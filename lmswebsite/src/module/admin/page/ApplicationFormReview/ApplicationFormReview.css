@@ -1,0 +1,117 @@
+.apllicationFormReview-Container{
+  padding: 2rem;
+}
+
+.batchesNav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 2em 0 2em;
+  }
+  
+  .batchTitle {
+    font-family: "poppins", sans-serif;
+  }
+  
+
+  .batchSearch {
+    margin: 10px;
+    padding: 0;
+
+  }
+  
+  .batchStudent,
+  .batchTeacher {
+    width: 150px;
+    height: 40px;
+    background: #fff;
+    border: 2px solid #939393;
+    border-radius: 10px;
+    margin-right: 2em;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .batchStudent.active,
+  .batchTeacher.active {
+    background: #c60077;
+    color: #fff;
+  }
+  
+  .batchIcon {
+    font-size: 20px;
+  }
+  
+  .searchIcon {
+    font-size: 20px;
+    font-weight: 300;
+    position: absolute;
+    color: #939393;
+    margin-left: 2em;
+    margin-top: 0.8em;
+  }
+  
+  #search {
+    width: 90%;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #939393;
+    margin-left: 2em;
+    padding-left: 3em;
+  }
+  
+  .FunnelIcon {
+    font-size: 30px;
+    margin-left: 10px;
+  }
+  
+  /* Batch_table.css */
+  .table-container {
+    margin-top: 2em;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    height: 200px;
+  }
+  
+  thead {
+    background-color: #ffcaea;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+  }
+  
+  tbody {
+    background-color: #ffffff;
+    justify-content: center;
+  }
+  
+  th {
+    font-size: 20px;
+    padding: 8px;
+    border-bottom: 1px solid #a2a2a2;
+    border-top: 1px solid #a2a2a2;
+  }
+  
+  .tdata {
+    font-size: 20px;
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #a2a2a2;
+    border-top: 1px solid #a2a2a2;
+  }
+  
+  .link {
+    text-decoration: none;
+    color: #c60077;
+    background: #ffcaea;
+    padding: 0.4em 1em 0 1em;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+  }
+  

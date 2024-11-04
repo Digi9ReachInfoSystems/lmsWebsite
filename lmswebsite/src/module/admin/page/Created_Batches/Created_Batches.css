@@ -1,0 +1,213 @@
+/* src/components/CreatedBatch.css */
+.created-Batch-container{
+    padding: 2rem;
+}
+
+/* Navigation Section */
+.batches_nav {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.batch_title {
+    font-family: "Poppins", sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.batch_btn {
+    width: 150px;
+    height: 40px;
+    background: #fff!important;
+    color: black    !important;
+    border: 2px solid #939393;
+    border-radius: 10px;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.batch_icon {
+    font-size: 20px;
+    margin-right: 5px;
+}
+
+.batch_btn span {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* Search and Filter Section */
+.batch_search {
+    position: relative;
+    margin: 20px 2em;
+    display: flex;
+    align-items: center;
+}
+
+.search_icon {
+    font-size: 20px;
+    font-weight: 300;
+    color: #939393!important;
+    position: absolute;
+    left: 10px;
+}
+
+.search_input {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: white!important;
+    border: 2px solid #939393;
+    padding-left: 40px;
+    font-size: 16px;
+}
+
+.Funnel_icon {
+    font-size: 30px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #939393;
+}
+
+/* Batch Table Section */
+.table-container {
+    margin-top: 2em;
+    max-height: 400px;
+    overflow-y: auto;  
+    overflow-x: auto;  
+}
+
+table {
+    width: 100%;
+    /* height: 500px; */
+    border-collapse: collapse;
+    table-layout: fixed; 
+    /* height: 200px; */ /* Removed fixed height to allow dynamic content */
+}
+
+thead {
+    background-color: #ffcaea;
+    position: sticky;
+    top: 0;
+    z-index: 1; /* Ensure the header stays above the body */
+}
+
+tbody{
+    background-color: #ffffff;
+}
+
+th {
+    font-size: 20px;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #a2a2a2;
+    border-top: 1px solid #a2a2a2;
+}
+
+.tdata {
+    font-size: 18px;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #a2a2a2;
+    border-top: 1px solid #a2a2a2;
+}
+
+.tdata a {
+    text-decoration: none;
+    color: #f562ba;
+}
+
+.tdata .tbtn {
+    display: flex;
+    padding: 0.4em 0.6em;
+    background: #bbffc6;
+    border: none;
+    outline: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.li {
+    width: 10px;
+    height: 10px;
+    margin: 0.4em 0.6em 0.6em 0.6em;
+    background: #1fff44;
+    border-radius: 50%;
+}
+
+.badge {
+    display: inline-block;
+    padding: 0.5em 1em;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff; /* You can change this color */
+    border-radius: 0.25rem;
+}
+
+/* Responsive Design (Optional) */
+@media (max-width: 768px) {
+    .batches_nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .batch_search {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .search_input {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .Funnel_icon {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    th, .tdata {
+        font-size: 16px;
+        padding: 8px;
+    }
+}
+
+/* Pagination Styles */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1em;
+    margin-bottom: auto;
+  }
+  
+  .pagination button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #939393;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background-color: #ffcaea;
+    font-weight: bold;
+  }
+  
+  .pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* Wrapper to contain both the table and pagination */
+.table-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 450px; /* Adjust this height based on your design */
+  }

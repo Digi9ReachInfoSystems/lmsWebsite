@@ -1,0 +1,24 @@
+.LMS-Title {
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.LMS-teachAtLMS {
+    display: flex;
+    flex-direction: row;
+    margin: 3em 15em;
+}
+
+.LMS-image {
+    width: 100px;
+    height: 100px;
+    margin-left: 5em;
+    border: .01em solid #939393;
+    border-radius: 50px;
+    padding: 1em;
+}
+
+.LMS-imageTitle {
+    margin: 1em;
+    text-align: center;
+}

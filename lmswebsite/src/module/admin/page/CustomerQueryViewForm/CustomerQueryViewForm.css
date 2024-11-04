@@ -1,0 +1,54 @@
+.queryForm-container {
+    max-width: 600px;
+    margin: 2em auto;
+    padding: 1.5em;
+    border: 2px solid #939393;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+  }
+  
+  .queryForm-title {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 1.8em;
+    color: #333;
+  }
+  
+  .queryForm-field {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
+    font-size: 1.1em;
+  }
+  
+  .queryForm-field label {
+    font-weight: bold;
+    width: 40%;
+  }
+  
+  .queryForm-field p {
+    width: 55%;
+    text-align: left;
+    margin: 0;
+  }
+  
+  .queryForm-status-btn {
+    padding: 0.5em 1em;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .queryForm-status-btn.solved {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .queryForm-status-btn.pending {
+    background-color: #ff9800;
+    color: white;
+  }
+  

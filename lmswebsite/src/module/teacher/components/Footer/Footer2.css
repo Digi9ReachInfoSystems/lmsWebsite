@@ -1,0 +1,86 @@
+.footer-container2 {
+    background-color: black;
+    
+    color: white;
+    padding: 40px 20px;
+    text-align: left;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    clip-path: ellipse(131% 82% at 50% 82%);
+    width: 100%;
+}
+
+/* Content layout to ensure columns wrap properly */
+.footer-content2 {
+    margin-top: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 40px;
+
+}
+
+/* Each Column Styling */
+.footer-column2 {
+    flex: 1;
+    margin: 10px;
+    min-width: 200px;
+
+}
+
+/* Column Headings */
+.footer-column2 h3, 
+.footer-column2 h4 {
+    color: #ff4081;
+    margin-bottom: 10px;
+}
+
+/* List Styling */
+.footer-column2 ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-column2 ul li {
+    margin-bottom: 8px;
+}
+
+/* Footer Bottom Section */
+.footer-bottom2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    border-top: 1px solid #444;
+    padding-top: 10px;
+}
+
+/* Links Styling */
+.footer-links2 a {
+    color: white;
+    margin-right: 15px;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.footer-links2 a:hover {
+    color: #ff4081;
+}
+
+/* Social Media Icons */
+.footer-social2 a {
+    color: white;
+    margin-left: 10px;
+    font-size: 24px;
+}
+
+.footer-social2 a:hover {
+    color: #ff4081;
+}
+
+/* Highlight effect for 'material' */
+.highlight2 {
+    color: #ff4081;
+    text-decoration: underline;
+}
