@@ -1,45 +1,53 @@
-// Navbar.jsx
-import React from 'react';
-import { AppBar, Toolbar, IconButton, Avatar, InputBase, Box, Badge } from '@mui/material';
-import { Mail, NotificationsNone } from '@mui/icons-material';
-import './Navbar.css'; // Importing CSS styles
+import React from "react";
+import { AppBarWrap } from "./Navbar.Styles";
+import { MdOutlineMenu, MdNotificationsNone } from "react-icons/md";
+import { useNavigate } from "react-router-dom"; // This can be removed if not needed
 
-const Navbar = () => {
+function NavBar() {
   return (
-    <Box position="static" className="navbar">
-      <Toolbar className="navbar-toolbar">
-        {/* Search Bar */}
-        {/* <Box className="search-bar">
-          <InputBase
-            placeholder="Search..."
-            className="search-input"
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </Box> */}
+    <AppBarWrap>
+      <div className="appbar-content">
+        <div className="appbar-left">
+          <button type="button" className="sidebar-open-btn">
+            <MdOutlineMenu size={24} />
+          </button>
+          <h3 className="appbar-title">Dashboard</h3>
+        </div>
+        <div className="appbar-right">
+          <div className="appbar-search">
+            <form>
+              <div className="input-group">
+                <span className="input-icon">
+                  {/* Replace this with any relevant icon if needed */}
+                  <img
+                    src="/path/to/search-icon.png" // Replace with your search icon path
+                    alt=""
+                    className="input-icon-img"
+                  />
+                </span>
+                <input
+                  type="text"
+                  placeholder="Search Here ..."
+                  className="input-control"
+                  disabled // Just for UI, disable to remove functionality
+                />
+              </div>
+            </form>
+          </div>
 
-        {/* Icons and Profile */}
-        <Box className="navbar-icons">
-          <IconButton>
-            <Badge badgeContent={2} color="error">
-              <Mail className="icon" />
-            </Badge>
-          </IconButton>
+          {/* Notification Bell Icon */}
+          <button className="notification-bell">
+            <MdNotificationsNone size={24} />
+            {/* Static unread count for UI purpose */}
+            <span className="unread-count">3</span>
+          </button>
+        </div>
+      </div>
 
-          <IconButton>
-            <Badge badgeContent={4} color="error">
-              <NotificationsNone className="icon" />
-            </Badge>
-          </IconButton>
-
-          <Avatar 
-            src="https://i.pravatar.cc/150?img=3" 
-            alt="Profile" 
-            className="profile-picture" 
-          />
-        </Box>
-      </Toolbar>
-    </Box>
+      {/* Static modal for UI purposes */}
+      <div className="notification-modal"></div>
+    </AppBarWrap>
   );
-};
+}
 
-export default Navbar;
+export default NavBar;
