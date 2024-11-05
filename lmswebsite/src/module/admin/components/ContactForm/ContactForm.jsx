@@ -37,7 +37,7 @@ const ContactForms = () => {
 
   return (
     <div className="contact-forms card">
-      <div className="header">
+      <div className="contact-forms-header">
         <h2>Unsolved Queries</h2>
       </div>
 

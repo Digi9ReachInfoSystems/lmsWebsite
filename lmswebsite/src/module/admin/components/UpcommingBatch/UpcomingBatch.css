@@ -8,13 +8,13 @@
 }
 
 /* Header section */
-.header {
+.upcoming-batch-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.sub-heading {
+.upcoming-batch-sub-heading {
   font-size: 14px;
   color: #6b7280;
 }
