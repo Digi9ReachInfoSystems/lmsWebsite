@@ -4,7 +4,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "./style/theme/theme"; // Import your theme
 import { GlobalStyles } from "./style/GlobalStyles/GlobalStyles"; // Import your global styles
 import DashboardLayout from "./module/admin/page/DashboardLayout/DashboardLayout";
-import Dashboard from "./module/admin/page/Dashboard/Dashboard";
+import Dashboard from "./module/admin/page/Dashboard/DashboardScreen";
 import One from "./module/admin/page/One/One";
 import CreatedBatch from "./module/admin/page/Created_Batches/Created_Batches";
 import Login from "./pages/Login/Login";
