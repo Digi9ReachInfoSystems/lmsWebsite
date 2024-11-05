@@ -1,0 +1,124 @@
+.RegisteredList-batchesNav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 2em 0 2em;
+  }
+  
+  .RegisteredList-batchTitle {
+    font-family: "poppins", sans-serif;
+  }
+  
+  .RegisteredList-batchSearch {
+    margin: 10px;
+    padding: 0;
+  }
+  
+  .RegisteredList-batchStudent,
+  .RegisteredList-batchTeacher {
+    width: 150px;
+    height: 40px;
+    background: #fff;
+    border: 2px solid #939393;
+    border-radius: 10px;
+    margin-right: 2em;
+    outline: none;
+    cursor: pointer;
+  }
+  
+  .RegisteredList-batchStudent.active,
+  .RegisteredList-batchTeacher.active {
+    background: #c60077;
+    color: #fff;
+  }
+  
+  .RegisteredList-batchIcon {
+    font-size: 20px;
+  }
+  
+  .RegisteredList-searchIcon {
+    font-size: 20px;
+    font-weight: 300;
+    position: absolute;
+    color: #939393;
+    margin-left: 2em;
+    margin-top: 0.8em;
+  }
+  
+  #RegisteredList-search {
+    width: 90%;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #939393;
+    margin-left: 2em;
+    padding-left: 3em;
+  }
+  
+  .RegisteredList-FunnelIcon {
+    font-size: 30px;
+    margin-left: 10px;
+  }
+  
+  /* Batch_table.css */
+  .RegisteredList-StudentTableContainer,
+  .RegisteredList-teacherTableContainer {
+    margin-top: 2em;
+    height: 50vh;
+    overflow-y: auto;
+    overflow-x: auto;
+    text-align: center;
+  }
+  
+  .RegisteredList-teacherTableContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    max-height: 55vh!important;
+    
+  }
+ 
+  
+  .RegisteredList-teacherTableContainer thead {
+    background-color: #ffcaea;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+  }
+  
+  .RegisteredList-teacherTableContainer tbody {
+    background-color: #ffffff;
+    justify-content: center;
+  }
+  
+  .RegisteredList-teacherTableContainer th {
+    font-size: 20px;
+    padding: 8px;
+    border-bottom: 1px solid #a2a2a2;
+    border-top: 1px solid #a2a2a2;
+  }
+  .RegisteredList-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+    gap: 10px;
+  }
+  
+  .pagination-button,
+  .RegisteredList-pagination button {
+    margin: 0 5px;
+    padding: 8px 12px;
+    border: 1px solid #939393;
+    border-radius: 5px;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  .pagination-button.active {
+    background-color: #c60077;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .RegisteredList-pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }

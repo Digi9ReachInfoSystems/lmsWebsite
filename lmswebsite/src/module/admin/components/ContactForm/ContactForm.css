@@ -1,0 +1,76 @@
+/* ContactForm.css */
+
+.contact-forms {
+  width: 30vw!important;
+  height: 50vh!important;
+  padding: 23px;
+  background-color: #fff;
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.sub-heading {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.contact-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.contact-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px; /* Add space between content and view link */
+}
+
+.contact-info {
+  flex: 1; /* Take available space for text */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.contact-info p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.contact-name {
+  font-weight: bold;
+}
+
+.contact-email {
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.view-link {
+  color: #f472b6;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-left: 10px; /* Add space between info and the link */
+  white-space: nowrap;
+}
+
+.see-all {
+  text-align: left;
+  color: #6b7280;
+  font-size: 0.85rem;
+  text-decoration: none;
+  margin-top: 10px;
+}

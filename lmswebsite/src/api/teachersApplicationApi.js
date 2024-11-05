@@ -1,4 +1,5 @@
 import api from '../config/axiosConfig';
+import { uploadFileToFirebase } from '../utils/uploadFileToFirebase'; // Utility function for file upload
 
 /**
  * Function to submit a teacher application
@@ -11,30 +12,35 @@ import api from '../config/axiosConfig';
  * @param {string} applicationData.language - The language of the applicant
  * @returns {Object} - The response from the server
  */
+
 export const submitTeacherApplication = async (applicationData) => {
-    const formData = new FormData();
-
-    // Append form data
-    formData.append('resume', applicationData.resume);
-    formData.append('state', applicationData.state);
-    formData.append('city', applicationData.city);
-    formData.append('pincode', applicationData.pincode);
-    formData.append('current_position', applicationData.current_position);
-    formData.append('language', applicationData.language);
-
     try {
-        const response = await api.post('/teacher-application/apply', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data', // Set content type for file upload
-            },
-        });
-        console.log('Application submitted successfully:', response.data);
-        return response.data; // Return the response data
+      // Upload resume and profile image to Firebase
+      const resumeUrl = await uploadFileToFirebase(applicationData.resume, 'resume');
+      const profileImageUrl = await uploadFileToFirebase(applicationData.profileImage, 'profileImage');
+  
+      // Prepare the request body
+      const requestBody = {
+        state: applicationData.state,
+        city: applicationData.city,
+        pincode: applicationData.pincode,
+        current_position: applicationData.current_position,
+        language: applicationData.language,
+        phone_number: applicationData.phone_number,
+        experience: applicationData.experience,
+        resume_link: resumeUrl, // Add resume URL
+        profileImage: profileImageUrl, // Add profile image URL
+      };
+  
+      // Send the request to the backend
+      const response = await api.post('/teacher-application/apply', requestBody);
+      console.log('Application submitted successfully:', response.data);
+      return response.data; // Return the response data
     } catch (error) {
-        console.error('Error submitting application:', error.response?.data || error.message);
-        throw error; // Throw the error for further handling
+      console.error('Error submitting application:', error.response?.data || error.message);
+      throw error; // Throw the error for further handling
     }
-};
+  };
 
 /**
  * Function to fetch teacher applications with an optional approval status
@@ -71,3 +77,21 @@ export const approveTeacherApplication = async (applicationId) => {
         throw error; // Throw the error for further handling
     }
 };
+
+/**
+ * Fetch a single teacher's application by ID.
+ * @param {string} applicationId - The ID of the application to fetch.
+ * @returns {Promise<Object>} - The application data or an error message.
+ */
+export const getSingleTeacherApplication = async (applicationId) => {
+    try {
+      const response = await api.get(
+        `/teacher-application/application/single/${applicationId}`
+      );
+      console.log('Fetched Application:', response.data); // For debugging
+      return response.data; // Return the application data
+    } catch (error) {
+      console.error('Error fetching application:', error.response?.data || error.message);
+      throw error; // Re-throw the error for further handling if needed
+    }
+  };
