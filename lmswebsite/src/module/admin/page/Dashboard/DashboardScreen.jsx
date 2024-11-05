@@ -18,19 +18,19 @@ const Dashboard = () => {
       const response = await getStatisticsData();
       setDashboardCards([
         {
-          title: "Total no of students",
+          title: "Total students",
           count: response.totalStudents,
           iconPath: student_icon,
           background: "#F8E7D8",
         },
         {
-          title: "Total no of teachers",
+          title: "Total teachers",
           count: response.totalTeachers,
           iconPath: teacher_icon,
           background: "#D7FDEB",
         },
         {
-          title: "Total no of Batches",
+          title: "Total Batches",
           count: response.totalBatches,
           iconPath: batch_icon,
           background: "#C9E2FF",
@@ -45,7 +45,9 @@ const Dashboard = () => {
       <div className="area-row ar-one">
         <Cards cardsData={dashboardCards} />
       </div>
-      <div className="area-row ar-two">rajat rajat</div>
+      <div className="area-row ar-two">
+        <UserEngagementChart /> <ContactForms />
+      </div>
       <div className="area-row ar-three">rajat</div>
     </DashboardScreenWrap>
   );

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import './ContactForm.css';
-import { getAllQuerys } from '../../../../api/customerQueryApi'; // Import API function
+import React, { useEffect, useState } from "react";
+import { ContactFormStylesWrap } from "./ContactForm.styles";
+import { getAllQuerys } from "../../../../api/customerQueryApi"; // Import API function
 
 const ContactForms = () => {
   const [queries, setQueries] = useState([]);
@@ -12,7 +12,7 @@ const ContactForms = () => {
     const fetchQueries = async () => {
       try {
         const data = await getAllQuerys(); // Fetch all queries from the API
-        console.log('Fetched Queries:', data.queries); // Debug log
+        console.log("Fetched Queries:", data.queries); // Debug log
 
         // Filter out only the unsolved queries (querySolved = false)
         const unsolvedQueries = data.queries.filter(
@@ -22,8 +22,8 @@ const ContactForms = () => {
         setQueries(unsolvedQueries || []); // Set the filtered queries in state
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching queries:', err);
-        setError('Failed to load queries');
+        console.error("Error fetching queries:", err);
+        setError("Failed to load queries");
         setLoading(false);
       }
     };
@@ -36,29 +36,29 @@ const ContactForms = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="contact-forms card">
-      <div className="header">
-        <h2>Unsolved Queries</h2>
+    <ContactFormStylesWrap>
+      <div className="contact-forms card">
+        <h2>Application Review</h2>
+
+        <ul className="contact-list">
+          {queries.map((query, index) => (
+            <li key={index} className="contact-item">
+              <div className="contact-info">
+                <p className="contact-name">{query.title || "N/A"}</p>
+                <p className="contact-email">{query.contactEmail || "N/A"}</p>
+              </div>
+              <a href="/" className="view-link">
+                View
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <a href="/" className="see-all">
+          See All
+        </a>
       </div>
-
-      <ul className="contact-list">
-        {queries.map((query, index) => (
-          <li key={index} className="contact-item">
-            <div className="contact-info">
-              <p className="contact-name">{query.title || 'N/A'}</p>
-              <p className="contact-email">{query.contactEmail || 'N/A'}</p>
-            </div>
-            <a href="/" className="view-link">
-              View
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <a href="/" className="see-all">
-        See All ➤
-      </a>
-    </div>
+    </ContactFormStylesWrap>
   );
 };
 

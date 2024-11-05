@@ -6,7 +6,7 @@ export const SideBarwrap = styled.div`
   // color: ${(props) => props.theme.colors.cadet};
   background: #FFE2E5;
   .sidebar-container {
-    width: 18vw;
+    width: 16vw;
 
     padding: 20px;
     // background-color: ${(props) => props.theme.colors.pink300};

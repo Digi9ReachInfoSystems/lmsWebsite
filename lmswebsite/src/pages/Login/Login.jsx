@@ -41,7 +41,7 @@ const Login = () => {
 
       const sessionData = {
         userId: user.uid,
-        accessToken: aT.access_token,
+        accessToken: user.accessToken,
         refreshToken: profileData.user.refresh_token,
         name: profileData.user.name,
         loggedIn: "true",
