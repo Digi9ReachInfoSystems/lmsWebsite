@@ -3,16 +3,16 @@ import { media } from "../../../../style/theme/theme";
 
 export const ContactFormStylesWrap = styled.div`
   width: 100%;
-  // max-height: 80vh;
-
-  min-width: 280px;
-  height: 40vh;
-  // margin: auto;
+  max-width: 350px;
+  min-width: 240px;
+  height: 100%; /* Fill available height */
+  margin: auto;
 
   .contact-forms {
     width: 100%;
-    max-width: 90vw; /* Responsive max width for smaller screens */
-    padding: 2vh 2vw; /* Responsive padding using viewport units */
+    height: 100%; /* Ensure the component fills its container height */
+    max-width: 90vw;
+    padding: 1vh 1vw;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -26,7 +26,6 @@ export const ContactFormStylesWrap = styled.div`
       padding: 1.5vh 4vw;
     `}
   }
-
   h2 {
     margin: 0;
     font-size: 1.2rem;
@@ -66,7 +65,7 @@ export const ContactFormStylesWrap = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2vh;
+    // margin-bottom: 2vh;
     padding-bottom: 1vh;
     border-bottom: 1px solid #f0f0f0;
 

@@ -3,8 +3,6 @@ import { BlockWrapStyles } from "../../../../style/DefaultStyles/DefaultStyles";
 import { media } from "../../../../style/theme/theme";
 
 export const CardBlockWrap = styled.div`
-  ${BlockWrapStyles}
-
   .cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -27,28 +25,13 @@ export const CardBlockWrap = styled.div`
     display: flex;
     align-items: center;
     border-radius: 8px;
-    padding: 16px;
+    padding: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     &.card-misty-rose {
       .card-item-icon {
-        background-color: ${(props) =>
-          props.theme.colors.pink3}; /* Light pink background */
-      }
-    }
-
-    &.card-2 {
-      .card-item-icon {
-        background-color: ${(props) =>
-          props.theme.colors.salmon}; /* Light pink background */
-      }
-    }
-
-    &.card-3 {
-      .card-item-icon {
-        background-color: ${(props) =>
-          props.theme.colors.nyanza}; /* Light pink background */
+        background-color: #fce4ec; /* Light pink background */
       }
     }
   }
@@ -66,9 +49,7 @@ export const CardBlockWrap = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background-color: ${(props) =>
-      props.theme.colors.gray700}; 
-      /* Icon background color */
+    background-color: #fce4ec; /* Icon background color */
 
     img {
       width: 24px;

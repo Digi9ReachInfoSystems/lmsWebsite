@@ -42,7 +42,7 @@ const Dashboard = () => {
 
   return (
     <DashboardScreenWrap className="content-area">
-      <div className="area-row ar-one">
+      <div >
         <Cards cardsData={dashboardCards} />
       </div>
       <div className="area-row ar-two">
