@@ -27,7 +27,10 @@ function App() {
       <GlobalStyles />
       <Router>
         <Routes>
+
+
           <Route path="/" element={<LandingPage />} key=""></Route>
+
           <Route path="/login" element={<Login />} />
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route path="/admin" element={<DashboardLayout />}>

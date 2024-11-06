@@ -14,10 +14,10 @@ const ContactForms = () => {
         const data = await getAllQuerys(); // Fetch all queries from the API
         console.log("Fetched Queries:", data.queries); // Debug log
 
-        // Filter out only the unsolved queries (querySolved = false)
-        const unsolvedQueries = data.queries.filter(
-          (query) => query.querySolved === false
-        );
+        // Filter out only the unsolved queries (querySolved = false) and limit to 4
+        const unsolvedQueries = data.queries
+          .filter((query) => query.querySolved === false)
+          .slice(0, 4);
 
         setQueries(unsolvedQueries || []); // Set the filtered queries in state
         setLoading(false);
@@ -38,7 +38,7 @@ const ContactForms = () => {
   return (
     <ContactFormStylesWrap>
       <div className="contact-forms card">
-        <h2>Application Review</h2>
+        <h2>Customer Queries</h2>
 
         <ul className="contact-list">
           {queries.map((query, index) => (
