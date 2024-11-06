@@ -1,0 +1,77 @@
+/* Card styling */
+.card {
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 98%;
+}
+
+/* Header section */
+.upcoming-batch-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.upcoming-batch-sub-heading {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.see-all-batches {
+  color: #f472b6;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Scrollable Table Container */
+.table-container {
+  max-height: 400px; /* Ensure it shows 10 rows (approx) */
+  overflow-y: auto;
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
+.table-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers */
+}
+
+/* Table styling */
+.batch-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0px;
+}
+
+.batch-table th,
+.batch-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.batch-table th {
+  background-color: white;
+  color: black;
+  font-weight: 700;
+}
+
+.batch-table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+.batch-table td {
+  font-size: 14px;
+  color: #374151;
+}
+
+.batch-table td:nth-child(3) {
+  font-weight: bold;
+  color: #2563eb;
+}
+
+.batch-table td:nth-child(4) {
+  font-weight: bold;
+  color: #34d399;
+}

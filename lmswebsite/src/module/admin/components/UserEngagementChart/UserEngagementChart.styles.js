@@ -5,10 +5,16 @@ export const UserEngagementChartWrap = styled.div`
   height: 40vh;
   .chart-wrapper {
     position: relative;
+<<<<<<< HEAD:lmswebsite/src/module/admin/components/UserEngagementChart/UserEngagementChart.css
+    width: 80%;
+    max-width: 40vw;
+    height : 50vh;
+=======
     width: 100%;
 
     height: 44vh;
     margin: 0 auto;
+>>>>>>> f511f8f9b797eb679a696d84b33ec9de5da0caba:lmswebsite/src/module/admin/components/UserEngagementChart/UserEngagementChart.styles.js
     background-color: #fff;
     border-radius: 0.8rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

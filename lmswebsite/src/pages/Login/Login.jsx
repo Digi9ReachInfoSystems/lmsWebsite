@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom"; // React Router for navigation
 import { signInWithEmailAndPassword } from "firebase/auth"; // Firebase Auth
 import { auth } from "../../config/firebaseConfig"; // Firebase instance
 import { getUserByAuthId } from "../../api/userApi"; // Axios service for user profile
-// import "./Login.css";
 import bgImg from "../../assets/image 32.png";
 import { refreshAccessToken } from "../../api/tempApi";
 import { LoginPageWrap } from "./Login.styles";
