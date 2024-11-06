@@ -31,9 +31,9 @@ const UpcomingBatch = () => {
 
   return (
     <div className="upcoming-batch card">
-      <div className="header">
+      <div className="upcoming-batch-header">
         <h2>Upcoming Batch</h2>
-        <p className="sub-heading">Assigned Batch Status</p>
+        <p className="upcoming-batch-sub-heading">Assigned Batch Status</p>
         <Link to={'/admin/createdBatches'} className='see-all-batches'>
           See All Assigned Batches ➤
         </Link>

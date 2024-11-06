@@ -17,19 +17,21 @@ import {
   Settings,
   Menu as MenuIcon,
 } from "@mui/icons-material";
+import LogoutIcon from '@mui/icons-material/Logout';
 import { SideBarwrap } from "./Sidebar.styles";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const navigate = useNavigate();
 
   const menuItems = [
     { name: "Dashboard", icon: <Dashboard />, link: "/admin/" },
     {
       name: "Assigned Batches",
       icon: <AddBox />,
-      link: "/admin/assignedBatches",
+      link: "/admin/createdBatches",
     },
     {
       name: "Schedule Class",
@@ -70,9 +72,8 @@ const Sidebar = () => {
               style={{ textDecoration: "none" }}
             >
               <div
-                className={`menu-item ${
-                  activeItem === item.name ? "active" : ""
-                }`}
+                className={`menu-item ${activeItem === item.name ? "active" : ""
+                  }`}
                 onClick={() => setActiveItem(item.name)}
               >
                 <div className="menu-icon">{item.icon}</div>
@@ -80,6 +81,18 @@ const Sidebar = () => {
               </div>
             </Link>
           ))}
+
+          <div
+            className={`menu-item ${activeItem === 'Logout' ? "active" : ""
+              }`}
+            onClick={() => {
+              localStorage.clear();
+              navigate("/login");
+            }}
+          >
+            <div className="menu-icon"><LogoutIcon /></div>
+            {!isCollapsed && <div className="menu-text">Logout</div>}
+          </div>
         </div>
       </div>
     </SideBarwrap>

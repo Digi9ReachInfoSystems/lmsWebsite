@@ -6,6 +6,7 @@ import { getAllTeachers } from "../../../../api/teacherApi";
 import { getAllStudents } from "../../../../api/studentApi";
 import { createBatch } from "../../../../api/batchApi";
 import { Link } from "react-router-dom";
+import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
 
 const CreateNewBatch = () => {
   // State for form inputs
@@ -19,6 +20,7 @@ const CreateNewBatch = () => {
   const [selectedStudents, setSelectedStudents] = useState([]);
   const [contentMaterial, setContentMaterial] = useState("");
   const [loading, setLoading] = useState(false);
+  const [batch_image, setBatch_image] = useState(null);
   const [error, setError] = useState("");
 
   // State for fetched data
@@ -59,6 +61,10 @@ const CreateNewBatch = () => {
 
     fetchData();
   }, []);
+  const handleFileChange = (e) => {
+    const {  files } = e.target;
+    setBatch_image(files[0]);
+  };
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -74,6 +80,7 @@ const CreateNewBatch = () => {
       !endTime ||
       !noOfClasses ||
       !selectedTeacher ||
+      !batch_image ||
       selectedStudents.length === 0 ||
       !contentMaterial
     ) {
@@ -91,6 +98,8 @@ const CreateNewBatch = () => {
       setError("Start time must be before end time.");
       return;
     }
+    const image_url= await uploadFileToFirebase(batch_image, "batch-images");
+    setBatch_image(image_url);
 
     // Prepare data for the backend
     const responseData = {
@@ -102,6 +111,7 @@ const CreateNewBatch = () => {
       no_of_classes: noOfClasses,
       teacher_id: selectedTeacher,
       students: selectedStudents,
+      batch_image,
       contentMaterial,
       date: new Date(),
     };
@@ -123,6 +133,7 @@ const CreateNewBatch = () => {
         setSelectedTeacher("");
         setSelectedStudents([]);
         setContentMaterial("");
+        setBatch_image(null);
       } else {
         console.warn("Unexpected response from createBatch:", response);
         setError("Unexpected response from the server.");
@@ -269,6 +280,12 @@ const CreateNewBatch = () => {
             isDisabled={loading || students.length === 0}
             required
           />
+        </label>
+        <label htmlFor="Meta_Image" className="batch_Label">
+          Meta Image:
+        <input type="file" id="Meta_Image" className="meta_image_input" 
+        onChange={handleFileChange}
+        />
         </label>
         <label htmlFor="Content_Material" className="batch_Label">
           Content Material:

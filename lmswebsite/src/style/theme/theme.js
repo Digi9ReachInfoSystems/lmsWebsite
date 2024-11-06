@@ -5,7 +5,7 @@ export const theme = {
   colors: {
     blue: "#5D5FEF",
     lightBlue: "#365EFF",
-    verypaleblue:"C9E2FF",
+    verypaleblue:"#C9E2FF",
     seasalt: "#FAFBFC",
     gray700: "#737791",
     ashgray: "#a5aea3",
@@ -20,6 +20,7 @@ export const theme = {
     pink3: "#FFC1CD",
     pink4: "#EE1B7A",
     pink5: "#672A47",
+    pink6:"#f562ba",
     salmon: "#FF947A",
     lightGrayishCyan:"#D7FDEB",
     cadet: "#151D48",
@@ -44,7 +45,7 @@ export const theme = {
   },
  
   typography: {
-    fontFamily: "'Public Sans', sans-serif",
+    fontFamily: "'Public Sans', sans-serif, 'Poppins'",
   },
  
   breakpoints: {
