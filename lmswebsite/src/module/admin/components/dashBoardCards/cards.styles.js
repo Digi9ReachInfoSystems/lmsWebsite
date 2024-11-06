@@ -5,176 +5,93 @@ import { media } from "../../../../style/theme/theme";
 export const CardBlockWrap = styled.div`
   ${BlockWrapStyles}
 
-  .block-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-    // height: 50px;
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
 
-    .block-title {
-      font-size: 1.5rem;
-      color: ${(props) => props.theme.colors.black};
-      font-weight: bold;
+    ${media.xxxl`
+      gap: 10px;
+    `}
 
-      ${media.lg`
-        font-size: 1.25rem;
-      `}
+    ${media.md`
+      grid-template-columns: repeat(2, 1fr);
+    `}
 
-      ${media.md`
-        font-size: 1rem;
-      `}
-
-      ${media.sm`
-        font-size: 0.9rem;
-      `}
-    }
+    ${media.xs`
+      grid-template-columns: 100%;
+    `}
   }
 
-  .dashboard-card {
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s;
-    cursor: pointer;
-    width: 100%; /* Makes the card adapt to container width */
-    padding: 1rem; /* Adds padding inside the card */
-    // height: 6vw;
+  .card-item {
+    display: flex;
+    align-items: center;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
-    &:hover {
-      transform: translateY(-5px);
+    &.card-misty-rose {
+      .card-item-icon {
+        background-color: ${(props) =>
+          props.theme.colors.pink3}; /* Light pink background */
+      }
+    }
+
+    &.card-2 {
+      .card-item-icon {
+        background-color: ${(props) =>
+          props.theme.colors.salmon}; /* Light pink background */
+      }
+    }
+
+    &.card-3 {
+      .card-item-icon {
+        background-color: ${(props) =>
+          props.theme.colors.nyanza}; /* Light pink background */
+      }
     }
   }
 
   .card-content {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 1rem;
-
-    ${media.lg`
-      padding: 0.75rem;
-    `}
-
-    ${media.md`
-      padding: 0.5rem;
-    `}
-
-    ${media.sm`
-      padding: 0.25rem;
-      flex-direction: column; /* Stack content vertically on smaller screens */
-    `}
+    gap: 16px;
   }
 
-  .card-icon {
-    border-radius: 100%;
-    width: 36px;
-    height: 36px;
+  .card-item-icon {
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: ${(props) =>
+      props.theme.colors.gray700}; 
+      /* Icon background color */
 
     img {
-      width: 22px; /* Base width */
-
-      ${media.lg`
-        width: 50px;
-      `}
-
-      ${media.md`
-        width: 40px;
-      `}
-
-      ${media.sm`
-        width: 30px;
-      `}
+      width: 24px;
+      height: 24px;
     }
-
-    ${media.lg`
-      width: 80px;
-      height: 60px;
-    `}
-
-    ${media.md`
-      width: 70px;
-      height: 50px;
-    `}
-
-    ${media.sm`
-      width: 60px;
-      height: 40px;
-    `}
   }
 
-  .card-info {
-    text-align: left;
-    padding: 1rem;
+  .card-text-content {
+    display: flex;
+    flex-direction: column;
+  }
 
-    ${media.lg`
-      padding: 0.75rem;
-    `}
+  .card-item-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+  }
 
-    ${media.md`
-      padding: 0.5rem;
-    `}
-
-    ${media.sm`
-      padding: 0.25rem;
-    `}
-
-    .card-title {
-      font-size: 1rem;
-      font-weight: 600;
-      color: ${(props) => props.theme.colors.gray700};
-
-      ${media.lg`
-        font-size: 0.9rem;
-      `}
-
-      ${media.md`
-        font-size: 0.75rem;
-      `}
-
-      ${media.sm`
-        font-size: 0.65rem;
-      `}
-    }
-
-    .card-subtitle {
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: ${(props) => props.theme.colors.gray600};
-
-      ${media.lg`
-        font-size: 0.8rem;
-      `}
-
-      ${media.md`
-        font-size: 0.7rem;
-      `}
-
-      ${media.sm`
-        font-size: 0.6rem;
-      `}
-    }
-
-    .card-count {
-      font-size: 1.2rem;
-      font-weight: bold;
-      color: ${(props) => props.theme.colors.black};
-
-      ${media.lg`
-        font-size: 1.1rem;
-      `}
-
-      ${media.md`
-        font-size: 1rem;
-      `}
-
-      ${media.sm`
-        font-size: 0.9rem;
-      `}
-    }
+  .card-item-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: #000;
+    margin: 4px 0 0;
   }
 `;

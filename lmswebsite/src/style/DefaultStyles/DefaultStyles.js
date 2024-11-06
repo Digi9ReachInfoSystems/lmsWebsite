@@ -20,7 +20,7 @@ export const BlockTitle = styled.div`
 `;
 
 export const BlockContentWrap = styled.div`
-  margin-top: 30px;
+  margin-top: 5px;
   ${media.xxl`
         margin-top: 12px;
   `}
@@ -30,7 +30,7 @@ export const BlockWrapStyles = css`
   // background: ${(props) => props.theme.colors.white};
   // box-shadow: 0 0.25rem 1.125rem rgba(75, 70, 92, 0.1);
   border-radius: 6px;
-  padding: px;
+  // padding: 2px;
 
   ${media.xxxl`
     padding: 12px;
