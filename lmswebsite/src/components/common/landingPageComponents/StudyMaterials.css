@@ -1,0 +1,82 @@
+.study-materials-container {
+  text-align: center;
+  padding: 40px;
+}
+
+.heading {
+  font-size: 36px;
+  font-weight: bold;
+  position: relative;
+}
+
+.heading::after {
+  content: "";
+  display: block;
+  width: 100px;
+  height: 4px;
+  background-color: #ff0080;
+  margin: 0 auto;
+  margin-top: 8px;
+}
+
+.class-buttons {
+  margin-top: 20px;
+}
+
+.class-buttons button {
+  margin: 5px;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.class-buttons button.active,
+.class-buttons button:hover {
+  background-color: #ff0080;
+  color: #fff;
+  border-color: #ff0080;
+}
+
+.materials-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.material-card {
+  width: 220px;
+  padding: 20px;
+  border-radius: 16px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.material-card h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.material-card p {
+  font-size: 16px;
+  color: #666;
+}
+
+.previous-year {
+  background-color: #fbe9e7;
+}
+
+.ncert {
+  background-color: #e0f7fa;
+}
+
+.revision {
+  background-color: #f3e5f5;
+}
+
+.general {
+  background-color: #e8f5e9;
+}
