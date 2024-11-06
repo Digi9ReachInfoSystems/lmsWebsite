@@ -9,9 +9,9 @@ import One from "./module/admin/page/One/One";
 import CreatedBatch from "./module/admin/page/Created_Batches/CreatedBatch";
 import Login from "./pages/Login/Login";
 import CreateNewBatch from "./module/admin/page/createNewBatch/CreateNewBatch";
-import ApplicationFormReview from "./module/admin/page/ApplicationFormReview/ApplicationFormReview";
+// import ApplicationFormReview from "./module/admin/page/ApplicationFormReview/ApplicationFormReview";
 import TeacherApplicationFormView from "./module/admin/page/ApplicationFormReview/TeacherApplicationFormView";
-import TeacherApplicationFormReview from "./module/admin/page/TeachersApplicationFormReview/TeacherApplicationFormReview"
+import TeacherApplicationFormReview from "./module/admin/page/TeachersApplicationFormReview/TeacherApplicationFormReview";
 import RegisteredList from "./module/admin/page/RegisteredList/RegisteredList";
 import Circulars from "./module/admin/page/Circular/Circulars";
 import CreateCircular from "./module/admin/page/CreateCircular/CreateCircular";
@@ -25,11 +25,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyles />
       <Router>
+        <GlobalStyles />
         <Routes>
-
-
           <Route path="/" element={<LandingPage />} key=""></Route>
 
           <Route path="/login" element={<Login />} />

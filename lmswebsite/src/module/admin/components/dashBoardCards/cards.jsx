@@ -15,30 +15,30 @@ const iconMap = {
 const Cards = ({ cardsData }) => {
   return (
     <CardBlockWrap>
-      <BlockContentWrap>
-        <div className="cards">
-          {cardsData.map((card, index) => (
-            <div
-              key={index}
-              className={`card-item`}
-              // style={{ backgroundColor: card.background }}
-            >
-              <div className="card-content">
-                <div
-                  className="card-item-icon"
-                  style={{ backgroundColor: card.background }}
-                >
-                  {iconMap[card.title] || <ImUser />} {/* Fallback icon */}
-                </div>
-                <div className="card-text-content">
-                  <p className="card-item-text">{card.title}</p>
-                  <div className="card-item-value">{card.count}</div>
-                </div>
+      {/* <BlockContentWrap> */}
+      <div className="cards">
+        {cardsData.map((card, index) => (
+          <div
+            key={index}
+            className={`card-item`}
+            // style={{ backgroundColor: card.background }}
+          >
+            <div className="card-content">
+              <div
+                className="card-item-icon"
+                style={{ backgroundColor: card.background }}
+              >
+                {iconMap[card.title] || <ImUser />} {/* Fallback icon */}
+              </div>
+              <div className="card-text-content">
+                <p className="card-item-text">{card.title}</p>
+                <div className="card-item-value">{card.count}</div>
               </div>
             </div>
-          ))}
-        </div>
-      </BlockContentWrap>
+          </div>
+        ))}
+      </div>
+      {/* </BlockContentWrap> */}
     </CardBlockWrap>
   );
 };

@@ -2,16 +2,14 @@ import styled from "styled-components";
 import { media } from "../../../../style/theme/theme";
 
 export const UserEngagementChartWrap = styled.div`
-  width: 100%;
-  max-width: 80vw;
-  height: 50vh;
-  margin: 0 auto;
+   width: 100%;
+  max-width: 60vw;
+  height: 100%; /* Ensure full height */
 
   .chart-wrapper {
     position: relative;
     width: 100%;
-    height: 100%;
-    max-height: 44vh;
+    height: 100%; /* Ensure full height */
     margin: 0 auto;
     background-color: #fff;
     border-radius: 0.8rem;
@@ -20,13 +18,12 @@ export const UserEngagementChartWrap = styled.div`
 
     ${media.md`
       padding: 0.8vh 1vw;
-      max-height: 42vh;
     `}
 
     ${media.sm`
       padding: 0.5vh 1vw;
-      max-height: 40vh;
     `}
+  }
   }
 
   .filter-button {

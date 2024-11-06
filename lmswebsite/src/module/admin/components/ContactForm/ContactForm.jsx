@@ -54,9 +54,9 @@ const ContactForms = () => {
           ))}
         </ul>
 
-        <a href="/" className="see-all">
+        {/* <a href="/" className="see-all">
           See All
-        </a>
+        </a> */}
       </div>
     </ContactFormStylesWrap>
   );

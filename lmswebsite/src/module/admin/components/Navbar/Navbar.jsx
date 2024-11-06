@@ -1,7 +1,10 @@
 import React from "react";
 import { AppBarWrap } from "./Navbar.Styles";
-import { MdOutlineMenu, MdNotificationsNone } from "react-icons/md";
-import { useNavigate } from "react-router-dom"; // This can be removed if not needed
+import { MdNotificationsNone } from "react-icons/md";
+import { FiSearch } from "react-icons/fi";
+import { MdOutlineMenu } from "react-icons/md";
+// import profileIcon from "/path/to/profile-icon.png"; // Replace with your profile icon path
+// // import logoIcon from "/path/to/logo-icon.png"; // Replace with your logo icon path
 
 function NavBar() {
   return (
@@ -14,38 +17,17 @@ function NavBar() {
           <h3 className="appbar-title">Dashboard</h3>
         </div>
         <div className="appbar-right">
-          <div className="appbar-search">
-            <form>
-              <div className="input-group">
-                <span className="input-icon">
-                  {/* Replace this with any relevant icon if needed */}
-                  <img
-                    src="/path/to/search-icon.png" // Replace with your search icon path
-                    alt=""
-                    className="input-icon-img"
-                  />
-                </span>
-                <input
-                  type="text"
-                  placeholder="Search Here ..."
-                  className="input-control"
-                  disabled // Just for UI, disable to remove functionality
-                />
-              </div>
-            </form>
-          </div>
+          <div className="appbar-search"></div>
 
           {/* Notification Bell Icon */}
           <button className="notification-bell">
             <MdNotificationsNone size={24} />
-            {/* Static unread count for UI purpose */}
-            <span className="unread-count">3</span>
+            {/* {unreadCount > 0 && (
+              <span className="unread-count">{unreadCount}</span>
+            )} */}
           </button>
         </div>
       </div>
-
-      {/* Static modal for UI purposes */}
-      <div className="notification-modal"></div>
     </AppBarWrap>
   );
 }

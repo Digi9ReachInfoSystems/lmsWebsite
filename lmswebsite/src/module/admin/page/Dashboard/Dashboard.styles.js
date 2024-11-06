@@ -1,49 +1,39 @@
 import styled from "styled-components";
 import { media } from "../../../../style/theme/theme";
 
-export const DashboardScreenWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 2vh; /* Use viewport units for consistent spacing on different screens */
-  width: 100%;
-  max-width: 80vw; /* Responsive max width */
-  margin: 5 auto;
-
+export const DashboardScreenWrap = styled.main`
   .area-row {
     display: flex;
-    gap: 2vw; /* Responsive gap between items */
+    gap: 24px;
     width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-
-    &.ar-one {
-      justify-content: space-between;
-      align-items: center;
-    }
 
     &.ar-two {
+      display: flex;
       justify-content: space-between;
       align-items: flex-start;
+      height: 380px; /* Set a specific height */
     }
 
     &.ar-three {
       display: block;
     }
 
-    /* Responsive layout for medium screens */
     ${media.md`
       flex-direction: column;
-      gap: 2vh;
-      align-items: center;
-      max-width: 100%;
+      .ar-two {
+        height: auto; /* Allow auto height on smaller screens */
+      }
     `}
+  }
 
-    /* Responsive layout for small screens */
-    ${media.sm`
-      flex-direction: column;
-      gap: 2vh;
-      align-items: center;
-      max-width: 100%;
-    `}
+  /* Specific styling for the 60-40 layout */
+  .user-engagement-container {
+    flex: 3; /* 60% */
+    height: 100%; /* Fill parent height */
+  }
+
+  .contact-forms-container {
+    flex: 2; /* 40% */
+    height: 100%; /* Fill parent height */
   }
 `;
