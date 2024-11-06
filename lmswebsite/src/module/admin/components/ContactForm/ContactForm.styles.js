@@ -2,23 +2,23 @@ import styled from "styled-components";
 import { media } from "../../../../style/theme/theme";
 
 export const ContactFormStylesWrap = styled.div`
-  width: 35%;
+  width: 30%;
   padding-right: 20px;
 
   .contact-forms {
-    width: 100%;
+    width: 90%;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     ${media.md`
-      width: 90%;
+      width: 80%;
       padding: 15px;
     `}
 
     ${media.sm`
-      width: 100%;
+      width: 90%;
       padding: 10px;
       border-radius: 8px;
     `}

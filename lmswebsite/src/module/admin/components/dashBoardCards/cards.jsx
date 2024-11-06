@@ -6,9 +6,6 @@ import { BlockTitle } from "../../../../style/DefaultStyles/DefaultStyles";
 const Cards = ({ cardsData }) => {
   return (
     <CardBlockWrap>
-      {/* <div className="block-head">
-        <BlockTitle className="block-title">Statistics</BlockTitle>
-      </div> */}
       <Grid container spacing={3}>
         {cardsData.map((card, index) => (
           <Grid item key={index} xs={12} sm={6} md={4}>

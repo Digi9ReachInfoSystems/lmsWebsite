@@ -13,6 +13,7 @@ export const DashboardScreenWrap = styled.div`
 
     &.ar-one {
       justify-content: space-between;
+
     }
 
     &.ar-two {

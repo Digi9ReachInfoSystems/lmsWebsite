@@ -9,18 +9,24 @@ export const CardBlockWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem;
+    // height: 50px;
 
     .block-title {
       font-size: 1.5rem;
       color: ${(props) => props.theme.colors.black};
       font-weight: bold;
 
-      ${media.md`
+      ${media.lg`
         font-size: 1.25rem;
       `}
 
-      ${media.sm`
+      ${media.md`
         font-size: 1rem;
+      `}
+
+      ${media.sm`
+        font-size: 0.9rem;
       `}
     }
   }
@@ -31,92 +37,125 @@ export const CardBlockWrap = styled.div`
     overflow: hidden;
     transition: transform 0.3s;
     cursor: pointer;
-    width: 15vw;
-    height: 4.5vw;
+    width: 100%; /* Makes the card adapt to container width */
+    padding: 1rem; /* Adds padding inside the card */
+    // height: 6vw;
 
     &:hover {
       transform: translateY(-5px);
     }
-
-    ${media.lg`
-      height: 55%; 
-    `}
-
-    ${media.md`
-      height: 50%; 
-    `}
-
-    ${media.sm`
-      height: 45%; 
-    `}
   }
 
   .card-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 1rem;
 
-    height: 100%;
+    ${media.lg`
+      padding: 0.75rem;
+    `}
 
     ${media.md`
-      padding: 12px;
+      padding: 0.5rem;
     `}
 
     ${media.sm`
-      padding: 10px;
+      padding: 0.25rem;
+      flex-direction: column; /* Stack content vertically on smaller screens */
     `}
   }
 
   .card-icon {
-    margin-top: 10px;
-    width: 100px;
-    height: 68px;
-    border-radius: 10%;
+    border-radius: 100%;
+    width: 36px;
+    height: 36px;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
 
     img {
-      width: 30px;
-      height: 30px;
+      width: 22px; /* Base width */
+
+      ${media.lg`
+        width: 50px;
+      `}
 
       ${media.md`
-        width: 28px;
-        height: 28px;
+        width: 40px;
       `}
 
       ${media.sm`
-        width: 24px;
-        height: 24px;
+        width: 30px;
       `}
     }
 
-    ${media.md`
+    ${media.lg`
       width: 80px;
-      height: 40px;
+      height: 60px;
+    `}
+
+    ${media.md`
+      width: 70px;
+      height: 50px;
     `}
 
     ${media.sm`
-      width: 70px;
-      height: 35px;
+      width: 60px;
+      height: 40px;
     `}
   }
 
   .card-info {
     text-align: left;
+    padding: 1rem;
+
+    ${media.lg`
+      padding: 0.75rem;
+    `}
+
+    ${media.md`
+      padding: 0.5rem;
+    `}
+
+    ${media.sm`
+      padding: 0.25rem;
+    `}
 
     .card-title {
       font-size: 1rem;
       font-weight: 600;
       color: ${(props) => props.theme.colors.gray700};
-      // margin-bottom: 4px;
+
+      ${media.lg`
+        font-size: 0.9rem;
+      `}
 
       ${media.md`
-        font-size: 0.5rem;
+        font-size: 0.75rem;
       `}
 
       ${media.sm`
-        font-size: 0.85rem;
+        font-size: 0.65rem;
+      `}
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: ${(props) => props.theme.colors.gray600};
+
+      ${media.lg`
+        font-size: 0.8rem;
+      `}
+
+      ${media.md`
+        font-size: 0.7rem;
+      `}
+
+      ${media.sm`
+        font-size: 0.6rem;
       `}
     }
 
@@ -125,12 +164,16 @@ export const CardBlockWrap = styled.div`
       font-weight: bold;
       color: ${(props) => props.theme.colors.black};
 
+      ${media.lg`
+        font-size: 1.1rem;
+      `}
+
       ${media.md`
-        font-size: 1.75rem;
+        font-size: 1rem;
       `}
 
       ${media.sm`
-        font-size: 1.5rem;
+        font-size: 0.9rem;
       `}
     }
   }
