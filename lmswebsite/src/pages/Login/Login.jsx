@@ -38,14 +38,14 @@ const Login = () => {
       const aT = await refreshAccessToken(profileData.user.refresh_token);
       // Store relevant information in session storage
 
-            const sessionData = {
-                userId: user.uid,
-                accessToken:user.accessToken,
-                refreshToken: profileData.user.refresh_token,
-                name: profileData.user.name,
-                loggedIn: "true",
-            };
-            // sessionStorage.clear();
+      const sessionData = {
+        userId: user.uid,
+        accessToken: user.accessToken,
+        refreshToken: profileData.user.refresh_token,
+        name: profileData.user.name,
+        loggedIn: "true",
+      };
+      // sessionStorage.clear();
 
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
 

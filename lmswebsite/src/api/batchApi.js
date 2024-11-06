@@ -29,3 +29,14 @@ export const getAllBatches = async (params = {}) => {
     }
   };
 
+  // Function to get all batches
+export const getAllBatchesNoFilter = async () => {
+  try {
+    const response = await api.get('/batches/getAllBatchesNoFilter');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching batches:', error);
+    throw error; // Re-throw the error to handle it in the calling function
+  }
+};
+
