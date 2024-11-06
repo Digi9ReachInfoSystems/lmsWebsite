@@ -1,0 +1,33 @@
+.maincontainer {
+  width: 80%;
+  margin-left: 10%;
+}
+
+.courses-container {
+  display: flex;
+  gap: 20px;
+}
+
+.single-course-section {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  width: 100%;
+}
+
+.single-course-section h3 {
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.single-course-section p {
+  color: #666;
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.heading1 {
+  display: flex;
+  justify-content: center;
+}

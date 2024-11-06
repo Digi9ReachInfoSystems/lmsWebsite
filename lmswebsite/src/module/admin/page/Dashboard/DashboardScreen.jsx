@@ -48,7 +48,7 @@ const Dashboard = () => {
       <div className="area-row ar-two">
         <UserEngagementChart /> <ContactForms />
       </div>
-      <div className="area-row ar-three">rajat</div>
+      <div className="area-row ar-three">{/* <UpcomingBatch /> */}</div>
     </DashboardScreenWrap>
   );
 };

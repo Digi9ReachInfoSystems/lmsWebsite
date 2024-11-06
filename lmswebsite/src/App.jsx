@@ -18,6 +18,7 @@ import CreateCircular from "./module/admin/page/CreateCircular/CreateCircular";
 import CustomerQuery from "./module/admin/page/CustomerQuery/CustomerQuery";
 import CustomerQueryFormView from "./module/admin/page/CustomerQueryViewForm/CustomerQueryViewForm";
 import BecomeTeacherApplicationForm from "./module/teacher/pages/BecomeTeacherApplicationForm/BecomeTeacherApplicationForm";
+import LandingPage from "./components/common/LandingPage";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -27,6 +28,10 @@ function App() {
       <GlobalStyles />
       <Router>
         <Routes>
+
+
+          <Route path="/" element={<LandingPage />} key=""></Route>
+
           <Route path="/login" element={<Login />} />
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route path="/admin" element={<DashboardLayout />}>
