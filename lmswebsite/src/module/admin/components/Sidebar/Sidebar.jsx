@@ -144,8 +144,7 @@ const Sidebar = () => {
                 className="menu-link"
               >
                 <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  {/* <MdOutlineAssignment /> */}
+                 
 
                   <MdOutlineAssignment />
                 </span>

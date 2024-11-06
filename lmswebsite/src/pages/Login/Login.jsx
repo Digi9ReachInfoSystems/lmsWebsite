@@ -31,11 +31,12 @@ const Login = () => {
         "sessionData",
         JSON.stringify({ accessToken: user.accessToken })
       );
+
       console.log(JSON.parse(localStorage.getItem("sessionData")));
 
       // Retrieve user profile using the returned authId (user.uid)
       const profileData = await getUserByAuthId(user.uid);
-      const aT = await refreshAccessToken(profileData.user.refresh_token);
+      // const aT = await refreshAccessToken(profileData.user.refresh_token);
       // Store relevant information in session storage
 
       const sessionData = {
