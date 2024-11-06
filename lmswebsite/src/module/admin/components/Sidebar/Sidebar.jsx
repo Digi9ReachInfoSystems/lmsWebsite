@@ -32,6 +32,13 @@ const Sidebar = () => {
       name: "Assigned Batches",
       icon: <AddBox />,
       link: "/admin/createdBatches",
+      
+    },
+    {
+      name: "Customer Queries",
+      icon: <AddBox />,
+      link: "/admin/customerQueries",
+     
     },
     {
       name: "Schedule Class",
@@ -42,6 +49,12 @@ const Sidebar = () => {
       name: "Create Assignment",
       icon: <Assignment />,
       link: "/admin/createAssignment",
+    },
+    {
+      name: "Application Form Review",
+      icon: <Assignment />,
+      link: "/admin/applicationFormReview",
+     
     },
     { name: "Circulars", icon: <Description />, link: "/admin/circular" },
     { name: "Settings", icon: <Settings />, link: "/admin/settings" },
