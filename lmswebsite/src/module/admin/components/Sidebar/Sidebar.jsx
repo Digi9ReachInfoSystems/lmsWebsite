@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { RxDashboard } from "react-icons/rx";
+import CloseIcon from "@mui/icons-material/Close";
+// import { IconButton } from "@mui/material";
+
 import {
   List,
   ListItem,
@@ -36,6 +39,7 @@ const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const [isCollapsed, setIsCollapsed] = useState(false);
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(true);
 
   const menuItems = [
     { name: "Dashboard", icon: <Dashboard />, link: "/admin/" },
@@ -67,134 +71,148 @@ const Sidebar = () => {
     { name: "Circulars", icon: <Description />, link: "/admin/circular" },
     { name: "Settings", icon: <Settings />, link: "/admin/settings" },
   ];
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsOpen(false);
+      } else {
+        setIsOpen(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Initial check
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <SideBarwrap>
-      <div className="sidebar-top">
-        <div className="sidebar-brand">
-          <span className="brand-logo">
-            <img
-              src="https://www.logoai.com/oss/icons/2021/10/27/rA73APprj8wskQ0.png"
-              alt="Logo"
-              className="logo"
-            />
-          </span>
-          <div className="sidebar-logo"></div>
+    <>
+      <div className="sidebar-toggle-btn"></div>
+      <SideBarwrap isOpen>
+        <div className="sidebar-top">
+          <div className="sidebar-brand">
+            <span className="brand-logo">
+              <img
+                src="https://www.logoai.com/oss/icons/2021/10/27/rA73APprj8wskQ0.png"
+                alt="Logo"
+                className="logo"
+              />
+            </span>
+            <div className="sidebar-logo">
+              <IconButton onClick={() => setIsOpen(!isOpen)}>
+                {isOpen ? <CloseIcon /> : <MenuIcon />}
+              </IconButton>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="sidebar-body">
-        <div className="sidebar-menu">
-          <ul className="menu-list">
-            <li className="menu-item">
-              <NavLink
-                to="/admin/"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-           
-                  <RxDashboard />
-                </span>
-                <span className="menu-link-text">DashBoard</span>
-              </NavLink>
-            </li>
-            <li className="menu-item">
-              <NavLink
-                to="/admin/createdBatches"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  <FaLayerGroup />
-                </span>
-                <span className="menu-link-text">Manage Batches</span>
-              </NavLink>
-            </li>
-            <li className="menu-item">
-              <NavLink
-                to="/admin/customerQueries"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  <RiCustomerServiceLine />
-                </span>
-                <span className="menu-link-text">Customer Queries</span>
-              </NavLink>
-            </li>
-            <li className="menu-item">
-              <NavLink
-                to="/admin/scheduleClass"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  <AiTwotoneSchedule />
-                </span>
-                <span className="menu-link-text">Schedule Class</span>
-              </NavLink>
-            </li>
-            <li className="menu-item">
-              <NavLink
-                to="/admin/createAssignment"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                 
+        <div className="sidebar-body">
+          <div className="sidebar-menu">
+            <ul className="menu-list">
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <RxDashboard />
+                  </span>
+                  <span className="menu-link-text">DashBoard</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/createdBatches"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <FaLayerGroup />
+                  </span>
+                  <span className="menu-link-text">Manage Batches</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/customerQueries"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <RiCustomerServiceLine />
+                  </span>
+                  <span className="menu-link-text">Customer Queries</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/scheduleClass"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <AiTwotoneSchedule />
+                  </span>
+                  <span className="menu-link-text">Schedule Class</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/createAssignment"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <MdOutlineAssignment />
+                  </span>
+                  <span className="menu-link-text">Create Assignment</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/applicationFormReview"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <FaWpforms />
+                  </span>
+                  <span className="menu-link-text">Application Form</span>
+                </NavLink>
+              </li>
 
-                  <MdOutlineAssignment />
-                </span>
-                <span className="menu-link-text">Create Assignment</span>
-              </NavLink>
-            </li>
-            <li className="menu-item">
-              <NavLink
-                to="/admin/applicationFormReview"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  <FaWpforms />
-                </span>
-                <span className="menu-link-text">Application Form</span>
-              </NavLink>
-            </li>
-
-            <li className="menu-item">
-              <NavLink
-                to="/admin/circular"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  <AiTwotoneNotification />
-                </span>
-                <span className="menu-link-text">Circulars</span>
-              </NavLink>
-            </li>
-            <li className="menu-item">
-              <NavLink
-                to="/admin/settings"
-                activeClassName="active"
-                className="menu-link"
-              >
-                <span className="menu-link-icon">
-                  {/* <img src={Icons.Graph} alt="" /> */}
-                  <MdOutlineSettings />
-                </span>
-                <span className="menu-link-text">Settings</span>
-              </NavLink>
-            </li>
-          </ul>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/circular"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <AiTwotoneNotification />
+                  </span>
+                  <span className="menu-link-text">Circulars</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/settings"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <MdOutlineSettings />
+                  </span>
+                  <span className="menu-link-text">Settings</span>
+                </NavLink>
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
-    </SideBarwrap>
+      </SideBarwrap>
+    </>
   );
 };
 
