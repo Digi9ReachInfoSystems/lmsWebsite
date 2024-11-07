@@ -11,28 +11,29 @@ export const SideBarwrap = styled.div`
   flex-direction: column;
   border-top-right-radius: 12px;
   border-bottom-right-radius: 12px;
-  // z-index: 1000;
+  z-index: 1000;
   transition: all 300ms ease-in-out;
+  left: 0;
+  top: 0;
+  // position: fixed;
 
-  ${media.xxxl`
-    width: 240px;
+  ${media.xl`
+    transform: translateX(${(props) => (props.isOpen ? "0" : "-100%")});
   `}
 
-  ${media.xxl`
+  z-index: 1000 ${media.xxxl`
+    width: 240px;
+  `} ${media.xxl`
     width: auto;
     padding: 20px 12px;
-  `}
-
-  
-  ${media.xl`
+  `} ${media.xl`
     width: 244px;
     position: fixed;
     left:0;
     top:0;
     height:100%;
 
-  `}
-
+  `} 
   .sidebar-top {
     margin-bottom: 32px;
     display: flex;

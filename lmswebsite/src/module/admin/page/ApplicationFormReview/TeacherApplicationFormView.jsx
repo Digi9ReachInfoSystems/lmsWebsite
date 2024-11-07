@@ -1,32 +1,61 @@
 import React, { useEffect, useState } from 'react'
 import { AiOutlineFileAdd } from 'react-icons/ai';
+import { FaSearch } from "react-icons/fa";
 import DashboardTable from '../../components/DashboardTable/DashboardTable';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { Link } from 'react-router-dom';
 import { getTeacherApplications } from '../../../../api/teachersApplicationApi';
 import { TeacherApplicationFormViewWrap } from './TeacherApplicationFormView.styles';
+import { FaFilter } from 'react-icons/fa'; // Font Awesome filter icon
+import FormModel from '../../components/FormModel/FormModel';
+import TeacherApplicationFormReview from '../TeachersApplicationFormReview/TeacherApplicationFormReview';
+
 export default function TeacherApplicationFormView() {
 
     const [searchInput, setSearchInput] = useState();
     const [filterData, setFilterData] = React.useState();
     const [originalData, setOriginalData] = useState([]);
+    const [statusFilter, setStatusFilter] = useState("pending");
+    const [isModelOpen, setIsModelOpen] = useState(false);
+    const [teacherId, setTeacherId] = useState("");
+    const openModel = () => {
+        setIsModelOpen(true);
+    }
+    const closeModel = () => {
+        setIsModelOpen(false);
+    }
     const columns = [
         "Name",
+        "Email",
+        "Date",
         "Status",
 
     ];
 
     React.useEffect(() => {
         const apiCaller = async () => {
-            const data = await getTeacherApplications("pending");
+            console.log("Calling API", statusFilter);
+            const data = await getTeacherApplications(statusFilter);
             console.log("Fetched Applications:", data);
             if (data) {
                 const dataFilter = data.applications.map((teacher) => {
+                    console.log("Data", teacher.teacher_id.email);
                     return {
                         "Name": teacher.teacher_id.name,
-                        "Status": <Link to={`/admin/applicationFormReview/teacher/${teacher._id}`}  className="TeachersApplicationFormView-link">
-                            {teacher.approval_status}
-                        </Link>
+                        "Email": teacher.teacher_id.email,
+                        "Date": new Date(teacher.date_applied).toLocaleDateString(),
+                        "Status":
+                            <button  className="TeachersApplicationFormView-link"
+                                onClick={
+                                    () => {
+                                        setTeacherId(teacher._id); 
+                                        openModel();
+                                    }
+                                }>
+
+                                {teacher.approval_status}
+
+                            </button>
                     };
                 });
                 setOriginalData(dataFilter);
@@ -35,7 +64,7 @@ export default function TeacherApplicationFormView() {
             }
         }
         apiCaller();
-    }, []);
+    }, [statusFilter]);
     useEffect(() => {
         if (searchInput) {
             const filtered = originalData.filter((item) =>
@@ -53,19 +82,54 @@ export default function TeacherApplicationFormView() {
     return (
         <TeacherApplicationFormViewWrap className="content-area">
             <div className="area-row ar-one">
-                <div className="TeachersApplicationFormView-batchesNav">
-                    <h2 className="TeachersApplicationFormView-batchTitle">Application Form</h2>
-                </div>
 
+                <div className="TeachersApplicationFormView-batches_nav">
+                    <h2 className="TeachersApplicationFormView-batch_title">Application Form</h2>
+                    <div className="TeachersApplicationFormView-search">
+                        <form>
+                            <div className="input-group">
+                                <span className="input-icon">
+                                    <FaSearch />
+                                </span>
+                                <input
+                                    type="text"
+                                    className="input-control"
+                                    placeholder="Search by Teacher Name"
+                                    value={searchInput} // Controlled input
+                                    onChange={(e) => setSearchInput(e.target.value)} // Update searchInput state on change
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    {/* filter */}
+                    <div className="TeachersApplicationFormView-filter">
+                        <div className="filter-dropdown">
+                            <FaFilter className="filter-icon" />
+                            <select
+                                value={statusFilter}
+                                onChange={(e) => setStatusFilter(e.target.value)}
+                                className="TeachersApplicationFormView-dropdown"
+                            >
+                                <option value="pending">Pending</option>
+                                <option value="rejected">Rejected</option>
+                                <option value="approved">Approved</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
             </div>
             <div className="area-row ar-two">
-                <SearchBar setFilter={setSearchInput} />
             </div>
             <div className="area-row ar-three">
                 {
                     filterData ?
                         <DashboardTable columns={columns} data={filterData} />
                         : <p>Loading...</p>
+                }{
+                    isModelOpen
+                        ? <FormModel isOpen={isModelOpen} onClose={closeModel} children={<TeacherApplicationFormReview teacher_Id={teacherId} />} />
+                        : null
                 }
 
             </div>
