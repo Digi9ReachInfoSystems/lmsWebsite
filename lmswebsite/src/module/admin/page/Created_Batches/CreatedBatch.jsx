@@ -72,7 +72,7 @@ export default function CreatedBatch() {
                 </div>
             </div>
             <div className="area-row ar-two">
-                <SearchBar setFilter={setSearchInput} />
+                <SearchBar placeholderText="Search Batches" setFilter={setSearchInput} />
             </div>
             <div className="area-row ar-three">
                 {

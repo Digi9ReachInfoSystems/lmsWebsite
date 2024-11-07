@@ -7,6 +7,10 @@ export const DashboarTablewrap = styled.div`
   max-height: 400px;
   padding:1rem;
   width: 100%;
+  border-radius:10px;
+  box-shadow: 0px 5px 18px 0px ${(props) => props.theme.colors.lightslategray};
+  
+
   ${
     media.md`
     width:80%;
@@ -20,13 +24,14 @@ export const DashboarTablewrap = styled.div`
 .DashboarTable-table-container table {
 //   width: 100%;
  min-width: 600px;
-//  border-radius:10px !important;
+ border-radius:10px !important;
 }
 
 .DashboarTable-thead {
 //   background-color: #ffcaea;
   background-color:${(props)=> props.theme.colors.pink300};
   justify-content: center;
+  
   position: sticky;
   top: 0;
 }

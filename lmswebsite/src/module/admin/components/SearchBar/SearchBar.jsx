@@ -4,7 +4,7 @@ import { PiFunnel } from "react-icons/pi";
 // import "../searchBar/SearchBar.css";
 import { SearchBarWrap } from "./SearchBar.styles";
 
-const SearchBar = ({  setFilter }) => {
+const SearchBar = ({placeholderText,  setFilter }) => {
   // { searchTerm, setSearchTerm, filter, setFilter }
   const [searchTerm,setSearchTerm]=React.useState()
   const handleSearchChange = (e) => {
@@ -20,7 +20,7 @@ const SearchBar = ({  setFilter }) => {
           type="search"
           name="search"
           id="searchBar-search"
-          placeholder="Type to search"
+          placeholder={placeholderText||"Type to search"}
           value={searchTerm}
           onChange={handleSearchChange}
         />
