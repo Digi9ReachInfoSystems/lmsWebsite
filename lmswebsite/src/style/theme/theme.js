@@ -40,6 +40,7 @@ export const theme = {
     aquamarine: "#8CFAC7",
     aliceBlue: "#F0F9FF",
     frenchGray: "#bdc9d3",
+    lightslategray:'#7090B014',
   },
   lineargradients: {
         pinkGradient: `linear-gradient(90deg,   #672A47 0%, #EE1B7A 100% )`,

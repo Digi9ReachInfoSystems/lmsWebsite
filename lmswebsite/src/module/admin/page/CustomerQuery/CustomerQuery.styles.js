@@ -28,18 +28,17 @@ display: flex;
     ${media.md`
       flex-direction: column;
     `}
-    }
    
-  .CustomerQuery-batchesNav {
+  &.CustomerQuery-batchesNav {
     display: flex;
     justify-content: space-between;
     margin: 1rem 0rem 1rem 1rem;
   }
   
-  .CustomerQuery-batchTitle {
+  &.CustomerQuery-batchTitle {
     font-family: ${theme.typography.fontFamily};
   }
-.CustomerQuery-link {
+&.CustomerQuery-link {
     background: ${(props) => props.theme.colors.lightPink};
     padding: 0.3em 1em;
     border-radius: 20px;

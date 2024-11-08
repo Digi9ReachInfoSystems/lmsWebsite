@@ -7,6 +7,10 @@ export const DashboarTablewrap = styled.div`
   max-height: 400px;
   padding:1rem;
   width: 100%;
+  border-radius:10px;
+ box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+  
+
   ${
     media.md`
     width:80%;
@@ -20,13 +24,16 @@ export const DashboarTablewrap = styled.div`
 .DashboarTable-table-container table {
 //   width: 100%;
  min-width: 600px;
-//  border-radius:10px !important;
+ box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
+
+    
 }
 
 .DashboarTable-thead {
 //   background-color: #ffcaea;
   background-color:${(props)=> props.theme.colors.pink300};
   justify-content: center;
+  border-radius:10px !important;
   position: sticky;
   top: 0;
 }
@@ -36,8 +43,10 @@ export const DashboarTablewrap = styled.div`
   justify-content: center;
 }
 
-.DashboarTable-table-containe th {
-  font-size: 1.2rem;
+.DashboarTable-table-container th {
+  font-size: 18px;
+    font-weight: 550;
+  color: ${(props)=>props.theme.colors.cadet};
   padding: 8px;
   text-align: center;
   border-bottom: 1px solid ${(props)=>props.theme.colors.frenchGray};
@@ -46,8 +55,9 @@ export const DashboarTablewrap = styled.div`
 }
 
 .DashboarTable-tdata {
-  font-size: 1.2rem;
-  padding: 8px;
+   font-size: 14px;
+    font-weight: 300;
+  padding: 8px 8px 8px 16px;
   text-align: left;
   border-bottom: 1px solid ${(props)=>props.theme.colors.frenchGray};
   border-top: 1px solid${(props)=>props.theme.colors.frenchGray};
