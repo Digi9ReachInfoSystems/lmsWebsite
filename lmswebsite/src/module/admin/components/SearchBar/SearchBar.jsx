@@ -20,7 +20,7 @@ const SearchBar = ({ setFilter }) => {
           type="search"
           name="search"
           id="searchBar-search"
-          placeholder="Type to search"
+          // placeholder={placeholderText||"Type to search"}
           value={searchTerm}
           onChange={handleSearchChange}
         />

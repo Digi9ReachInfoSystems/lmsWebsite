@@ -35,13 +35,13 @@ export const SearchBarWrap = styled.div`
   }
 
   #searchBar-search {
-    width: 80vw; /* Adjust width using vw */
+    width: 25vw; /* Adjust width using vw */
     height: 6vh; /* Adjust height using vh */
     border-radius: 0.8vw; /* Use vw for consistent border-radius */
     border: 0.2vw solid ${theme.colors.frenchGray};
     padding-left: 5vw; /* Add padding to make space for the icon */
     ${media.md`
-        width: 70vw; /* Adjust width for medium screens */
+        width: 30vw; /* Adjust width for medium screens */
        padding-left: 4vw; /* Adjust padding for icon */
      `}
     ${media.xs`

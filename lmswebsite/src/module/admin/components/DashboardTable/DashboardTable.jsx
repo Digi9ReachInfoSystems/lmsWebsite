@@ -10,6 +10,7 @@ const DashboardTable = ({ columns, data }) => {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
+  
 
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
