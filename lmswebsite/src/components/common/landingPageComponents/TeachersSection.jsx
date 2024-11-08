@@ -1,20 +1,41 @@
 import React from "react";
-import "./TeachersSection.css"; // Import the CSS file
-import t1 from "../../../icons/LandingPageIcons/t1.svg";
-import t2 from "../../../icons/LandingPageIcons/t2.svg";
-import t3 from "../../../icons/LandingPageIcons/t3.svg";
-import t4 from "../../../icons/LandingPageIcons/t4.svg";
-import graduationcap from "../../../icons/LandingPageIcons/graduationcap.svg";
-import books from "../../../icons/LandingPageIcons/books.svg";
-import clocks from "../../../icons/LandingPageIcons/clocks.svg";
+import "./TeachersSection.css"; 
+
+const teachersData = [
+  {
+    image: "https://firebasestorage.googleapis.com/v0/b/lmseducationplaform.appspot.com/o/profile%2F49be5222-791e-4d2c-8561-e9fd84ff75b4.jpg?alt=media",
+    name: "John Doe",
+    experience: "5 years",
+    subject: "Maths",
+    availability: "9 AM - 5 PM",
+    language: "English",
+  },
+  {
+    image: "https://firebasestorage.googleapis.com/v0/b/lmseducationplaform.appspot.com/o/profile%2F49be5222-791e-4d2c-8561-e9fd84ff75b4.jpg?alt=media",
+
+    name: "Jane Smith",
+    experience: "7 years",
+    subject: "Physics",
+    availability: "10 AM - 6 PM",
+    language: "English",
+  },
+  {
+    image: "https://firebasestorage.googleapis.com/v0/b/lmseducationplaform.appspot.com/o/profile%2F49be5222-791e-4d2c-8561-e9fd84ff75b4.jpg?alt=media",
+
+    name: "Alex Green",
+    experience: "6 years",
+    subject: "Chemistry",
+    availability: "8 AM - 4 PM",
+    language: "English",
+  },
+];
 
 const TeachersSection = () => {
   return (
     <section className="teachers-section">
       <h2 className="section-title">Learn from expert teachers</h2>
-      <p className="section-title1">
-        "Learn from the Best, Achieve the Greatest"
-      </p>
+      <p className="section-title1">"Learn from the Best, Achieve the Greatest"</p>
+      
       <div className="teachers-grid">
         {teachersData.map((teacher, index) => (
           <div key={index} className="teacher-card">
@@ -24,74 +45,17 @@ const TeachersSection = () => {
               className="teacher-image"
             />
             <div className="teacher-info">
-              <p className="teacher-description">
-                <b>{teacher.description}</b>
-              </p>
               <h3 className="teacher-name">{teacher.name}</h3>
               <p className="teacher-subject">{teacher.subject}</p>
+              <p className="teacher-experience">{teacher.experience}</p>
+              <p className="teacher-availability">{teacher.availability}</p>
+              <p className="teacher-language">{teacher.language}</p>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className="teachers-grid2">
-        {teachersData2.map((teacher, index) => (
-          <div key={index} className="flex3">
-            <img
-              src={teacher.image}
-              alt={teacher.name}
-              className="teacher-image2"
-            />
-            <p className="teacher-description2">{teacher.description}</p>
           </div>
         ))}
       </div>
     </section>
   );
 };
-
-// Sample teacher data
-const teachersData = [
-  {
-    image: t1,
-    description: "4+ yrs exp",
-    name: "Roopa",
-    subject: "Maths teacher",
-  },
-  {
-    image: t2,
-    description: "4+ yrs exp",
-    name: "Swathi",
-    subject: "Physics teacher",
-  },
-  {
-    image: t3,
-    description: "4+ yrs exp",
-    name: "Naina",
-    subject: "English teacher",
-  },
-  {
-    image: t4,
-    description: "4+ yrs exp",
-    name: "Preksha",
-    subject: "Chemistry teacher",
-  },
-];
-
-const teachersData2 = [
-  {
-    image: graduationcap,
-    description: "With years of experience from top-tier colleges.",
-  },
-  {
-    image: books,
-    description:
-      "Teachers specially trained to bring out the best in every student.",
-  },
-  {
-    image: clocks,
-    description:
-      "Over 4.5 crore hours of teaching experience, impacting 10 lakh students across 1,000+ cities in 57 countries.",
-  },
-];
 
 export default TeachersSection;

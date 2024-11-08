@@ -13,7 +13,9 @@ const Why = () => {
 
       <div className="why-features">
         <div className="feature-item">
+        <div className="feature-icon1">
           <img src={p1g} alt="Skilled Instructors" className="feature-icon" />
+          </div>
           <h3>Skilled Instructors</h3>
           <p>
             "Learn from skilled instructors who bring expertise and passion to
@@ -21,7 +23,9 @@ const Why = () => {
           </p>
         </div>
         <div className="feature-item">
+        <div className="feature-icon1">
           <img src={p2o} alt="Online Classes" className="feature-icon" />
+          </div>
           <h3>Online Classes</h3>
           <p>
             "Join our online classes for expert-led, flexible learning tailored
@@ -29,7 +33,9 @@ const Why = () => {
           </p>
         </div>
         <div className="feature-item">
+        <div className="feature-icon1">
           <img src={p3H} alt="Home Projects" className="feature-icon" />
+          </div>
           <h3>Home Assignment</h3>
           <p>
             "Discover our resource for expert-led courses designed to empower
@@ -37,7 +43,9 @@ const Why = () => {
           </p>
         </div>
         <div className="feature-item">
+          <div className="feature-icon1">
           <img src={p4b} alt="Book Library" className="feature-icon" />
+          </div>
           <h3>Study material</h3>
           <p>
             "Explore our comprehensive study materials designed to enhance your

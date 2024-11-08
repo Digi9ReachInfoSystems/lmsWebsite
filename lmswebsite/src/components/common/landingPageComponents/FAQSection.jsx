@@ -13,7 +13,7 @@ const FAQSection = () => {
       <h2 className="faq-title">Frequently Asked Questions</h2>
       <div className="faq-list">
         {faqData.map((faq, index) => (
-          <div key={index} className="faq-item">
+          <div key={faq._id.$oid} className="faq-item">
             <div className="faq-question" onClick={() => toggleFAQ(index)}>
               <h3>{faq.question}</h3>
               <span className={`faq-toggle ${openFAQ === index ? "open" : ""}`}>
@@ -32,29 +32,40 @@ const FAQSection = () => {
 
 const faqData = [
   {
-    question: "What is The Toppers Academy?",
-    answer:
-      "The Toppers Academy is an online learning platform for students preparing for various competitive exams.",
+    _id: { $oid: "6718c74bebcbb25de0cf7d8f" },
+    question: "What is the return policy?",
+    answer: "Please contact admin team",
+    createdAt: { $date: "2024-10-23T09:52:11.443Z" },
+    updatedAt: { $date: "2024-10-23T09:57:47.491Z" },
   },
   {
-    question: "How do I enroll in a course?",
+    _id: { $oid: "6718c92eebcbb25de0cf7d94" },
+    question: "What is the return policy?",
     answer:
-      "You can enroll in a course by visiting our Courses page, selecting a course, and clicking on the enrollment button.",
+      "You can return the product within 30 days of purchase in the original packaging.",
+    createdAt: { $date: "2024-10-23T10:00:14.670Z" },
+    updatedAt: { $date: "2024-10-23T10:00:14.682Z" },
   },
   {
-    question: "What payment methods do you accept?",
-    answer:
-      "We accept all major credit and debit cards, UPI, and net banking options.",
+    _id: { $oid: "6718c74bebcbb25de0cf7d8f" },
+    question: "What is the return policy?",
+    answer: "Please contact admin team",
+    createdAt: { $date: "2024-10-23T09:52:11.443Z" },
+    updatedAt: { $date: "2024-10-23T09:57:47.491Z" },
   },
   {
-    question: "Can I access study materials offline?",
-    answer:
-      "Yes, you can download study materials to access them offline at any time.",
+    _id: { $oid: "6718c74bebcbb25de0cf7d8f" },
+    question: "What is the return policy?",
+    answer: "Please contact admin team",
+    createdAt: { $date: "2024-10-23T09:52:11.443Z" },
+    updatedAt: { $date: "2024-10-23T09:57:47.491Z" },
   },
   {
-    question: "Is there a refund policy?",
-    answer:
-      "Yes, we offer a refund within 7 days of enrollment if you are not satisfied with the course.",
+    _id: { $oid: "6718c74bebcbb25de0cf7d8f" },
+    question: "What is the return policy?",
+    answer: "Please contact admin team",
+    createdAt: { $date: "2024-10-23T09:52:11.443Z" },
+    updatedAt: { $date: "2024-10-23T09:57:47.491Z" },
   },
 ];
 
