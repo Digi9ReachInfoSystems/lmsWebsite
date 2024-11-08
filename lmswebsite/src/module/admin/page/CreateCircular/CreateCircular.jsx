@@ -1,30 +1,37 @@
 import React, { useState } from "react";
-import "./CreateCircular.css";
 import { FiFileText } from "react-icons/fi";
-import { Link } from "react-router-dom";
 import { createCircularNotificationApi } from "../../../../api/circularNotificationApi";
+import {
+  CreateCircularFormWrap,
+  CircularFormContainer,
+  FormGroup,
+  SubmitButton,
+  BackButton,
+} from "./CreateCircular.styles";
+import { useNavigate } from "react-router-dom";
 
-const CreateCircular = () => {
+const CreateCircular = ({closeModal}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [validDate, setValidDate] = useState("");
   const [metaImage, setMetaImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(""); // For image preview
+  const [imagePreview, setImagePreview] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setMetaImage(file); // Store the file object
-      setImagePreview(URL.createObjectURL(file)); // Create a preview URL
+      setMetaImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
-    // Validate input
+    setSuccessMessage("");
+    setError("");
     if (!title || !description || !validDate || !metaImage) {
       setError("All fields are required, including an image.");
       return;
@@ -41,12 +48,13 @@ const CreateCircular = () => {
       const response = await createCircularNotificationApi(notificationData);
       console.log("Circular created successfully:", response);
       setSuccessMessage("Circular notification created successfully!");
-      setError(""); // Clear previous errors
-      setTitle(""); // Clear form inputs
+      setError("");
+      setTitle("");
       setDescription("");
       setValidDate("");
       setMetaImage(null);
-      setImagePreview(""); // Clear image preview
+      setImagePreview("");
+      closeModal();
     } catch (error) {
       console.error("Error creating circular:", error);
       setError("Failed to create circular. Please try again.");
@@ -54,82 +62,72 @@ const CreateCircular = () => {
   };
 
   return (
-    <div className="CreateCircular-formContainer">
-      <div className="CreateCircular-batchesNav">
-        <h2 className="CreateCircular-batchTitle">Create Circular</h2>
-        <Link to="/admin/circular" className="CreateCircular-batchBtn">
-          <FiFileText className="CreateCircular-batchIcon" />
-          <span>Back to Circulars</span>
-        </Link>
-      </div>
+    <CreateCircularFormWrap>
+      {/* <div className="createCircular-title">Create Circular</div> */}
+{/* 
+      <BackButton to="/admin/circular">
+        <FiFileText className="icon" />
+        Back to Circulars
+      </BackButton> */}
 
-      <form onSubmit={handleSubmit} className="CreateCircular-circularForm">
+      <CircularFormContainer>
         {error && <p className="error_message">{error}</p>}
         {successMessage && <p className="success_message">{successMessage}</p>}
 
-        <div className="CreateCircular-formGroup">
-          <label className="CreateCircular-Title">Title <span>:</span></label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="CreateCircular-formInput"
-            placeholder="Enter circular title"
-          />
-        </div>
+        <form onSubmit={handleSubmit}>
+          <FormGroup>
+            <label>Title:</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter circular title"
+            />
+          </FormGroup>
 
-        <div className="CreateCircular-formGroup">
-          <label className="CreateCircular-Description">
-            Description<span>:</span>
-          </label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="CreateCircular-formInput"
-            placeholder="Enter circular description"
-          />
-        </div>
+          <FormGroup>
+            <label>Description:</label>
+            <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Enter circular description"
+              rows="4"
+            />
+          </FormGroup>
 
-        <div className="CreateCircular-formGroup">
-          <label className="CreateCircular-Date">
-            Valid Date<span>:</span>
-          </label>
-          <input
-            type="date"
-            value={validDate}
-            onChange={(e) => setValidDate(e.target.value)}
-            className="CreateCircular-formInput"
-          />
-        </div>
+          <FormGroup>
+            <label>Valid Till:</label>
+            <input
+              type="date"
+              value={validDate}
+              onChange={(e) => setValidDate(e.target.value)}
+            />
+          </FormGroup>
 
-        <div className="CreateCircular-formGroup">
-          <label htmlFor="CreateCircular-ProfileImage" className="CreateCircular-ProfileImage">
-            {imagePreview ? (
-              <img
-              width={"10%"}
-height={"10%"}
-                src={imagePreview}
-                alt="Circular Preview"
-                className="CreateCircular-profileImagePreview"
-              />
-            ) : (
-              "Upload Circular Image :"
-            )}
-          </label>
-          <input
-            type="file"
-            accept="image/*"
-            id="CreateCircular-ProfileImage"
-            onChange={handleImageChange}
-            className="CreateCircular-formInput"
-          />
-        </div>
+          <FormGroup>
+            <label>
+              {imagePreview ? (
+                <img
+                  src={imagePreview}
+                  alt="Circular Preview"
+                  className="image-preview"
+                />
+              ) : (
+                "Upload Image:"
+              )}
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              className="file-input"
+              onChange={handleImageChange}
+            />
+          </FormGroup>
 
-        <button type="submit" className="CreateCircular-formSubmitButton">
-          Send
-        </button>
-      </form>
-    </div>
+          <SubmitButton type="submit">Submit</SubmitButton>
+        </form>
+      </CircularFormContainer>
+    </CreateCircularFormWrap>
   );
 };
 
