@@ -1,23 +1,21 @@
-// src/components/CreatedBatch.jsx
-
 import React, { useState, useEffect } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
 import { getAllBatchesNoFilter } from "../../../../api/batchApi"; // Adjust the path if needed
-import { Link } from "react-router-dom";
 import { CreatedBatchWrap } from "./CreatedBatches.styles";
 import DashboardTable from "../../components/DashboardTable/DashboardTable";
+import CreateNewBatch from "../CreateNewBatch/CreateNewBatch"; // Import the modal component
 
 export default function CreatedBatch() {
-  const [searchInput, setSearchInput] = useState(""); // Initialize searchInput with an empty string
+  const [searchInput, setSearchInput] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal
 
   const columns = [
     "Batch Name",
     "Teacher's Name",
     "No of Students",
-    // "No of Classes",
     "Date",
     "Time",
     "Subject",
@@ -57,6 +55,14 @@ export default function CreatedBatch() {
     }
   }, [searchInput, originalData]);
 
+  const handleOpenModal = () => {
+    setIsModalOpen(true); // Open modal
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false); // Close modal
+  };
+
   return (
     <CreatedBatchWrap className="content-area">
       <div className="area-row ar-one">
@@ -72,16 +78,20 @@ export default function CreatedBatch() {
                   type="text"
                   className="input-control"
                   placeholder="Search by Batch Name"
-                  value={searchInput} // Controlled input
-                  onChange={(e) => setSearchInput(e.target.value)} // Update searchInput state on change
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
                 />
               </div>
             </form>
           </div>
-          <Link to="/admin/createNewBatch" className="created-batch-batch_btn">
+          {/* Link replaced with button to open modal */}
+          <button
+            onClick={handleOpenModal} // Open modal on click
+            className="created-batch-batch_btn"
+          >
             <AiOutlineFileAdd className="created-batch-batch_icon" />
             <span>Create Batch</span>
-          </Link>
+          </button>
         </div>
       </div>
       <div className="area-row ar-two"></div>
@@ -92,6 +102,9 @@ export default function CreatedBatch() {
           <p>No results found</p>
         )}
       </div>
+
+      {/* CreateNewBatch Modal */}
+      <CreateNewBatch open={isModalOpen} handleClose={handleCloseModal} />
     </CreatedBatchWrap>
   );
 }
