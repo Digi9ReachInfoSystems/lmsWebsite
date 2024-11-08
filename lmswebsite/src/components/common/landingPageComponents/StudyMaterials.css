@@ -45,6 +45,7 @@
   justify-content: center;
   gap: 20px;
   margin-top: 40px;
+  flex-wrap: wrap; 
 }
 
 .material-card {
@@ -79,4 +80,73 @@
 
 .general {
   background-color: #e8f5e9;
+}
+
+@media (max-width: 1280px) {
+  .heading {
+    font-size: 32px;
+  }
+  .class-buttons button {
+    padding: 8px 16px;
+  }
+  .material-card {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .study-materials-container {
+    padding: 20px;
+  }
+  .heading {
+    font-size: 28px;
+  }
+  .class-buttons button {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+  .materials-grid {
+    gap: 15px;
+  }
+  .material-card {
+    width: 180px;
+    padding: 15px;
+  }
+  .material-card h2 {
+    font-size: 18px;
+  }
+  .material-card p {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .study-materials-container {
+    padding: 10px;
+  }
+  .heading {
+    font-size: 24px;
+  }
+  .class-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .class-buttons button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  .materials-grid {
+    gap: 10px;
+  }
+  .material-card {
+    width: 160px;
+    padding: 10px;
+  }
+  .material-card h2 {
+    font-size: 16px;
+  }
+  .material-card p {
+    font-size: 12px;
+  }
 }

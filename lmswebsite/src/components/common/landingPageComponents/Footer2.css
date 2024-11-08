@@ -10,35 +10,6 @@
   clip-path: ellipse(131% 82% at 50% 82%);
 }
 
-.footer-content2 {
-  margin-top: 60px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  margin-bottom: 40px;
-}
-
-.footer-column2 {
-  flex: 1;
-  margin: 10px;
-  min-width: 200px;
-}
-
-.footer-column2 h3,
-.footer-column2 h4 {
-  color: #ff4081;
-  margin-bottom: 10px;
-}
-
-.footer-column2 ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-column2 ul li {
-  margin-bottom: 8px;
-}
-
 .footer-bottom2 {
   display: flex;
   justify-content: space-between;

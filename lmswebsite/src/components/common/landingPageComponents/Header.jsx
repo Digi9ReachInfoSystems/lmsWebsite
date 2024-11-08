@@ -5,6 +5,7 @@ import "./Header.css";
 const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isStudyMaterialOpen, setIsStudyMaterialOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleCoursesDropdown = () => {
     setIsCoursesOpen(!isCoursesOpen);
@@ -16,6 +17,10 @@ const Header = () => {
     setIsCoursesOpen(false);
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header className="header">
       <div className="header-container">
@@ -24,7 +29,16 @@ const Header = () => {
             <img src={logo} alt="The Toppers Academy" className="logo-icon" />
           </a>
         </div>
-        <nav className="nav-menu">
+        
+        <div className="menu-icon" onClick={toggleMenu}>
+          <div className={`hamburger ${isMenuOpen ? "open" : ""}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+        
+        <nav className={`nav-menu ${isMenuOpen ? "open" : ""}`}>
           <ul className="nav-links">
             <li className="dropdown">
               <a href="#!" onClick={toggleCoursesDropdown}>
@@ -73,6 +87,7 @@ const Header = () => {
             </li>
           </ul>
         </nav>
+        
         <div className="auth-buttons">
           <button className="sign-in">Sign In</button>
           <button className="sign-up">Sign Up</button>
