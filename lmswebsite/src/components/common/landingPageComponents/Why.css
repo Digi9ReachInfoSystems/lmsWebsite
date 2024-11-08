@@ -30,11 +30,16 @@
 .feature-item {
   text-align: center;
   width: 22%;
-}
 
-.feature-item .icon {
-  font-size: 40px;
-  margin-bottom: 10px;
+}
+.feature-icon{
+  width: 50px;
+  height: 50px;
+}
+.feature-icon1{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .feature-item h3 {
@@ -58,9 +63,7 @@
 }
 
 .highlight-content {
-  /* width: 50%; */
-  /* text-align: left; */
-  line-height: 50px;
+  line-height: 1.6;
 }
 
 .highlight-content h2 {
@@ -79,7 +82,6 @@
   font-size: 14px;
   color: #333;
   margin-bottom: 20px;
-  line-height: 10px;
 }
 
 .highlight-button {
@@ -97,35 +99,92 @@
   background-color: #e60073;
 }
 
-.highlight-users {
-  font-size: 14px;
-  margin-top: 10px;
-}
-
 .highlight-image img {
   width: 430px;
   border-radius: 12px;
 }
 
-@media (max-width: 768px) {
-  .highlight-section {
-    flex-direction: column;
+@media (max-width: 1200px) {
+  .why-features {
+    gap: 20px;
   }
 
-  .highlight-content,
-  .highlight-image {
-    width: 100%;
-    text-align: center;
+  .feature-item {
+    width: 24%;
+  }
+
+  .highlight-section {
+    flex-direction: column;
+    padding: 40px;
   }
 
   .highlight-image img {
-    width: 200px;
-    margin-top: 20px;
+    width: 380px;
   }
 }
 
-.feature-icon {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 10px;
+@media (max-width: 768px) {
+  .why-features {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feature-item {
+    width: 80%;
+    margin-bottom: 20px;
+  }
+
+  .highlight-section {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .highlight-content h2 {
+    font-size: 24px;
+  }
+
+  .highlight-description {
+    font-size: 13px;
+  }
+
+  .highlight-image img {
+    width: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .why-section {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .why-heading {
+    font-size: 28px;
+  }
+
+  .highlight-content h2 {
+    font-size: 20px;
+  }
+
+  .feature-item {
+    width: 100%;
+  }
+
+  .highlight-section {
+    padding: 20px;
+  }
+
+  .highlight-description,
+  .highlight-subtext {
+    font-size: 12px;
+  }
+
+  .highlight-button {
+    font-size: 14px;
+    width: 200px;
+  }
+
+  .highlight-image img {
+    width: 250px;
+  }
 }

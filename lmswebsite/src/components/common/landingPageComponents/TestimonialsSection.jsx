@@ -9,28 +9,16 @@ const TestimonialsSection = () => {
 
   const testimonialsData = [
     {
-      quote:
-        "The best part? I wasn't just passively consuming information. You challenged me to think critically, apply my learning, and experiment.",
-      author: "Dinesh Narayana",
-      course: "B.Tech Computer Science",
-      rating: 4.5,
+      review: "Great course!",
+      rating: 5,
+      student_id: "6718b90633d29d0586cfecb2",
       image: s1,
     },
     {
-      quote:
-        "This platform provided invaluable insights and hands-on experience that really boosted my confidence.",
-      author: "Sneha Gupta",
-      course: "MBA Finance",
-      rating: 4.7,
+      review: "Great course!",
+      rating: 1,
+      student_id: "6718b90633d29d0586cfecb2",
       image: s3,
-    },
-    {
-      quote:
-        "The instructors are amazing, and the community forum solidified my understanding, making learning engaging.",
-      author: "Amit Roy",
-      course: "M.Sc Chemistry",
-      rating: 4.8,
-      image: s2,
     },
   ];
 
@@ -46,14 +34,7 @@ const TestimonialsSection = () => {
     );
   };
 
-  // Destructure the current testimonial data, including 'rating'
-  const {
-    quote,
-    author,
-    course,
-    rating = 0,
-    image,
-  } = testimonialsData[currentTestimonialIndex];
+  const { review, rating = 0, image } = testimonialsData[currentTestimonialIndex];
 
   return (
     <section className="testimonials-section">
@@ -64,10 +45,8 @@ const TestimonialsSection = () => {
         </button>
 
         <div className="testimonial-content">
-          <img src={image} alt={author} className="testimonial-image" />
-          <p className="testimonial-quote">"{quote}"</p>
-          <p className="testimonial-author">{author}</p>
-          <p className="testimonial-course">{course}</p>
+          <img src={image} alt="Student" className="testimonial-image" />
+          <p className="testimonial-quote">"{review}"</p>
           <div className="rating-container">
             <span className="rating">{rating}</span>
             <span className="stars">

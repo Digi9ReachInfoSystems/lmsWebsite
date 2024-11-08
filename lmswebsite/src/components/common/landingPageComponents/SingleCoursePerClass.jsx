@@ -4,23 +4,45 @@ import "./SingleCoursePerClass.css";
 const SingleCoursePerClass = () => {
   const [singleCourseData, setSingleCourseData] = useState([]);
 
+  const dummyData = [
+    {
+      _id: { $oid: "66fe9a52fc472c1dea01ba87" },
+      className: "Science",
+      classLevel: 10,
+      curriculum: "CBSE",
+      created_at: { $date: "2024-10-03T13:21:22.364Z" },
+      courseTitle: "Introduction to Science",
+      coursePrice: 200,
+    },
+    {
+      _id: { $oid: "66ffc909f9acfb728162bdb8" },
+      className: "Chemistry",
+      classLevel: 11,
+      curriculum: "CBSE",
+      created_at: { $date: "2024-10-04T10:52:57.481Z" },
+      courseTitle: "Advanced Chemistry",
+      coursePrice: 250,
+    },
+  ];
+
   useEffect(() => {
     fetch("http://localhost:5000/courses/singleCoursePerClass")
       .then((response) => response.json())
       .then((data) => {
-        const repeatedData = data.courses[0]
-          ? Array(4).fill(data.courses[0])
-          : [];
+        const repeatedData = data.courses && data.courses[0]
+          ? Array(3).fill(data.courses[0])
+          : dummyData;
         setSingleCourseData(repeatedData);
       })
-      .catch((error) =>
-        console.error("Error fetching single course data:", error)
-      );
+      .catch((error) => {
+        console.error("Error fetching single course data:", error);
+        setSingleCourseData(dummyData);
+      });
   }, []);
 
   return (
     <div className="maincontainer">
-      <h1 className="heading1">Explore our programs</h1>
+      <h1 >Explore our programs</h1>
       <p className="heading1">
         Discover the many benefits you will enjoy when you{" "}
       </p>
