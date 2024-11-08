@@ -1,136 +1,140 @@
+
+
 import React, { useState, useEffect } from "react";
+import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
-import { PiFunnel } from "react-icons/pi";
-import { FiFileText } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import "./Circulars.css";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
+import { Link } from "react-router-dom";
+import { CircularWrap } from "./Circulars.styles";
+import DashboardTable from "../../components/DashboardTable/DashboardTable";
+import ImageViewer from "../../components/ImageViewer/ImageViewer";
+import FormModel from "../../components/FormModel/FormModel";
+import CreateCircular from "../CreateCircular/CreateCircular";
 
-const Circulars = () => {
-  const [circulars, setCirculars] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [selectedImage, setSelectedImage] = useState(null); // Track selected image
-  const [isModalOpen, setIsModalOpen] = useState(false); // Track modal visibility
 
-  useEffect(() => {
-    const fetchCirculars = async () => {
-      try {
-        const data = await getAllCircularNotificationsApi();
-        console.log("Fetched Circulars:", data);
-        setCirculars(data.circularNotifications || []);
-      } catch (error) {
-        console.error("Error fetching circular notifications:", error);
-        setError("Failed to load circulars. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
+export default function Circulars() {
+  const [searchInput, setSearchInput] = useState(""); // Initialize searchInput with an empty string
+  const [filterData, setFilterData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [children, setChildren] = useState(null);
 
-    fetchCirculars();
-  }, []);
+  const columns = [
+    "Title",
+    "Description",
+    "Image",
+    "Action",
+  ];
 
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
+  const openModal = () => {
 
-  const handleFilterChange = (e) => {
-    setFilter(e.target.value);
-  };
-
-  const filteredCirculars = circulars.filter((circular) => {
-    const title = circular?.circularName || "";
-    return (
-      title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (!filter || circular.approval_status === filter)
-    );
-  });
-
-  const openModal = (imageUrl) => {
-    setSelectedImage(imageUrl);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setSelectedImage(null);
     setIsModalOpen(false);
+    setSelectedImage(null);
+    window.location.reload();
   };
 
+  // Fetch data on component mount
+  useEffect(() => {
+    const apiCaller = async () => {
+      const data = await getAllCircularNotificationsApi();
+      console.log("Fetched Circulars:", data);
+      if (data) {
+        const dataFilter = data.circularNotifications.map((circular) => ({
+          "Title": circular.circularName,
+          "Description": circular.content,
+          "Image": (
+            <img
+              src={circular.image}
+              alt="Circular Image"
+              className="circular-image-box"
+            />
+
+          ),
+          "Action": (<button
+            className="circular-image-btn"
+            onClick={() => {
+              setSelectedImage(circular.image);
+              setChildren(<ImageViewer image={circular.image} />)
+              openModal();
+            }}
+            
+          >
+
+            view image
+          </button>),
+        }));
+        setOriginalData(dataFilter);
+        setFilterData(dataFilter); // Set initial table data
+      }
+    };
+    apiCaller();
+  }, []);
+
+  // Filter data based on searchInput for "Batch Name"
+  useEffect(() => {
+    if (searchInput) {
+      const filtered = originalData.filter((item) =>
+        item["Title"].toLowerCase().includes(searchInput.toLowerCase())
+      );
+      setFilterData(filtered);
+    } else {
+      setFilterData(originalData); // Reset to original data if search is empty
+    }
+  }, [searchInput, originalData]);
+
+
+
   return (
-    <>
-      <div className="Circulars-batchesNav">
-        <h2 className="Circulars-batchTitle">Circulars</h2>
-        <Link to="/admin/createcircular" className="Circulars-batchBtn">
-          <FiFileText className="Circulars-batchIcon" />
-          <span>Create Circular</span>
-        </Link>
-      </div>
-
-      <div className="Circulars-batchSearch">
-        <FaSearch className="Circulars-searchIcon" />
-        <input
-          type="search"
-          name="search"
-          id="Circulars-search"
-          placeholder="Type to search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <PiFunnel className="Circulars-FunnelIcon" />
-      </div>
-
-      <div className="Circulars-tableContainer">
-        {loading ? (
-          <p>Loading circulars...</p>
-        ) : error ? (
-          <p className="error_message">{error}</p>
-        ) : filteredCirculars.length === 0 ? (
-          <p>No circulars found.</p>
-        ) : (
-          <table>
-            <thead>
-              <tr className="Circulars-thead">
-                <th className="Circulars-tdata">Title</th>
-                <th className="Circulars-tdata">Description</th>
-                <th className="Circulars-tdata">Send to</th>
-                <th className="Circulars-tdata">Image</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredCirculars.map((circular, index) => (
-                <tr key={index} className="Circulars-tbody">
-                  <td className="Circulars-tdata">{circular.circularName || "N/A"}</td>
-                  <td className="Circulars-tdata">{circular.content || "N/A"}</td>
-                  <td className="Circulars-tdata">{circular.sentTo || "N/A"}</td>
-                  <td className="Circulars-tdata">
-                    <button
-                      className="Circulars-link"
-                      onClick={() => openModal(circular.image)}
-                    >
-                      View
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>
-              &times;
-            </span>
-            <img src={selectedImage} alt="Circular" width={"100"} height={"100"}   className="modal-image" />
+    <CircularWrap className="content-area">
+      <div className="area-row ar-one">
+        <div className="circular-batches_nav">
+          <h2 className="circular-batch_title">Created Circulars</h2>
+          <div className="circular-search">
+            <form>
+              <div className="input-group">
+                <span className="input-icon">
+                  <FaSearch />
+                </span>
+                <input
+                  type="text"
+                  className="input-control"
+                  placeholder="Search by Circular Name"
+                  value={searchInput} // Controlled input
+                  onChange={(e) => setSearchInput(e.target.value)} // Update searchInput state on change
+                />
+              </div>
+            </form>
           </div>
+          <button
+            onClick={() => {
+              setChildren(<CreateCircular closeModal={closeModal} />);
+              openModal();
+            }}
+            className="circular-batch_btn"
+          >
+            <AiOutlineFileAdd className="circular-batch_icon" />
+            <span>Create Circular</span>
+          </button>
         </div>
-      )}
-    </>
+      </div>
+      <div className="area-row ar-two"></div>
+      <div className="area-row ar-three">
+        {filterData.length > 0 ? (
+          <DashboardTable columns={columns} data={filterData} />
+        ) : (
+          <p>No results found</p>
+        )}
+        {
+          isModalOpen
+            ? <FormModel isOpen={isModalOpen} onClose={closeModal} children={children} />
+            : null
+        }
+      </div>
+    </CircularWrap>
   );
-};
-
-export default Circulars;
+}

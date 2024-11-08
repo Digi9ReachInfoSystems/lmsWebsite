@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TeacherApplicationFormReviewWrap } from "./TeacherApplicationFormreview.styles";
 import { getSingleTeacherApplication, approveTeacherApplication } from "../../../../api/teachersApplicationApi";
 
-const TeacherApplicationFormReview = ({ teacher_Id}) => {
+const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const navigate = useNavigate();
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -34,7 +34,7 @@ const TeacherApplicationFormReview = ({ teacher_Id}) => {
     try {
       await approveTeacherApplication(teacher_Id);
       alert("Application approved successfully!");
-      navigate("/admin/applicationFormReview"); // Redirect to applications list
+      closeModal();
     } catch (error) {
       console.error("Error approving application:", error);
       alert("Failed to approve the application.");
