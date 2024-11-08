@@ -42,13 +42,13 @@ const Dashboard = () => {
 
   return (
     <DashboardScreenWrap className="content-area">
-      <div className="area-row ar-one">
+      <div>
         <Cards cardsData={dashboardCards} />
       </div>
       <div className="area-row ar-two">
         <UserEngagementChart /> <ContactForms />
       </div>
-      <div className="area-row ar-three">rajat</div>
+      <div className="area-row ar-three">{/* <UpcomingBatch /> */}</div>
     </DashboardScreenWrap>
   );
 };

@@ -49,7 +49,7 @@ export const submitTeacherApplication = async (applicationData) => {
  */
 export const getTeacherApplications = async (approvalStatus) => {
     try {
-        const response = await api.get('/teacher-application', {
+        const response = await api.get('/teacher-application/', {
             params: {
                 approval_status: approvalStatus, // Set the approval status as a query parameter
             },

@@ -3,15 +3,16 @@ import { media } from "../../../../style/theme/theme";
 
 export const AppBarWrap = styled.div`
   box-shadow: 0 0.125rem 0.25rem rgba(165, 163, 174, 0.3);
-  padding: 10px 24px;
-  width:100%
-
-  border-radius: 0px;
+  padding: 8px;
+  // margin: 16px;
+  border-radius: 6px;
+  max-width: 100%;
+  // width: 100vw;
   background-color: ${(props) => props.theme.colors.white};
 
   ${media.xxxl`
     padding: 14px 12px;
-    // margin: 12px;
+    margin: 12px;
   `};
 
   .appbar-content {

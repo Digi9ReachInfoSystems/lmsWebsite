@@ -2,33 +2,49 @@ import styled from "styled-components";
 import { media } from "../../../../style/theme/theme";
 
 export const ContactFormStylesWrap = styled.div`
-  width: 35%;
-  padding-right: 20px;
+  width: 100%;
+  max-width: 350px;
+  min-width: 240px;
+  height: 100%; /* Fill available height */
+  margin: auto;
 
   .contact-forms {
     width: 100%;
-    padding: 20px;
+    height: 100%; /* Ensure the component fills its container height */
+    max-width: 90vw;
+    padding: 1vh 1vw;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
     ${media.md`
-      width: 90%;
-      padding: 15px;
+      padding: 2vh 3vw;
     `}
 
     ${media.sm`
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
+      max-width: 95vw;
+      padding: 1.5vh 4vw;
+    `}
+  }
+  h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: ${(props) => props.theme.colors.gray700};
+
+    ${media.md`
+      font-size: 1rem;
+    `}
+
+    ${media.sm`
+      font-size: 0.9rem;
     `}
   }
 
-  h2 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: bold;
-    color: ${(props) => props.theme.colors.gray700};
+  .sub-heading {
+    margin: 5px 0 0;
+    color: #6b7280;
+    font-size: 1rem;
 
     ${media.md`
       font-size: 0.9rem;
@@ -39,23 +55,9 @@ export const ContactFormStylesWrap = styled.div`
     `}
   }
 
-  .sub-heading {
-    margin: 5px 0 0;
-    color: #6b7280;
-    font-size: 0.85rem;
-
-    ${media.md`
-      font-size: 0.8rem;
-    `}
-
-    ${media.sm`
-      font-size: 0.75rem;
-    `}
-  }
-
   .contact-list {
     list-style-type: none;
-    padding: 20px;
+    padding: 1vh 0; /* Responsive padding */
     margin: 0;
   }
 
@@ -63,8 +65,8 @@ export const ContactFormStylesWrap = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
+    // margin-bottom: 2vh;
+    padding-bottom: 1vh;
     border-bottom: 1px solid #f0f0f0;
 
     &:last-child {
@@ -72,8 +74,8 @@ export const ContactFormStylesWrap = styled.div`
     }
 
     ${media.sm`
-      margin-bottom: 10px;
-      padding-bottom: 8px;
+      margin-bottom: 1.5vh;
+      padding-bottom: 1vh;
     `}
   }
 
@@ -84,7 +86,7 @@ export const ContactFormStylesWrap = styled.div`
 
     .contact-name {
       font-weight: bold;
-      font-size: 0.95rem;
+      font-size: 1rem;
 
       ${media.md`
         font-size: 0.9rem;
@@ -97,7 +99,7 @@ export const ContactFormStylesWrap = styled.div`
 
     .contact-email {
       color: #6b7280;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
 
       ${media.md`
         font-size: 0.8rem;
@@ -113,7 +115,7 @@ export const ContactFormStylesWrap = styled.div`
     color: #f472b6;
     font-weight: bold;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     white-space: nowrap;
 
     ${media.md`
@@ -127,19 +129,18 @@ export const ContactFormStylesWrap = styled.div`
 
   .see-all {
     display: block;
-    margin-top: 10px;
-    text-align: right;
-    color: #f472b6;
+    margin-top: 6px;
+    text-align: left;
+    color: ${(props) => props.theme.colors.gray700};
     font-size: 0.85rem;
     text-decoration: none;
-    font-weight: bold;
 
     ${media.md`
-      font-size: 0.8rem;
+      font-size: 0.75rem;
     `}
 
     ${media.sm`
-      font-size: 0.75rem;
+      font-size: 0.7rem;
     `}
   }
 `;

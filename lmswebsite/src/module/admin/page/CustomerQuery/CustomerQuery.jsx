@@ -1,96 +1,78 @@
-import React, { useState, useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
-import { PiFunnel } from "react-icons/pi";
-import { Link } from "react-router-dom";
-import "./CustomerQuery.css";
-import { getAllQuerys } from "../../../../api/customerQueryApi";
+import React, { useState, useEffect } from 'react'
+import { AiOutlineFileAdd } from "react-icons/ai";
+import { CustomerQueryWrap } from './CustomerQuery.styles';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import DashboardTable from '../../components/DashboardTable/DashboardTable';
+import { getAllQuerys } from '../../../../api/customerQueryApi';
+import { Link } from 'react-router-dom';
 
-const CustomerQuery = () => {
-  const [queries, setQueries] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
+export default function CustomerQuery2() {
+    const [searchInput, setSearchInput] = useState();
+    const [filterData, setFilterData] = React.useState();
+    const [originalData, setOriginalData] = useState([]);
+    const columns = [
+        "Title",
+        "Description",
+        "Status",
 
-  // Fetch all pending queries on component mount
-  useEffect(() => {
-    const fetchQueries = async () => {
-      try {
-        const data = await getAllQuerys();
-        const pendingQueries = data?.queries?.filter(
-          (query) => query.queryStatus === "pending"
-        );
-        setQueries(pendingQueries || []);
-      } catch (error) {
-        console.error("Error fetching queries:", error);
-        setError("Failed to load queries. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
+    ];
 
-    fetchQueries();
-  }, []);
+    React.useEffect(() => {
+        const apiCaller = async () => {
+            const data = await getAllQuerys();
+            const pendingQueries = data?.queries?.filter(
+                (query) => query.queryStatus === "pending"
+            );
+            console.log(pendingQueries);
+            if (pendingQueries) {
+                const dataFilter = pendingQueries.map((query) => {
+                    return {
+                        "Title": query.title || "N/A",
+                        "Description": query.message || "N/A",
+                        "Status": <Link to={`/admin/customerQueries/${query._id}`} className="CustomerQuery-link">
+                            {query.queryStatus || "N/A"}
+                        </Link>,
+                    };
+                });
+                setOriginalData(dataFilter);
+                setFilterData(dataFilter);
+            }
+        }
+        apiCaller();
+    }, []);
 
-  const handleSearchChange = (e) => setSearchTerm(e.target.value);
+    useEffect(() => {
+        if (searchInput) {
+            const filtered = originalData.filter((item) =>
+                Object.values(item).some((value) =>
+                    value.toString().toLowerCase().includes(searchInput.toLowerCase())
+                )
+            );
+            setFilterData(filtered);
+        } else {
+            setFilterData(originalData);
+        }
+    }, [searchInput, originalData]);
+    return (
+        <CustomerQueryWrap className="content-area">
+            <div>
+                <div className="area-row ar-one">
+                    <div className="CustomerQuery-batchesNav">
+                        <h2 className="CustomerQuery-batchTitle">Customer Queries</h2>
+                    </div>
+                </div>
+                <div className="area-row ar-two">
+                    <SearchBar setFilter={setSearchInput} />
+                </div>
+                <div className="area-row ar-three">
+                    {
+                        filterData ?
+                            <DashboardTable columns={columns} data={filterData} />
+                            : <p>Loading...</p>
+                    }
 
-  const filteredQueries = queries.filter((query) => {
-    const title = query?.Title || ""; // Ensure title is defined
-    return title.toLowerCase().includes(searchTerm.toLowerCase());
-  });
-
-  return (
-    <>
-      <div className="Query-batchesNav">
-        <h2 className="Query-batchTitle">Customer Queries</h2>
-      </div>
-
-      <div className="Query-batchSearch">
-        <FaSearch className="Query-searchIcon" />
-        <input
-          type="search"
-          name="search"
-          id="Query-search"
-          placeholder="Type to search"
-          value={searchTerm}
-          onChange={handleSearchChange}
-        />
-        <PiFunnel className="Query-FunnelIcon" />
-      </div>
-
-      <div className="Query-tableContainer">
-        {loading ? (
-          <p>Loading queries...</p>
-        ) : error ? (
-          <p className="error_message">{error}</p>
-        ) : filteredQueries.length === 0 ? (
-          <p>No pending queries found.</p>
-        ) : (
-          <table>
-            <thead>
-              <tr className="Query-thead">
-                <th className="Query-tdata">Title</th>
-                <th className="Query-tdata">Description</th>
-                <th className="Query-tdata">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredQueries.map((query, index) => (
-                <tr key={index} className="Query-tbody">
-                  <td className="Query-tdata">{query.title || "N/A"}</td>
-                  <td className="Query-tdata">{query.message || "N/A"}</td>
-                  <td className="Query-tdata">
-                    <Link to={`/admin/customerQueries/${query._id}`} className="Query-link">
-                      {query.queryStatus || "N/A"}
-                    </Link>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
-    </>
-  );
-};
-
-export default CustomerQuery;
+                </div>
+            </div>
+        </CustomerQueryWrap>
+    )
+}

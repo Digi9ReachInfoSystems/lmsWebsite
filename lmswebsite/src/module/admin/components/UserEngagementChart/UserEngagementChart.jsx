@@ -109,6 +109,9 @@ const UserEngagementChart = () => {
   return (
     <UserEngagementChartWrap>
       <div className="chart-wrapper">
+        <div>
+          <h3>User Stats</h3>
+        </div>
         {/* Filter Button */}
         <div className="filter-button">
           <Button

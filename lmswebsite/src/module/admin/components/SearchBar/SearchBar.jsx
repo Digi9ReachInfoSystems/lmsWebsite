@@ -4,9 +4,9 @@ import { PiFunnel } from "react-icons/pi";
 // import "../searchBar/SearchBar.css";
 import { SearchBarWrap } from "./SearchBar.styles";
 
-const SearchBar = ({  setFilter }) => {
+const SearchBar = ({ setFilter }) => {
   // { searchTerm, setSearchTerm, filter, setFilter }
-  const [searchTerm,setSearchTerm]=React.useState()
+  const [searchTerm, setSearchTerm] = React.useState();
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
     setFilter(e.target.value);

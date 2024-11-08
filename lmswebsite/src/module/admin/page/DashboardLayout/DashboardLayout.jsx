@@ -1,10 +1,10 @@
 // DashboardLayout.jsx
 import React, { useState } from "react";
-import { Box, CssBaseline } from "@mui/material";
+
 import Sidebar from "../../components/Sidebar/Sidebar"; // Import your Sidebar
 import Navbar from "../../components/Navbar/Navbar"; // Import your Navbar
 import { Outlet } from "react-router-dom";
-// import "./DashboardLayout.css"; // Import the CSS styles
+import { GlobalStyles } from "../../../../style/GlobalStyles/GlobalStyles";
 
 const DashboardLayout = () => {
   return (

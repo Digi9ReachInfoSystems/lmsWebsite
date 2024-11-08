@@ -1,38 +1,44 @@
 import React from "react";
-import { Grid, Card, CardContent, Typography, Box } from "@mui/material";
 import { CardBlockWrap } from "./cards.styles";
-import { BlockTitle } from "../../../../style/DefaultStyles/DefaultStyles";
+import { BlockContentWrap } from "../../../../style/DefaultStyles/DefaultStyles";
+import { ImUser } from "react-icons/im";
+import { GiTeacher } from "react-icons/gi";
+import { MdLiveTv } from "react-icons/md";
+
+// Define icon mappings for each title
+const iconMap = {
+  "Total students": <ImUser />,
+  "Total teachers": <GiTeacher />,
+  "Total Batches": <MdLiveTv />,
+};
 
 const Cards = ({ cardsData }) => {
   return (
     <CardBlockWrap>
-      {/* <div className="block-head">
-        <BlockTitle className="block-title">Statistics</BlockTitle>
-      </div> */}
-      <Grid container spacing={3}>
+      {/* <BlockContentWrap> */}
+      <div className="cards">
         {cardsData.map((card, index) => (
-          <Grid item key={index} xs={12} sm={6} md={4}>
-            <Card className="dashboard-card">
-              <CardContent className="card-content">
-                <Box
-                  className="card-icon"
-                  style={{ backgroundColor: card.background }}
-                >
-                  <img
-                    src={card.iconPath}
-                    alt={`${card.title} Icon`}
-                    className="icon-image"
-                  />
-                </Box>
-                <Box className="card-info">
-                  <Typography className="card-title">{card.title}</Typography>
-                  <Typography className="card-count">{card.count}</Typography>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+          <div
+            key={index}
+            className={`card-item`}
+            // style={{ backgroundColor: card.background }}
+          >
+            <div className="card-content">
+              <div
+                className="card-item-icon"
+                style={{ backgroundColor: card.background }}
+              >
+                {iconMap[card.title] || <ImUser />} {/* Fallback icon */}
+              </div>
+              <div className="card-text-content">
+                <p className="card-item-text">{card.title}</p>
+                <div className="card-item-value">{card.count}</div>
+              </div>
+            </div>
+          </div>
         ))}
-      </Grid>
+      </div>
+      {/* </BlockContentWrap> */}
     </CardBlockWrap>
   );
 };
