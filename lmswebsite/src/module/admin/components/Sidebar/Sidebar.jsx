@@ -35,6 +35,8 @@ import { FaWpforms } from "react-icons/fa6";
 import { AiTwotoneNotification } from "react-icons/ai";
 import { MdOutlineSettings } from "react-icons/md";
 import { FaUsersGear } from "react-icons/fa6";
+import { VscSignOut } from "react-icons/vsc";
+import { MdPayment } from "react-icons/md";
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -72,6 +74,11 @@ const Sidebar = () => {
     { name: "Circulars", icon: <Description />, link: "/admin/circular" },
     { name: "Settings", icon: <Settings />, link: "/admin/settings" },
   ];
+
+  const handleLogout = () => {
+    localStorage.clear(); // Clear all items in localStorage
+    navigate("/login"); // Redirect to the login page or desired route
+  };
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
@@ -150,6 +157,30 @@ const Sidebar = () => {
               </li>
               <li className="menu-item">
                 <NavLink
+                  to="/admin/customPayments"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <MdPayment />
+                  </span>
+                  <span className="menu-link-text">Manage Payment</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/CustomPackages"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <RiCustomerServiceLine />
+                  </span>
+                  <span className="menu-link-text">Custom Package</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
                   to="/admin/scheduleClass"
                   activeClassName="active"
                   className="menu-link"
@@ -219,6 +250,18 @@ const Sidebar = () => {
                     <MdOutlineSettings />
                   </span>
                   <span className="menu-link-text">Settings</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/login" // Optional: Redirect route after logout
+                  className="menu-link"
+                  onClick={handleLogout} // Logout function attached here
+                >
+                  <span className="menu-link-icon">
+                    <VscSignOut />
+                  </span>
+                  <span className="menu-link-text">Sign Out</span>
                 </NavLink>
               </li>
             </ul>

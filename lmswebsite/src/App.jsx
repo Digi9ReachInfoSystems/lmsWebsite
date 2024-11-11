@@ -22,6 +22,9 @@ import LandingPage from "./components/common/LandingPage";
 import { Public } from "@mui/icons-material";
 import PublicRoute from "./module/admin/components/PublicRoute";
 import UserManagement from "./module/admin/page/UserManagement/UserManagement";
+import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
+// import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
+import ManagePayment from "./module/admin/page/managePayment/managePayment";
 // import PublicRoute from "./module/admin/components/PublicRoute";
 
 function App() {
@@ -68,6 +71,12 @@ function App() {
               path="/admin/applicationFormReview"
               element={<TeacherApplicationFormView />}
             />
+            <Route
+              path="/admin/CustomPackages"
+              element={<manageCustomBatch />}
+            />
+
+            <Route path="/admin/customPayments" element={<ManagePayment />} />
             <Route
               path="/admin/applicationFormReview/teacher/:teacherId"
               element={<TeacherApplicationFormReview />}
