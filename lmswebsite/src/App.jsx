@@ -11,17 +11,17 @@ import Login from "./pages/Login/Login";
 import ProtectedRoute from "./module/admin/components/ProtectedRoute";
 import CreateNewBatch from "./module/admin/page/createNewBatch/CreateNewBatch";
 // import ApplicationFormReview from "./module/admin/page/ApplicationFormReview/ApplicationFormReview";
-import TeacherApplicationFormView from "./module/admin/page/ApplicationFormReview/TeacherApplicationFormView";
+import TeacherApplicationFormView  from "./module/admin/page/ApplicationFormView/TeacherApplicationFormView";
 import TeacherApplicationFormReview from "./module/admin/page/TeachersApplicationFormReview/TeacherApplicationFormReview";
-import RegisteredList from "./module/admin/page/RegisteredList/RegisteredList";
 import Circulars from "./module/admin/page/Circular/Circulars";
 import CreateCircular from "./module/admin/page/CreateCircular/CreateCircular";
-import CustomerQuery from "./module/admin/page/CustomerQuery/CustomerQuery";
+import CustomerQuery from "./module/admin/page/CustomerQuery/CustomerQuery"
 import CustomerQueryFormView from "./module/admin/page/CustomerQueryViewForm/CustomerQueryViewForm";
 import BecomeTeacherApplicationForm from "./module/teacher/pages/BecomeTeacherApplicationForm/BecomeTeacherApplicationForm";
 import LandingPage from "./components/common/LandingPage";
 import { Public } from "@mui/icons-material";
 import PublicRoute from "./module/admin/components/PublicRoute";
+import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
 // import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
 import ManagePayment from "./module/admin/page/managePayment/managePayment";
@@ -81,7 +81,7 @@ function App() {
               path="/admin/applicationFormReview/teacher/:teacherId"
               element={<TeacherApplicationFormReview />}
             />
-            <Route path="/admin/registeredList" element={<RegisteredList />} />
+            <Route path="/admin/userManagement" element={<UserManagement/>} />
             <Route path="/admin/circular" element={<Circulars />} />
             <Route path="/admin/createcircular" element={<CreateCircular />} />
             <Route path="/admin/customerQueries" element={<CustomerQuery />} />

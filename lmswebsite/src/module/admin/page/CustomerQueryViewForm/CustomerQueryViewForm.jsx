@@ -1,54 +1,48 @@
 import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
-import "./CustomerQueryViewForm.css";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  CustomerQueryViewFormWrap,
+  QueryFormContainer,
+  QueryFormField,
+  StatusButton,
+} from "./CustomerQueryViewForm.styles";
 import { fetchQueryById, updateQueryById } from "../../../../api/customerQueryApi";
 
-const CustomerQueryViewForm = () => {
-  const { queryId } = useParams(); // Get the queryId from the route params
-  const [query, setQuery] = useState(null); // Store query details
-  const [status, setStatus] = useState(""); // Store the status of the query
-  const [loading, setLoading] = useState(true); // Manage loading state
-  const [error, setError] = useState(""); // Store error messages
+const CustomerQueryViewForm = ({queryId}) => {
+
+  const navigate = useNavigate();
+  const [query, setQuery] = useState(null);
+  const [status, setStatus] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   // Fetch query details when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchQueryById(queryId); // Fetch the query by ID
-        console.log(data);
-        setQuery(data); // Set the query details
-        setStatus(data.queryStatus); // Set the initial status
+        const data = await fetchQueryById(queryId);
+        setQuery(data);
+        setStatus(data.queryStatus);
       } catch (err) {
         console.error("Error fetching query:", err.message);
         setError("Failed to fetch query details.");
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
-
     fetchData();
   }, [queryId]);
 
-  // Function to toggle the query status and update it on the backend
-  const toggleStatus = async () => {
+  // Function to update the query status to "solved" on the backend
+  const resolveQuery = async () => {
     try {
-      const newStatus = status === "solved" ? "pending" : "solved"; // Toggle status
+      const updatedQuery = { ...query, queryStatus: "solved", querySolved: true };
 
-      const updatedQuery = {
-        ...query,
-        queryStatus: newStatus,
-        querySolved: newStatus === "solved",
-      };
-
-      // Update the query status on the backend
       await updateQueryById(queryId, updatedQuery);
-
-      // Update the state locally after successful backend update
       setQuery(updatedQuery);
-      setStatus(newStatus);
-
-      alert("Query status updated successfully.");
-      Navigate("/admin/customerQueryReview");
+      setStatus("solved");
+      alert("Query status updated to solved successfully.");
+      navigate("/admin/customerQueryReview");
     } catch (error) {
       console.error("Error updating query status:", error.message);
       alert("Failed to update query status.");
@@ -59,38 +53,42 @@ const CustomerQueryViewForm = () => {
   if (error) return <p className="error_message">{error}</p>;
 
   return (
-    <div className="queryForm-container">
+    <CustomerQueryViewFormWrap>
       <h2 className="queryForm-title">Query Details</h2>
-      <div className="queryForm-field">
-        <label>Title:</label>
-        <p>{query.title}</p>
-      </div>
-      <div className="queryForm-field">
-        <label>Contact Email:</label>
-        <p>{query.contactEmail}</p>
-      </div>
-      <div className="queryForm-field">
-        <label>Contact Number:</label>
-        <p>{query.contactNumber}</p>
-      </div>
-      <div className="queryForm-field">
-        <label>Message:</label>
-        <p>{query.message}</p>
-      </div>
-      <div className="queryForm-field">
-        <label>Date Queried:</label>
-        <p>{new Date(query.dateQueried).toLocaleString()}</p>
-      </div>
-      <div className="queryForm-field">
-        <label>Status:</label>
-        <button
-          className={`queryForm-status-btn ${status}`}
-          onClick={toggleStatus}
-        >
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </button>
-      </div>
-    </div>
+      <QueryFormContainer>
+        <QueryFormField>
+          <label>Title:</label>
+          <p>{query.title}</p>
+        </QueryFormField>
+        <QueryFormField>
+          <label>Contact Email:</label>
+          <p>{query.contactEmail}</p>
+        </QueryFormField>
+        <QueryFormField>
+          <label>Contact Number:</label>
+          <p>{query.contactNumber}</p>
+        </QueryFormField>
+        <QueryFormField>
+          <label>Message:</label>
+          <p>{query.message}</p>
+        </QueryFormField>
+        <QueryFormField>
+          <label>Date Queried:</label>
+          <p>{new Date(query.dateQueried).toLocaleString()}</p>
+        </QueryFormField>
+        
+        <QueryFormField>
+          <label>Status:</label>
+          <p>{status.charAt(0).toUpperCase() + status.slice(1)}</p>
+        </QueryFormField>
+       
+        {status === "pending" && (
+          <StatusButton className="resolve" onClick={resolveQuery}>
+            Resolve Query
+          </StatusButton>
+        )}
+      </QueryFormContainer>
+    </CustomerQueryViewFormWrap>
   );
 };
 

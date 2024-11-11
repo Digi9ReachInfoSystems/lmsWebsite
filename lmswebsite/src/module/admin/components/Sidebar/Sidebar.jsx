@@ -34,6 +34,7 @@ import { AiTwotoneSchedule } from "react-icons/ai";
 import { FaWpforms } from "react-icons/fa6";
 import { AiTwotoneNotification } from "react-icons/ai";
 import { MdOutlineSettings } from "react-icons/md";
+import { FaUsersGear } from "react-icons/fa6";
 import { VscSignOut } from "react-icons/vsc";
 import { MdPayment } from "react-icons/md";
 
@@ -212,6 +213,18 @@ const Sidebar = () => {
                     <FaWpforms />
                   </span>
                   <span className="menu-link-text">Application Form</span>
+                </NavLink>
+              </li>
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/userManagement"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <FaUsersGear />
+                  </span>
+                  <span className="menu-link-text">User Management</span>
                 </NavLink>
               </li>
 
