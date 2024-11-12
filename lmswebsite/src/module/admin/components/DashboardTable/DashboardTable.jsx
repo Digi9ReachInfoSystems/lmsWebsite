@@ -10,7 +10,6 @@ const DashboardTable = ({ columns, data }) => {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
-  
 
   const totalPages = Math.ceil(data.length / rowsPerPage);
 
@@ -32,12 +31,12 @@ const DashboardTable = ({ columns, data }) => {
 
   return (
     <DashboarTablewrap>
-      <div className="DashboarTable-table-container">
+      <div className="DashboardTable-table-container">
         <table>
           <thead>
-            <tr className="DashboarTable-thead">
+            <tr className="DashboardTable-thead">
               {columns.map((column, index) => (
-                <th key={index} className="DashboarTable-tdata">
+                <th key={index} className="DashboardTable-tdata">
                   {column}
                 </th>
               ))}
@@ -45,9 +44,9 @@ const DashboardTable = ({ columns, data }) => {
           </thead>
           <tbody>
             {currentRows.map((row, rowIndex) => (
-              <tr key={rowIndex} className="DashboarTable-tbody">
+              <tr key={rowIndex} className="DashboardTable-tbody">
                 {columns.map((column, colIndex) => (
-                  <td key={colIndex} className="DashboarTable-tdata">
+                  <td key={colIndex} className="DashboardTable-tdata">
                     {row[column] || "N/A"}
                   </td>
                 ))}
@@ -57,19 +56,20 @@ const DashboardTable = ({ columns, data }) => {
         </table>
 
         {/* Pagination Controls */}
-        <div className="DashboarTable-pagination-controls">
+        <div className="DashboardTable-pagination-controls">
           <button
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
-            className="DashboarTable-pagination-button"
+            className="DashboardTable-pagination-button"
           >
             Previous
           </button>
           {Array.from({ length: totalPages }, (_, index) => (
             <button
               key={index}
-              className={`DashboarTable-pagination-button ${currentPage === index + 1 ? "active" : ""
-                }`}
+              className={`DashboardTable-pagination-button ${
+                currentPage === index + 1 ? "active" : ""
+              }`}
               onClick={() => handlePageChange(index + 1)}
             >
               {index + 1}
@@ -78,7 +78,7 @@ const DashboardTable = ({ columns, data }) => {
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
-            className="DashboarTable-pagination-button"
+            className="DashboardTable-pagination-button"
           >
             Next
           </button>
