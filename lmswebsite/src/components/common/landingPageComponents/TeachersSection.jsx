@@ -1,5 +1,5 @@
 import React from "react";
-import "./TeachersSection.css"; 
+import { TeachersSectionContainer, SectionTitle, SectionSubtitle, TeachersGrid, TeacherCard, TeacherImage, TeacherInfo, TeacherName, TeacherSubject, TeacherExperience, TeacherAvailability, TeacherLanguage } from './TeachersSection.styles'; 
 
 const teachersData = [
   {
@@ -12,7 +12,6 @@ const teachersData = [
   },
   {
     image: "https://firebasestorage.googleapis.com/v0/b/lmseducationplaform.appspot.com/o/profile%2F49be5222-791e-4d2c-8561-e9fd84ff75b4.jpg?alt=media",
-
     name: "Jane Smith",
     experience: "7 years",
     subject: "Physics",
@@ -21,7 +20,6 @@ const teachersData = [
   },
   {
     image: "https://firebasestorage.googleapis.com/v0/b/lmseducationplaform.appspot.com/o/profile%2F49be5222-791e-4d2c-8561-e9fd84ff75b4.jpg?alt=media",
-
     name: "Alex Green",
     experience: "6 years",
     subject: "Chemistry",
@@ -32,29 +30,25 @@ const teachersData = [
 
 const TeachersSection = () => {
   return (
-    <section className="teachers-section">
-      <h2 className="section-title">Learn from expert teachers</h2>
-      <p className="section-title1">"Learn from the Best, Achieve the Greatest"</p>
+    <TeachersSectionContainer>
+      <SectionTitle>Learn from expert teachers</SectionTitle>
+      <SectionSubtitle>"Learn from the Best, Achieve the Greatest"</SectionSubtitle>
       
-      <div className="teachers-grid">
+      <TeachersGrid>
         {teachersData.map((teacher, index) => (
-          <div key={index} className="teacher-card">
-            <img
-              src={teacher.image}
-              alt={teacher.name}
-              className="teacher-image"
-            />
-            <div className="teacher-info">
-              <h3 className="teacher-name">{teacher.name}</h3>
-              <p className="teacher-subject">{teacher.subject}</p>
-              <p className="teacher-experience">{teacher.experience}</p>
-              <p className="teacher-availability">{teacher.availability}</p>
-              <p className="teacher-language">{teacher.language}</p>
-            </div>
-          </div>
+          <TeacherCard key={index}>
+            <TeacherImage src={teacher.image} alt={teacher.name} />
+            <TeacherInfo>
+              <TeacherName>{teacher.name}</TeacherName>
+              <TeacherSubject>{teacher.subject}</TeacherSubject>
+              <TeacherExperience>{teacher.experience}</TeacherExperience>
+              <TeacherAvailability>{teacher.availability}</TeacherAvailability>
+              <TeacherLanguage>{teacher.language}</TeacherLanguage>
+            </TeacherInfo>
+          </TeacherCard>
         ))}
-      </div>
-    </section>
+      </TeachersGrid>
+    </TeachersSectionContainer>
   );
 };
 

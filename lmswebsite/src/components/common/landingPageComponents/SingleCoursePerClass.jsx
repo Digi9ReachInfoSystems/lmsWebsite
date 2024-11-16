@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./SingleCoursePerClass.css";
+import {
+  MainContainer,
+  Heading,
+  SubHeading,
+  CoursesContainer,
+  SingleCourseSection,
+  CourseTitle,
+  CourseDetail,
+} from "./SingleCoursePerClass.styles";
 
 const SingleCoursePerClass = () => {
   const [singleCourseData, setSingleCourseData] = useState([]);
@@ -41,64 +49,63 @@ const SingleCoursePerClass = () => {
   }, []);
 
   return (
-    <div className="maincontainer">
-      <h1 >Explore our programs</h1>
-      <p className="heading1">
-        Discover the many benefits you will enjoy when you{" "}
-      </p>
-      <p className="heading1">add us to your online platform</p>
-      <h3>Grades Class 4 - Class 10</h3>
-      <div className="courses-container">
+    <MainContainer>
+      <Heading>Explore our programs</Heading>
+      <SubHeading>
+        Discover the many benefits you will enjoy when you add us to your online platform
+      </SubHeading>
+      <Heading>Grades Class 4 - Class 10</Heading>
+      <CoursesContainer>
         {singleCourseData.length > 0 ? (
           singleCourseData.map((course, index) => (
-            <div className="single-course-section" key={index}>
-              <h3>{course.courseTitle}</h3>
-              <p>Class Name: {course.className}</p>
-              <p>Class Level: {course.classLevel}</p>
-              <p>Curriculum: {course.curriculum}</p>
-              <p>Price: ${course.coursePrice}</p>
-            </div>
+            <SingleCourseSection key={index}>
+              <CourseTitle>{course.courseTitle}</CourseTitle>
+              <CourseDetail>Class Name: {course.className}</CourseDetail>
+              <CourseDetail>Class Level: {course.classLevel}</CourseDetail>
+              <CourseDetail>Curriculum: {course.curriculum}</CourseDetail>
+              <CourseDetail>Price: ${course.coursePrice}</CourseDetail>
+            </SingleCourseSection>
           ))
         ) : (
-          <p>No Data Available for Single Course Per Class</p>
+          <CourseDetail>No Data Available for Single Course Per Class</CourseDetail>
         )}
-      </div>
+      </CoursesContainer>
 
-      <h3>Online Live School Tutions</h3>
-      <div className="courses-container">
+      <Heading>Online Live School Tuitions</Heading>
+      <CoursesContainer>
         {singleCourseData.length > 0 ? (
           singleCourseData.map((course, index) => (
-            <div className="single-course-section" key={index}>
-              <h3>{course.courseTitle}</h3>
-              <p>Class Name: {course.className}</p>
-              <p>Class Level: {course.classLevel}</p>
-              <p>Curriculum: {course.curriculum}</p>
-              <p>Price: ${course.coursePrice}</p>
-            </div>
+            <SingleCourseSection key={index}>
+              <CourseTitle>{course.courseTitle}</CourseTitle>
+              <CourseDetail>Class Name: {course.className}</CourseDetail>
+              <CourseDetail>Class Level: {course.classLevel}</CourseDetail>
+              <CourseDetail>Curriculum: {course.curriculum}</CourseDetail>
+              <CourseDetail>Price: ${course.coursePrice}</CourseDetail>
+            </SingleCourseSection>
           ))
         ) : (
-          <p>No Data Available for Single Course Per Class</p>
+          <CourseDetail>No Data Available for Single Course Per Class</CourseDetail>
         )}
-      </div>
+      </CoursesContainer>
 
-      <h3>Class 11 - Class 12</h3>
-      <h3>JEE-NEET</h3>
-      <div className="courses-container">
+      <Heading>Class 11 - Class 12</Heading>
+      <Heading>JEE-NEET</Heading>
+      <CoursesContainer>
         {singleCourseData.length > 0 ? (
           singleCourseData.map((course, index) => (
-            <div className="single-course-section" key={index}>
-              <h3>{course.courseTitle}</h3>
-              <p>Class Name: {course.className}</p>
-              <p>Class Level: {course.classLevel}</p>
-              <p>Curriculum: {course.curriculum}</p>
-              <p>Price: ${course.coursePrice}</p>
-            </div>
+            <SingleCourseSection key={index}>
+              <CourseTitle>{course.courseTitle}</CourseTitle>
+              <CourseDetail>Class Name: {course.className}</CourseDetail>
+              <CourseDetail>Class Level: {course.classLevel}</CourseDetail>
+              <CourseDetail>Curriculum: {course.curriculum}</CourseDetail>
+              <CourseDetail>Price: ${course.coursePrice}</CourseDetail>
+            </SingleCourseSection>
           ))
         ) : (
-          <p>No Data Available for Single Course Per Class</p>
+          <CourseDetail>No Data Available for Single Course Per Class</CourseDetail>
         )}
-      </div>
-    </div>
+      </CoursesContainer>
+    </MainContainer>
   );
 };
 

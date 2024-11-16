@@ -1,22 +1,29 @@
 import React from "react";
-import "./Footer.css";
+import {
+  FooterContainer,
+  FooterContent,
+  FooterText,
+  FooterButton,
+  FooterImageWrapper,
+  FooterImage,
+} from "./Footer.styles";
 import fImage from "../../../icons/LandingPageIcons/f.svg";
 
 const Footer = () => {
   return (
-    <footer className="footer1">
-      <div className="footer-content1">
-        <div className="footer-text1">
+    <FooterContainer>
+      <FooterContent>
+        <FooterText>
           <h2>Have a question? Let's chat!</h2>
-          <p>If you are confused or in doubt, you can free</p>
-          <p>contact us, we will be happy to help.</p>
-          <button>Contact Us</button>
-        </div>
-        <div className="footer-image1">
-          <img src={fImage} alt="Background design" />
-        </div>
-      </div>
-    </footer>
+          <p>If you are confused or in doubt, feel free</p>
+          <p>to contact us. We’ll be happy to help.</p>
+          <FooterButton>Contact Us</FooterButton>
+        </FooterText>
+        <FooterImageWrapper>
+          <FooterImage src={fImage} alt="Background design" />
+        </FooterImageWrapper>
+      </FooterContent>
+    </FooterContainer>
   );
 };
 

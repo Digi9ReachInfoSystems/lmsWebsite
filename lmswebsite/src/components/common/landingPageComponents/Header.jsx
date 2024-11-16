@@ -1,6 +1,19 @@
 import React, { useState } from "react";
 import logo from "../../../icons/LandingPageIcons/logo.svg";
-import "./Header.css";
+import {
+  HeaderContainer,
+  Logo,
+  LogoImage,
+  MenuIcon,
+  Hamburger,
+  NavMenu,
+  NavLinks,
+  NavLinkItem,
+  DropdownContent,
+  AuthButtons,
+  SignInButton,
+  SignUpButton,
+} from "./Header.styles";
 
 const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
@@ -22,78 +35,48 @@ const Header = () => {
   };
 
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="logo">
-          <a href="/">
-            <img src={logo} alt="The Toppers Academy" className="logo-icon" />
-          </a>
-        </div>
-        
-        <div className="menu-icon" onClick={toggleMenu}>
-          <div className={`hamburger ${isMenuOpen ? "open" : ""}`}>
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-        
-        <nav className={`nav-menu ${isMenuOpen ? "open" : ""}`}>
-          <ul className="nav-links">
-            <li className="dropdown">
-              <a href="#!" onClick={toggleCoursesDropdown}>
-                Courses
-              </a>
-              {isCoursesOpen && (
-                <ul className="dropdown-content">
-                  <li>
-                    <a href="/">Course 1</a>
-                  </li>
-                  <li>
-                    <a href="/">Course 2</a>
-                  </li>
-                  <li>
-                    <a href="/">Course 3</a>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li className="dropdown">
-              <a href="#!" onClick={toggleStudyMaterialDropdown}>
-                Study Material
-              </a>
-              {isStudyMaterialOpen && (
-                <ul className="dropdown-content">
-                  <li>
-                    <a href="/">Material 1</a>
-                  </li>
-                  <li>
-                    <a href="/">Material 2</a>
-                  </li>
-                  <li>
-                    <a href="/">Material 3</a>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li>
-              <a href="/">Become a Teacher</a>
-            </li>
-            <li>
-              <a href="/">Create Your Enrollment</a>
-            </li>
-            <li>
-              <a href="/">About Us</a>
-            </li>
-          </ul>
-        </nav>
-        
-        <div className="auth-buttons">
-          <button className="sign-in">Sign In</button>
-          <button className="sign-up">Sign Up</button>
-        </div>
-      </div>
-    </header>
+    <HeaderContainer>
+      <Logo href="/">
+        <LogoImage src={logo} alt="The Toppers Academy" />
+      </Logo>
+      
+      <MenuIcon onClick={toggleMenu}>
+        <Hamburger className={isMenuOpen ? "open" : ""} />
+      </MenuIcon>
+
+      <NavMenu className={isMenuOpen ? "open" : ""}>
+        <NavLinks>
+          <NavLinkItem>
+            <a href="#!" onClick={toggleCoursesDropdown}>Courses</a>
+            {isCoursesOpen && (
+              <DropdownContent>
+                <li><a href="/">Course 1</a></li>
+                <li><a href="/">Course 2</a></li>
+                <li><a href="/">Course 3</a></li>
+              </DropdownContent>
+            )}
+          </NavLinkItem>
+          <NavLinkItem>
+            <a href="#!" onClick={toggleStudyMaterialDropdown}>Study Material</a>
+            {isStudyMaterialOpen && (
+              <DropdownContent>
+                <li><a href="/">Material 1</a></li>
+                <li><a href="/">Material 2</a></li>
+                <li><a href="/">Material 3</a></li>
+              </DropdownContent>
+            )}
+          </NavLinkItem>
+          <NavLinkItem><a href="/">Become a Teacher</a></NavLinkItem>
+          <NavLinkItem><a href="/">Create Your Enrollment</a></NavLinkItem>
+          <NavLinkItem><a href="/">About Us</a></NavLinkItem>
+        </NavLinks>
+      </NavMenu>
+
+      <AuthButtons>
+        <SignInButton>Sign In</SignInButton>
+        <SignUpButton>Sign Up</SignUpButton>
+      </AuthButtons>
+    </HeaderContainer>
   );
 };
 
