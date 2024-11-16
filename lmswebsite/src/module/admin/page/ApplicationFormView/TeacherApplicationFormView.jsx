@@ -23,6 +23,7 @@ export default function TeacherApplicationFormView() {
     }
     const closeModel = () => {
         setIsModelOpen(false);
+        window.location.reload();
     }
     const columns = [
         "Name",
@@ -128,7 +129,7 @@ export default function TeacherApplicationFormView() {
                         : <p>Loading...</p>
                 }{
                     isModelOpen
-                        ? <FormModel isOpen={isModelOpen} onClose={closeModel} children={<TeacherApplicationFormReview teacher_Id={teacherId} />} />
+                        ? <FormModel isOpen={isModelOpen} onClose={closeModel} children={<TeacherApplicationFormReview teacher_Id={teacherId}closeModal={closeModel} />} />
                         : null
                 }
 
