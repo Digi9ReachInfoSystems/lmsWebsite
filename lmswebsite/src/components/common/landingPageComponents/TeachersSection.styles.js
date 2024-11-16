@@ -5,6 +5,7 @@ export const TeachersSectionContainer = styled.section`
   text-align: center;
   width: 80%;
   margin-left: 10%;
+  background-color: white;
 `;
 
 export const SectionTitle = styled.h2`

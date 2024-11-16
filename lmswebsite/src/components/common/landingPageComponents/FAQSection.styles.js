@@ -79,7 +79,7 @@ export const ToggleIcon = styled.span`
   font-weight: bold;
   color: #ff0080;
   transition: transform 0.3s ease;
-  transform: ${(props) => (props.open ? "rotate(45deg)" : "rotate(0deg)")};
+  transform: ${(props) => (props.open ? "rotate(0deg)" : "rotate(0deg)")};
 
   @media (max-width: 1024px) {
     font-size: 22px;
