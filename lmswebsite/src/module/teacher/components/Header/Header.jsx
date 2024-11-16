@@ -1,89 +1,102 @@
-import React, { useState } from "react";
-import logo from "../../assets/logo.svg"; // Import SVG as an image
-// import '../styles/Header.css';  // Import the associated CSS file
-import "./Header.css"; // Import the associated CSS file
+import React, { useState, useEffect } from "react";
+import logo from "../../assets/logo.svg";
+import {
+  HeaderContainer,
+  Logo,
+  NavMenu,
+  NavLinks,
+  DropdownContent,
+  HamburgerMenu,
+  MobileMenu,
+} from "./Header.styles";
 
 const Header = () => {
-  // State to control dropdown visibility
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isStudyMaterialOpen, setIsStudyMaterialOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Toggle dropdown function for courses
   const toggleCoursesDropdown = () => {
     setIsCoursesOpen(!isCoursesOpen);
-    setIsStudyMaterialOpen(false); // Close the other dropdown
+    setIsStudyMaterialOpen(false);
   };
 
-  // Toggle dropdown function for study material
   const toggleStudyMaterialDropdown = () => {
     setIsStudyMaterialOpen(!isStudyMaterialOpen);
-    setIsCoursesOpen(false); // Close the other dropdown
+    setIsCoursesOpen(false);
   };
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Close the mobile menu when resizing to desktop view
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 580) { // Adjust this breakpoint as needed
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <header className="header">
-      <div className="header-container">
-        <div className="logo">
-          <a href="/">
-            <img src={logo} alt="The Toppers Academy" className="logo-icon" />{" "}
-            {/* Use the SVG as an img */}
-          </a>
-        </div>
-        <nav className="nav-menu">
-          <ul className="nav-links">
-            <li className="dropdown">
-              <a href="#!" onClick={toggleCoursesDropdown}>
-                Courses
-              </a>
-              {isCoursesOpen && (
-                <ul className="dropdown-content">
-                  <li>
-                    <a href="/">Course 1</a>
-                  </li>
-                  <li>
-                    <a href="/">Course 2</a>
-                  </li>
-                  <li>
-                    <a href="/">Course 3</a>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li className="dropdown">
-              <a href="#!" onClick={toggleStudyMaterialDropdown}>
-                Study Material
-              </a>
-              {isStudyMaterialOpen && (
-                <ul className="dropdown-content">
-                  <li>
-                    <a href="/">Material 1</a>
-                  </li>
-                  <li>
-                    <a href="/">Material 2</a>
-                  </li>
-                  <li>
-                    <a href="/">Material 3</a>
-                  </li>
-                </ul>
-              )}
-            </li>
-            <li>
-              <a href="/">Become a Teacher</a>
-            </li>
-            <li>
-              <a href="/">Create Your Enrollment</a>
-            </li>
-            <li>
-              <a href="/">About Us</a>
-            </li>
-          </ul>
-        </nav>
-        <div className="auth-buttons">
-          <button className="sign-in">Sign In</button>
-          <button className="sign-up">Sign Up</button>
-        </div>
-      </div>
-    </header>
+    <HeaderContainer>
+      <Logo>
+        <a href="/">
+          <img src={logo} alt="The Toppers Academy" className="logo-icon" />
+        </a>
+      </Logo>
+      
+      {/* Desktop Nav Menu */}
+      <NavMenu>
+        <NavLinks>
+          <li className="dropdown">
+            <a href="#!" onClick={toggleCoursesDropdown}>
+              Courses
+            </a>
+            <DropdownContent isOpen={isCoursesOpen}>
+              <li><a href="">Course 1</a></li>
+              <li><a href="">Course 2</a></li>
+              <li><a href="">Course 3</a></li>
+            </DropdownContent>
+          </li>
+          <li className="dropdown">
+            <a href="#!" onClick={toggleStudyMaterialDropdown}>
+              Study Material
+            </a>
+            <DropdownContent isOpen={isStudyMaterialOpen}>
+              <li><a href="">Material 1</a></li>
+              <li><a href="">Material 2</a></li>
+              <li><a href="">Material 3</a></li>
+            </DropdownContent>
+          </li>
+          <li><a href="">Become a Teacher</a></li>
+          <li><a href="">Create Your Enrollment</a></li>
+          <li><a href="">About Us</a></li>
+        </NavLinks>
+      </NavMenu>
+
+      {/* Hamburger Icon for Mobile */}
+      <HamburgerMenu onClick={toggleMobileMenu}>
+        <span />
+        <span />
+        <span />
+      </HamburgerMenu>
+
+      {/* Mobile Nav Menu */}
+      {isMobileMenuOpen && (
+        <MobileMenu>
+          <NavLinks>
+            <li><a href="">Courses</a></li>
+            <li><a href="">Study Material</a></li>
+            <li><a href="">Become a Teacher</a></li>
+            <li><a href="">Create Your Enrollment</a></li>
+            <li><a href="">About Us</a></li>
+          </NavLinks>
+        </MobileMenu>
+      )}
+    </HeaderContainer>
   );
 };
 
