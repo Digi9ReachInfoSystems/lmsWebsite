@@ -1,12 +1,23 @@
 import React from "react";
-import "./Footer2.css";
+import {
+  FooterContainer,
+  FooterContent,
+  FooterColumn,
+  FooterBottom,
+  FooterLinks,
+  FooterSocial,
+} from "./Footerteacher.styles";
 
-const Footer2 = () => {
+const FooterTeacher = () => {
   return (
-    <footer className="footer-container2">
-      <div className="footer-content2">
-        <div className="footer-column2">
-          <h3>Study <span className="highlight2">material</span></h3>
+    
+    <FooterContainer>
+      <h3>
+          Study Material
+          </h3>
+      <FooterContent>
+      
+            <FooterColumn>
           <ul>
             <li>NCERT</li>
             <li>NCERT Solutions</li>
@@ -21,9 +32,9 @@ const Footer2 = () => {
             <li>NCERT Solutions for Class 12 English</li>
             <li>NCERT Solutions for Class 12 Hindi</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <ul>
             <li>NCERT Solutions for Class 11</li>
             <li>NCERT Solutions for Class 11 Maths</li>
@@ -36,9 +47,9 @@ const Footer2 = () => {
             <li>NCERT Solutions for Class 11 English</li>
             <li>NCERT Solutions for Class 11 Hindi</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <ul>
             <li>NCERT Solutions for Class 10</li>
             <li>NCERT Solutions for Class 10 Maths</li>
@@ -53,9 +64,9 @@ const Footer2 = () => {
             <li>NCERT Solutions for Class 9 Social Science</li>
             <li>NCERT Solutions for Class 9 Hindi</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <ul>
             <li>Reference Book Solutions</li>
             <li>HC Verma Solutions</li>
@@ -67,9 +78,9 @@ const Footer2 = () => {
             <li>TS Grewal Solutions</li>
             <li>Sandeep Garg</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <ul>
             <li>CBSE</li>
             <li>CBSE Syllabus</li>
@@ -80,9 +91,9 @@ const Footer2 = () => {
             <li>CBSE Previous Year Question Papers Class 10</li>
             <li>CBSE Important Formulas</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <ul>
             <li>ICSE</li>
             <li>ICSE Solutions</li>
@@ -90,26 +101,26 @@ const Footer2 = () => {
             <li>ICSE Class 9 Solutions</li>
             <li>ICSE Class 8 Solutions</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <h4>State boards</h4>
           <ul>
             <li>Karnataka Board</li>
             <li>Maharashtra Board</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <h4>Free Study Material</h4>
           <ul>
             <li>Previous Year Question Papers</li>
             <li>Sample Papers</li>
             <li>Ask Questions</li>
           </ul>
-        </div>
+        </FooterColumn>
 
-        <div className="footer-column2">
+        <FooterColumn>
           <h4>Important Subjects</h4>
           <ul>
             <li>Physics</li>
@@ -121,23 +132,23 @@ const Footer2 = () => {
             <li>Geography</li>
             <li>Civics</li>
           </ul>
-        </div>
-      </div>
+        </FooterColumn>
+      </FooterContent>
 
-      <div className="footer-bottom2">
-        <p>© 2024.Toppers Academy.com. All rights reserved</p>
-        <div className="footer-links2">
+      <FooterBottom>
+        <p>© 2024 Toppers Academy.com. All rights reserved</p>
+        <FooterLinks>
           <a href="#">Privacy policy</a>
           <a href="#">Terms and conditions</a>
-        </div>
-        <div className="footer-social2">
+        </FooterLinks>
+        <FooterSocial>
           <a href="#"><i className="fa fa-facebook"></i></a>
           <a href="#"><i className="fa fa-linkedin"></i></a>
           <a href="#"><i className="fa fa-twitter"></i></a>
-        </div>
-      </div>
-    </footer>
+        </FooterSocial>
+      </FooterBottom>
+    </FooterContainer>
   );
 };
 
-export default Footer2;
+export default FooterTeacher;

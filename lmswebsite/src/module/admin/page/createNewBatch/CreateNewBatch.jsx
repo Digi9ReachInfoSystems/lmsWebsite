@@ -231,27 +231,38 @@ const CreateNewBatch = ({ open, handleClose }) => {
     setCoverImage(file);
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async(e) => {
     const { files } = e.target;
     setBatch_image(files[0]);
+    const downloadUrl = await uploadFileToFirebase(files[0], "batcheImages");
+    setCoverImage(downloadUrl);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-
+   
     const batchData = {
-      batch_name: batchName,
-      start_date: startDate,
-      end_date: endDate,
-      no_of_classes: noOfClasses,
-      teacher_ids: selectedTeacher.map((teacher) => teacher.value), // Array of teacher IDs
-      student_ids: selectedStudents.map((student) => student.value), // Array of student IDs
-      batch_image: coverImage,
-      // content_material: contentMaterial,
-      // date: new Date(),
-    };
+      batch_name:batchName,
+      batch_image:coverImage,
+      subject_id:subjectId,
+      class_id:classId,
+      teacher_id:selectedTeacher.map((teacher) => teacher.value),
+      students:selectedStudents.map((student) => student.value),
+      date:startDate,
+    }
+    // const batchData = {
+
+    //   batch_name: batchName,
+    //   date: startDate,
+    //   end_date: endDate,
+    //   teacher_ids: selectedTeacher.map((teacher) => teacher.value), // Array of teacher IDs
+    //   student_ids: selectedStudents.map((student) => student.value), // Array of student IDs
+    //   batch_image: coverImage,
+    //   // content_material: contentMaterial,
+    //   // date: new Date(),
+    // };
 
     try {
       const response = await createBatch(batchData);

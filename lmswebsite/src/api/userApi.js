@@ -29,3 +29,17 @@ export const getUserProfile = async (authId) => {
         throw error; // Re-throw the error for handling
     }
 };
+
+export const updateUserByAuthId = async (authId,updateData) => {
+    try {
+        const response = await api.put('/users/updateProfile', updateData,{
+            headers: {
+                auth_id: authId, // Pass the auth_id in headers
+            },
+        });
+        return response.data; // Return the user data from the API response
+    } catch (error) {
+        console.error('Error fetching user by auth_id:', error);
+        throw error; // Re-throw error for further handling if needed
+    }
+};

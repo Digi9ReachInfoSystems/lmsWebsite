@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
-import api from "../.././../../config/axiosConfig";
-import "./TeachersSection.css"; // Import the CSS file
+import { getTeachersByExperience } from "../../../../api/teacherApi";
+import {
+  TeachersSectionContainer,
+  SectionTitle,
+  TeachersGrid,
+  TeacherCard,
+  TeacherImage,
+  TeacherInfo,
+} from "./TeacherSection.styles";
 
 const TeachersSection = () => {
   const [teachers, setTeachers] = useState([]);
@@ -10,9 +17,8 @@ const TeachersSection = () => {
   useEffect(() => {
     const fetchTeachers = async () => {
       try {
-        const response = await api.get("/teachers/experience/greater");
-        // Assuming response.data is an array of teacher objects sorted by experience
-        setTeachers(response.data.slice(0, 3)); // Get the top 3 experienced teachers
+        const response = await getTeachersByExperience();
+        setTeachers(response.slice(0, 4)); // Get the top 3 experienced teachers
         setLoading(false);
       } catch (err) {
         console.error("Error fetching teachers:", err);
@@ -33,28 +39,26 @@ const TeachersSection = () => {
   }
 
   return (
-    <section className="teachers-section">
-      <h2 className="section-title">Meet Our Experienced Teachers</h2>
-      <div className="teachers-grid">
+    <TeachersSectionContainer>
+      <SectionTitle>Meet Our Experienced Teachers</SectionTitle>
+      <TeachersGrid>
         {teachers.map((teacher, index) => (
-          console.log(teacher),
-          <div key={index} className="teacher-card">
-            <img
-              src={teacher.profile_image || 'default-image-path.jpg'} // Use a default image if not provided
+          <TeacherCard key={index}>
+            <TeacherImage
+              src={teacher.profile_image || 'default-image-path.jpg'}
               alt={teacher.name}
-              className="teacher-image"
             />
-            <div className="teacher-info">
+            <TeacherInfo>
               <h3 className="teacher-name">{teacher.name}</h3>
               <p className="teacher-subject">{teacher.subject}</p>
               <p className="teacher-experience">
                 Experience: {teacher.experience} years
               </p>
-            </div>
-          </div>
+            </TeacherInfo>
+          </TeacherCard>
         ))}
-      </div>
-    </section>
+      </TeachersGrid>
+    </TeachersSectionContainer>
   );
 };
 
