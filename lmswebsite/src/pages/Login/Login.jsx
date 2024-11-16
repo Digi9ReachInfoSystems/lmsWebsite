@@ -56,7 +56,13 @@ const Login = () => {
       // sessionStorage.setItem('sessionData', JSON.stringify(updatedSessionData));
 
       // Navigate to the admin dashboard
-      navigate("/admin");
+      if (profileData.user.role === "admin") {
+        navigate("/admin");
+      } else if (profileData.user.role === "student") {
+        navigate("/student");
+      } else if (profileData.user.role === "teacher") {
+        navigate("/teacher");
+      }
     } catch (error) {
       console.error("Login error:", error);
       setErrorMessage("Incorrect email or password. Please try again.");

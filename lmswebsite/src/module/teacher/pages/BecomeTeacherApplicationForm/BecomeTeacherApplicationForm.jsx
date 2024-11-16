@@ -1,13 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Select from 'react-select';
 import { FaCloudUploadAlt } from "react-icons/fa";
-import "./BecomeTeacherApplicationForm.css";
 import Header from "../../components/Header/Header";
 import LMS from "../../components/LMS/LMS";
 import BecomeTeacherLogo from "../../assets/BecomeTeacherLogo.png";
-import { submitTeacherApplication } from "../../../../api/teachersApplicationApi";
+import { getTeacherApplicationsByUserId, submitTeacherApplication } from "../../../../api/teachersApplicationApi";
 import TeachersSection from "../../components/TeacherSection/TeachersSection";
+import FooterTeacher from "../../components/Footer/FooterTeacher";
+import { getAllClasses } from "../../../../api/classApi";
+import {
+  ApplicationContainer,
+  Form,
+  UploadWrapper,
+  Processing,
+} from "./BecomeTeacherApplicationForm.styles";
+import { useNavigate } from 'react-router-dom';
+import { getUserByAuthId } from "../../../../api/userApi";
+import { getAllSubjects } from "../../../../api/subjectApi";
+import {
+  getClasses,
+  getSubjects,
+  getTeachersBySubjectAndClass,
+  getStudentsBySubjectAndClass,
+} from "../../../../services/createBatch";
+import {updateUserByAuthId} from "../../../../api/userApi"
+import api from "../../../../config/axiosConfig";
 
 const BecomeTeacherApplicationForm = () => {
+  const [formVisibility, setFormVisibility] = useState(true);
+  const [formProcessing, setFormProcessing] = useState(false);
+  const [formReject, setFormReject] = useState(false);
+  const [slectedSubject, setSelectedSubject] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [selectedClass, setSelectedClass] = useState([]);
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     state: "",
     city: "",
@@ -17,6 +45,8 @@ const BecomeTeacherApplicationForm = () => {
     language: "",
     experience: "",
     resume: null,
+    class_id: null,
+    subject_id: null,
     profileImage: null,
   });
 
@@ -24,36 +54,99 @@ const BecomeTeacherApplicationForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (e) => {
     const { name, files } = e.target;
     setFormData((prev) => ({ ...prev, [name]: files[0] }));
+
   };
+  useEffect(() => {
+    const session = JSON.parse(localStorage.getItem("sessionData"));
+    const apicaller = async () => {
+      // const subjectData = await getAllSubjects();
+      const classData = await getAllClasses();
+      // setClasses(classData);
+      // console.log("kk", subjectData);
+      setClasses(classData);
+      console.log("classes", classData);
+      // setSubjects(subjectData);
+      const userresponse = await getUserByAuthId(session.userId);
+      try {
+        const response = await getTeacherApplicationsByUserId(userresponse.user._id);
+
+        if (response.application.approval_status === "pending") {
+          setFormVisibility(false);
+          setFormProcessing(true);
+        } else if (response.application.approval_status === "rejected") {
+          setFormProcessing(false);
+          setFormVisibility(false);
+          setFormReject(true);
+        } else if (response.application.approval_status === "approved") {
+          navigate("/teacher/dashboard");
+        }
+
+
+
+      } catch (err) {
+        if (err.response.status === 404) {
+          setFormVisibility(true);
+          setFormProcessing(false);
+          setFormReject(false);
+        }
+        console.error("Error fetching teacher applications:", err);
+      }
+
+
+    }
+    apicaller();
+  }, []);
+  useEffect(() => {
+    if (selectedClass.length > 0) {
+      const fetchSubjects = async () => {
+        selectedClass.forEach(async (item) => {
+          const data = await getSubjects(item.value)
+          console.log("sss data", data);
+          setSubjects(subjects.concat(data));
+        })
+ console.log("inside ",subjects);
+      };
+      fetchSubjects();
+    }else{
+      setSubjects([]);
+    }
+  }, [selectedClass]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const submissionData = new FormData();
-  // console.log("Form Data:", formData);
-      // Append text fields
-      submissionData.append("state", formData.state);
-      submissionData.append("city", formData.city);
-      submissionData.append("pincode", formData.pincode);
-      submissionData.append("phone_number", formData.phone_number); // Matching backend name
-      submissionData.append("current_position", formData.current_position);
-      submissionData.append("language", formData.language);
-      submissionData.append("experience", formData.experience);
+      setTimeout(() => setSuccess(null), 3000);
+      setFormData((prev) => ({ ...prev, subject_id: slectedSubject.map((option) => option.value) }));
+      setFormData((prev) => ({ ...prev, class_id: selectedClass.map((option) => option.value) }));
+      setTimeout(() => setSuccess(null), 3000);
+      const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
+      const responseUser = await updateUserByAuthId(authId,{name:formData.name,phone_number:formData.phone_number});
+      const submissionData={
+        phone_number:formData.phone_number,
+        class_id:formData.class_id,
+        subject_id:formData.subject_id,
+        state:formData.state,
+        city:formData.city,
+        pincode:formData.pincode,
+        current_position:formData.current_position,
+        experience:formData.experience,
+        language:formData.language,
+        resume_link:formData.resume,
+        profileImage:formData.profileImage
+      }
+      const response = await submitTeacherApplication(submissionData);
 
-      // Append files
-      submissionData.append("resume", formData.resume);
-      submissionData.append("profileImage", formData.profileImage);
-      // console.log("Submission Data:", submissionData);
-      const response = await submitTeacherApplication(formData);
       alert("Application submitted successfully!");
+      window.location.reload();
       console.log("Application Response:", response);
     } catch (error) {
       alert("Failed to submit the application. Please try again.");
@@ -65,126 +158,203 @@ const BecomeTeacherApplicationForm = () => {
 
   return (
     <>
-      <Header />
-      <div className="applicationContainer">
-        <div className="applicationImage">
-          <img src={BecomeTeacherLogo} alt="teacherFormImage" className="teacherformImage" />
-        </div>
-        <div className="applicationDetails">
-          <h2 className="applicationFormTitle">Love Teaching Students? Join Us</h2>
-          <p className="applicationFormSubtitle">
-            Become a Teacher and train students all around the world.
-          </p>
+      <Header />{formVisibility &&
+        <ApplicationContainer>
+          <div className="applicationImage">
+            <img src={BecomeTeacherLogo} alt="Teacher Form" className="teacherformImage" />
+          </div>
+          <div className="applicationDetails">
+            <h2 className="applicationFormTitle">Love Teaching Students? Join Us</h2>
+            <p className="applicationFormSubtitle">
+              Become a Teacher and train students all around the world.
+            </p>
 
-          <form onSubmit={handleSubmit}>
-            <div className="applicationRowOne">
-              <input
-                type="text"
-                name="phone_number"
-                placeholder="Phone Number"
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="state"
-                placeholder="State"
-                onChange={handleInputChange}
-                required
-              />
-              <input
-                type="text"
-                name="city"
-                placeholder="City"
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-
-            <div className="applicationRowTwo">
-              <input
-                type="tel"
-                name="pincode"
-                placeholder="Enter PinCode"
-                value={formData.pincode}
-                onChange={handleInputChange}
-                required
-              />
-              <select
-                name="current_position"
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Position</option>
-                <option value="Teacher">Teacher</option>
-                <option value="Assistant">Assistant</option>
-                <option value="Principal">Principal</option>
-              </select>
-
-              <select
-                name="experience"
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Experience</option>
-                <option value="Fresher">Fresher</option>
-                <option value="1 Year">1 Year</option>
-                <option value="2 Years">2 Years</option>
-                <option value="3 Years">3 Years</option>
-                <option value="4+ Years">4+ Years</option>
-              </select>
-            </div>
-
-            <div className="applicationRowThree">
-              <select
-                name="language"
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">Select Language</option>
-                <option value="English">English</option>
-                <option value="Hindi">Hindi</option>
-                <option value="Spanish">Spanish</option>
-                <option value="French">French</option>
-              </select>
-
-              <div className="uploadWrapper">
+            <Form onSubmit={handleSubmit}>
+              <div className="applicationRowOne">
                 <input
-                  type="file"
-                  name="resume"
-                  onChange={handleFileChange}
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  onChange={handleInputChange}
                   required
                 />
-                <label className="uploadLabel">
-                  <span>Upload Resume</span>
-                  <FaCloudUploadAlt className="uploadIcon" />
-                </label>
-              </div>
-
-              <div className="uploadWrapper">
                 <input
-                  type="file"
-                  name="profileImage"
-                  onChange={handleFileChange}
+                  type="text"
+                  name="phone_number"
+                  placeholder="Phone Number"
+                  onChange={handleInputChange}
                   required
                 />
-                <label className="uploadLabel">
-                  <span>Upload Profile Image</span>
-                  <FaCloudUploadAlt className="uploadIcon" />
-                </label>
-              </div>
-            </div>
 
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Submitting..." : "Submit"}
-            </button>
-          </form>
+                <input
+                  type="text"
+                  name="state"
+                  placeholder="State"
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="text"
+                  name="city"
+                  placeholder="City"
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className="applicationRowTwo">
+                <input
+                  type="tel"
+                  name="pincode"
+                  placeholder="Enter PinCode"
+                  value={formData.pincode}
+                  onChange={handleInputChange}
+                  required
+                />
+                <input
+                  type="number"
+                  name="experience"
+                  placeholder="Enter Experience"
+                  min="0"
+                  max="100"
+                  onChange={handleInputChange}
+                  required
+                />
+
+                <select
+                  name="current_position"
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Position</option>
+                  <option value="Teacher">Teacher</option>
+                  <option value="Assistant">Assistant</option>
+                  <option value="Principal">Principal</option>
+                </select>
+
+                {/* <select
+                  name="subjects"
+                  isMultiple
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Experience</option>
+                  <option value="0">Fresher</option>
+                  <option value="1">1 Year</option>
+                  <option value="2">2 Years</option>
+                  <option value="3">3 Years</option>
+                  <option value="4">4+ Years</option>
+                </select> */}
+              </div>
+
+              <div className="applicationRowThree">
+                <select
+                  name="language"
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Language</option>
+                  <option value="English">English</option>
+                  <option value="Hindi">Hindi</option>
+                  <option value="Spanish">Spanish</option>
+                  <option value="French">French</option>
+                </select>
+
+                <UploadWrapper>
+
+                  <label className="uploadLabel">
+                    <span>Upload Resume</span>
+                    <FaCloudUploadAlt className="uploadIcon" />
+                  </label>
+                  <input
+                    type="file"
+                    name="resume"
+                    onChange={handleFileChange}
+                    required
+                    className="file-input"
+                  />
+                </UploadWrapper>
+
+                <UploadWrapper>
+
+                  <label className="uploadLabel">
+                    <span>Upload Profile Image</span>
+                    <FaCloudUploadAlt className="uploadIcon" />
+                  </label>
+                  <input
+                    type="file"
+                    name="profileImage"
+                    onChange={handleFileChange}
+                    required
+                    className="file-input"
+                  />
+                </UploadWrapper>
+              </div>
+              <div className="applicationRowThree">
+                <Select
+                  isMulti
+                  placeholder="Select classes..."
+                  className="react-select-container"
+                  classNamePrefix="react-select"
+                  options={classes.map((classItem) => ({
+                    value: classItem._id,
+                    label: classItem.classLevel + " - " + classItem.className,
+                  }))}
+                  onChange={(options) => {
+                    setSelectedClass(options);
+                  }}
+                />
+              </div>
+              <div className="applicationRowThree">
+              {console.log("Subjects:", subjects)}
+                {subjects &&
+
+                  <Select
+                    isMulti
+                    placeholder="Select subjects..."
+                    className="react-select-container"
+                    classNamePrefix="react-select"
+                    options={subjects.map((subject) => ({
+                      value: subject._id,
+                      label: subject.subject_name,
+                    }))}
+                    onChange={(options) => {
+                      // setSelectedSubject(slectedSubject.concat(options));
+                      setSelectedSubject(options);
+                      console.log("Selected subjects:", slectedSubject.map((option) => option.value));
+                    }}
+                  />}
+              </div>
+
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </button>
+            </Form>
+          </div>
+        </ApplicationContainer>
+
+      }
+      <Processing visible={(formProcessing || formReject)}>
+
+        <div className="applicationUnderProcessing">
+          {
+            formProcessing && <p>Application Under Processing....!!!!</p>
+          }
+
         </div>
-      </div>
-      <LMS/>
-      <TeachersSection/>
+        <div>
+          {
+            formReject && <p>Application Rejected... Better Luck Next Time</p>
+          }
+
+        </div>
+      </Processing>
+
+
+      <LMS />
+      <TeachersSection />
+      <FooterTeacher />
     </>
-   
   );
 };
 

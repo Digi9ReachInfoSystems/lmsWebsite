@@ -25,6 +25,14 @@ import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
 // import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
 import ManagePayment from "./module/admin/page/managePayment/managePayment";
+import TeacherDashboardLayout from "./module/teacher/pages/TeacherDashboardLayout/TeacherDashboardLayout";
+import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
+import TeacherDashboardScreen from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen";
+import AssignedTeacherBatch from "./module/teacher/pages/AssignedBatches/AssignedTeacherBatch";
+import TeacherCircular from "./module/teacher/pages/TeacherCircular/TeacherCircular";
+import SettingsTabs from "./module/teacher/pages/Settings/SettingTapPage/SettingTabs";
+import QuizBatches from "./module/teacher/pages/Quizz/QuizzBatches/QuizBatches";
+import QuizList from "./module/teacher/pages/Quizz/QuizList/QuizList";
 // import PublicRoute from "./module/admin/components/PublicRoute";
 
 function App() {
@@ -55,6 +63,21 @@ function App() {
           />
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
+          <Route
+            path="/teacher/dashboard"
+            element={
+              <ProtectedRoute>
+                <TeacherDashboardLayout/>
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<TeacherDashboardScreen/>} />
+            <Route path="/teacher/dashboard/batches" element={<AssignedTeacherBatch/>} />
+            <Route path="/teacher/dashboard/circular" element={<TeacherCircular/>} />
+            <Route path="/teacher/dashboard/setting" element={<SettingsTabs/>} />
+            <Route path="/teacher/dashboard/quizz/assignedBatch" element={<QuizBatches/>} />
+            <Route path="/teacher/dashboard/quizz/batches/:batchId" element={<QuizList/>} />
+          </Route>
           <Route
             path="/admin"
             element={

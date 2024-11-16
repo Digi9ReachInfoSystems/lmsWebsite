@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
-import { getAllBatchesNoFilter } from "../../../../api/batchApi"; // Adjust the path if needed
+import { getAllBatchesNoFilter,getAllBatches } from "../../../../api/batchApi"; // Adjust the path if needed
 import { CreatedBatchWrap } from "./CreatedBatches.styles";
 import DashboardTable from "../../components/DashboardTable/DashboardTable";
 import CreateNewBatch from "../CreateNewBatch/CreateNewBatch"; // Import the modal component
@@ -15,7 +15,6 @@ export default function CreatedBatch() {
   const columns = [
     "Batch Name",
     "Teacher's Name",
-    "No of Students",
     "Date",
     "Time",
     "Subject",
@@ -26,14 +25,13 @@ export default function CreatedBatch() {
   // Fetch data on component mount
   useEffect(() => {
     const apiCaller = async () => {
-      const data = await getAllBatchesNoFilter();
+      const data = await getAllBatches();
       if (data) {
         const dataFilter = data.data.map((batch) => ({
           "Batch Name": batch.batch_name,
-          "Teacher's Name": batch.teacher_id?.name || "N/A",
+          "Teacher's Name": batch.teacher_id.user_id?.name || "N/A",
           "No of Students": batch.students.length,
-          "No of Classes": batch.no_of_classes,
-          Date: new Date(batch.start_date).toLocaleDateString(),
+          Date: new Date(batch.date).toLocaleDateString(),
           Time: new Date(batch.date).toLocaleTimeString(),
         }));
         setOriginalData(dataFilter);

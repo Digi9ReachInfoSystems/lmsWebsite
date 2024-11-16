@@ -3,7 +3,7 @@ import axios from "axios";
 // Create an Axios instance with the base URL and common configurations
 const api = axios.create({
   baseURL: "https://lmswebsite-backend.vercel.app/", // Replace with your backend base URL
-  timeout: 10000, // Optional: Timeout after 10 seconds
+  timeout: 30000, // Optional: Timeout after 10 seconds
   headers: {
     "Content-Type": "application/json",
   },

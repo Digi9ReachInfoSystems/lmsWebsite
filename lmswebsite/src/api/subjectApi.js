@@ -19,3 +19,15 @@ export const createSubject = async (subjectData) => {
     throw error;
   }
 };
+
+export const getAllSubjects = async () => {
+  try {
+    const response = await api.get('/subjects');
+    console.log('Subjects fetched successfully:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching subjects:', error.response?.data || error.message);
+    throw error;
+  }
+};
+

@@ -15,10 +15,10 @@ import { uploadFileToFirebase } from '../utils/uploadFileToFirebase'; // Utility
 
 export const submitTeacherApplication = async (applicationData) => {
     try {
+      console.log('Submitting application:', applicationData);
       // Upload resume and profile image to Firebase
-      const resumeUrl = await uploadFileToFirebase(applicationData.resume, 'resume');
+      const resumeUrl = await uploadFileToFirebase(applicationData.resume_link, 'resume');
       const profileImageUrl = await uploadFileToFirebase(applicationData.profileImage, 'profileImage');
-  
       // Prepare the request body
       const requestBody = {
         state: applicationData.state,
@@ -29,9 +29,10 @@ export const submitTeacherApplication = async (applicationData) => {
         phone_number: applicationData.phone_number,
         experience: applicationData.experience,
         resume_link: resumeUrl, // Add resume URL
+        class_id:applicationData.class_id,
+        subject_id:applicationData.subject_id,
         profileImage: profileImageUrl, // Add profile image URL
       };
-  
       // Send the request to the backend
       const response = await api.post('/teacher-application/apply', requestBody);
       console.log('Application submitted successfully:', response.data);
@@ -95,3 +96,14 @@ export const getSingleTeacherApplication = async (applicationId) => {
       throw error; // Re-throw the error for further handling if needed
     }
   };
+
+export const getTeacherApplicationsByUserId = async (user_id) => {
+    try {
+        const response = await api.get(`/teacher-application/application/single/teacher/${user_id}`);
+        console.log('Teacher applications fetched successfully:', response.data);
+        return response.data; // Return the response data
+    } catch (error) {
+        console.error('Error fetching teacher applications:', error.response?.data || error.message);
+        throw error; // Throw the error for further handling
+    }
+};
