@@ -1,6 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./ExperiencedTeachers.css";
+import {
+  Container,
+  Title,
+  TeacherCard,
+  TeacherRole,
+  TeacherInfo,
+  ResumeLink,
+  NoTeachersMessage,
+} from "./ExperiencedTeachers.styles";
 
 const ExperiencedTeachers = () => {
   const [teachersData, setTeachersData] = useState([]);
@@ -18,29 +26,25 @@ const ExperiencedTeachers = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Experienced Teachers</h2>
+    <Container>
+      <Title>Experienced Teachers</Title>
       {teachersData && teachersData.length > 0 ? (
         teachersData.map((teacher, index) => (
-          <div key={index} className="teacher-cards">
-            <h3>{teacher.role}</h3>
-            <p>Experience: {teacher.experience || "N/A"}</p>
-            <p>Classes Taught: {teacher.no_of_classes}</p>
+          <TeacherCard key={index}>
+            <TeacherRole>{teacher.role}</TeacherRole>
+            <TeacherInfo>Experience: {teacher.experience || "N/A"}</TeacherInfo>
+            <TeacherInfo>Classes Taught: {teacher.no_of_classes}</TeacherInfo>
             {teacher.resume_link && (
-              <a
-                href={teacher.resume_link}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <ResumeLink href={teacher.resume_link} target="_blank" rel="noopener noreferrer">
                 View Resume
-              </a>
+              </ResumeLink>
             )}
-          </div>
+          </TeacherCard>
         ))
       ) : (
-        <p>No Experienced Teachers Available</p>
+        <NoTeachersMessage>No Experienced Teachers Available</NoTeachersMessage>
       )}
-    </div>
+    </Container>
   );
 };
 
