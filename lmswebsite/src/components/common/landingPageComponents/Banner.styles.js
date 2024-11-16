@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { media } from "../../../style/theme/theme"; 
 
 export const BannerContainer = styled.div`
     display: flex;
@@ -6,7 +7,7 @@ export const BannerContainer = styled.div`
     align-items: center;
     background-color: white;
     min-height: 100vh;
-    margin-top: -35px;
+    position: relative;
 `;
 
 export const InnerContainer = styled.div`
@@ -17,9 +18,9 @@ export const InnerContainer = styled.div`
 
 export const Wave = styled.div`
     position: absolute;
-    bottom: -40px;
+    bottom: -1vh;
     width: 100%;
-    height: 50vh;
+    height: 30vh;
     background-color: #ff4081;
     clip-path: path("M0,6 C240,320 480,0 720,80 C960,160 1200,64 1440,120 L1440,300 L0,300 Z");
 `;
@@ -31,26 +32,26 @@ export const SliderItem = styled.div`
     position: relative;
 `;
 
+
 export const BannerImage = styled.img`
+    display: block;
+    margin: auto;
     width: 50%;
     height: auto;
     max-height: 250px;
     object-fit: cover;
-    margin-left: 280px;
 
-    @media (max-width: 1200px) {
-        margin-left: 0;
+    ${media.xl`
         width: 60%;
-    }
+    `}
 
-    @media (max-width: 768px) {
+    ${media.md`
         width: 70%;
-    }
+    `}
 
-    @media (max-width: 480px) {
+    ${media.xs`
         width: 90%;
-        margin-left: 0;
-    }
+    `}
 `;
 
 export const BannerText = styled.p`
@@ -65,29 +66,51 @@ export const BannerText = styled.p`
     text-align: center;
     width: 80%;
 
-    @media (max-width: 768px) {
+    ${media.md`
         font-size: 1rem;
         padding: 8px 16px;
-    }
+    `}
 
-    @media (max-width: 480px) {
+    ${media.xs`
         font-size: 0.9rem;
         padding: 6px 12px;
-    }
+    `}
 `;
 
 export const CoursesBackground = styled.div`
     position: relative;
     background-color: white;
     width: 60%;
-    margin-left: 220px;
-    margin-top: 60px;
+    margin: 40px auto;
     border-radius: 20px;
     border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center; /* Center content inside CoursesBackground */
+
+    ${media.md`
+        width: 80%;
+        margin: 20px auto;
+    `}
+
+    ${media.xs`
+        width: 90%;
+        margin: 10px auto;
+    `}
 `;
 
 export const CoursesTitle = styled.h2`
-    margin-left: 50px;
+    margin: 20px;
+    text-align: center; /* Center the title text */
+
+    ${media.md`
+        margin: 10px;
+    `}
+
+    ${media.xs`
+        margin: 5px;
+    `}
 `;
 
 export const CoursesSection = styled.div`
@@ -97,10 +120,10 @@ export const CoursesSection = styled.div`
     width: 90%;
     margin: 0 auto;
 
-    @media (max-width: 768px) {
+    ${media.md`
         flex-direction: column;
-        align-items: center;
-    }
+        align-items: center; /* Center items in smaller screens */
+    `}
 `;
 
 export const Card = styled.div`
@@ -114,27 +137,31 @@ export const Card = styled.div`
     flex: 1 1 calc(20% - 20px);
     max-width: calc(20% - 20px);
     box-sizing: border-box;
+    text-align: center;
 
-    @media (max-width: 768px) {
-        flex: 1 1 80%;
-        max-width: 80%;
-    }
+    ${media.md`
+        flex: 1 1 60%; /* Set a wider width at medium screens to prevent overflow */
+        max-width: 60%;
+        margin: 10px 0;
+    `}
 
-    @media (max-width: 480px) {
-        width: 100%;
+    ${media.xs`
+        flex: 1 1 100%; /* Full width on extra small screens */
+        max-width: 100%;
         margin: 5px 0;
-    }
+    `}
 `;
 
 export const StatsSection = styled.div`
     position: relative;
-    padding-top: 50px;
+    padding-top: 40px;
 `;
 
 export const CardContainer = styled.div`
     display: flex;
     justify-content: center;
     gap: 20px;
+    margin-bottom: 2vh;
     flex-wrap: wrap;
 `;
 

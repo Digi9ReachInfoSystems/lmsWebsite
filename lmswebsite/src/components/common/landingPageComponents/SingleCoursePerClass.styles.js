@@ -4,6 +4,15 @@ export const MainContainer = styled.div`
   width: 80%;
   margin: 0 auto;
   text-align: center;
+  background-color: white;
+
+  @media (max-width: 1200px) {
+    width: 90%;
+  }
+
+  @media (max-width: 767px) {
+    width: 95%;
+  }
 `;
 
 export const Heading = styled.h1`
@@ -26,6 +35,11 @@ export const CoursesContainer = styled.div`
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const SingleCourseSection = styled.div`
@@ -40,6 +54,14 @@ export const SingleCourseSection = styled.div`
   &:hover {
     transform: translateY(-5px);
   }
+
+  @media (max-width: 1200px) {
+    width: calc(45% - 20px);
+  }
+
+  @media (max-width: 767px) {
+    width: 100%;
+  }
 `;
 
 export const CourseTitle = styled.h3`
@@ -53,28 +75,3 @@ export const CourseDetail = styled.p`
   color: #666;
   margin: 5px 0;
 `;
-
-// @media (max-width: 1200px) {
-//   export const MainContainer = styled.div`
-//     width: 90%;
-//   `;
-
-//   export const SingleCourseSection = styled.div`
-//     width: 45%;
-//   `;
-// }
-
-// @media (max-width: 767px) {
-//   export const MainContainer = styled.div`
-//     width: 95%;
-//   `;
-
-//   export const CoursesContainer = styled.div`
-//     flex-direction: column;
-//     align-items: center;
-//   `;
-
-//   export const SingleCourseSection = styled.div`
-//     width: 100%;
-//   `;
-// }

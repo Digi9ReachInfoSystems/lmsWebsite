@@ -3,6 +3,8 @@ import styled from "styled-components";
 export const StudyMaterialsContainer = styled.div`
   text-align: center;
   padding: 40px;
+    background-color: white;
+
 `;
 
 export const Heading = styled.h1`

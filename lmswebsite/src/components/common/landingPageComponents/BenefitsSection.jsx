@@ -1,9 +1,21 @@
-import React, { useEffect, useState } from "react";
-import "./BenefitsSection.css";
+import React, { useState } from "react";
+import {
+  BenefitsSectionContainer,
+  Title,
+  SubTitle,
+  FlexContainer,
+  BenefitCard,
+  BenefitContent,
+  Dot,
+  BenefitTitle,
+  BenefitDescription,
+  BenefitImage,
+  Image,
+} from "./BenefitsSection.styles";
 import Group from "../../../icons/LandingPageIcons/Group.svg";
 
 const BenefitsSection = () => {
-  const [data, setData] = useState({
+  const [data] = useState({
     message: "Benefits fetched successfully",
     benefits: [
       {
@@ -26,9 +38,9 @@ const BenefitsSection = () => {
       },
       {
         _id: "6718aa84f826a013f6e1ba08",
-        title: "Learn with expert ",
+        title: "Learn with expert",
         description:
-          "There are a number of online forums where you can ask questions about using export details in your online course mentor.",
+          "There are a number of online forums where you can ask questions about using expert details in your online course mentor.",
         color: "#FF5733",
         createdAt: "2024-10-23T07:49:24.165Z",
         updatedAt: "2024-10-23T07:49:24.165Z",
@@ -37,34 +49,32 @@ const BenefitsSection = () => {
   });
 
   return (
-    <div className="benefits-section">
-      <h1 className="Benefits">Benefits from our </h1>
-      <h1 id="website" className="Benefits ">
-        website
-      </h1>
-      <div className="flexone">
+    <BenefitsSectionContainer>
+      <Title>Benefits from our</Title>
+      <SubTitle>website</SubTitle>
+      <FlexContainer>
         <div>
           {data.benefits.length > 0 ? (
             data.benefits.map((benefit, index) => (
-              <div key={index} className="benefit-card">
-                <div className="benefit-content">
-                  <h1 className="dot"></h1>
+              <BenefitCard key={index}>
+                <BenefitContent>
+                  <Dot />
                   <div>
-                    <h3 className="benefit-title">{benefit.title}</h3>
-                    <p>{benefit.description}</p>
+                    <BenefitTitle>{benefit.title}</BenefitTitle>
+                    <BenefitDescription>{benefit.description}</BenefitDescription>
                   </div>
-                </div>
-              </div>
+                </BenefitContent>
+              </BenefitCard>
             ))
           ) : (
             <p>No Benefits Available at the moment. Please check back later.</p>
           )}
         </div>
-        <div className="benefit-image">
-          <img src={Group} alt="Benefit Illustration" />
-        </div>
-      </div>
-    </div>
+        <BenefitImage>
+          <Image src={Group} alt="Benefit Illustration" />
+        </BenefitImage>
+      </FlexContainer>
+    </BenefitsSectionContainer>
   );
 };
 

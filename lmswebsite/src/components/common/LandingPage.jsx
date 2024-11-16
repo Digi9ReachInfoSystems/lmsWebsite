@@ -12,6 +12,7 @@ import FAQSection from "./landingPageComponents/FAQSection";
 import Footer from "./landingPageComponents/Footer";
 import Footer2 from "./landingPageComponents/Footer2";
 import TestimonialsSection from "./landingPageComponents/TestimonialsSection";
+import { PageContainer, LoadingMessage, ErrorMessage } from "./LandingPage.styles";
 
 const LandingPage = () => {
   const [data, setData] = useState(null);
@@ -32,14 +33,13 @@ const LandingPage = () => {
     fetchData();
   }, []);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
+  if (loading) return <LoadingMessage>Loading...</LoadingMessage>;
+  if (error) return <ErrorMessage>Error: {error}</ErrorMessage>;
 
   return (
-    <div>
+    <PageContainer>
       <Header />
-      <Banner/>
+      <Banner />
       <BenefitsSection />
       <StudyMaterials />
       <SingleCoursePerClass />
@@ -49,10 +49,8 @@ const LandingPage = () => {
       <FAQSection />
       <Footer />
       <Footer2 />
-    </div>
+    </PageContainer>
   );
 };
 
 export default LandingPage;
-
-
