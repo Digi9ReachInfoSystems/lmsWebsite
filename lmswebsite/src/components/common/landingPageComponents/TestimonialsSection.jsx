@@ -1,5 +1,17 @@
 import React, { useState } from "react";
-import "./TestimonialsSection.css";
+import { 
+  TestimonialsSectionWrapper,
+  SectionTitle,
+  TestimonialContainer,
+  TestimonialContent,
+  TestimonialImage,
+  TestimonialQuote,
+  RatingContainer,
+  Rating,
+  Stars,
+  LeftBtn,
+  RightBtn
+} from './TestimonialsSection.styles';
 import s1 from "../../../icons/LandingPageIcons/s1.svg";
 import s2 from "../../../icons/LandingPageIcons/s2.svg";
 import s3 from "../../../icons/LandingPageIcons/s3.svg";
@@ -37,29 +49,29 @@ const TestimonialsSection = () => {
   const { review, rating = 0, image } = testimonialsData[currentTestimonialIndex];
 
   return (
-    <section className="testimonials-section">
-      <h2 className="section-title">Student Testimonials</h2>
-      <div className="testimonial-container">
-        <button className="nav-btn left-btn" onClick={previousTestimonial}>
+    <TestimonialsSectionWrapper>
+      <SectionTitle>Student Testimonials</SectionTitle>
+      <TestimonialContainer>
+        <LeftBtn onClick={previousTestimonial}>
           &#8249;
-        </button>
+        </LeftBtn>
 
-        <div className="testimonial-content">
-          <img src={image} alt="Student" className="testimonial-image" />
-          <p className="testimonial-quote">"{review}"</p>
-          <div className="rating-container">
-            <span className="rating">{rating}</span>
-            <span className="stars">
+        <TestimonialContent>
+          <TestimonialImage src={image} alt="Student" />
+          <TestimonialQuote>"{review}"</TestimonialQuote>
+          <RatingContainer>
+            <Rating>{rating}</Rating>
+            <Stars>
               {"★".repeat(Math.floor(rating))} {rating % 1 !== 0 && "☆"}
-            </span>
-          </div>
-        </div>
+            </Stars>
+          </RatingContainer>
+        </TestimonialContent>
 
-        <button className="nav-btn right-btn" onClick={nextTestimonial}>
+        <RightBtn onClick={nextTestimonial}>
           &#8250;
-        </button>
-      </div>
-    </section>
+        </RightBtn>
+      </TestimonialContainer>
+    </TestimonialsSectionWrapper>
   );
 };
 

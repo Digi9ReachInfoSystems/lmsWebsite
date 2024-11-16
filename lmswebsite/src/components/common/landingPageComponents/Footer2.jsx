@@ -1,28 +1,31 @@
 import React from "react";
-import "./Footer2.css";
+import {
+  FooterContainer,
+  FooterBottom,
+  FooterText,
+  FooterLinks,
+  FooterLink,
+  FooterSocial,
+  SocialIcon,
+} from "./Footer2.styles";
+import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const Footer2 = () => {
   return (
-    <footer className="footer-container2">
-      <div className="footer-bottom2">
-        <p>© 2024.Toppers Academy.com. All rights reserved</p>
-        <div className="footer-links2">
-          <a href="#">Privacy policy</a>
-          <a href="#">Terms and conditions</a>
-        </div>
-        <div className="footer-social2">
-          <a href="#">
-            <i className="fa fa-facebook"></i>
-          </a>
-          <a href="#">
-            <i className="fa fa-linkedin"></i>
-          </a>
-          <a href="#">
-            <i className="fa fa-twitter"></i>
-          </a>
-        </div>
-      </div>
-    </footer>
+    <FooterContainer>
+      <FooterBottom>
+        <FooterText>© 2024. ToppersAcademy.com. All rights reserved</FooterText>
+        <FooterLinks>
+          <FooterLink href="#">Privacy Policy</FooterLink>
+          <FooterLink href="#">Terms and Conditions</FooterLink>
+        </FooterLinks>
+        <FooterSocial>
+          <SocialIcon href="#"><FaFacebook /></SocialIcon>
+          <SocialIcon href="#"><FaLinkedin /></SocialIcon>
+          <SocialIcon href="#"><FaTwitter /></SocialIcon>
+        </FooterSocial>
+      </FooterBottom>
+    </FooterContainer>
   );
 };
 
