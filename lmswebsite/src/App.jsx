@@ -33,6 +33,9 @@ import TeacherCircular from "./module/teacher/pages/TeacherCircular/TeacherCircu
 import SettingsTabs from "./module/teacher/pages/Settings/SettingTapPage/SettingTabs";
 import QuizBatches from "./module/teacher/pages/Quizz/QuizzBatches/QuizBatches";
 import QuizList from "./module/teacher/pages/Quizz/QuizList/QuizList";
+import SignUpPage from "./pages/SignUpPage/SignUpPage";
+import StudentLandingPage from "./module/student/pages/StudentLandingPage/StudentLandingPage";
+import StudentCourseDetailsPage from "./module/student/pages/PCMBLandingPage/StudentCourseDetailsPage";
 // import PublicRoute from "./module/admin/components/PublicRoute";
 
 function App() {
@@ -61,7 +64,9 @@ function App() {
               </PublicRoute>
             }
           />
-
+          <Route path="/signup" element={<SignUpPage/>} />
+          <Route path="/student" element={<StudentLandingPage/>} />
+           <Route path="/student/courseDetails" element={<StudentCourseDetailsPage/>}/>
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route
             path="/teacher/dashboard"
