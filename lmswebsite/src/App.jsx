@@ -33,9 +33,12 @@ import TeacherCircular from "./module/teacher/pages/TeacherCircular/TeacherCircu
 import SettingsTabs from "./module/teacher/pages/Settings/SettingTapPage/SettingTabs";
 import QuizBatches from "./module/teacher/pages/Quizz/QuizzBatches/QuizBatches";
 import QuizList from "./module/teacher/pages/Quizz/QuizList/QuizList";
+<<<<<<< HEAD
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import StudentLandingPage from "./module/student/pages/StudentLandingPage/StudentLandingPage";
 import StudentCourseDetailsPage from "./module/student/pages/PCMBLandingPage/StudentCourseDetailsPage";
+=======
+>>>>>>> b6af5d5 (Teacher Module)
 // import PublicRoute from "./module/admin/components/PublicRoute";
 
 function App() {

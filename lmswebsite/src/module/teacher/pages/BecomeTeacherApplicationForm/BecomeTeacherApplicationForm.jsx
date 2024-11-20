@@ -7,7 +7,11 @@ import BecomeTeacherLogo from "../../assets/BecomeTeacherLogo.png";
 import { getTeacherApplicationsByUserId, submitTeacherApplication } from "../../../../api/teachersApplicationApi";
 import TeachersSection from "../../components/TeacherSection/TeachersSection";
 import FooterTeacher from "../../components/Footer/FooterTeacher";
+<<<<<<< HEAD
 import { getAllClasses, getClassesByBoardId } from "../../../../api/classApi";
+=======
+import { getAllClasses } from "../../../../api/classApi";
+>>>>>>> b6af5d5 (Teacher Module)
 import {
   ApplicationContainer,
   Form,
@@ -23,9 +27,14 @@ import {
   getTeachersBySubjectAndClass,
   getStudentsBySubjectAndClass,
 } from "../../../../services/createBatch";
+<<<<<<< HEAD
 import { updateUserByAuthId } from "../../../../api/userApi"
 import api from "../../../../config/axiosConfig";
 import { getBoards } from "../../../../api/boardApi";
+=======
+import {updateUserByAuthId} from "../../../../api/userApi"
+import api from "../../../../config/axiosConfig";
+>>>>>>> b6af5d5 (Teacher Module)
 
 const BecomeTeacherApplicationForm = () => {
   const [formVisibility, setFormVisibility] = useState(true);
@@ -35,8 +44,11 @@ const BecomeTeacherApplicationForm = () => {
   const [subjects, setSubjects] = useState([]);
   const [classes, setClasses] = useState([]);
   const [selectedClass, setSelectedClass] = useState([]);
+<<<<<<< HEAD
   const [boardData, setBoardData] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState("");
+=======
+>>>>>>> b6af5d5 (Teacher Module)
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -71,9 +83,17 @@ const BecomeTeacherApplicationForm = () => {
     const session = JSON.parse(localStorage.getItem("sessionData"));
     const apicaller = async () => {
       // const subjectData = await getAllSubjects();
+<<<<<<< HEAD
       const board = await getBoards();
       setBoardData(board);
 
+=======
+      const classData = await getAllClasses();
+      // setClasses(classData);
+      // console.log("kk", subjectData);
+      setClasses(classData);
+      console.log("classes", classData);
+>>>>>>> b6af5d5 (Teacher Module)
       // setSubjects(subjectData);
       const userresponse = await getUserByAuthId(session.userId);
       try {
@@ -105,6 +125,7 @@ const BecomeTeacherApplicationForm = () => {
     }
     apicaller();
   }, []);
+<<<<<<< HEAD
 
   useEffect(() => {
     const apicaller = async () => {
@@ -116,6 +137,8 @@ const BecomeTeacherApplicationForm = () => {
     apicaller();
   }, [selectedBoard]);
 
+=======
+>>>>>>> b6af5d5 (Teacher Module)
   useEffect(() => {
     if (selectedClass.length > 0) {
       const fetchSubjects = async () => {
@@ -124,10 +147,17 @@ const BecomeTeacherApplicationForm = () => {
           console.log("sss data", data);
           setSubjects(subjects.concat(data));
         })
+<<<<<<< HEAD
         console.log("inside ", subjects);
       };
       fetchSubjects();
     } else {
+=======
+ console.log("inside ",subjects);
+      };
+      fetchSubjects();
+    }else{
+>>>>>>> b6af5d5 (Teacher Module)
       setSubjects([]);
     }
   }, [selectedClass]);
@@ -140,6 +170,7 @@ const BecomeTeacherApplicationForm = () => {
       setTimeout(() => setSuccess(null), 3000);
       setFormData((prev) => ({ ...prev, subject_id: slectedSubject.map((option) => option.value) }));
       setFormData((prev) => ({ ...prev, class_id: selectedClass.map((option) => option.value) }));
+<<<<<<< HEAD
       setFormData((prev) => ({ ...prev, board_id: selectedBoard }));
       setTimeout(() => setSuccess(null), 3000);
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
@@ -157,6 +188,23 @@ const BecomeTeacherApplicationForm = () => {
         resume_link: formData.resume,
         profileImage: formData.profileImage,
         board_id: formData.board_id
+=======
+      setTimeout(() => setSuccess(null), 3000);
+      const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
+      const responseUser = await updateUserByAuthId(authId,{name:formData.name,phone_number:formData.phone_number});
+      const submissionData={
+        phone_number:formData.phone_number,
+        class_id:formData.class_id,
+        subject_id:formData.subject_id,
+        state:formData.state,
+        city:formData.city,
+        pincode:formData.pincode,
+        current_position:formData.current_position,
+        experience:formData.experience,
+        language:formData.language,
+        resume_link:formData.resume,
+        profileImage:formData.profileImage
+>>>>>>> b6af5d5 (Teacher Module)
       }
       const response = await submitTeacherApplication(submissionData);
 
@@ -307,6 +355,7 @@ const BecomeTeacherApplicationForm = () => {
               </div>
               <div className="applicationRowThree">
                 <Select
+<<<<<<< HEAD
                   placeholder="Select Board"
                   className="react-select-container"
                   classNamePrefix="react-select"
@@ -321,6 +370,8 @@ const BecomeTeacherApplicationForm = () => {
               <div className="applicationRowThree">
                 {selectedBoard &&
                   <Select
+=======
+>>>>>>> b6af5d5 (Teacher Module)
                   isMulti
                   placeholder="Select classes..."
                   className="react-select-container"
@@ -332,10 +383,17 @@ const BecomeTeacherApplicationForm = () => {
                   onChange={(options) => {
                     setSelectedClass(options);
                   }}
+<<<<<<< HEAD
                 />}
               </div>
               <div className="applicationRowThree">
                 {console.log("Subjects:", subjects)}
+=======
+                />
+              </div>
+              <div className="applicationRowThree">
+              {console.log("Subjects:", subjects)}
+>>>>>>> b6af5d5 (Teacher Module)
                 {subjects &&
 
                   <Select
