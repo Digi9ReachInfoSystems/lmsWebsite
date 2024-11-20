@@ -1,4 +1,4 @@
-import api from "./axiosConfig";
+import api from "../config/axiosConfig";
 
 export const createPackage = async (responseData) => {
     try {
@@ -12,10 +12,10 @@ export const createPackage = async (responseData) => {
 };
 
 
-export const getPackageById = async (classId) => {
+export const getPackageByClassId = async (classId) => {
     try {
         // Call the backend API using the Axios instance
-        const response = await api.get(`/packages/getPackages${classId}`);
+        const response = await api.get(`/packages/getPackages/${classId}`);
         console.log("Package fetched successfully:", response.data);
         return response.data;
     } catch (error) {
