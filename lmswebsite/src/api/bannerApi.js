@@ -1,6 +1,8 @@
-import api from "./axiosConfig";
+import api from "../config/axiosConfig";
 
 export const createBanner = async (responseData) => {
+    console.log("responseData", responseData);
+    
     try {
         // Call the backend API using the Axios instance
         const response = await api.post("/banners/", responseData);

@@ -1,4 +1,4 @@
-// src/components/QuizModel/TeacherAddQuestionModel.styles.js
+ // src/components/QuizModel/TeacherAddQuestionModel.styles.js
 
 import styled from "styled-components";
 import { media, theme } from "../../../../../style/theme/theme"; // Adjust the path as needed
@@ -178,8 +178,8 @@ export const CorrectOptionContainer = styled.div`
   display: flex;
   align-items: center;
   margin-top: 1em;
-
   label {
+  
     margin-right: 0.5em;
     font-weight: bold;
     color: ${theme.colors.gray700};

@@ -71,7 +71,9 @@ const Sidebar = () => {
       icon: <Assignment />,
       link: "/admin/applicationFormReview",
     },
-    { name: "Circulars", icon: <Description />, link: "/admin/circular" },
+    { name: "Circulars", 
+      icon: <Description />, 
+      link: "/admin/circular" },
     { name: "Settings", icon: <Settings />, link: "/admin/settings" },
   ];
 
@@ -240,6 +242,21 @@ const Sidebar = () => {
                   <span className="menu-link-text">Circulars</span>
                 </NavLink>
               </li>
+
+              
+              <li className="menu-item">
+                <NavLink
+                  to="/admin/manageContent"
+                  activeClassName="active"
+                  className="menu-link"
+                >
+                  <span className="menu-link-icon">
+                    <MdPayment />
+                  </span>
+                  <span className="menu-link-text">Manage Content</span>
+                </NavLink>
+              </li>
+
               <li className="menu-item">
                 <NavLink
                   to="/admin/settings"
