@@ -64,3 +64,18 @@ export const getAllStudents = async () => {
       throw error;
     }
   };
+
+
+  export const getStudentByAuthId= async (authId) => {
+    try {
+      const response = await api.get('/students/getstudent/getbyAuthId', {
+        headers: {
+          'auth_id': authId, // Pass the auth_id in headers
+        },
+      });
+      return response.data; // Return the teacher data from the API response
+    } catch (error) {
+      console.error('Error fetching student by auth_id:', error);
+      throw error; // Re-throw error for further handling if needed
+    }
+  };
