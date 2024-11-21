@@ -31,3 +31,14 @@ export const getAllSubjects = async () => {
   }
 };
 
+export const deleteSubjectById = async (subjectId) => {
+  try {
+    const response = await api.delete(`/subjects/${subjectId}`);
+    console.log('Subject deleted successfully:', response.data);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting subject:', error.response?.data || error.message);
+    throw error;
+  }``
+};
+

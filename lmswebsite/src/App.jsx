@@ -11,7 +11,7 @@ import Login from "./pages/Login/Login";
 import ProtectedRoute from "./module/admin/components/ProtectedRoute";
 import CreateNewBatch from "./module/admin/page/createNewBatch/CreateNewBatch";
 // import ApplicationFormReview from "./module/admin/page/ApplicationFormReview/ApplicationFormReview";
-import TeacherApplicationFormView  from "./module/admin/page/ApplicationFormView/TeacherApplicationFormView";
+import TeacherApplicationFormView from "./module/admin/page/ApplicationFormView/TeacherApplicationFormView";
 import TeacherApplicationFormReview from "./module/admin/page/TeachersApplicationFormReview/TeacherApplicationFormReview";
 import Circulars from "./module/admin/page/Circular/Circulars";
 import CreateCircular from "./module/admin/page/CreateCircular/CreateCircular";
@@ -40,7 +40,16 @@ import StudentCourseDetailsPage from "./module/student/pages/PCMBLandingPage/Stu
 =======
 >>>>>>> b6af5d5 (Teacher Module)
 // import PublicRoute from "./module/admin/components/PublicRoute";
+import AssignedBatchStudentsList from "./module/teacher/pages/AssignedBatchStudentsList/AssignedBatchStudentsList";
 
+import ManageContent from "./module/admin/page/ManageContent/ManageContent";
+// import ClassForm from "./module/admin/page/ClassForm/ClassForm";
+// import SubjectForm from "./module/admin/page/SubjectForm/SubjectForm";
+// import BoardForm from "./module/admin/page/BoardForm/BoardForm";
+// import PackageForm from "./module/admin/page/PackageForm/PackageForm";
+// import FaqForm from "./module/admin/page/FaqForm/FaqForm";
+// import BannerForm from "./module/admin/page/BannerForm/BannerForm";
+import ManageContentTable from "./module/admin/page/ManageContentTable/ManageContentTable";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -75,16 +84,17 @@ function App() {
             path="/teacher/dashboard"
             element={
               <ProtectedRoute>
-                <TeacherDashboardLayout/>
+                <TeacherDashboardLayout />
               </ProtectedRoute>
             }
           >
-            <Route index element={<TeacherDashboardScreen/>} />
-            <Route path="/teacher/dashboard/batches" element={<AssignedTeacherBatch/>} />
-            <Route path="/teacher/dashboard/circular" element={<TeacherCircular/>} />
-            <Route path="/teacher/dashboard/setting" element={<SettingsTabs/>} />
-            <Route path="/teacher/dashboard/quizz/assignedBatch" element={<QuizBatches/>} />
-            <Route path="/teacher/dashboard/quizz/batches/:batchId" element={<QuizList/>} />
+            <Route index element={<TeacherDashboardScreen />} />
+            <Route path="/teacher/dashboard/batches" element={<AssignedTeacherBatch />} />
+            <Route path="/teacher/dashboard/assigned-batches/:batchId" element={<AssignedBatchStudentsList />} />
+            <Route path="/teacher/dashboard/circular" element={<TeacherCircular />} />
+            <Route path="/teacher/dashboard/setting" element={<SettingsTabs />} />
+            <Route path="/teacher/dashboard/quizz/assignedBatch" element={<QuizBatches />} />
+            <Route path="/teacher/dashboard/quizz/batches/:batchId" element={<QuizList />} />
           </Route>
           <Route
             path="/admin"
@@ -112,10 +122,20 @@ function App() {
               path="/admin/applicationFormReview/teacher/:teacherId"
               element={<TeacherApplicationFormReview />}
             />
-            <Route path="/admin/userManagement" element={<UserManagement/>} />
+            <Route path="/admin/userManagement" element={<UserManagement />} />
             <Route path="/admin/circular" element={<Circulars />} />
             <Route path="/admin/createcircular" element={<CreateCircular />} />
             <Route path="/admin/customerQueries" element={<CustomerQuery />} />
+
+
+            <Route path="/admin/manageContent" element={<ManageContent />}>
+          <Route path="class" element={<ManageContentTable contentType="class" />} />
+          <Route path="subject" element={<ManageContentTable contentType="subject" />} />
+          <Route path="board" element={<ManageContentTable contentType="board" />} />
+          <Route path="package" element={<ManageContentTable contentType="package" />} />
+          <Route path="faq" element={<ManageContentTable contentType="faq" />} />
+          <Route path="banner" element={<ManageContentTable contentType="banner" />} />
+        </Route>
             <Route
               path="/admin/customerQueries/:queryId"
               element={<CustomerQueryFormView />}

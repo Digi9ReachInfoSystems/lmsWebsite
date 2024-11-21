@@ -10,9 +10,13 @@ import api from '../config/axiosConfig';
  * @returns {Object} - The created class data from the API
  */
 // Function to create a new class
+
+
+
 export const createClass = async (classData) => {
     try {
-        const response = await api.post('/classes', classData);
+        console.log(classData);
+        const response = await api.post('/classes/', classData);
         console.log('Class created successfully:', response.data);
         return response.data; // Return the created class data
     } catch (error) {
@@ -20,6 +24,21 @@ export const createClass = async (classData) => {
         throw error; // Throw error for further handling
     }
 };
+
+
+export const getClassesByBoardId = async (boardId) => {
+    try {
+        const response = await api.get(`/classes/board/${boardId}`);
+        console.log('Fetched classes by board ID:', response.data);
+        return response.data; // Return fetched classes
+    } catch (error) {
+        console.error('Error fetching classes by board ID:', error.response?.data || error.message);
+        throw error; // Throw error for further handling
+    }
+};  
+
+
+
 // Function to fetch all classes
 export const getAllClasses = async () => {
     try {

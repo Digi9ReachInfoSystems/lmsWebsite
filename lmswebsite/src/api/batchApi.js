@@ -43,10 +43,25 @@ export const getAllBatchesNoFilter = async () => {
 export const getBatchesByTeacherId = async (teacherId) => {
   try {
     const response = await api.get(`/batches/getBatches/teacher/${teacherId}`);
+    console.log("batches fetched succesfully",response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching batches:', error);
     throw error; // Re-throw the error to handle it in the calling function
   }
 };
+
+
+export const getBatchById = async(batch_id)=>{
+  try{
+    const response = await api.get(`/batches/${batch_id}`);
+    console.log("batches fetched succesfully",response.data);
+    return response.data;
+
+  }catch(error)
+  {
+    console.error("Error fetching batch",error);
+    throw error;
+  }
+}
 
