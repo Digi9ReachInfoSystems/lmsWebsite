@@ -2,7 +2,7 @@
 
 import React from 'react';
 import axiosInstance from '../../../../config/axiosConfig'; // Adjust the path as needed
-
+import { EnrollButton  }from "./PaymentComponet.style";
 const PaymentComponent = ({ studentId, packageId, amount }) => {
   const handlePayment = async () => {
     try {
@@ -67,7 +67,13 @@ const PaymentComponent = ({ studentId, packageId, amount }) => {
     }
   };
 
-  return <button onClick={handlePayment}>Pay Now</button>;
+
+  return (
+    <EnrollButton onClick={handlePayment}>
+      Pay Now
+    </EnrollButton>
+
+ )
 };
 
 export default PaymentComponent;

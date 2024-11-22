@@ -1,5 +1,4 @@
 import api from "../config/axiosConfig";
- 
 export const createCustomPackage = async (responseData) => {
     try {
         // Call the backend API using the Axios instance
@@ -21,4 +20,5 @@ export const getPackages = async () => {
     } catch (error) {
         console.error("Error fetching Custom Packages:", error.response?.data || error.message);    
     }
+
 }

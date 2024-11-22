@@ -15,6 +15,7 @@ import {
   GetStartedButton,
 } from "./StudentExistingPackages.style";
 import { TiTick } from "react-icons/ti";
+import { Link } from "react-router-dom";
 
 const packages = [
   {
@@ -55,7 +56,7 @@ const packages = [
   },
 ];
 
-const StudentExistingPackages = ({data}) => {
+const StudentExistingPackages = ({data,studentId}) => {
   return (
     <Container>
       <Header>
@@ -87,9 +88,9 @@ const StudentExistingPackages = ({data}) => {
                 }}
                 size={20}
               />
-              {pkg.name}
+              {pkg.package_name}
             </PlanTitle>
-            <PlanPrice>{pkg.price}</PlanPrice>
+            <PlanPrice>₹ {pkg.price}</PlanPrice>
             <PlanDescription>{pkg.description}</PlanDescription>
             <PlanFeatures>
               {pkg.features.map((feature, idx) => (
@@ -111,7 +112,9 @@ const StudentExistingPackages = ({data}) => {
                 </div>
               ))}
             </PlanFeatures>
-            <GetStartedButton>Get started</GetStartedButton>
+            <Link to = {`/student/course/details`} state={{data:pkg,studentId}}>
+            <GetStartedButton>Get started </GetStartedButton>
+            </Link>
           </Plan>
         ))}
       </PlanContainer>
