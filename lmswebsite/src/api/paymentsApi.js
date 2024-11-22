@@ -11,7 +11,7 @@ import api from '../config/axiosConfig';
  */
 export const createPaymentApi = async (paymentData) => {
     try {
-        const response = await api.post('/payment', paymentData);
+        const response = await api.post('/api/payment', paymentData);
         console.log('Payment created successfully:', response.data);
         return response.data; // Return the payment details
     } catch (error) {
@@ -26,7 +26,7 @@ export const createPaymentApi = async (paymentData) => {
  */
 export const getAllPaymentsApi = async () => {
     try {
-        const response = await api.get('/payment');
+        const response = await api.get('/api/payments/allPayments');
         console.log('Payments fetched successfully:', response.data);
         return response.data; // Return the response data containing all payments
     } catch (error) {
