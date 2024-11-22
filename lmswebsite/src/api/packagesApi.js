@@ -68,4 +68,13 @@ export const updatePackageById = async (packageId, responseData) => {
     }
 }
 
-
+export const getPackageById = async (packageId) => {
+    try {
+        // Call the backend API using the Axios instance
+        const response = await api.get(`/packages/getPackageById/single/${packageId}`);
+        console.log("Package fetched successfully:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching package:", error.response?.data || error.message);
+    }
+}
