@@ -125,3 +125,16 @@ export const MobileMenu = styled.div`
     }
   }
 `;
+export const SignUpButton = styled.button`
+  background-color: #ff0080;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e60073;
+  }
+`;
