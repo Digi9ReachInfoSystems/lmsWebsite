@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, createRoutesFromElements ,createBrowserRouter} from "react-router-dom";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./style/theme/theme"; // Import your theme
 import { GlobalStyles } from "./style/GlobalStyles/GlobalStyles"; // Import your global styles
@@ -33,17 +33,17 @@ import TeacherCircular from "./module/teacher/pages/TeacherCircular/TeacherCircu
 import SettingsTabs from "./module/teacher/pages/Settings/SettingTapPage/SettingTabs";
 import QuizBatches from "./module/teacher/pages/Quizz/QuizzBatches/QuizBatches";
 import QuizList from "./module/teacher/pages/Quizz/QuizList/QuizList";
-<<<<<<< HEAD
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
-import StudentLandingPage from "./module/student/pages/StudentLandingPage/StudentLandingPage";
-import StudentCourseDetailsPage from "./module/student/pages/PCMBLandingPage/StudentCourseDetailsPage";
-=======
->>>>>>> b6af5d5 (Teacher Module)
+import{ StudentLandingPage,loaderFunction as studentLandingPageLoader} from "./module/student/pages/StudentLandingPage/StudentLandingPage";
+import StudentCourseDetailsPage from "./module/student/pages/StudentCourseDetailsPage/StudentCourseDetailsPage";
+import SubscriptionSuccess from "./module/student/pages/SubscriptionSuccess/SubscriptionSuccess";
+
+
 // import PublicRoute from "./module/admin/components/PublicRoute";
 
 function App() {
   const [count, setCount] = useState(0);
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Router>
@@ -68,8 +68,11 @@ function App() {
             }
           />
           <Route path="/signup" element={<SignUpPage/>} />
-          <Route path="/student" element={<StudentLandingPage/>} />
-           <Route path="/student/courseDetails" element={<StudentCourseDetailsPage/>}/>
+          <Route path="/student"  loader={studentLandingPageLoader} element={<StudentLandingPage />} />
+          <Route path="/student/course/details" element={<StudentCourseDetailsPage/>}/>
+          <Route path="/student/package/successPage/" element={<SubscriptionSuccess/>}/>
+
+
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route
             path="/teacher/dashboard"
@@ -123,6 +126,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      {/* <RouterProvider router={router} /> */}
     </ThemeProvider>
   );
 }

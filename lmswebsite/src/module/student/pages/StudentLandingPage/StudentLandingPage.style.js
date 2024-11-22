@@ -152,14 +152,30 @@ export const AvailableSlotsContainer = styled.div`
 
 export const Slot = styled.div`
   padding: 8px;
-  background-color: #fff;
+  background-color: : ${(props) =>(props.isSelected ? "#EE1B7A" : "#fff")};
+  color:${(props) =>(props.isSelected ? "#fff" : "#000")};
   border: 1px solid #dcdcdc;
   border-radius: 50px;
   text-align: center;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 500;k
+  cursor: pointer;
+
 
   &:hover {
-    cursor: pointer;
+    background-color: #ffc1cd;
+    color: #fff;
   }
+`;
+
+export const CustomPackageStatus = styled.h2`
+text-align: center;
+font-size: 42px;
+font-weight: 800;
+display: flex;
+align-items: center;
+justify-content: center;
+height:400px;
+width:100%;
+margin:0px;
 `;
