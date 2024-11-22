@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme } from "../../../../style/theme/theme"; // Import the theme from theme.js
+import { theme } from "../../../../../style/theme/theme"; // Import the theme from theme.js
 
 // Container for the Create Class page
 export const Container = styled.div`

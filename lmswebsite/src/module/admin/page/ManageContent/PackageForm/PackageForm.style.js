@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { theme, media } from "../../../../style/theme/theme"; // Adjust the path to your theme file
+import { theme, media } from "../../../../../style/theme/theme"; // Adjust the path to your theme file
 
 export const FormContainer = styled.div`
   background-color: ${theme.colors.white};

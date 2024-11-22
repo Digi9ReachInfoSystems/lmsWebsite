@@ -8,7 +8,7 @@ export const CustomerQueryViewFormWrap = styled.div`
   padding: 20px;
   background-color: ${theme.colors.backgroundLight};
   width: 100%;
-  max-width: 800px; /* Limits the width of the container */
+  // max-width: 800px; /* Limits the width of the container */
   margin: 0 auto; /* Centers the container */
 
   ${media.md`
@@ -50,7 +50,7 @@ export const QueryFormContainer = styled.div`
   background: white;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+ 
 
   ${media.md`
     padding: 1em;

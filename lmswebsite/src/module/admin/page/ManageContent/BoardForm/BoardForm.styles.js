@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { theme, media } from "../../../../style/theme/theme";
+import { theme, media } from "../../../../../style/theme/theme";
 
 export const FormContainer = styled.div`
     background-color: ${theme.colors.seasalt};
@@ -90,7 +90,7 @@ export const Label = styled.label`
 
 export const Input = styled.input`
     flex: 1;
-    padding: 0.5em;
+    padding: 0.5em .8em;
     border: 2px solid ${theme.colors.primary};
     border-radius: 4px;
     border-color: ${theme.colors.primary};

@@ -10,8 +10,9 @@ import {
   getClasses,
   getSubjects,
   getTeachersBySubjectAndClass,
-  getStudentsBySubjectAndClass,
+
 } from "../../../../services/createBatch";
+import { getStudentsByClassId } from "../../../../api/studentApi";
 import styled from "styled-components";
 const ModalContent = styled.div`
   position: fixed;
@@ -193,15 +194,15 @@ const CreateNewBatch = ({ open, handleClose }) => {
         );
         setTeachers(teacherData || []);
 
-        const studentData = await getStudentsBySubjectAndClass(
-          subjectId,
+        const studentData = await getStudentsByClassId(
+
           classId
         );
         setStudents(studentData || []);
       };
       fetchTeachersAndStudents();
     }
-  }, [classId, subjectId]);
+  }, [classId]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -231,7 +232,7 @@ const CreateNewBatch = ({ open, handleClose }) => {
     setCoverImage(file);
   };
 
-  const handleFileChange = async(e) => {
+  const handleFileChange = async (e) => {
     const { files } = e.target;
     setBatch_image(files[0]);
     const downloadUrl = await uploadFileToFirebase(files[0], "batcheImages");
@@ -242,15 +243,15 @@ const CreateNewBatch = ({ open, handleClose }) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-   
+
     const batchData = {
-      batch_name:batchName,
-      batch_image:coverImage,
-      subject_id:subjectId,
-      class_id:classId,
-      teacher_id:selectedTeacher.map((teacher) => teacher.value),
-      students:selectedStudents.map((student) => student.value),
-      date:startDate,
+      batch_name: batchName,
+      batch_image: coverImage,
+      subject_id: subjectId,
+      class_id: classId,
+      teacher_id: selectedTeacher.map((teacher) => teacher.value),
+      students: selectedStudents.map((student) => student.value),
+      date: startDate,
     }
     // const batchData = {
 
@@ -325,15 +326,22 @@ const CreateNewBatch = ({ open, handleClose }) => {
               />
             </FormSection>
 
+           
+
             <FormSection>
               <label>Select Teachers</label>
               <Select
                 isMulti
-                options={teachers.map((teacher) => ({
-                  value: teacher._id,
-                  label: teacher.user_id.name,
-                }))}
-                onChange={(options) => setSelectedTeacher(options)}
+                options={teachers
+                  .filter(
+                    (teacher) =>
+                      teacher.user_id && teacher.user_id.name && teacher._id
+                  )
+                  .map((teacher) => ({
+                    value: teacher._id,
+                    label: teacher.user_id.name,
+                  }))}
+                onChange={(options) => setSelectedTeacher(options || [])}
               />
             </FormSection>
 
@@ -341,13 +349,19 @@ const CreateNewBatch = ({ open, handleClose }) => {
               <label>Select Students</label>
               <Select
                 isMulti
-                options={students.map((student) => ({
-                  value: student._id,
-                  label: student.user_id.name,
-                }))}
-                onChange={(options) => setSelectedStudents(options)}
+                options={students
+                  .filter(
+                    (student) =>
+                      student.user_id && student.user_id.name && student._id
+                  )
+                  .map((student) => ({
+                    value: student._id,
+                    label: student.user_id.name,
+                  }))}
+                onChange={(options) => setSelectedStudents(options || [])}
               />
             </FormSection>
+
 
             <FormSection>
               <label>Upload Batch Image</label>

@@ -8,9 +8,9 @@ import {
   RadioGroup,
   FormItem,
 } from "./SubjectForm.style"; // Import your styled-components
-import { createSubject } from "../../../../api/subjectApi";
-import { getBoards } from "../../../../api/boadApi";
-import { getClassesByBoardId } from "../../../../api/classApi";
+import { createSubject } from "../../../../../api/subjectApi";
+import { getBoards } from "../../../../../api/boadApi";
+import { getClassesByBoardId } from "../../../../../api/classApi";
 import { message, Spin, Alert } from "antd"; // Ant Design components for feedback
 
 const SubjectForm = () => {

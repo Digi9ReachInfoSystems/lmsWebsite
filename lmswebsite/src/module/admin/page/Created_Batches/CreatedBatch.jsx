@@ -4,7 +4,8 @@ import { FaSearch } from "react-icons/fa";
 import { getAllBatchesNoFilter,getAllBatches } from "../../../../api/batchApi"; // Adjust the path if needed
 import { CreatedBatchWrap } from "./CreatedBatches.styles";
 import DashboardTable from "../../components/DashboardTable/DashboardTable";
-import CreateNewBatch from "../CreateNewBatch/CreateNewBatch"; // Import the modal component
+import CreateNewBatch from "../createNewBatch/CreateNewBatch"; // Import the modal component
+import FormModel from "../../components/FormModel/FormModel";
 
 export default function CreatedBatch() {
   const [searchInput, setSearchInput] = useState("");
@@ -15,32 +16,39 @@ export default function CreatedBatch() {
   const columns = [
     "Batch Name",
     "Teacher's Name",
+     "No of Students",
     "Date",
     "Time",
     "Subject",
     "Class",
-    "Action",
   ];
 
   // Fetch data on component mount
   useEffect(() => {
     const apiCaller = async () => {
-      const data = await getAllBatches();
-      if (data) {
-        const dataFilter = data.data.map((batch) => ({
-          "Batch Name": batch.batch_name,
-          "Teacher's Name": batch.teacher_id.user_id?.name || "N/A",
-          "No of Students": batch.students.length,
-          Date: new Date(batch.date).toLocaleDateString(),
-          Time: new Date(batch.date).toLocaleTimeString(),
-        }));
-        setOriginalData(dataFilter);
-        setFilterData(dataFilter); // Set initial table data
+      try {
+        const data = await getAllBatches();
+        if (data && Array.isArray(data.batches)) {
+          const dataFilter = data.batches.map((batch) => ({
+            "Batch Name": batch.batch_name,
+            "Teacher's Name":[ batch.teacher_id.map((teacher) => teacher.user_id.name+",")],
+            "No of Students": batch.students ? batch.students.length : 0,
+            Date: new Date(batch.date).toLocaleDateString(),
+            Time: new Date(batch.date).toLocaleTimeString(),
+            Subject: batch.subject_id?.subject_name || "N/A",
+            Class: batch.class_id?.classLevel || "N/A",
+          }));
+          setOriginalData(dataFilter);
+          setFilterData(dataFilter); // Set initial table data
+        } else {
+          console.error('Unexpected data format:', data);
+        }
+      } catch (error) {
+        console.error('Error fetching batches:', error);
       }
     };
     apiCaller();
-  }, []);
-
+  }, []); 
   // Filter data based on searchInput for "Batch Name"
   useEffect(() => {
     if (searchInput) {
@@ -99,6 +107,9 @@ export default function CreatedBatch() {
         ) : (
           <p>No results found</p>
         )}
+        {
+          isModalOpen ? <FormModel isOpen={isModalOpen} onClose={handleCloseModal} children={<CreateNewBatch />} /> : null
+        }
       </div>
 
       {/* CreateNewBatch Modal */}

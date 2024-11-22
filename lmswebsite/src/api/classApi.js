@@ -84,13 +84,3 @@ export const updateClass = async (classId, updatedData) => {
     }
   };
 
-export const getClassesByBoardId = async (boardId) => {
-    try {
-        const response = await api.get(`/classes/board/${boardId}`);
-        console.log('Fetched classes by board ID:', response.data);
-        return response.data; // Return fetched classes
-    } catch (error) {
-        console.error('Error fetching classes by board ID:', error.response?.data || error.message);
-        throw error; // Throw error for further handling
-    }
-};  

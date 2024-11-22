@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FormContainer } from "./BannerForm.style"; // Import styles
-import { createBanner } from "../../../../api/bannerApi"; // Adjust the path to your API function
-import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
+import { createBanner } from "../../../../../api/bannerApi"; // Adjust the path to your API function
+import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase";
 
 const BannerForm = () => {
   const [formData, setFormData] = useState({

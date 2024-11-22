@@ -2,55 +2,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom"; // Import Link here
 import { theme, media } from "../../../../style/theme/theme";
 
-export const CreateCircularFormWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  padding: 20px;
-  background-color: ${theme.colors.backgroundLight};
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
 
-  ${media.md`
-    max-width: 600px;
-    padding: 15px;
-  `}
-
-  ${media.sm`
-    max-width: 100%;
-    padding: 10px;
-  `}
-
-  .createCircular-title {
-    font-family: ${theme.typography.fontFamily};
-    font-size: 2rem;
-    font-weight: bold;
-    color: ${theme.colors.primary};
-    margin-bottom: 20px;
-
-    ${media.md`
-      font-size: 1.8rem;
-    `}
-
-    ${media.sm`
-      font-size: 1.6rem;
-    `}
-  }
-
-  .success_message {
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 10px;
-    color: ${(props) => (props.theme.colors.emerald )};
-  }
-    .error_message {
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 10px;
-    color: ${(props) => ( props.theme.colors.red )};
-  }
-`;
 
 export const CircularFormContainer = styled.div`
   display: flex;
@@ -59,7 +11,7 @@ export const CircularFormContainer = styled.div`
   background: ${theme.colors.white};
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+
 
   ${media.md`
     padding: 1em;

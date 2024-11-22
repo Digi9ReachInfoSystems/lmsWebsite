@@ -33,12 +33,9 @@ import TeacherCircular from "./module/teacher/pages/TeacherCircular/TeacherCircu
 import SettingsTabs from "./module/teacher/pages/Settings/SettingTapPage/SettingTabs";
 import QuizBatches from "./module/teacher/pages/Quizz/QuizzBatches/QuizBatches";
 import QuizList from "./module/teacher/pages/Quizz/QuizList/QuizList";
-<<<<<<< HEAD
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
 import StudentLandingPage from "./module/student/pages/StudentLandingPage/StudentLandingPage";
 import StudentCourseDetailsPage from "./module/student/pages/PCMBLandingPage/StudentCourseDetailsPage";
-=======
->>>>>>> b6af5d5 (Teacher Module)
 // import PublicRoute from "./module/admin/components/PublicRoute";
 import AssignedBatchStudentsList from "./module/teacher/pages/AssignedBatchStudentsList/AssignedBatchStudentsList";
 
@@ -49,7 +46,8 @@ import ManageContent from "./module/admin/page/ManageContent/ManageContent";
 // import PackageForm from "./module/admin/page/PackageForm/PackageForm";
 // import FaqForm from "./module/admin/page/FaqForm/FaqForm";
 // import BannerForm from "./module/admin/page/BannerForm/BannerForm";
-import ManageContentTable from "./module/admin/page/ManageContentTable/ManageContentTable";
+import ManageContentTable from "./module/admin/page/ManageContent/ManageContentTable/ManageContentTable";
+import CustomPackage from "./module/admin/page/CustomPackage/CustomPackage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -136,6 +134,8 @@ function App() {
           <Route path="faq" element={<ManageContentTable contentType="faq" />} />
           <Route path="banner" element={<ManageContentTable contentType="banner" />} />
         </Route>
+     
+     <Route path="/admin/customPackage" element={<CustomPackage  />} />
             <Route
               path="/admin/customerQueries/:queryId"
               element={<CustomerQueryFormView />}
