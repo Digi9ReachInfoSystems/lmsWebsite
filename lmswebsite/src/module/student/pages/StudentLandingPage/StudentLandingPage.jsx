@@ -132,7 +132,7 @@ export const StudentLandingPage = () => {
       try {
         const response = await createCustomPackage({ subject_id: slectedSubject, student_id: studentDataForm.student._id, slots: slot });
         console.log("response", response);
-        windows.location.reload();
+        window.location.reload();
       } catch (err) {
         console.error("Error submitting Packages:", err);
       }

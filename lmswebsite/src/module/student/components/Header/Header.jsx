@@ -8,16 +8,23 @@ import {
   DropdownContent,
   HamburgerMenu,
   MobileMenu,
+  SignUpButton,
 } from "./Header.styles";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isStudyMaterialOpen, setIsStudyMaterialOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
+  const navigate= useNavigate();
   const toggleCoursesDropdown = () => {
     setIsCoursesOpen(!isCoursesOpen);
     setIsStudyMaterialOpen(false);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/");
   };
 
   const toggleStudyMaterialDropdown = () => {
@@ -96,6 +103,7 @@ const Header = () => {
           </NavLinks>
         </MobileMenu>
       )}
+      <SignUpButton onClick={handleLogout}>Logout</SignUpButton>
     </HeaderContainer>
   );
 };
