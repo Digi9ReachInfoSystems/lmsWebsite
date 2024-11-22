@@ -14,6 +14,7 @@ import {
   SignInButton,
   SignUpButton,
 } from "./Header.styles";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
@@ -39,7 +40,7 @@ const Header = () => {
       <Logo href="/">
         <LogoImage src={logo} alt="The Toppers Academy" />
       </Logo>
-      
+
       <MenuIcon onClick={toggleMenu}>
         <Hamburger className={isMenuOpen ? "open" : ""} />
       </MenuIcon>
@@ -73,8 +74,12 @@ const Header = () => {
       </NavMenu>
 
       <AuthButtons>
-        <SignInButton>Sign In</SignInButton>
-        <SignUpButton>Sign Up</SignUpButton>
+        <Link to="/login">
+          <SignInButton>Sign In</SignInButton>
+        </Link>
+        <Link to="/signup">
+          <SignUpButton>Sign Up</SignUpButton>
+        </Link>
       </AuthButtons>
     </HeaderContainer>
   );

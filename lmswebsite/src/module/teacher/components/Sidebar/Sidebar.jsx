@@ -149,79 +149,11 @@ const Sidebar = () => {
                   <span className="menu-link-text">Settings</span>
                 </NavLink>
               </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/customerQueries"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <RiCustomerServiceLine />
-                  </span>
-                  <span className="menu-link-text">Customer Queries</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/customPayments"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <MdPayment />
-                  </span>
-                  <span className="menu-link-text">Manage Payment</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/CustomPackages"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <RiCustomerServiceLine />
-                  </span>
-                  <span className="menu-link-text">Custom Package</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/scheduleClass"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <AiTwotoneSchedule />
-                  </span>
-                  <span className="menu-link-text">Schedule Class</span>
-                </NavLink>
-              </li>
              
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/applicationFormReview"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <FaWpforms />
-                  </span>
-                  <span className="menu-link-text">Application Form</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/userManagement"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <FaUsersGear />
-                  </span>
-                  <span className="menu-link-text">User Management</span>
-                </NavLink>
-              </li>
+             
+            
+            
+            
 
              
               <li className="menu-item">

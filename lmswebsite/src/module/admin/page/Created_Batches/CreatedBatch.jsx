@@ -1,119 +1,136 @@
 import React, { useState, useEffect } from "react";
-import { AiOutlineFileAdd } from "react-icons/ai";
-import { FaSearch } from "react-icons/fa";
-import { getAllBatchesNoFilter,getAllBatches } from "../../../../api/batchApi"; // Adjust the path if needed
-import { CreatedBatchWrap } from "./CreatedBatches.styles";
-import DashboardTable from "../../components/DashboardTable/DashboardTable";
-import CreateNewBatch from "../createNewBatch/CreateNewBatch"; // Import the modal component
-import FormModel from "../../components/FormModel/FormModel";
+import { Table, Button, Input, Modal, message } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { getAllBatches } from "../../../../api/batchApi";
+import CreateNewBatch from "../createNewBatch/CreateNewBatch";
+import { Container } from "./CreatedBatches.styles";
 
-export default function CreatedBatch() {
+const CreatedBatch = () => {
+  const [batches, setBatches] = useState([]);
+  const [filteredBatches, setFilteredBatches] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  const [filterData, setFilterData] = useState([]);
-  const [originalData, setOriginalData] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to control modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const fetchBatches = async () => {
+    try {
+      const data = await getAllBatches();
+      if (data && Array.isArray(data.batches)) {
+        const formattedData = data.batches.map((batch) => ({
+          key: batch._id, // Ant Design requires a unique key for table rows
+          batchName: batch.batch_name,
+          teachers: batch.teacher_id.map((teacher) => teacher.user_id.name).join(", ") || "N/A",
+          numOfStudents: batch.students ? batch.students.length : 0,
+          date: new Date(batch.date).toLocaleDateString(),
+          time: new Date(batch.date).toLocaleTimeString(),
+          subject: batch.subject_id?.subject_name || "N/A",
+          class: batch.class_id?.classLevel || "N/A",
+        }));
+        setBatches(formattedData);
+        setFilteredBatches(formattedData);
+      } else {
+        message.error("Unexpected data format from server.");
+      }
+    } catch (error) {
+      console.error("Error fetching batches:", error);
+      message.error("Failed to fetch batches.");
+    }
+  };
+
+  useEffect(() => {
+    fetchBatches();
+  }, []);
+
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchInput(value);
+    const filtered = batches.filter((batch) =>
+      batch.batchName.toLowerCase().includes(value)
+    );
+    setFilteredBatches(filtered);
+  };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => {
+    setIsModalOpen(false);
+    fetchBatches(); // Refresh data after creating a new batch
+  };
 
   const columns = [
-    "Batch Name",
-    "Teacher's Name",
-     "No of Students",
-    "Date",
-    "Time",
-    "Subject",
-    "Class",
+    {
+      title: "Batch Name",
+      dataIndex: "batchName",
+      key: "batchName",
+    },
+    {
+      title: "Teacher's Name",
+      dataIndex: "teachers",
+      key: "teachers",
+    },
+    {
+      title: "No. of Students",
+      dataIndex: "numOfStudents",
+      key: "numOfStudents",
+    },
+    {
+      title: "Date",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Time",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Subject",
+      dataIndex: "subject",
+      key: "subject",
+    },
+    {
+      title: "Class",
+      dataIndex: "class",
+      key: "class",
+    },
   ];
 
-  // Fetch data on component mount
-  useEffect(() => {
-    const apiCaller = async () => {
-      try {
-        const data = await getAllBatches();
-        if (data && Array.isArray(data.batches)) {
-          const dataFilter = data.batches.map((batch) => ({
-            "Batch Name": batch.batch_name,
-            "Teacher's Name":[ batch.teacher_id.map((teacher) => teacher.user_id.name+",")],
-            "No of Students": batch.students ? batch.students.length : 0,
-            Date: new Date(batch.date).toLocaleDateString(),
-            Time: new Date(batch.date).toLocaleTimeString(),
-            Subject: batch.subject_id?.subject_name || "N/A",
-            Class: batch.class_id?.classLevel || "N/A",
-          }));
-          setOriginalData(dataFilter);
-          setFilterData(dataFilter); // Set initial table data
-        } else {
-          console.error('Unexpected data format:', data);
-        }
-      } catch (error) {
-        console.error('Error fetching batches:', error);
-      }
-    };
-    apiCaller();
-  }, []); 
-  // Filter data based on searchInput for "Batch Name"
-  useEffect(() => {
-    if (searchInput) {
-      const filtered = originalData.filter((item) =>
-        item["Batch Name"].toLowerCase().includes(searchInput.toLowerCase())
-      );
-      setFilterData(filtered);
-    } else {
-      setFilterData(originalData); // Reset to original data if search is empty
-    }
-  }, [searchInput, originalData]);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true); // Open modal
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false); // Close modal
-  };
-
   return (
-    <CreatedBatchWrap className="content-area">
-      <div className="area-row ar-one">
-        <div className="created-batch-batches_nav">
-          <h2 className="created-batch-batch_title">Created Batches</h2>
-          <div className="create-Batch-search">
-            <form>
-              <div className="input-group">
-                <span className="input-icon">
-                  <FaSearch />
-                </span>
-                <input
-                  type="text"
-                  className="input-control"
-                  placeholder="Search by Batch Name"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                />
-              </div>
-            </form>
-          </div>
-          {/* Link replaced with button to open modal */}
-          <button
-            onClick={handleOpenModal} // Open modal on click
-            className="created-batch-batch_btn"
-          >
-            <AiOutlineFileAdd className="created-batch-batch_icon" />
-            <span>Create Batch</span>
-          </button>
+    <Container>
+      <div className="header">
+        <h2>Created Batches</h2>
+        <div className="actions">
+          <Input
+            placeholder="Search by Batch Name"
+            value={searchInput}
+            onChange={handleSearch}
+            allowClear
+            style={{ width: 300 }}
+          />
+          <Button type="primary" style={{ background: "#EE1B7A", borderColor: "#EE1B7A" }} icon={<PlusOutlined />} onClick={openModal}>
+            Create Batch
+          </Button>
         </div>
       </div>
-      <div className="area-row ar-two"></div>
-      <div className="area-row ar-three">
-        {filterData.length > 0 ? (
-          <DashboardTable columns={columns} data={filterData} />
-        ) : (
-          <p>No results found</p>
-        )}
-        {
-          isModalOpen ? <FormModel isOpen={isModalOpen} onClose={handleCloseModal} children={<CreateNewBatch />} /> : null
-        }
-      </div>
 
-      {/* CreateNewBatch Modal */}
-      <CreateNewBatch open={isModalOpen} handleClose={handleCloseModal} />
-    </CreatedBatchWrap>
+      <Table
+        dataSource={filteredBatches}
+        columns={columns}
+        bordered
+        pagination={{ pageSize: 6 }}
+      />
+
+<Modal
+  title="Create New Batch"
+  visible={isModalOpen}
+  onCancel={closeModal}
+  footer={null}
+  centered
+  destroyOnClose
+  style={{backgroundColor: "none", marginRight:"15px"}}
+>
+  <CreateNewBatch open={isModalOpen} closeModal={closeModal} />
+</Modal>
+    </Container>
   );
-}
+};
+
+export default CreatedBatch;

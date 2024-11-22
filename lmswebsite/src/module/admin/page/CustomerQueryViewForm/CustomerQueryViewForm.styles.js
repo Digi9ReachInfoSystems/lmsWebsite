@@ -6,9 +6,9 @@ export const CustomerQueryViewFormWrap = styled.div`
   flex-direction: column;
   gap: 24px;
   padding: 20px;
-  background-color: ${theme.colors.backgroundLight};
+  background: ${theme.colors.backgroundLight};
   width: 100%;
-  // max-width: 800px; /* Limits the width of the container */
+  max-width: 800px; /* Limits the width of the container */
   margin: 0 auto; /* Centers the container */
 
   ${media.md`
@@ -50,6 +50,7 @@ export const QueryFormContainer = styled.div`
   background: white;
   padding: 20px;
   border-radius: 8px;
+  // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
  
 
   ${media.md`

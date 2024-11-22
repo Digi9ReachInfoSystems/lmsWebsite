@@ -91,6 +91,7 @@ const SignUpPage = () => {
           refresh_token: user._tokenResponse.refreshToken,
         }
         await signupUser(data);
+        localStorage.clear();
         navigate("/login");
       }else if(role === "student"){
         const data = {
