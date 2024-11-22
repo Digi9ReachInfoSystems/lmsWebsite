@@ -31,21 +31,7 @@ import { getSubjects } from "../../../../services/createBatch";
 import { createCustomPackage } from "../../../../api/customPackageApi"
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
-export const loaderFunction = async () => {
-  const sessionData = JSON.parse(localStorage.getItem("sessionData"));
-  const user = await getUserByAuthId(sessionData.userId);
-  const data = await getStudentByAuthId(sessionData.userId);
-  const packageResponse = await getPackageByClassId(data.student.class._id);
-  const subjectResponse = await getSubjects(data.student.class._id);
-  const response = await getClassesByBoardId(data.student.board_id._id);
-  return {
-    data: data,
-    packageResponse: packageResponse,
-    user: user,
-    subjectResponse: subjectResponse,
-    response: response,
-  };
-}
+
 
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
