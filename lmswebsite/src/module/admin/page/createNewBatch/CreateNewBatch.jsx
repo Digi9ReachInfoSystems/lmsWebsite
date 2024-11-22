@@ -1,171 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Box, Button, Typography } from "@mui/material"; // Import necessary components from MUI
-import Select from "react-select";
-// import { FiFileText, FaUpload } from "react-icons/fi";
-import { getAllTeachers } from "../../../../api/teacherApi";
-import { getAllStudents } from "../../../../api/studentApi";
+import { Modal, Form, Input, Select, Button, DatePicker, Upload, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 import { createBatch } from "../../../../api/batchApi";
-import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
-import {
-  getClasses,
-  getSubjects,
-  getTeachersBySubjectAndClass,
-
-} from "../../../../services/createBatch";
+import { getClasses, getSubjects, getTeachersBySubjectAndClass } from "../../../../services/createBatch";
 import { getStudentsByClassId } from "../../../../api/studentApi";
-import styled from "styled-components";
-const ModalContent = styled.div`
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  max-width: 800px;
-  width: 100%;
-  z-index: 1000;
-  overflow-y: auto;
-  max-height: 90vh;
-`;
+import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
+import { CreateNewBatchWrap } from "./CreateNewBatch.Styles"; // Import styles
 
-const FormSection = styled.div`
-  margin-bottom: 20px;
+const { Option } = Select;
 
-  h4 {
-    margin-bottom: 10px;
-  }
-
-  label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-
-  input,
-  select,
-  textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-
-  .input-group {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 10px;
-
-    .add-button {
-      padding: 0 10px;
-      border: none;
-      background-color: #28a745;
-      color: #fff;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  }
-
-  .drop-zone {
-    border: 2px dashed #ccc;
-    border-radius: 10px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 10px;
-    position: relative;
-
-    &:hover {
-      background-color: #f9f9f9;
-    }
-
-    p {
-      margin: 10px 0;
-      color: #666;
-    }
-  }
-
-  .image-preview {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-
-    .image-container {
-      position: relative;
-      img {
-        width: 70px;
-        height: 70px;
-        object-fit: cover;
-        border-radius: 5px;
-      }
-      .remove-btn {
-        position: absolute;
-        top: -5px;
-        right: -5px;
-        background-color: red;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        font-size: 12px;
-        padding: 2px 5px;
-      }
-    }
-  }
-`;
-
-const ModalOverlay = styled.div`
-  display: ${(props) => (props.show ? "block" : "none")};
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-`;
-
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 500,
-  maxHeight: "80vh",
-  overflowY: "auto",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 2,
-};
-const CreateNewBatch = ({ open, handleClose }) => {
-  const [batchName, setBatchName] = useState("");
-  const [classId, setClassId] = useState("");
-  const [subjectId, setSubjectId] = useState("");
-
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-
-  const [noOfClasses, setNoOfClasses] = useState("");
-  const [selectedTeacher, setSelectedTeacher] = useState("");
-  const [selectedStudents, setSelectedStudents] = useState([]);
-  const [contentMaterial, setContentMaterial] = useState("");
-  const [batch_image, setBatch_image] = useState(null); // URL of the uploaded image
-  const [coverImage, setCoverImage] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  const [error, setError] = useState("");
+const CreateNewBatch = ({ open, closeModal }) => {
+  const [form] = Form.useForm();
   const [classes, setClasses] = useState([]);
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchClasses = async () => {
@@ -175,222 +25,168 @@ const CreateNewBatch = ({ open, handleClose }) => {
     fetchClasses();
   }, []);
 
-  useEffect(() => {
-    if (classId) {
-      const fetchSubjects = async () => {
-        const subjectData = await getSubjects(classId);
-        setSubjects(subjectData || []);
-      };
-      fetchSubjects();
-    }
-  }, [classId]);
-
-  useEffect(() => {
-    if (classId && subjectId) {
-      const fetchTeachersAndStudents = async () => {
-        const teacherData = await getTeachersBySubjectAndClass(
-          subjectId,
-          classId
-        );
-        setTeachers(teacherData || []);
-
-        const studentData = await getStudentsByClassId(
-
-          classId
-        );
-        setStudents(studentData || []);
-      };
-      fetchTeachersAndStudents();
-    }
-  }, [classId]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const teachersData = await getAllTeachers();
-        if (teachersData && teachersData.teachers) {
-          setTeachers(teachersData.teachers);
-        }
-        const studentsData = await getAllStudents();
-        if (Array.isArray(studentsData)) {
-          setStudents(studentsData);
-        }
-      } catch (err) {
-        console.error("Error fetching teachers or students:", err);
-        setError("Failed to fetch teachers or students.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleCoverImageChange = (e) => {
-    const file = e.target.files[0];
-    setCoverImage(file);
+  const handleClassChange = async (value) => {
+    const subjectData = await getSubjects(value);
+    const studentData = await getStudentsByClassId(value);
+    setSubjects(subjectData || []);
+    setStudents(studentData || []);
+    form.setFieldsValue({
+      subject: undefined,
+      teachers: undefined,
+      students: undefined,
+    });
   };
 
-  const handleFileChange = async (e) => {
-    const { files } = e.target;
-    setBatch_image(files[0]);
-    const downloadUrl = await uploadFileToFirebase(files[0], "batcheImages");
-    setCoverImage(downloadUrl);
+  const handleSubjectChange = async (value) => {
+    const teacherData = await getTeachersBySubjectAndClass(value, form.getFieldValue("class"));
+    setTeachers(teacherData || []);
+    form.setFieldsValue({ teachers: undefined });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  const handleFileUpload = async (info) => {
+    if (info.file.status === "uploading") return;
+    if (info.file.status === "done") {
+      const file = info.file.originFileObj;
+      const url = await uploadFileToFirebase(file, "batchImages");
+      form.setFieldsValue({ batchImage: url });
+      message.success("File uploaded successfully!");
+    }
+  };
+
+  const handleSubmit = async (values) => {
     setLoading(true);
-
-    const batchData = {
-      batch_name: batchName,
-      batch_image: coverImage,
-      subject_id: subjectId,
-      class_id: classId,
-      teacher_id: selectedTeacher.map((teacher) => teacher.value),
-      students: selectedStudents.map((student) => student.value),
-      date: startDate,
-    }
-    // const batchData = {
-
-    //   batch_name: batchName,
-    //   date: startDate,
-    //   end_date: endDate,
-    //   teacher_ids: selectedTeacher.map((teacher) => teacher.value), // Array of teacher IDs
-    //   student_ids: selectedStudents.map((student) => student.value), // Array of student IDs
-    //   batch_image: coverImage,
-    //   // content_material: contentMaterial,
-    //   // date: new Date(),
-    // };
-
     try {
+      const batchData = {
+        ...values,
+        teachers: values.teachers?.map((teacher) => teacher.value) || [],
+        students: values.students?.map((student) => student.value) || [],
+      };
       const response = await createBatch(batchData);
-      if (response && response.message) {
-        alert("Batch created successfully!");
-        handleClose();
-      } else {
-        setError("Unexpected response from the server.");
+      if (response?.message) {
+        message.success("Batch created successfully!");
+        form.resetFields();
+        closeModal(); // Close modal on success
       }
     } catch (error) {
-      setError("Failed to create batch. Please try again.");
+      message.error("Failed to create batch. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleOverlayClick = (e) => {
-    if (e.target === e.currentTarget) {
-      handleClose(); // Close modal when clicking outside the modal content
-    }
-  };
-
   return (
-    <>
-      <ModalOverlay show={open} onClick={() => handleClose()}>
-        <ModalContent onClick={(e) => e.stopPropagation()}>
-          <Typography variant="h6" component="h2">
-            Create New Batch
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <FormSection>
-              <label>Batch Name</label>
-              <input
-                type="text"
-                value={batchName}
-                onChange={(e) => setBatchName(e.target.value)}
-                required
-              />
-            </FormSection>
+    <CreateNewBatchWrap>
+      <Modal
+        title="Create New Batch"
+        open={open}
+        onCancel={closeModal}
+        footer={null}
+        centered
+        destroyOnClose
+      >
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
+          <Form.Item
+            name="batchName"
+            label="Batch Name"
+            rules={[{ required: true, message: "Please enter the batch name" }]}
+          >
+            <Input placeholder="Enter batch name" />
+          </Form.Item>
 
-            <FormSection>
-              <label>Select Class</label>
-              <Select
-                options={classes.map((cls) => ({
-                  value: cls._id,
-                  label: cls.classLevel,
-                }))}
-                onChange={(option) => setClassId(option.value)}
-              />
-            </FormSection>
+          <Form.Item
+            name="class"
+            label="Class"
+            rules={[{ required: true, message: "Please select a class" }]}
+          >
+            <Select placeholder="Select class" onChange={handleClassChange}>
+              {classes.map((cls) => (
+                <Option key={cls._id} value={cls._id}>
+                  {cls.classLevel}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
 
-            <FormSection>
-              <label>Select Subject</label>
-              <Select
-                options={subjects.map((subject) => ({
-                  value: subject._id,
-                  label: subject.subject_name,
-                }))}
-                onChange={(option) => setSubjectId(option.value)}
-              />
-            </FormSection>
+          <Form.Item
+            name="subject"
+            label="Subject"
+            rules={[{ required: true, message: "Please select a subject" }]}
+          >
+            <Select
+              placeholder="Select subject"
+              onChange={handleSubjectChange}
+              disabled={!subjects.length}
+            >
+              {subjects.map((subj) => (
+                <Option key={subj._id} value={subj._id}>
+                  {subj.subject_name}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
 
-           
+          <Form.Item
+            name="teachers"
+            label="Teachers"
+            rules={[{ required: true, message: "Please select teachers" }]}
+          >
+            <Select
+              mode="multiple"
+              placeholder="Select teachers"
+              options={teachers.map((teacher) => ({
+                label: teacher.user_id.name,
+                value: teacher._id,
+              }))}
+              disabled={!teachers.length}
+            />
+          </Form.Item>
 
-            <FormSection>
-              <label>Select Teachers</label>
-              <Select
-                isMulti
-                options={teachers
-                  .filter(
-                    (teacher) =>
-                      teacher.user_id && teacher.user_id.name && teacher._id
-                  )
-                  .map((teacher) => ({
-                    value: teacher._id,
-                    label: teacher.user_id.name,
-                  }))}
-                onChange={(options) => setSelectedTeacher(options || [])}
-              />
-            </FormSection>
+          <Form.Item name="students" label="Students">
+            <Select
+              mode="multiple"
+              placeholder="Select students"
+              options={students.map((student) => ({
+                label: student.user_id.name,
+                value: student._id,
+              }))}
+              disabled={!students.length}
+            />
+          </Form.Item>
 
-            <FormSection>
-              <label>Select Students</label>
-              <Select
-                isMulti
-                options={students
-                  .filter(
-                    (student) =>
-                      student.user_id && student.user_id.name && student._id
-                  )
-                  .map((student) => ({
-                    value: student._id,
-                    label: student.user_id.name,
-                  }))}
-                onChange={(options) => setSelectedStudents(options || [])}
-              />
-            </FormSection>
+          <Form.Item
+            name="date"
+            label="Date"
+            rules={[{ required: true, message: "Please select a date" }]}
+          >
+            <DatePicker style={{ width: "100%" }} />
+          </Form.Item>
 
+          <Form.Item name="batchImage" label="Upload Batch Image" valuePropName="file">
+            <Upload
+              name="file"
+              accept="image/*"
+              customRequest={handleFileUpload}
+              listType="picture"
+              maxCount={1}
+            >
+              <Button icon={<UploadOutlined />}>Upload</Button>
+            </Upload>
+          </Form.Item>
 
-            <FormSection>
-              <label>Upload Batch Image</label>
-              <input type="file" onChange={handleFileChange} />
-            </FormSection>
-            <FormSection>
-              <label>Select Date</label>
-              <input
-                type="date"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
-              />
-            </FormSection>
-
+          <Form.Item>
             <Button
-              className="submit-btn"
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={loading}
+              type="primary"
+              htmlType="submit"
+              loading={loading}
+              block
+              style={{ background: "#EE1B7A", borderColor: "#EE1B7A" }}
             >
               {loading ? "Creating..." : "Create Batch"}
             </Button>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-          </form>
-        </ModalContent>
-      </ModalOverlay>
-    </>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </CreateNewBatchWrap>
   );
 };
 

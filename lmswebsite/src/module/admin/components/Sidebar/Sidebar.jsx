@@ -37,6 +37,7 @@ import { MdOutlineSettings } from "react-icons/md";
 import { FaUsersGear } from "react-icons/fa6";
 import { VscSignOut } from "react-icons/vsc";
 import { MdPayment } from "react-icons/md";
+import { CiMoneyCheck1 } from "react-icons/ci";
 
 const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("Dashboard");
@@ -171,12 +172,12 @@ const Sidebar = () => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  to="/admin/CustomPackages"
+                  to="/admin/customPackage"
                   activeClassName="active"
                   className="menu-link"
                 >
                   <span className="menu-link-icon">
-                    <RiCustomerServiceLine />
+                  <CiMoneyCheck1 />
                   </span>
                   <span className="menu-link-text">Custom Package</span>
                 </NavLink>
@@ -258,7 +259,7 @@ const Sidebar = () => {
               </li>
 
 
-              <li className="menu-item">
+              {/* <li className="menu-item">
                 <NavLink
                   to="/admin/customPackage"
                   activeClassName="active"
@@ -269,7 +270,7 @@ const Sidebar = () => {
                   </span>
                   <span className="menu-link-text">Custom Package</span>
                 </NavLink>
-              </li>
+              </li> */}
 
 
 

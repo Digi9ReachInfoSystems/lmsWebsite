@@ -53,15 +53,16 @@ export const SubmitButton = styled.button`
   font-size: 1rem;
   font-weight: bold;
   color: ${theme.colors.black};
-  background-color: ${theme.colors.pink3};
+  background-color: ${theme.colors.pink4};
+ margin-top:10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   align-self: flex-start;
 
-  &:hover {
-    background-color: ${theme.colors.pink};
-  }
+  // &:hover {
+  //   background-color: ${theme.colors.pink};
+  // }
 
   ${media.md`
     width: 100%;

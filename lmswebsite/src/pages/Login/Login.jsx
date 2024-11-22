@@ -116,7 +116,7 @@ const Login = () => {
           </form>
 
           <p>
-            Not registered yet? <a href="/">Create an Account</a>
+            Not registered yet? <a href="/signup">Create an Account</a>
           </p>
         </div>
       </div>

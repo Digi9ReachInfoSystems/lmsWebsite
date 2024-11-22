@@ -1,95 +1,12 @@
 import styled from "styled-components";
-import { theme, media } from "../../../../style/theme/theme"
-
+import { theme, media } from "../../../../style/theme/theme";
 
 export const UserManagementWrap = styled.div`
-.UserManagement-batches_nav {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2em;
-    margin: 0;
-
-    ${media.md`
-      flex-direction: column;
-      align-items: stretch;
-      padding: 1em;
-    `}
-  }
-
-  .UserManagement-batch_title {
-    font-family: ${theme.typography.fontFamily};
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-    flex:1;
-  }
-.UserManagement-search {
-    max-width: 320px;
-    width: 100%;
-    margin-right:25px;
-   
-      flex: 0 0 auto;
-      align-items: center; 
-
-    ${media.md`
-      max-width: 100%;
-      margin-top: 1em;
-    `}
-
-    .input-group {
-      width: 100%;
-      background-color: ${(props) => props.theme.colors.white};
-      border-radius: 6px;
-       height: 40px; 
-       margin-top:40px;
-   
-       padding-right:10px;
-      display: flex;
-      align-items: center;
-      padding: 4px 12px;
-      position: relative;
-
-      ${media.lg`
-        height: 40px;
-      `}
-
-      .input-icon {
-        width: 20px;
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .input-control {
-        // flex: 1;
-        border: none;
-        outline: 0;
-        font-size: 15px;
-        color: ${(props) => props.theme.colors.gray700};
-        padding-left: 12px;
-        background-color: transparent;
-
-        &::placeholder {
-          color: ${(props) => props.theme.colors.gray700};
-        }
-      }
-    }
-  }
-
-.UserManagement-link{
-color:${(props) => props.theme.colors.pink4};
-background:${(props) => props.theme.colors.pink3};
-padding: 0.4em 1em 0 1em;
-border:none;
-border-radius: 20px!important;
-      }
-
-  
   display: flex;
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  padding:10px;
 
   .area-row {
     display: flex;
@@ -97,12 +14,7 @@ border-radius: 20px!important;
 
     &.ar-one {
       justify-content: space-between;
-    }
-
-    &.ar-two {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
     }
 
     &.ar-three {
@@ -114,66 +26,85 @@ border-radius: 20px!important;
     `}
   }
 
-  /* Styles for the filter container */
-.UserManagement-filter {
-  display: flex;
-  align-items: center;
-  margin:0px; /* Adjust spacing as needed */
-}
+  .UserManagement-batch_title {
+    font-family: ${theme.typography.fontFamily};
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px;
+  }
 
-/* Styles for the filter dropdown container */
-.UserManagement-filter-dropdown {
-  display: flex;
-  align-items: center;
-  border-radius: 4px;
-  padding: 5px;
-  background-color:${(props) => props.theme.colors.white}; /* White background */
-  margin-top: 10px;
-  margin-bottom :0px;
-  ${media.md`
-    
-     font-size: 14px;
+  .UserManagement-controls {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    ${media.md`
+      flex-direction: column;
+      gap: 10px;
+      align-items: stretch;
     `}
-}
+  }
 
-/* Styles for the filter icon */
-.UserManagement-filter-icon {
-  font-size: 18px; /* Adjust the size as needed */
-  color:${(props) => props.theme.colors.gray700}; /* Icon color */
-  margin-right: 8px;
-}
+  .UserManagement-search {
+    width: 300px;
+    height: 40px;
+    border-radius: 6px;
 
-/* Styles for the dropdown select element */
-.UserManagement--dropdown {
-  // border: none;
-  // outline: none;
-  // font-size: 16px;
-  // background-color:${(props) => props.theme.colors.white};
-  // // color: #333;
-  // // background-color: transparent; /* Transparent to show parent background */
-  // cursor: pointer;
-}
+    .ant-input {
+      border: 1px solid ${theme.colors.gray300};
+    }
 
-/* Remove default arrow icon */
-.UserManagement-dropdown {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  // appearance: none;
-  background-color:${(props) => props.theme.colors.white};
-}
+    ${media.md`
+      width: 100%;
+    `}
+  }
 
-/* Custom arrow icon */
-.UserManagement-dropdown {
-  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="5"><path fill="%23333" d="M0 0l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 10px;
-  padding-right: 25px; /* Space for the custom arrow */
-}
+  .UserManagement-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 
-/* Adjust padding inside the select */
-.UserManagement-dropdown {
-  padding-left: 0;
-}
+    .UserManagement-filter-icon {
+      font-size: 18px;
+      color: ${theme.colors.gray700};
+    }
 
+    .UserManagement-dropdown {
+      width: 150px;
+
+      .ant-select-selector {
+        border-radius: 6px !important;
+        height: 40px !important;
+        display: flex;
+        align-items: center;
+        background-color: ${theme.colors.white};
+        border: 1px solid ${theme.colors.gray300};
+      }
+
+      .ant-select-selection-item {
+        font-size: 14px;
+        color: ${theme.colors.gray700};
+      }
+    }
+  }
+
+  .ant-table {
+    background-color: ${theme.colors.white};
+    border-radius: 8px;
+
+    .ant-table-thead > tr > th {
+      background: ${theme.colors.gray100};
+      color: ${theme.colors.gray700};
+      font-weight: bold;
+    }
+
+    .ant-table-tbody > tr > td {
+      color: ${theme.colors.gray700};
+    }
+
+    .ant-pagination-item-active {
+      background-color: ${theme.colors.primary};
+      border-color: ${theme.colors.primary};
+    }
+  }
 `;

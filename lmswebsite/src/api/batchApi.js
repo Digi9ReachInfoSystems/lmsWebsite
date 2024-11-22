@@ -16,15 +16,15 @@ export const createBatch = async (responseData) => {
  * @param {Object} params - Query parameters (e.g., page, limit, start_date, end_date, teacher_id, etc.)
  * @returns {Promise<Object>} - Returns the response data or logs an error.
  */
-export const getAllBatches = async (params ) => {
+export const getAllBatches = async (params) => {
     try {
       // Call the backend API using Axios with query params
       if(params!==undefined){
-        const response = await api.get('/batches/getAllBatches', { params });
+        const response = await api.get('/batches/getAllBatches/all', { params });
         console.log('Batches fetched successfully:', response.data);
         return response.data; // Return the response data
       }else{
-        const response = await api.get('/batches/getAllBatches');
+        const response = await api.get('/batches/getAllBatches/all');
         console.log('Batches fetched successfully:', response.data);
         return response.data; // Return the response data
       }

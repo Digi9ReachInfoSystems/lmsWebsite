@@ -5,6 +5,10 @@
 }
 
   :where(.css-dev-only-do-not-override-apn68).ant-modal .ant-modal-content {
-    background-color: unset !important;
+
     padding: unset !important;
+  }
+
+  .ant-form {
+    padding: 20px; /* Add padding to the form */
   }

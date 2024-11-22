@@ -50,15 +50,16 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
         }
       }));
 
-      const classD = batches.map((batch, index) => {
+      let classD ;
+      batches.map((batch, index) => {
         if (batch._id === selectedBatchIndex) {
 
 
-          return { id: batch.class_id._id, name: batch.class_id.classLevel };
+          classD={ id: batch.class_id._id, name: batch.class_id.classLevel };
         }
       })
 
-      setClassData(classD[0]);
+      setClassData(classD);
       console.log("Class Data:", classData);
     }
   }, [selectedBatchIndex])
@@ -249,8 +250,8 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
             >
               <option value="">Select Subject</option>
               {subjectData.map((subject,index) => (
-                <option key={subject._id} value={subject?._id||index}>
-                  {subject.subject_name} {/* Adjust based on actual subject field */}
+                <option key={subject?._id} value={subject?._id||index}>
+                  {subject?.subject_name} {/* Adjust based on actual subject field */}
                 </option>
               ))}
             </select>

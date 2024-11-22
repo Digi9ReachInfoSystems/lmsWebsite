@@ -1,132 +1,109 @@
-import React,{useState, useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import { getAllStudents } from "../../../../api/studentApi";
 import { getAllTeachers } from "../../../../api/teacherApi";
-import { UserManagementWrap } from './UserManagement.styles';
-import { FaFilter } from 'react-icons/fa'; // Font Awesome filter icon
-import SearchBar from '../../components/SearchBar/SearchBar';
-import DashboardTable from '../../components/DashboardTable/DashboardTable';
-import { Link } from 'react-router-dom';
-import { FaSearch } from 'react-icons/fa';
+import { UserManagementWrap } from "./UserManagement.styles";
+import { FaFilter, FaSearch } from "react-icons/fa";
+import { Input, Select, Table } from "antd";
+
+const { Option } = Select;
 
 export default function UserManagement() {
+  const [searchInput, setSearchInput] = useState("");
+  const [data, setData] = useState([]);
+  const [originalData, setOriginalData] = useState([]);
+  const [statusFilter, setStatusFilter] = useState("students");
+  const [columns, setColumns] = useState([]);
 
-
-    const [searchInput, setSearchInput] = useState();
-    const [filterData, setFilterData] = React.useState();
-    const [originalData, setOriginalData] = useState([]);
-    const [statusFilter, setStatusFilter] = useState("students");
-    const [teacherId, setTeacherId] = useState("");
-    const  [columns, setColumns] = useState([]);
-
-
-    React.useEffect(() => {
-        const apiCaller = async () => {
-            if(statusFilter === "students"){
-                setColumns(["Name", "Email", "Phone Number", "Class Level"]);
-                const studentData = await getAllStudents();
-                console.log(studentData);
-                if(studentData){    
-                   
-                    const dataFilter = studentData.map((student) => {
-                        return {
-                            "Name": student.user_id.name||"N/A",
-                            "Email": student.user_id.email||"N/A",
-                            "Phone Number": student.phone_number||"N/A",
-                            "Class Level":student.ClassLevel||"N/A",
-                               
-                        };
-                    })
-                    setOriginalData(dataFilter);
-                    setFilterData(dataFilter);
-                }
-               
-                
-            }else if(statusFilter === "teachers"){
-                setColumns(["Name", "Email", "Phone Number", "Qualification"]);
-                const teacherData = await getAllTeachers();
-                
-                if(teacherData){    
-                    const dataFilter = teacherData.teachers.map((teacher) => {
-                        return {
-                            "Name": teacher.user_id.name||"N/A",
-                            "Email": teacher.user_id.email||"N/A",
-                            "Phone Number": teacher.phone_number||"N/A",
-                            "Qualification":teacher.qualifications||"N/A",
-                               
-                        };
-                    })
-                    setOriginalData(dataFilter);
-                    setFilterData(dataFilter);
-                }
-                
-            }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (statusFilter === "students") {
+        const studentData = await getAllStudents();
+        setColumns([
+          { title: "Name", dataIndex: "name", key: "name" },
+          { title: "Email", dataIndex: "email", key: "email" },
+          { title: "Phone Number", dataIndex: "phoneNumber", key: "phoneNumber" },
+          { title: "Class Level", dataIndex: "classLevel", key: "classLevel" },
+        ]);
+        if (studentData) {
+          const formattedData = studentData.map((student) => ({
+            key: student._id,
+            name: student.user_id?.name || "N/A",
+            email: student.user_id?.email || "N/A",
+            phoneNumber: student.phone_number || "N/A",
+            classLevel: student.ClassLevel || "N/A",
+          }));
+          setOriginalData(formattedData);
+          setData(formattedData);
         }
-        apiCaller();
-    }, [statusFilter]);
-    useEffect(() => {
-        if (searchInput) {
-            const filtered = originalData.filter((item) =>
-                Object.values(item).some((value) =>
-                    value.toString().toLowerCase().includes(searchInput.toLowerCase())
-                )
-            );
-            setFilterData(filtered);
-        } else {
-            setFilterData(originalData);
+      } else if (statusFilter === "teachers") {
+        const teacherData = await getAllTeachers();
+        setColumns([
+          { title: "Name", dataIndex: "name", key: "name" },
+          { title: "Email", dataIndex: "email", key: "email" },
+          { title: "Phone Number", dataIndex: "phoneNumber", key: "phoneNumber" },
+          { title: "Qualification", dataIndex: "qualification", key: "qualification" },
+        ]);
+        if (teacherData) {
+          const formattedData = teacherData.teachers.map((teacher) => ({
+            key: teacher._id,
+            name: teacher.user_id?.name || "N/A",
+            email: teacher.user_id?.email || "N/A",
+            phoneNumber: teacher.phone_number || "N/A",
+            qualification: teacher.qualifications || "N/A",
+          }));
+          setOriginalData(formattedData);
+          setData(formattedData);
         }
-    }, [searchInput, originalData]);
+      }
+    };
 
+    fetchData();
+  }, [statusFilter]);
 
-    return (
-        <UserManagementWrap className="content-area">
-            <div className="area-row ar-one">
+  useEffect(() => {
+    const filteredData = originalData.filter((item) =>
+      Object.values(item)
+        .join(" ")
+        .toLowerCase()
+        .includes(searchInput.toLowerCase())
+    );
+    setData(filteredData);
+  }, [searchInput, originalData]);
 
-                <div className="UserManagement-batches_nav">
-                    <h2 className="UserManagement-batch_title">User Management</h2>
-                    <div className="UserManagement-search">
-                        <form>
-                            <div className="input-group">
-                                <span className="input-icon">
-                                    <FaSearch />
-                                </span>
-                                <input
-                                    type="text"
-                                    className="input-control"
-                                    placeholder={statusFilter === "students" ? "Search by Student Name" : "Search by Teacher Name"}
-                                    value={searchInput} // Controlled input
-                                    onChange={(e) => setSearchInput(e.target.value)} // Update searchInput state on change
-                                />
-                            </div>
-                        </form>
-                    </div>
-                    {/* filter */}
-                    <div className="UserManagement-filter">
-                        <div className="UserManagement-filter-dropdown">
-                            <FaFilter className="UserManagement-filter-icon" />
-                            <select
-                                value={statusFilter}
-                                onChange={(e) => setStatusFilter(e.target.value)}
-                                className="UserManagement-dropdown"
-                            >
-                                <option value="students">Students</option>
-                                <option value="teachers">Teachers</option>
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div className="area-row ar-two">
-            </div>
-            <div className="area-row ar-three">
-                {
-                    filterData ?
-                        <DashboardTable columns={columns} data={filterData} />
-                        : <p>Loading...</p>
-                }
-
-            </div>
-
-        </UserManagementWrap>
-    )
+  return (
+    <UserManagementWrap>
+      <div className="area-row ar-one">
+        <h2 className="UserManagement-batch_title">User Management</h2>
+        <div className="UserManagement-controls">
+          <Input
+            className="UserManagement-search"
+            placeholder={`Search by ${statusFilter === "students" ? "Student" : "Teacher"} Name`}
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            // prefix={<FaSearch />}
+          />
+          <div className="UserManagement-filter">
+            {/* <FaFilter className="UserManagement-filter-icon" /> */}
+            <Select
+              value={statusFilter}
+              onChange={(value) => setStatusFilter(value)}
+              className="UserManagement-dropdown"
+            >
+              <Option value="students">Students</Option>
+              <Option value="teachers">Teachers</Option>
+            </Select>
+          </div>
+        </div>
+      </div>
+      <div className="area-row ar-three">
+        <Table
+          columns={columns}
+          dataSource={data}
+          pagination={{ pageSize: 10 }}
+          bordered
+          rowKey={(record) => record.key}
+        />
+      </div>
+    </UserManagementWrap>
+  );
 }

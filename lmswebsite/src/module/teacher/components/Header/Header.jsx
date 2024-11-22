@@ -8,12 +8,16 @@ import {
   DropdownContent,
   HamburgerMenu,
   MobileMenu,
+  SignUpButton,
 } from "./Header.styles";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isStudyMaterialOpen, setIsStudyMaterialOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   const toggleCoursesDropdown = () => {
     setIsCoursesOpen(!isCoursesOpen);
@@ -40,6 +44,11 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear(); // Clear all items in localStorage
+    navigate("/login"); // Redirect to the login page or desired route
+  };
+
   return (
     <HeaderContainer>
       <Logo>
@@ -47,7 +56,7 @@ const Header = () => {
           <img src={logo} alt="The Toppers Academy" className="logo-icon" />
         </a>
       </Logo>
-      
+
       {/* Desktop Nav Menu */}
       <NavMenu>
         <NavLinks>
@@ -96,6 +105,7 @@ const Header = () => {
           </NavLinks>
         </MobileMenu>
       )}
+      <SignUpButton onClick={handleLogout}>Logout</SignUpButton>
     </HeaderContainer>
   );
 };
