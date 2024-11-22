@@ -7,10 +7,10 @@ import {
   Button,
   FeatureInputContainer,
 } from "./PackageForm.style"; // Adjust the path to your styled-components
-import { createPackage } from "../../../../api/packagesApi"; // API call for creating a package
-import { getClassesByBoardId } from "../../../../api/classApi"; // Fetch classes by board
-import { getSubjects } from "../../../../services/createBatch"; // Fetch subjects by class
-import { getBoards } from "../../../../api/boadApi"; // Fetch boards
+import { createPackage } from "../../../../../api/packagesApi"; // API call for creating a package
+import { getClassesByBoardId } from "../../../../../api/classApi"; // Fetch classes by board
+import { getSubjects } from "../../../../../services/createBatch"; // Fetch subjects by class
+import { getBoards } from "../../../../../api/boadApi"; // Fetch boards
 import { message, Spin, Alert, Select } from "antd";
 
 const { Option } = Select;

@@ -13,12 +13,12 @@ import BoardForm from '../BoardForm/BoardForm';
 import PackageForm from '../PackageForm/PackageForm';
 import FaqForm from '../FaqForm/FaqForm';
 import BannerForm from '../BannerForm/BannerForm';
-import { getAllClasses, createClass, deleteClass } from '../../../../api/classApi';
-import { getAllSubjects, createSubject, deleteSubjectById } from '../../../../api/subjectApi';
-import { getBoards, createBoard, deleteBoard } from '../../../../api/boadApi';
-import { getAllPackages, createPackage, deletePackageById } from '../../../../api/packagesApi';
-import { getAllFAQ, createFAQ, deleteFAQ } from '../../../../api/faq';
-import { getBanners, createBanner, deleteBanner } from '../../../../api/bannerApi';
+import { getAllClasses, createClass, deleteClass } from '../../../../../api/classApi';
+import { getAllSubjects, createSubject, deleteSubjectById } from '../../../../../api/subjectApi';
+import { getBoards, createBoard, deleteBoard } from '../../../../../api/boadApi';
+import { getAllPackages, createPackage, deletePackageById } from '../../../../../api/packagesApi';
+import { getAllFAQ, createFAQ, deleteFAQ } from '../../../../../api/faq';
+import { getBanners, createBanner, deleteBanner } from '../../../../../api/bannerApi';
 
 const ManageContentTable = ({ contentType }) => {
   const [data, setData] = useState([]);
@@ -53,7 +53,7 @@ const ManageContentTable = ({ contentType }) => {
 
           // Enrich classes with board names
           const enrichedClasses = classesData.map((cls) => {
-            const boardId = cls.curriculum?.$oid || cls.curriculum;
+            const boardId = cls.curriculum?.$oid || cls?.curriculum?._id;
             const boardName = boardId ? boardMap[boardId] || 'N/A' : 'N/A';
             return {
               ...cls,
@@ -71,7 +71,7 @@ const ManageContentTable = ({ contentType }) => {
             getAllClasses(),
             getBoards(),
           ]);
-          
+
 
           // Create mappings
           const classMap = {};

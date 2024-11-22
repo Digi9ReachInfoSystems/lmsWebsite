@@ -1,14 +1,14 @@
 // src/module/teacher/pages/BecomeTeacherApplicationForm/TaskBoard/ClassForm.style.js
 
 import styled from 'styled-components';
-import {theme,media} from '../../../../style/theme/theme';
+import {theme,media} from '../../../../../style/theme/theme';
 // Container for the entire form
 export const FormContainer = styled.div`
   background-color: #ffffff;
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto; /* Center the form horizontally */
 
   h2 {

@@ -8,8 +8,8 @@ import {
   Label,
   Button,
 } from './ClassForm.style'; // Corrected import
-import { createClass } from '../../../../api/classApi'; // Ensure correct path
-import { getBoards } from '../../../../api/boadApi'; // Corrected import path
+import { createClass } from '../../../../../api/classApi'; // Ensure correct path
+import { getBoards } from '../../../../../api/boadApi'; // Corrected import path
 import { message, Spin, Alert } from 'antd'; // Import Ant Design components for feedback
 
 const ClassForm = () => {

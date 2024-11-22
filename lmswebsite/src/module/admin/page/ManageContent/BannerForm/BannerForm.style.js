@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { media, theme } from "../../../../style/theme/theme";
+import { media, theme } from "../../../../../style/theme/theme";
 export const FormContainer = styled.div`
   max-width: 600px;
   margin: 0 auto;

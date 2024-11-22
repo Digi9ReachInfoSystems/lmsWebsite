@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FiFileText } from "react-icons/fi";
 import { createCircularNotificationApi } from "../../../../api/circularNotificationApi";
 import {
-  CreateCircularFormWrap,
   CircularFormContainer,
   FormGroup,
   SubmitButton,
@@ -62,13 +61,7 @@ const CreateCircular = ({closeModal}) => {
   };
 
   return (
-    <CreateCircularFormWrap>
-      {/* <div className="createCircular-title">Create Circular</div> */}
-{/* 
-      <BackButton to="/admin/circular">
-        <FiFileText className="icon" />
-        Back to Circulars
-      </BackButton> */}
+
 
       <CircularFormContainer>
         {error && <p className="error_message">{error}</p>}
@@ -127,7 +120,7 @@ const CreateCircular = ({closeModal}) => {
           <SubmitButton type="submit">Submit</SubmitButton>
         </form>
       </CircularFormContainer>
-    </CreateCircularFormWrap>
+
   );
 };
 

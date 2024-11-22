@@ -248,8 +248,8 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
               }}
             >
               <option value="">Select Subject</option>
-              {subjectData.map((subject) => (
-                <option key={subject._id} value={subject._id}>
+              {subjectData.map((subject,index) => (
+                <option key={subject._id} value={subject?._id||index}>
                   {subject.subject_name} {/* Adjust based on actual subject field */}
                 </option>
               ))}

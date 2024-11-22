@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input,  Form, Alert, Spin, message } from "antd";
 import { FormContainer, StyledButton } from "./FaqForm.style"; // Import styles
-import { createFAQ } from "../../../../api/faq"; // Adjust the path to your API function
+import { createFAQ } from "../../../../../api/faq"; // Adjust the path to your API function
 
 const FaqForm = () => {
   const [formData, setFormData] = useState({

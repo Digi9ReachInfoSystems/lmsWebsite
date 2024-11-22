@@ -1,14 +1,14 @@
 // SubjectForm.style.js
 
 import styled from "styled-components";
-import { media, theme } from "../../../../style/theme/theme";
+import { media, theme } from "../../../../../style/theme/theme";
 
 export const FormContainer = styled.div`
   background-color: ${theme.colors.white};
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 auto; /* Center the form horizontally */
 
   h2 {

@@ -8,7 +8,7 @@ import {
   Label,
   Button,
 } from './BoardForm.styles'; // Ensure the file is named BoardForm.styles.js
-import { createBoard } from '../../../../api/boadApi'; // Corrected import path (from boadApi to boardApi)
+import { createBoard } from '../../../../../api/boadApi'; // Corrected import path (from boadApi to boardApi)
 import { message, Spin, Alert } from 'antd'; // Ant Design components for feedback
 
 const BoardForm = () => {
