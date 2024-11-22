@@ -16,13 +16,18 @@ export const createBatch = async (responseData) => {
  * @param {Object} params - Query parameters (e.g., page, limit, start_date, end_date, teacher_id, etc.)
  * @returns {Promise<Object>} - Returns the response data or logs an error.
  */
-export const getAllBatches = async (params = {}) => {
+export const getAllBatches = async (params ) => {
     try {
       // Call the backend API using Axios with query params
-      const response = await api.get('/batches/getAllBatches', { params });
-  
-      console.log('Batches fetched successfully:', response.data);
-      return response.data; // Return the response data
+      if(params!==undefined){
+        const response = await api.get('/batches/getAllBatches', { params });
+        console.log('Batches fetched successfully:', response.data);
+        return response.data; // Return the response data
+      }else{
+        const response = await api.get('/batches/getAllBatches');
+        console.log('Batches fetched successfully:', response.data);
+        return response.data; // Return the response data
+      }
     } catch (error) {
       console.error('Error fetching batches:', error.response?.data || error.message);
       throw error; // Optionally rethrow the error for further handling
@@ -43,10 +48,25 @@ export const getAllBatchesNoFilter = async () => {
 export const getBatchesByTeacherId = async (teacherId) => {
   try {
     const response = await api.get(`/batches/getBatches/teacher/${teacherId}`);
+    console.log("batches fetched succesfully",response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching batches:', error);
     throw error; // Re-throw the error to handle it in the calling function
   }
 };
+
+
+export const getBatchById = async(batch_id)=>{
+  try{
+    const response = await api.get(`/batches/${batch_id}`);
+    console.log("batches fetched succesfully",response.data);
+    return response.data;
+
+  }catch(error)
+  {
+    console.error("Error fetching batch",error);
+    throw error;
+  }
+}
 

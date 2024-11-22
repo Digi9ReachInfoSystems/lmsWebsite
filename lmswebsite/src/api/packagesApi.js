@@ -1,9 +1,19 @@
 import api from "../config/axiosConfig";
+import { uploadFileToFirebase } from "../utils/uploadFileToFirebase";
 
 export const createPackage = async (responseData) => {
+
+
     try {
+        const downloadURL= await uploadFileToFirebase(responseData.image, "packageImages");
+        const submissionData = {
+            ...responseData,
+           image: downloadURL
+        }
+
+        console.log("submissionData", submissionData);
         // Call the backend API using the Axios instance
-        const response = await api.post("/packages/createPackage", responseData);
+        const response = await api.post("/packages/createPackage", submissionData);
         console.log("Package created successfully:", response.data);
         return response.data;
     } catch (error) {
@@ -58,6 +68,7 @@ export const updatePackageById = async (packageId, responseData) => {
     }
 }
 
+<<<<<<< HEAD
 export const getPackageById = async (packageId) => {
     try {
         // Call the backend API using the Axios instance
@@ -68,3 +79,6 @@ export const getPackageById = async (packageId) => {
         console.error("Error fetching package:", error.response?.data || error.message);
     }
 }
+=======
+
+>>>>>>> origin/main

@@ -3,3 +3,8 @@
     font-family: poppins;
     /* background-color: white;  */
 }
+
+  :where(.css-dev-only-do-not-override-apn68).ant-modal .ant-modal-content {
+    background-color: unset !important;
+    padding: unset !important;
+  }

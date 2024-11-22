@@ -79,3 +79,14 @@ export const getAllStudents = async () => {
       throw error; // Re-throw error for further handling if needed
     }
   };
+
+
+  export const getStudentsByClassId = async (classId) => {
+    try {
+      const response = await api.get(`/students/class/${classId}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching students by class ID:', error);
+      throw error;
+    }
+  };
