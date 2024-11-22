@@ -68,7 +68,6 @@ export const updatePackageById = async (packageId, responseData) => {
     }
 }
 
-<<<<<<< HEAD
 export const getPackageById = async (packageId) => {
     try {
         // Call the backend API using the Axios instance
@@ -79,6 +78,3 @@ export const getPackageById = async (packageId) => {
         console.error("Error fetching package:", error.response?.data || error.message);
     }
 }
-=======
-
->>>>>>> origin/main

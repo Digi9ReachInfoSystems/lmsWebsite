@@ -34,16 +34,11 @@ import SettingsTabs from "./module/teacher/pages/Settings/SettingTapPage/Setting
 import QuizBatches from "./module/teacher/pages/Quizz/QuizzBatches/QuizBatches";
 import QuizList from "./module/teacher/pages/Quizz/QuizList/QuizList";
 import SignUpPage from "./pages/SignUpPage/SignUpPage";
-<<<<<<< HEAD
-import{ StudentLandingPage,loaderFunction as studentLandingPageLoader} from "./module/student/pages/StudentLandingPage/StudentLandingPage";
+import{ StudentLandingPage} from "./module/student/pages/StudentLandingPage/StudentLandingPage";
 import StudentCourseDetailsPage from "./module/student/pages/StudentCourseDetailsPage/StudentCourseDetailsPage";
 import SubscriptionSuccess from "./module/student/pages/SubscriptionSuccess/SubscriptionSuccess";
 
 
-=======
-import StudentLandingPage from "./module/student/pages/StudentLandingPage/StudentLandingPage";
-import StudentCourseDetailsPage from "./module/student/pages/PCMBLandingPage/StudentCourseDetailsPage";
->>>>>>> origin/main
 // import PublicRoute from "./module/admin/components/PublicRoute";
 import AssignedBatchStudentsList from "./module/teacher/pages/AssignedBatchStudentsList/AssignedBatchStudentsList";
 
@@ -83,7 +78,7 @@ function App() {
             }
           />
           <Route path="/signup" element={<SignUpPage/>} />
-          <Route path="/student"  loader={studentLandingPageLoader} element={<StudentLandingPage />} />
+          <Route path="/student"   element={<StudentLandingPage />} />
           <Route path="/student/course/details" element={<StudentCourseDetailsPage/>}/>
           <Route path="/student/package/successPage/" element={<SubscriptionSuccess/>}/>
 
