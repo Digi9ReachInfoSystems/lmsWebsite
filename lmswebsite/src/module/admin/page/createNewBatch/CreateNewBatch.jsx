@@ -29,7 +29,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
     const subjectData = await getSubjects(value);
     const studentData = await getStudentsByClassId(value);
     setSubjects(subjectData || []);
-    setStudents(studentData || []);
+    setStudents(studentData.students || []);
     form.setFieldsValue({
       subject: undefined,
       teachers: undefined,
@@ -44,13 +44,13 @@ const CreateNewBatch = ({ open, closeModal }) => {
   };
 
   const handleFileUpload = async (info) => {
-    if (info.file.status === "uploading") return;
-    if (info.file.status === "done") {
-      const file = info.file.originFileObj;
-      const url = await uploadFileToFirebase(file, "batchImages");
+
+      const url = await uploadFileToFirebase(info.file, "batchImages");
+      console.log("url", url);
+      
       form.setFieldsValue({ batchImage: url });
       message.success("File uploaded successfully!");
-    }
+    
   };
 
   const handleSubmit = async (values) => {
@@ -58,10 +58,22 @@ const CreateNewBatch = ({ open, closeModal }) => {
     try {
       const batchData = {
         ...values,
-        teachers: values.teachers?.map((teacher) => teacher.value) || [],
-        students: values.students?.map((student) => student.value) || [],
+        date: values.date.format("YYYY-MM-DD"),
+        teachers: values.teachers?.map((teacher) => teacher) || [],
+        students: values.students?.map((student) => student) || [],
       };
-      const response = await createBatch(batchData);
+      const submissionData={
+        batch_name: batchData.batchName,
+        batch_image:batchData.batchImage,
+        teacher_id: batchData.teachers,
+        class_id: batchData.class,
+        students:batchData.students,
+        subject_id:batchData.subject,
+        date:  batchData.date,
+    
+      }
+
+      const response = await createBatch(submissionData);
       if (response?.message) {
         message.success("Batch created successfully!");
         form.resetFields();
