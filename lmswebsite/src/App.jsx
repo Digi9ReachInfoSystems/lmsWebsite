@@ -51,6 +51,9 @@ import ManageContent from "./module/admin/page/ManageContent/ManageContent";
 // import BannerForm from "./module/admin/page/BannerForm/BannerForm";
 import ManageContentTable from "./module/admin/page/ManageContent/ManageContentTable/ManageContentTable";
 import CustomPackage from "./module/admin/page/CustomPackage/CustomPackage";
+import PaymentSuccess from "./module/student/pages/PaymentSuccess/PaymentSuccess";
+import StudentDashboardLayout from "./module/student/pages/StudentDashboardLayout/StudentDashboardLayout";
+import StudentDashboardScreen from "./module/student/pages/StudentDashboard/StudentDashboardScreen";
 function App() {
   const [count, setCount] = useState(0);
   
@@ -81,6 +84,11 @@ function App() {
           <Route path="/student"   element={<StudentLandingPage />} />
           <Route path="/student/course/details" element={<StudentCourseDetailsPage/>}/>
           <Route path="/student/package/successPage/" element={<SubscriptionSuccess/>}/>
+          <Route path="/student/package/paymentSucces" element={<PaymentSuccess/>}/>
+
+          <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
+          <Route index element={<StudentDashboardScreen/>} />
+          </Route>
 
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
