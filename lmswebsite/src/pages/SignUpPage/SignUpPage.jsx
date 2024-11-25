@@ -80,7 +80,7 @@ const SignUpPage = () => {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log("User created:", userCredential);
       const user = userCredential.user;
-      localStorage.setItem("sessionData", JSON.stringify({ accessToken: user.accessToken }));
+      localStorage.setItem("sessionData", JSON.stringify({ accessToken: user.accessToken ,refreshToken: userCredential._tokenResponse.refreshToken}));
       console.log("role", role);
 
       if (role === "teacher") {
@@ -92,11 +92,11 @@ const SignUpPage = () => {
         await signupUser(data);
         localStorage.clear();
         navigate("/login");
-      } else if (role === "student") {  
+      } else if (role === "student") {
         const downloadUrl = await uploadFileToFirebase(
           values.profile_image[0].originFileObj,
-                  "studentProfile"
-                );
+          "studentProfile"
+        );
         const data = {
           role: role,
           access_token: user.accessToken,
@@ -141,14 +141,17 @@ const SignUpPage = () => {
           {/* Wrapping buttons in a container to display them inline */}
           <ButtonContainer>
             <Button
-              type={role === "student" ? "primary" : "default"}
+              isSelected={role === "student"}
               onClick={() => setRole(role === "student" ? "" : "student")}
+               style={role == "student" ? { background: "#ff0076", color: "#fff" } : { background: "#fff", color: "#ff0076" }}
             >
               Student
             </Button>
-            <Button
+            <Button 
               type={role === "teacher" ? "primary" : "default"}
+              isSelected={role == "teacher" ? true : false}
               onClick={() => setRole(role === "teacher" ? "" : "teacher")}
+              style={role == "teacher" ? { background: "#ff0076", color: "#fff" } : { background: "#fff", color: "#ff0076" }}
             >
               Teacher
             </Button>
@@ -330,19 +333,20 @@ const SignUpPage = () => {
               </>
             )}
 
-           
+
 
             <Form.Item>
               <Button
                 type="primary"
                 onClick={handleSignUp}
-                style={{ width: "100%" }}
+                // style={{ width: "100%" }}
                 htmlType="submit"
                 disabled={
                   form.getFieldsError().some(({ errors }) => errors.length) ||
                   !role ||
                   isSubmitting
                 }
+                style={role !== "default" ? { background: "#ff0076", color: "#fff", width: "100%" } : { background: "#fff", color: "#ff0076", width: "100%" }}
               >
                 {isSubmitting ? "Submitting..." : "Create Account"}
               </Button>
