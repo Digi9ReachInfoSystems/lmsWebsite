@@ -5,7 +5,7 @@ export const updateAccessToken = async () => {
     try {
         const sessionData = JSON.parse(localStorage.getItem('sessionData'));
         console.log("sessionData referesh", sessionData);
-        if (sessionData.refreshToken) {
+        if (sessionData?.refreshToken) {
             const response = await api.post('refreshToken/get-access-token',{refresh_token:sessionData.refreshToken});
             if (response.status === 200) {  
                 const newsessionData={
