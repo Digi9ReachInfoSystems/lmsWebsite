@@ -57,6 +57,7 @@ import StudentDashboardScreen from "./module/student/pages/StudentDashboard/Stud
 
 import StudentCircular from "./module/student/pages/StudentCircular/StudentCircular";
 import StudentSetting from "./module/student/pages/StudentAccount/StudentSetting/StudentSetting";
+import StudentAssignedBatches from "./module/student/pages/StudentAssignedBatches/StudentAssignedBatches";
 function App() {
   const [count, setCount] = useState(0);
   
@@ -91,8 +92,6 @@ function App() {
 
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
           <Route index element={<StudentDashboardScreen/>} />
-          <Route path="/student/dashboard/circular" element={<StudentCircular />} />
-          <Route path="/student/dashboard/setting" element={<StudentSetting/>} />
           </Route>
 
 
