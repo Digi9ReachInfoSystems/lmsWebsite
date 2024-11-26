@@ -95,6 +95,7 @@ function App() {
           <Route path="/student/dashboard/circular" element={<StudentCircular />} />
           <Route path="/student/dashboard/setting" element={<StudentSetting />} />
           <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
+          
           </Route>
 
 
