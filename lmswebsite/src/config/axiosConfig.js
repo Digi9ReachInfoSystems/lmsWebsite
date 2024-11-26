@@ -11,7 +11,7 @@ const api = axios.create({
     "Content-Type": "application/json",
   },
 });
-updateAccessToken();
+// updateAccessToken();
 // Optional: Add a request interceptor to attach authorization token
 api.interceptors.request.use(
   (config) => {

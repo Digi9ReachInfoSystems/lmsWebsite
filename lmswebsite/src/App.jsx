@@ -24,7 +24,7 @@ import PublicRoute from "./module/admin/components/PublicRoute";
 import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
 // import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
-import ManagePayment from "./module/admin/page/ManagePayment/ManagePayment";
+import ManagePayment from "./module/admin/page/managePayment/managePayment";
 import TeacherDashboardLayout from "./module/teacher/pages/TeacherDashboardLayout/TeacherDashboardLayout";
 import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
 import TeacherDashboardScreen from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen";
@@ -141,7 +141,7 @@ function App() {
 
 
             <Route path="/admin/manageContent" element={<ManageContent />}>
-          <Route path="class" element={<ManageContentTable contentType="class" />} />
+          <Route index element={<ManageContentTable contentType="class" />} />
           <Route path="subject" element={<ManageContentTable contentType="subject" />} />
           <Route path="board" element={<ManageContentTable contentType="board" />} />
           <Route path="package" element={<ManageContentTable contentType="package" />} />
