@@ -115,7 +115,7 @@ const Sidebar = () => {
               </li>
               <li className="menu-item">
                 <NavLink
-                  to="/student/dashboard/quizz/assignedBatch"
+                  to="/student/dashboard/assignedBatch"
                   activeClassName="active"
                   className="menu-link"
                 >
