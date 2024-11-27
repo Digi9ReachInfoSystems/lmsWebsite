@@ -4,11 +4,11 @@ import moment from "moment";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Default styles for react-big-calendar
 import "./ManageMeeting.css"; // Optional custom styles
-import { getTeacherByAuthId, getTeacherscheduleById } from "../../../../api/teacherApi";
+import { getStudentByAuthId, getStudentscheduleById } from "../../../../api/studentApi";
 
 const localizer = momentLocalizer(moment);
 
-function ManageMeeting() {
+function ManageMeetingStudent() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,14 +18,13 @@ function ManageMeeting() {
     const fetchSchedule = async () => {
       try {
         setLoading(true);
-        // const teacherId = "6482b54ef5823f6b2e3db456"; // Replace with dynamic teacher ID
+        const teacherId = "6482b54ef5823f6b2e3db456"; // Replace with dynamic teacher ID
+        const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
+        const studentData= await getStudentByAuthId(authId);
+        const response= await getStudentscheduleById(studentData.student._id);
         // const response = await axios.get(
-        //   `http://localhost:5000/teachers/teacher/67456cc8d15050c25347206f/schedule`
+        //   `http://localhost:5000/students/student/67442e833781bb93207b0dbf/schedule`
         // );
-
-        const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
-        const teacherdata=await getTeacherByAuthId(authId);
-        const response= await getTeacherscheduleById(teacherdata.teacher._id);
         const schedule = response.data.schedule;
 
         // Map the schedule into events for react-big-calendar
@@ -121,4 +120,4 @@ function ManageMeeting() {
   );
 }
 
-export default ManageMeeting;
+export default ManageMeetingStudent;
