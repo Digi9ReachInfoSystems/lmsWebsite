@@ -64,6 +64,8 @@ import ManageMeeting from "./module/teacher/pages/manageMeetings/manageMeeting";
 import StudentCircular from "./module/student/pages/StudentCircular/StudentCircular";
 import StudentSetting from "./module/student/pages/StudentAccount/StudentSetting/StudentSetting";
 import StudentAssignedBatches from "./module/student/pages/StudentAssignedBatches/StudentAssignedBatches";
+import StudentTaskBoard from "./module/student/pages/StudentTaskBoard/StudentTaskBoardQuiz/StudentTaskBoard";
+import QuizQuestionPage from "./module/student/pages/StudentTaskBoard/QuizQuestionPage/QuizQuestionPage";
 import ManageMeetingStudent from "./module/student/pages/manageMeetingsStudent/ManageMeetingStudent";
 function App() {
   const [count, setCount] = useState(0);
@@ -111,6 +113,8 @@ function App() {
           <Route path="/student/dashboard/circular" element={<StudentCircular />} />
           <Route path="/student/dashboard/setting" element={<StudentSetting />} />
           <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
+          <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
+          <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
           <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
           
           </Route>
