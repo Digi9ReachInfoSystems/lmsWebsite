@@ -4,11 +4,11 @@ import moment from "moment";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Default styles for react-big-calendar
 import "./ManageMeeting.css"; // Optional custom styles
-import { getTeacherByAuthId, getTeacherscheduleById } from "../../../../api/teacherApi";
+import { getStudentByAuthId, getStudentscheduleById } from "../../../../api/studentApi";
 
 const localizer = momentLocalizer(moment);
 
-function ManageMeeting() {
+function ManageMeetingStudent() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -18,14 +18,13 @@ function ManageMeeting() {
     const fetchSchedule = async () => {
       try {
         setLoading(true);
-        // const teacherId = "6482b54ef5823f6b2e3db456"; // Replace with dynamic teacher ID
+        const teacherId = "6482b54ef5823f6b2e3db456"; // Replace with dynamic teacher ID
+        const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
+        const studentData= await getStudentByAuthId(authId);
+        const response= await getStudentscheduleById(studentData.student._id);
         // const response = await axios.get(
-        //   `http://localhost:5000/teachers/teacher/67456cc8d15050c25347206f/schedule`
+        //   `http://localhost:5000/students/student/67442e833781bb93207b0dbf/schedule`
         // );
-
-        const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
-        const teacherdata=await getTeacherByAuthId(authId);
-        const response= await getTeacherscheduleById(teacherdata.teacher._id);
         const schedule = response.data.schedule;
 
         // Map the schedule into events for react-big-calendar
@@ -57,21 +56,16 @@ function ManageMeeting() {
     }
   };
 
-  // Custom event rendering with time
+  // Custom event rendering
   const renderEvent = ({ event }) => (
     <div>
       <strong>{event.title}</strong>
-      <br />
-      <span style={{ fontSize: "12px", color: "#ffffff" }}>
-        {moment(event.start).format("hh:mm A")} -{" "}
-        {moment(event.end).format("hh:mm A")}
-      </span>
       <br />
       {event.meeting_url ? (
         <button
           style={{
             marginTop: "5px",
-            backgroundColor: "#f78fb3",
+            backgroundColor: "#3f51b5",
             color: "white",
             border: "none",
             borderRadius: "5px",
@@ -79,7 +73,7 @@ function ManageMeeting() {
             cursor: "pointer",
           }}
           onClick={(e) => {
-            e.stopPropagation();
+            e.stopPropagation(); // Prevent triggering calendar selection
             handleSelectEvent(event);
           }}
         >
@@ -94,8 +88,8 @@ function ManageMeeting() {
   );
 
   return (
-    <div style={{ padding: "20px", backgroundColor: "#ffffff" }}>
-      <h1 style={{ color: "#8e44ad" }}>Manage Meetings</h1>
+    <div style={{ padding: "20px" }}>
+      <h1>Manage Meetings</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -106,24 +100,24 @@ function ManageMeeting() {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 800, borderRadius: "10px" }}
-          views={["month", "week", "day", "agenda"]}
-          defaultView="month"
-          selectable={true}
+          style={{ height: 600 }}
+          views={["month", "week", "day", "agenda"]} // Available views
+          defaultView="month" // Set the default view
+          selectable={true} // Allow selecting events
           components={{
-            event: renderEvent,
+            event: renderEvent, // Use custom event rendering
           }}
-          popup={true}
+          popup={true} // Show details in a popup
           eventPropGetter={() => (event) => ({
             style: {
-              backgroundColor: event.meeting_url ? "#f4c6d8" : "#f8d7da",
+              backgroundColor: event.meeting_url ? "#e3f2fd" : "#f8d7da", // Differentiate events with and without meeting_url
               color: "black",
             },
           })}
         />
-      )}
+      )}Z
     </div>
   );
 }
 
-export default ManageMeeting;
+export default ManageMeetingStudent;
