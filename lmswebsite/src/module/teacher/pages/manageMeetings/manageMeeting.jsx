@@ -19,7 +19,7 @@ function ManageMeeting() {
         setLoading(true);
         const teacherId = "6482b54ef5823f6b2e3db456"; // Replace with dynamic teacher ID
         const response = await axios.get(
-          `http://localhost:5000/teachers/teacher/67456cc8d15050c25347206f/schedule`
+          `https://lmswebsite-backend.vercel.app/teachers/teacher/67456cc8d15050c25347206f/schedule`
         );
         const schedule = response.data.schedule;
 
@@ -52,16 +52,21 @@ function ManageMeeting() {
     }
   };
 
-  // Custom event rendering
+  // Custom event rendering with time
   const renderEvent = ({ event }) => (
     <div>
       <strong>{event.title}</strong>
+      <br />
+      <span style={{ fontSize: "12px", color: "#ffffff" }}>
+        {moment(event.start).format("hh:mm A")} -{" "}
+        {moment(event.end).format("hh:mm A")}
+      </span>
       <br />
       {event.meeting_url ? (
         <button
           style={{
             marginTop: "5px",
-            backgroundColor: "#3f51b5",
+            backgroundColor: "#f78fb3",
             color: "white",
             border: "none",
             borderRadius: "5px",
@@ -69,7 +74,7 @@ function ManageMeeting() {
             cursor: "pointer",
           }}
           onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering calendar selection
+            e.stopPropagation();
             handleSelectEvent(event);
           }}
         >
@@ -84,8 +89,8 @@ function ManageMeeting() {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Manage Meetings</h1>
+    <div style={{ padding: "20px", backgroundColor: "#ffffff" }}>
+      <h1 style={{ color: "#8e44ad" }}>Manage Meetings</h1>
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
@@ -96,22 +101,22 @@ function ManageMeeting() {
           events={events}
           startAccessor="start"
           endAccessor="end"
-          style={{ height: 600 }}
-          views={["month", "week", "day", "agenda"]} // Available views
-          defaultView="month" // Set the default view
-          selectable={true} // Allow selecting events
+          style={{ height: 800, borderRadius: "10px" }}
+          views={["month", "week", "day", "agenda"]}
+          defaultView="month"
+          selectable={true}
           components={{
-            event: renderEvent, // Use custom event rendering
+            event: renderEvent,
           }}
-          popup={true} // Show details in a popup
+          popup={true}
           eventPropGetter={() => (event) => ({
             style: {
-              backgroundColor: event.meeting_url ? "#e3f2fd" : "#f8d7da", // Differentiate events with and without meeting_url
+              backgroundColor: event.meeting_url ? "#f4c6d8" : "#f8d7da",
               color: "black",
             },
           })}
         />
-      )}Z
+      )}
     </div>
   );
 }
