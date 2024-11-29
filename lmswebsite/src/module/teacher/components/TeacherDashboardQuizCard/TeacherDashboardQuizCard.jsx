@@ -14,9 +14,9 @@ const TeacherdashBoardQuizCard = ({ cardsdata }) => {
       
         <div className="card">
           <div className="card-content">
-          <div className="card-icon">{cardsdata.icon}</div>
-            <div className="card-title">{cardsdata.title}</div>
-            <div className="card-value">{cardsdata.count}</div>
+          {/* <div className="card-icon">{cardsdata.icon}</div> */}
+            {/* <div className="card-title">{cardsdata.title}</div>
+            <div className="card-value">{cardsdata.count}</div> */}
             
           </div>
 

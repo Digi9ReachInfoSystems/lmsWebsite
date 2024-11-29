@@ -1,4 +1,5 @@
 import api from '../config/axiosConfig';
+import { uploadFileToFirebase } from '../utils/uploadFileToFirebase';
 
 /**
  * Function to upload content
@@ -8,17 +9,10 @@ import api from '../config/axiosConfig';
  * @returns {Object} - The response data containing the uploaded content details
  */
 export const uploadContent = async (batchId, teacherId, file) => {
+    console.log("Uploading content...hdgfhgjhkjlj",teacherId,batchId, file);
     try {
-        const formData = new FormData();
-        formData.append('batchId', batchId);
-        formData.append('teacherId', teacherId);
-        formData.append('file', file);
-
-        const response = await api.post('/contents/upload', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data', // Ensure the request uses form data
-            },
-        });
+        const file_link= await uploadFileToFirebase(file, "contentFiles");
+        const response = await api.post('/contents/upload', { batchId:batchId, teacherId:teacherId, materialLink:file_link });
 
         console.log('Content uploaded successfully:', response.data);
         return response.data; // Return the response data
