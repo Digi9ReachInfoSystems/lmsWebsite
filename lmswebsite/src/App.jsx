@@ -32,7 +32,7 @@ import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/man
 // import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
 import ManagePayment from "./module/admin/page/managePayment/managePayment";
 import TeacherDashboardLayout from "./module/teacher/pages/TeacherDashboardLayout/TeacherDashboardLayout";
-import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
+// import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
 import TeacherDashboardScreen from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen";
 import AssignedTeacherBatch from "./module/teacher/pages/AssignedBatches/AssignedTeacherBatch";
 import TeacherCircular from "./module/teacher/pages/TeacherCircular/TeacherCircular";
@@ -70,6 +70,8 @@ import ManageMeetingStudent from "./module/student/pages/manageMeetingsStudent/M
 import { TeacherAttendance } from "./module/teacher/pages/TeacherAttendance/TeacherAttendance";
 import { StudentAttendance } from "./module/student/pages/StudentAttendance/StudentAttendance";
 import { ManageAttendance } from "./module/admin/page/ManageAttendance/ManageAttendance";
+import TeacherdashBoardCards from "./module/teacher/components/TeacherdashBoardCards/TeacherdashBoardCards";
+import StudentMaterial from "./module/student/pages/StudentMaterials/StudentMaterial";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -112,15 +114,15 @@ function App() {
           />
 
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
-            <Route index element={<StudentDashboardScreen />} />
-            <Route path="/student/dashboard/circular" element={<StudentCircular />} />
-            <Route path="/student/dashboard/setting" element={<StudentSetting />} />
-            <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
-            <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
-            <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
-            <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
-            <Route path="/student/dashboard/attendance" element={<StudentAttendance/>} />
-
+          <Route index element={<StudentDashboardScreen/>} />
+          <Route path="/student/dashboard/circular" element={<StudentCircular />} />
+          <Route path="/student/dashboard/setting" element={<StudentSetting />} />
+          <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
+          <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
+          <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
+          <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
+          <Route path="/student/dashboard/assignedBatches/:batchId" element={<StudentMaterial />} />
+          
           </Route>
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
@@ -133,7 +135,8 @@ function App() {
             }
           >
             <Route index element={<TeacherDashboardScreen />} />
-            <Route
+
+                    <Route
               path="/teacher/dashboard/batches"
               element={<AssignedTeacherBatch />}
             />
