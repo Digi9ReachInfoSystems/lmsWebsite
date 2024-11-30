@@ -153,7 +153,7 @@ const Sidebar = () => {
               
               <li className="menu-item">
                 <NavLink
-                  to="/teacher/dashboard/settings"
+                  to="/teacher/dashboard/setting"
                   activeClassName="active"
                   className="menu-link"
                 >
