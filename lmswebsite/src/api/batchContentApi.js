@@ -58,8 +58,9 @@ export const getContentsByTeacherId = async (teacherId) => {
  * @param {string} batchId - The ID of the batch to retrieve contents for
  * @returns {Array} - The response data containing contents for the specified batch
  */
-export const getContentsByBatchId = async (batchId) => {
+export const getContentByBatchId = async (batchId) => {
     try {
+        console.log("Batch ID: console", batchId);
         const response = await api.get(`/contents/batch/${batchId}`);
         console.log('Contents fetched successfully for batch:', response.data);
         return response.data; // Return the response data

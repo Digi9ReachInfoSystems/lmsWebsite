@@ -68,6 +68,7 @@ import StudentTaskBoard from "./module/student/pages/StudentTaskBoard/StudentTas
 import QuizQuestionPage from "./module/student/pages/StudentTaskBoard/QuizQuestionPage/QuizQuestionPage";
 import ManageMeetingStudent from "./module/student/pages/manageMeetingsStudent/ManageMeetingStudent";
 import TeacherdashBoardCards from "./module/teacher/components/TeacherdashBoardCards/TeacherdashBoardCards";
+import StudentMaterial from "./module/student/pages/StudentMaterials/StudentMaterial";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -117,6 +118,7 @@ function App() {
           <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
           <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
           <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
+          <Route path="/student/dashboard/assignedBatches/:batchId" element={<StudentMaterial />} />
           
           </Route>
 
