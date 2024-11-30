@@ -67,6 +67,9 @@ import StudentAssignedBatches from "./module/student/pages/StudentAssignedBatche
 import StudentTaskBoard from "./module/student/pages/StudentTaskBoard/StudentTaskBoardQuiz/StudentTaskBoard";
 import QuizQuestionPage from "./module/student/pages/StudentTaskBoard/QuizQuestionPage/QuizQuestionPage";
 import ManageMeetingStudent from "./module/student/pages/manageMeetingsStudent/ManageMeetingStudent";
+import { TeacherAttendance } from "./module/teacher/pages/TeacherAttendance/TeacherAttendance";
+import { StudentAttendance } from "./module/student/pages/StudentAttendance/StudentAttendance";
+import { ManageAttendance } from "./module/admin/page/ManageAttendance/ManageAttendance";
 import TeacherdashBoardCards from "./module/teacher/components/TeacherdashBoardCards/TeacherdashBoardCards";
 import StudentMaterial from "./module/student/pages/StudentMaterials/StudentMaterial";
 function App() {
@@ -161,6 +164,10 @@ function App() {
               path="/teacher/dashboard/quizz/batches/:batchId"
               element={<QuizList />}
             />
+            <Route
+              path="/teacher/dashboard/teacherAttendance"
+              element={<TeacherAttendance />}
+            />
           </Route>
           <Route
             path="/admin"
@@ -225,10 +232,11 @@ function App() {
               path="/admin/customerQueries/:queryId"
               element={<CustomerQueryFormView />}
             />
+            <Route path="/admin/manageAttendance" element={<ManageAttendance/>} />
           </Route>
 
 
-        
+
         </Routes>
       </Router>
       {/* <RouterProvider router={router} /> */}
