@@ -67,6 +67,9 @@ import StudentAssignedBatches from "./module/student/pages/StudentAssignedBatche
 import StudentTaskBoard from "./module/student/pages/StudentTaskBoard/StudentTaskBoardQuiz/StudentTaskBoard";
 import QuizQuestionPage from "./module/student/pages/StudentTaskBoard/QuizQuestionPage/QuizQuestionPage";
 import ManageMeetingStudent from "./module/student/pages/manageMeetingsStudent/ManageMeetingStudent";
+import { TeacherAttendance } from "./module/teacher/pages/TeacherAttendance/TeacherAttendance";
+import { StudentAttendance } from "./module/student/pages/StudentAttendance/StudentAttendance";
+import { ManageAttendance } from "./module/admin/page/ManageAttendance/ManageAttendance";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -109,14 +112,15 @@ function App() {
           />
 
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
-          <Route index element={<StudentDashboardScreen/>} />
-          <Route path="/student/dashboard/circular" element={<StudentCircular />} />
-          <Route path="/student/dashboard/setting" element={<StudentSetting />} />
-          <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
-          <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
-          <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
-          <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
-          
+            <Route index element={<StudentDashboardScreen />} />
+            <Route path="/student/dashboard/circular" element={<StudentCircular />} />
+            <Route path="/student/dashboard/setting" element={<StudentSetting />} />
+            <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
+            <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
+            <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
+            <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
+            <Route path="/student/dashboard/attendance" element={<StudentAttendance/>} />
+
           </Route>
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
@@ -156,6 +160,10 @@ function App() {
             <Route
               path="/teacher/dashboard/quizz/batches/:batchId"
               element={<QuizList />}
+            />
+            <Route
+              path="/teacher/dashboard/teacherAttendance"
+              element={<TeacherAttendance />}
             />
           </Route>
           <Route
@@ -221,10 +229,11 @@ function App() {
               path="/admin/customerQueries/:queryId"
               element={<CustomerQueryFormView />}
             />
+            <Route path="/admin/manageAttendance" element={<ManageAttendance/>} />
           </Route>
 
 
-        
+
         </Routes>
       </Router>
       {/* <RouterProvider router={router} /> */}
