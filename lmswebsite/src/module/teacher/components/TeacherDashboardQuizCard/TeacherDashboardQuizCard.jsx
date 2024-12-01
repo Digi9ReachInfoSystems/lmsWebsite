@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import QuizImage from "../../../teacher/assets/Quiz.jpg";
 
 import { MdLiveTv } from "react-icons/md";
