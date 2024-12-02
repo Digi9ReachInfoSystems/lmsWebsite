@@ -122,7 +122,7 @@ function ManageMeeting() {
       <div>
         <strong>{event.title}</strong>
         <br />
-        <span style={{ fontSize: "12px", color: "#ffffff" }}>
+        <span style={{ fontSize: "12px", color: "#111111" }}>
           {moment(event.start).format("hh:mm A")} -{" "}
           {moment(event.end).format("hh:mm A")}
         </span>
