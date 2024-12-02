@@ -14,7 +14,7 @@ import {
 import SignUpImage from "../../assets/SignUpImage.png"; // Import image
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../config/firebaseConfig";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword ,sendEmailVerification} from "firebase/auth";
 import { signupUser } from "../../api/authApi";
 import { Select, Form, Input, Upload, Button, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -78,8 +78,10 @@ const SignUpPage = () => {
     setIsSubmitting(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+       await userCredential.user.sendEmailVerification(); 
       console.log("User created:", userCredential);
       const user = userCredential.user;
+      
       localStorage.setItem("sessionData", JSON.stringify({ accessToken: user.accessToken ,refreshToken: userCredential._tokenResponse.refreshToken}));
       console.log("role", role);
 
