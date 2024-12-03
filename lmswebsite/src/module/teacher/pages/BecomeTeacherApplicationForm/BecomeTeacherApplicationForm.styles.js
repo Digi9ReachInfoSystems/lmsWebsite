@@ -9,6 +9,7 @@ export const ApplicationContainer = styled.div`
   gap: 24px;
   padding: 40px;
   background-color: ${theme.colors.backgroundLight};
+  width: 100%;  
 
   ${media.md`
     padding: 20px;

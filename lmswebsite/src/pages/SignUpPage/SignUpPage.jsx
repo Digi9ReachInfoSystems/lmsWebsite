@@ -25,7 +25,7 @@ import { getBoards } from "../../api/boardApi";
 const { Option } = Select;
 
 const SignUpPage = () => {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("teacher");
   const [classes, setClasses] = useState([]);
   const [board, setBoard] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState("");
@@ -78,7 +78,7 @@ const SignUpPage = () => {
     setIsSubmitting(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      //  await userCredential.user.sendEmailVerification(); 
+       await sendEmailVerification(userCredential.user); 
       console.log("User created:", userCredential);
       const user = userCredential.user;
       
