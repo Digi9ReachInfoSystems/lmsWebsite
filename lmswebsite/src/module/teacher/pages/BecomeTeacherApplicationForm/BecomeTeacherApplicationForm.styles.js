@@ -91,6 +91,7 @@ export const StyledForm = styled.div`
 
   .ant-form-item {
     margin-bottom: 16px;
+    width: 100%;
   }
 
   .applicationRowOne,
@@ -108,10 +109,10 @@ export const StyledForm = styled.div`
       gap: 12px;
     `}
   }
-     .applicationRowThree  div{
-       width: 100%;
-       gap: 20px;
-     }
+    //  .applicationRowThree  div{
+    //    width: 100%;
+    //    gap: 20px;
+    //  }
     
      
 

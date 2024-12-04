@@ -78,7 +78,19 @@ const SignUpPage = () => {
     setIsSubmitting(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-       await sendEmailVerification(userCredential.user); 
+      sendEmailVerification(userCredential.user)
+      .then(() => {
+        // Verification email sent
+        console.log("Verification email sent!");
+        alert("Verification email sent! Please check your inbox.");
+      })
+      .catch((error) => {
+        // Handle any errors related to sending the verification email
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Error sending verification email:", errorCode, errorMessage);
+        alert("Error sending verification email. Please try again.");
+      });
       console.log("User created:", userCredential);
       const user = userCredential.user;
       
