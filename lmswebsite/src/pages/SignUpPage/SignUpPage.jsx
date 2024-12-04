@@ -78,7 +78,7 @@ const SignUpPage = () => {
     setIsSubmitting(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-       await userCredential.user.sendEmailVerification(); 
+      //  await userCredential.user.sendEmailVerification(); 
       console.log("User created:", userCredential);
       const user = userCredential.user;
       
