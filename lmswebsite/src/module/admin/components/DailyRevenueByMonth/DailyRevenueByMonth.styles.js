@@ -9,7 +9,8 @@ export const ChartWrapper = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   margin-top: 3vh;
-
+  
+  
   @media (max-width: 768px) {
     margin-top: 91vh;
   }
