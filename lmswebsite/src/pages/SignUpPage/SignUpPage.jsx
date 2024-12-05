@@ -25,7 +25,7 @@ import { getBoards } from "../../api/boardApi";
 const { Option } = Select;
 
 const SignUpPage = () => {
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("teacher");
   const [classes, setClasses] = useState([]);
   const [board, setBoard] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState("");
@@ -78,7 +78,19 @@ const SignUpPage = () => {
     setIsSubmitting(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      //  await userCredential.user.sendEmailVerification(); 
+      sendEmailVerification(userCredential.user)
+      .then(() => {
+        // Verification email sent
+        console.log("Verification email sent!");
+        alert("Verification email sent! Please check your inbox.");
+      })
+      .catch((error) => {
+        // Handle any errors related to sending the verification email
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.error("Error sending verification email:", errorCode, errorMessage);
+        alert("Error sending verification email. Please try again.");
+      });
       console.log("User created:", userCredential);
       const user = userCredential.user;
       
