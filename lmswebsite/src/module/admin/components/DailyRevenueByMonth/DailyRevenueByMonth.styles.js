@@ -11,7 +11,7 @@ export const ChartWrapper = styled.div`
   margin-top: 3vh;
 
   @media (max-width: 768px) {
-    margin-top: 71vh;
+    margin-top: 91vh;
   }
 `;
 
