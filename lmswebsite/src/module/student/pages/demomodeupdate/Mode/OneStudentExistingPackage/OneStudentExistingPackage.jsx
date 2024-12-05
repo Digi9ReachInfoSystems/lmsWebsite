@@ -13,7 +13,7 @@ import {
   PlanFeatures,
   Feature,
   GetStartedButton,
-} from "./StudentExistingPackages.style";
+} from "./OneStudentExistingPackage.style";
 import { TiTick } from "react-icons/ti";
 import { Link } from "react-router-dom";
 
@@ -56,7 +56,8 @@ const packages = [
   },
 ];
 
-const StudentExistingPackages = ({data,studentId}) => {
+const OneStudentExistingPackage = ({data,studentId}) => {
+  
   return (
     <Container>
       <Header>
@@ -64,12 +65,7 @@ const StudentExistingPackages = ({data,studentId}) => {
         <h2>Existing Packages</h2>
         <p>Simple, transparent pricing that grows with you.</p>
       </Header>
-      {/* <ToggleContainer>
-        <label>
-          <ToggleSwitch type="checkbox" />
-          <span>Annual pricing (save 20%)</span>
-        </label>
-      </ToggleContainer> */}
+     
 
       {/* Clip-path div */}
       <div className="clip-path-bg"></div>
@@ -81,10 +77,10 @@ const StudentExistingPackages = ({data,studentId}) => {
                 style={{
                   display: "block",
                   margin: "0 auto 8px",
-                  color: "#ff007f",
-                  backgroundColor: "pink",
+                  color: "blue",
+                  backgroundColor: "#7ebaff",
                   borderRadius: "50%",
-                  border: "3px solid pink",
+                  border: "3px solid #ddedff ",
                 }}
                 size={20}
               />
@@ -100,10 +96,10 @@ const StudentExistingPackages = ({data,studentId}) => {
                 >
                   <TiTick
                     style={{
-                      color: "#ff007f",
-                      backgroundColor: "pink",
+                      color: "blue",
+                      backgroundColor: "#ddedff",
                       borderRadius: "50%",
-                      border: "3px solid pink",
+                      border: "3px solid #ddedff",
                       marginRight: "8px",
                     }}
                     size={20}
@@ -122,4 +118,4 @@ const StudentExistingPackages = ({data,studentId}) => {
   );
 };
 
-export default StudentExistingPackages;
+export default OneStudentExistingPackage;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UploadOutlined, WindowsFilled } from "@ant-design/icons";
 import { Input, Select, Button, Upload, Form, message } from "antd";
-import Header from "../../components/Header/Header";
+import OneHeader from "../demomodeupdate/Mode/oneHeader/oneHeader";
 import studentApplicationImage from "../../../../assets/SignUpImage.png";
 
 import {
@@ -15,11 +15,11 @@ import {
   AvailableSlotsContainer,
   Slot,
   CustomPackageStatus
-} from "./StudentLandingPage.style";
-import StudentEnrollmentVideoView from "../../components/StudentEnrollmentVideoView/StudentEnrollmentVideoView";
-import StudentEnrollmentReviews from "../../components/StudentEnrollmentReviews/StudentEnrollmentReviews";
+} from "./OneToOneLandingPage.style";
+// import StudentEnrollmentVideoView from "../../components/StudentEnrollmentVideoView/StudentEnrollmentVideoView";
+// import StudentEnrollmentReviews from "../../components/StudentEnrollmentReviews/StudentEnrollmentReviews";
 import TeachersSection from "../../components/TeacherSection/TeachersSection";
-import StudentExistingPackages from "../../components/StudentExistingPackages/StudentExistingPackages";
+// import StudentExistingPackages from "../../components/StudentExistingPackages/StudentExistingPackages";
 import Footer2 from "../../components/Footer2/Footer2";
 import { getUserByAuthId } from "../../../../api/userApi";
 import { getStudentByAuthId, getStudentById } from "../../../../api/studentApi";
@@ -29,12 +29,12 @@ import { getClassesByBoardId } from "../../../../api/classApi";
 import { getPackageByClassId } from "../../../../api/packagesApi";
 import { getSubjects } from "../../../../services/createBatch";
 import { createCustomPackage } from "../../../../api/customPackageApi"
-import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
-
-import {GotoOneToOne} from "../../components/GotoOneToOne/GotoOneToOne";
-
-
-export const StudentLandingPage = () => {
+// import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
+import OneStudentExistingPackage from "../demomodeupdate/Mode/OneStudentExistingPackage/OneStudentExistingPackage";
+import OneLoadingPage from "../demomodeupdate/Mode/oneLoadingPage/oneLoadingPage";
+import OneStudentEnrollmentReview from "../demomodeupdate/Mode/oneStudentEnrollmentReview/oneStudentEnrollmentReview";
+import OneStudentEnrollmentVideoView from "../demomodeupdate/Mode/oneStudentEnrollementVideo/oneStudentEnrollementVideo";
+export const OneToOneStudentlandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
 
   const [studentDataForm, setStudentDataForm] = useState();
@@ -73,7 +73,7 @@ export const StudentLandingPage = () => {
         }
         console.log("studentData", data);
         setStudentDataForm(data);
-        const packageResponse = await getPackageByClassId(data.student.class._id, "normal");
+        const packageResponse = await getPackageByClassId(data.student.class._id,"personal");
         setPackagesData(packageResponse);
         console.log("packageResponse", data.student.class._id, "gg", packageResponse);
         const subjectResponse = await getSubjects(data.student.class._id);
@@ -152,7 +152,7 @@ export const StudentLandingPage = () => {
 
         <>
 
-          <Header />
+        <OneHeader />
           {studentDataForm.student.custom_package_status === "no_package" ?
             <ApplicationContainer>
               <ApplicationImage>
@@ -296,8 +296,8 @@ export const StudentLandingPage = () => {
                           htmlType="submit"
                           style={{
                             background:
-                              "linear-gradient(90deg, #E82C86 0%, #82194B 100%)",
-                            borderColor: "#82194B",
+                              "linear-gradient(90deg, #5D5FEF 0%, #7ebaff  100%)",
+                            borderColor: "#7ebaff",
                           }}
                         >
                           Submit Application
@@ -308,27 +308,23 @@ export const StudentLandingPage = () => {
                   </StyledRow>
                 </Form>
               </ApplicationDetails>
-              
             </ApplicationContainer>
-            
             : studentDataForm.student.custom_package_status === "pending" ?
               <CustomPackageStatus> Your Custom Package is under review</CustomPackageStatus>
               : <CustomPackageStatus> Your Custom Package Request Rejected</CustomPackageStatus>
           }
-           <GotoOneToOne/>
           {studentDataForm.student.custom_package_status == "no_package" &&
-            <StudentExistingPackages data={packagesData} studentId={studentDataForm.student._id} />
+            <OneStudentExistingPackage data={packagesData} studentId={studentDataForm.student._id} />
 
           }
-          
-          <StudentEnrollmentVideoView />
+          <OneStudentEnrollmentVideoView />
           <TeachersSection />
-          <StudentEnrollmentReviews />
+          <OneStudentEnrollmentReview />
           <Footer2 />
         </>
         :
 
-        <LoadingPage />
+        <OneLoadingPage />
 
     }
 

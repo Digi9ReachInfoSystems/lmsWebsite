@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { theme, media} from "../../../../../../style/theme/theme";
 export const Container = styled.div`
   text-align: center;
   padding: 20px;
@@ -10,7 +10,7 @@ export const Container = styled.div`
     left: 0;
     width: 100%;
     height: 15rem;
-    background: #ee1b7a;
+    background: ${theme.colors.blueone};
     clip-path: polygon(0% 70%, 100% 0%, 100% 50%, 0% 100%);
     z-index: -1;
     transition: clip-path 0.3s ease, height 0.3s ease;
@@ -42,7 +42,7 @@ export const Header = styled.div`
   }
 
   p {
-    font-size: 20px;
+    font-size: 16px;
     margin-bottom: 10px;
 
     @media (max-width: 768px) {
@@ -86,12 +86,12 @@ export const ToggleSwitch = styled.input`
   margin-right: 10px;
   cursor: pointer;
   appearance: none;
-  background: #ccc;
+  background: ${theme.colors.one};
   border-radius: 34px;
   transition: 0.4s;
 
   &:checked {
-    background: #ff4081;
+    background: ${theme.colors.blueone};
   }
 
   &:checked::after {
@@ -125,7 +125,7 @@ export const PlanContainer = styled.div`
 
 export const Plan = styled.div`
   position: relative;
-  border: 1px solid #ddd;
+  border: 1px solid ${theme.colors.blueone};
   border-radius: 10px;
   padding: 20px;
   width: 100%;
@@ -162,7 +162,7 @@ export const Plan = styled.div`
 
 export const PlanTitle = styled.h3`
   font-size: 22px;
-  color: #ee1b7a;
+  color: ${theme.colors.blueone};
   margin: 10px;
 
   @media (max-width: 768px) {
@@ -199,7 +199,7 @@ export const PlanPrice = styled.p`
 
 export const PlanDescription = styled.p`
   font-size: 16px;
-  color: #667085;
+  color: ${theme.colors.blueone};
   margin: 10px 0;
 
   @media (max-width: 768px) {
@@ -235,7 +235,7 @@ export const Feature = styled.li`
 `;
 
 export const GetStartedButton = styled.button`
-  background-color: #ff4081;
+  background-color: ${theme.colors.blueone};
   width: 80%;
   color: #fff;
   padding: 10px 20px;
@@ -247,7 +247,7 @@ export const GetStartedButton = styled.button`
   align-self: center; /* Center the button horizontally */
 
   &:hover {
-    background-color: #e91e63;
+    background-color: ${theme.colors.one};
   }
 
   @media (max-width: 768px) {
