@@ -74,6 +74,8 @@ import TeacherdashBoardCards from "./module/teacher/components/TeacherdashBoardC
 import StudentMaterial from "./module/student/pages/StudentMaterials/StudentMaterial";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import LandingHome from "./Main/Pages/LandingHome";
+import RescheduleMeeting from "./module/student/pages/RescheduleMeeting/RescheduleMeeting";
+import RescheduleMeetingTeacher from "./module/teacher/pages/RescheduleMeetingTeacher/RescheduleMeetingTeacher";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -125,7 +127,8 @@ function App() {
           <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
           <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
           <Route path="/student/dashboard/assignedBatches/:batchId" element={<StudentMaterial />} />
-          <Route path="/student/dashboard/attendance" element={<StudentAttendance />} />          
+          <Route path="/student/dashboard/attendance" element={<StudentAttendance />} />  
+          <Route path="/student/dashboard/meetings/reschedule" element={<RescheduleMeeting /> } />        
           </Route>
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
@@ -170,6 +173,10 @@ function App() {
             <Route
               path="/teacher/dashboard/teacherAttendance"
               element={<TeacherAttendance />}
+            />
+            <Route 
+              path="/teacher/dashboard/meetingReschedule"
+              element={<RescheduleMeetingTeacher/>}
             />
           </Route>
           <Route
