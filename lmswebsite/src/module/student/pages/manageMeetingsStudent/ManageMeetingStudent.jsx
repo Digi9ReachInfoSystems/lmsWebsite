@@ -7,6 +7,7 @@ import "./ManageMeeting.css"; // Optional custom styles
 import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
 import { clockIn, clockOut } from "../../../../api/teacherApi";
 import { useNavigate ,Link} from "react-router-dom";
+import { Heading } from "../../../../style/PrimaryStyles/PrimaryStyles";
 
 const localizer = momentLocalizer(moment);
 
@@ -206,7 +207,8 @@ function ManageMeetingStudent() {
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Manage Meetings</h1>
+       <Heading>Manage Meetings</Heading>
+      {/* <h1>Manage Meetings</h1> */}
       {loading ? (
         <p>Loading...</p>
       ) : error ? (
