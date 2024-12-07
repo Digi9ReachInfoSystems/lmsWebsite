@@ -21,7 +21,7 @@ import {
   SubjectItem,
   BackButton,
 } from "./ClassDetailPage.style";
-
+import { PageContainer, PrimaryButton } from "../../style/PrimaryStyles/PrimaryStyles";
 const ClassDetailPage = () => {
   const { classId } = useParams(); // Get the class ID from the URL parameters
   const navigate = useNavigate(); // Initialize useNavigate for navigation
@@ -39,9 +39,10 @@ const mode="normal";
     const fetchPackages = async () => {
         console.log("classId", classId);
       try {
-        const packagesData = await getPackageByClassId(classId,mode);
+        const packagesData = await getPackageByClassId(classId,"normal");
+        const packagesData2 = await getPackageByClassId(classId,"personal");
         console.log("packagesData", packagesData);
-        setPackages(packagesData);
+        setPackages(packagesData.concat(packagesData2));
         setLoadingPackages(false);
       } catch (error) {
         setPackagesError(error);
@@ -73,7 +74,7 @@ const mode="normal";
   }
 
   return (
-    <Container>
+    <PageContainer>
       <BackButton onClick={handleBackClick}>← Back to Classes</BackButton>
       <Header>Packages Details for Class</Header>
 
@@ -84,7 +85,7 @@ const mode="normal";
           {packages.map((pkg) => (
             <PackageCard key={pkg._id}>
               <PackageTitle>{pkg.package_name}</PackageTitle>
-              {pkg.image && <PackageImage src={pkg.image} alt={pkg.package_name} />}
+              {/* {pkg.image && <PackageImage src={pkg.image} alt={pkg.package_name} />} */}
               <PackageDescription>{pkg.description}</PackageDescription>
               {pkg.features && pkg.features.length > 0 && (
                 <div>
@@ -106,13 +107,16 @@ const mode="normal";
                       <SubjectItem key={subject._id}>{subject.subject_name}</SubjectItem>
                     ))}
                   </SubjectList>
+                  <PrimaryButton> Contact Us</PrimaryButton>
                 </div>
               )}
             </PackageCard>
           ))}
+          
         </PackageGrid>
+        
       )}
-    </Container>
+    </PageContainer>
   );
 };
 

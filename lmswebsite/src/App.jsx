@@ -80,6 +80,7 @@ import { OneToOneStudentlandingPage } from "./module/student/pages/OneToOneLandi
 import Mode from "./module/student/pages/demomodeupdate/Mode/Mode";
 import BoardDetailPage from "./pages/BoardDetailPage/BoardDetailPage";
 import ClassDetailPage from "./pages/ClassDetailPage/ClassDetailPage";
+import PackageDetailPage from "./pages/PackageDetailPage/PackageDetailPage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -107,8 +108,9 @@ function App() {
             }
           />
 
-<Route path="/testing" element={<BoardDetailPage />} />
-<Route path="/testing/:classId" element={<ClassDetailPage/>}/>
+<Route path="/testing/:boardId" element={<BoardDetailPage />} />
+<Route path="/testingClass/:classId" element={<ClassDetailPage/>}/>
+<Route path="/testingPackage/:packageId" element={<PackageDetailPage/>}/>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/student" element={<StudentLandingPage />} />
