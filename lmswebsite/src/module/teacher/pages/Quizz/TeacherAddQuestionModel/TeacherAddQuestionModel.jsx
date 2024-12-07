@@ -151,6 +151,15 @@ const TeacherAddQuestionModel = ({ onSave }) => {
         form={form}
         layout="vertical"
         onFinish={handleApply}
+        initialValues={{
+          questions: [
+            {
+              questionText: "",
+              options: { a: "", b: "", c: "", d: "" },
+              correctOption: "",
+            },
+          ],
+        }}
       >
         <h4>Quiz Questions</h4>
 
@@ -252,7 +261,7 @@ const TeacherAddQuestionModel = ({ onSave }) => {
         <Button
           type="primary"
           htmlType="submit"
-          style={{ marginTop: '20px' }}
+          style={{ backgroundColor: '#ff0080', borderColor: '#ff0080',width:"100%" ,marginTop:"10px"}}
         >
           Apply
         </Button>
