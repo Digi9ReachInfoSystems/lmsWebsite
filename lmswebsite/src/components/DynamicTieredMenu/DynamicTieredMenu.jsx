@@ -1,54 +1,108 @@
-
 import React from 'react';
-import { MegaMenu } from 'primereact/megamenu';
-import 'primereact/resources/themes/bootstrap4-light-blue/theme.css'; // Vela Green Theme
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-
-export default function DynamicTieredMenu() {
-    const items = [
-
-
-        {
-            label: 'Electronics',
-            icon: 'pi pi-mobile',
-            items: [
-                [
-                    {
-                        label: 'Computer',
-                        items: [{ label: 'Monitor' }, { label: 'Mouse' }, { label: 'Notebook' }, { label: 'Keyboard' }, { label: 'Printer' }, { label: 'Storage' }]
-                    }
-                ],
-                [
-                    {
-                        label: 'Home Theather',
-                        items: [{ label: 'Projector' }, { label: 'Speakers' }, { label: 'TVs' }]
-                    }
-                ],
-                [
-                    {
-                        label: 'Gaming',
-                        items: [{ label: 'Accessories' }, { label: 'Console' }, { label: 'PC' }, { label: 'Video Games' }]
-                    }
-                ],
-                [
-                    {
-                        label: 'Appliances',
-                        items: [{ label: 'Coffee Machine' }, { label: 'Fridge' }, { label: 'Oven' }, { label: 'Vaccum Cleaner' }, { label: 'Washing Machine' }]
-                    }
-                ]
-            ]
-        },
-
-    ];
-
-    return (
-        // <div className="card">
-           
-           
-        // </div>
-         <>
-         <MegaMenu model={items} breakpoint="960px" />
-         </>
-    )
-}
+import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
+import { Menu } from 'antd';
+const items = [
+  {
+    key: 'sub1',
+    icon: <MailOutlined />,
+    label: 'Navigation One',
+    children: [
+      {
+        key: '1-1',
+        label: 'Item 1',
+        type: 'group',
+        children: [
+          {
+            key: '1',
+            label: 'Option 1',
+          },
+          {
+            key: '2',
+            label: 'Option 2',
+          },
+        ],
+      },
+      {
+        key: '1-2',
+        label: 'Item 2',
+        type: 'group',
+        children: [
+          {
+            key: '3',
+            label: 'Option 3',
+          },
+          {
+            key: '4',
+            label: 'Option 4',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'sub2',
+    icon: <AppstoreOutlined />,
+    label: 'Navigation Two',
+    children: [
+      {
+        key: '5',
+        label: 'Option 5',
+      },
+      {
+        key: '6',
+        label: 'Option 6',
+      },
+      {
+        key: 'sub3',
+        label: 'Submenu',
+        children: [
+          {
+            key: '7',
+            label: 'Option 7',
+          },
+          {
+            key: '8',
+            label: 'Option 8',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'sub4',
+    label: 'Navigation Three',
+    icon: <SettingOutlined />,
+    children: [
+      {
+        key: '9',
+        label: 'Option 9',
+      },
+      {
+        key: '10',
+        label: 'Option 10',
+      },
+      {
+        key: '11',
+        label: 'Option 11',
+      },
+      {
+        key: '12',
+        label: 'Option 12',
+      },
+    ],
+  },
+];
+const onClick = (e) => {
+  console.log('click', e);
+};
+const DynamicTieredMenu = () => (
+  <Menu
+    onClick={onClick}
+    style={{
+      width: 256,
+    }}
+    mode="vertical"
+    items={items}
+  />
+);
+export default DynamicTieredMenu;
