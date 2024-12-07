@@ -208,7 +208,6 @@ function ManageMeetingStudent() {
   return (
     <PageContainer  >
       {/* <BaseButton>hello</BaseButton> */}
-      <PrimaryButton onClick={()=>{alert("logout")}}>Logout</PrimaryButton>
        <Heading>Manage Meetings</Heading>
       {/* <h1>Manage Meetings</h1> */}
       {loading ? (
