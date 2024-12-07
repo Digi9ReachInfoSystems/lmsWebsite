@@ -33,7 +33,6 @@ import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
 import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
 
-
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
 
@@ -71,7 +70,10 @@ export const StudentLandingPage = () => {
         }
         console.log("studentData", data);
         setStudentDataForm(data);
-        const packageResponse = await getPackageByClassId(data.student.class._id, "normal");
+        const packageResponse = await getPackageByClassId(
+          data.student.class._id,
+          "normal"
+        );
         setPackagesData(packageResponse);
         console.log(
           "packageResponse",
@@ -285,21 +287,28 @@ export const StudentLandingPage = () => {
                   </StyledRow>
                 </Form>
               </ApplicationDetails>
-
             </ApplicationContainer>
+          ) : studentDataForm.student.custom_package_status === "pending" ? (
+            <CustomPackageStatus>
+              {" "}
+              Your Custom Package is under review
+            </CustomPackageStatus>
+          ) : (
+            <CustomPackageStatus>
+              {" "}
+              Your Custom Package Request Rejected
+            </CustomPackageStatus>
+          )}
 
-            : studentDataForm.student.custom_package_status === "pending" ?
-              <CustomPackageStatus> Your Custom Package is under review</CustomPackageStatus>
-              : <CustomPackageStatus> Your Custom Package Request Rejected</CustomPackageStatus>
-          }
-
-          {studentDataForm.student.custom_package_status == "no_package" &&
+          {studentDataForm.student.custom_package_status == "no_package" && (
             <>
               <GotoOneToOne />
-              <StudentExistingPackages data={packagesData} studentId={studentDataForm.student._id} />
+              <StudentExistingPackages
+                data={packagesData}
+                studentId={studentDataForm.student._id}
+              />
             </>
-
-          }
+          )}
 
           <StudentEnrollmentVideoView />
           <TeachersSection />
@@ -312,5 +321,3 @@ export const StudentLandingPage = () => {
     </>
   );
 };
-
-// export  StudentLandingPage;
