@@ -26,8 +26,8 @@ export const CardBlockWrap = styled.div`
     align-items: center;
     border-radius: 8px;
     padding: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    // box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
     &.card-misty-rose {
       .card-item-icon {

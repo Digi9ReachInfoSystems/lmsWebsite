@@ -9,6 +9,72 @@ export const TeacherApplicationFormReviewWrap = styled.div`
   padding: 20px;
   background-color: ${theme.colors.backgroundLight};
 
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: ${theme.colors.bgcolor};
+    padding: 5px 10px;
+    border-radius: 0px 0px 0 0;
+    // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .modal-header h2 {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 400;
+  }
+
+  .Values {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .teacher-details-heading {
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .teacher-details-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .view-resume-btn {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .view-resume-btn:hover {
+    background-color: #45a049;
+  }
+
+  .teacher-details-item {
+    flex: 1;
+    margin-right: 10px;
+  }
+
+  .teacher-details-item:last-child {
+    margin-right: 0;
+  }
+
+  .teacher-details-item p {
+    margin: 5px 0;
+  }
+
+  .close-btn {
+    display: flex;
+
+    align-items: center;
+  }
+
   .TeacherApplicationFormReview-teacherContainer {
     display: flex;
     flex-direction: column;
@@ -16,7 +82,6 @@ export const TeacherApplicationFormReviewWrap = styled.div`
     background: white;
     padding: 20px;
     border-radius: 8px;
-   
 
     ${media.md`
       padding: 1em;
@@ -77,7 +142,7 @@ export const TeacherApplicationFormReviewWrap = styled.div`
     border-radius: 8px;
 
     img {
-    width: 180px;
+      width: 180px;
       height: 180px;
       border-radius: 10%;
 
@@ -92,7 +157,7 @@ export const TeacherApplicationFormReviewWrap = styled.div`
     display: flex;
     flex-direction: row;
     gap: 20px;
-    
+
     label {
       width: 30%;
       font-size: 1.2rem;
@@ -113,11 +178,9 @@ export const TeacherApplicationFormReviewWrap = styled.div`
       ${media.xs`
         font-size:1rem;
       `}
-     
     }
-    
-    input {
 
+    input {
       width: 70%;
       padding: 9px;
       font-size: 1rem;
@@ -206,7 +269,7 @@ export const TeacherApplicationFormReviewWrap = styled.div`
     color: ${theme.colors.error};
     text-align: center;
   }
-  
+
   .area-row {
     display: flex;
     gap: 24px;

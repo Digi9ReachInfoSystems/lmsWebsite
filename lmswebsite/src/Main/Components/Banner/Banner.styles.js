@@ -4,8 +4,8 @@ import { theme } from "../../../style/theme/theme";
 export const BannerContainerWarp = styled.div`
   font-family: ${theme.typography.fontFamily};
   background-color: ${theme.colors.pink4};
-  height: 100vh;
-  width: 80%;
+  height: 80vh;
+  width: 80vw;
   position: relative;
   display: flex;
   margin: 0 auto;
@@ -33,104 +33,98 @@ export const BannerContainerWarp = styled.div`
     height: 125vh;
   }
 `;
-
 export const BannerClip = styled.div`
   position: absolute;
-  background: #ffc1cd; /* Light pink color */
+  background: #fdfdfd; /* Light pink background */
   width: 100%;
-  height: 95vh;
+  height: 80vh; /* Default height for larger screens */
   top: 0;
   clip-path: path(
-    "M0,0 L1200,0 L1200,350 C1020,200 1000,900 800,600 C500,100 280,600 0,250 L0,0 Z"
-  );
+    "M0,0 L2600,0 L1600,200 C1200,1200 900,400 700,500 C100,800 300,350 0,600 Z"
+  ); /* Adjusted to match the shape you want */
 
-  @media (max-width: ${theme.breakpoints.xl}) {
-    height: 90vh;
+  @media (max-width: ${(props) => props.theme.breakpoints.xl}) {
+    height: 75vh; /* Adjust height for extra-large screens */
     clip-path: path(
-      "M0,0 L1000,0 L1000,400 C850,150 800,750 700,680 C450,80 350,700 0,300 L0,0 Z"
-    );
+      "M0,0 L100%,0 L100%,300 C900,600 800,400 700,500 C600,600 400,350 0,300 Z"
+    ); /* Slightly adjusted path for medium-large screens */
   }
 
-  @media (max-width: ${theme.breakpoints.lg}) {
-    height: 85vh;
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}) {
+    height: 70vh; /* Adjust height for large screens */
     clip-path: path(
-      "M0,0 L1200,0 L1200,400 C980 300 1000,800 800,700 C543,200 200,600 0,300 L0,0 Z"
-    );
+      "M0,0 L100%,0 L100%,350 C850,450 800,350 700,400 C600,450 400,250 0,200 Z"
+    ); /* Path adjustment for large screens */
   }
 
-  @media (max-width: ${theme.breakpoints.md}) {
-    height: auto;
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
+    height: 60vh; /* Adjust height for medium screens */
     clip-path: path(
-      "M0,0 L1200,0 L1200,400 C1200,100 840,950 800,650 C480,20 240,600 0,300 L0,0 Z"
-    );
+      "M0,0 L100%,0 L100%,400 C900,650 800,350 700,400 C600,450 400,250 0,200 Z"
+    ); /* Adjust path for smaller devices */
   }
 
-  @media (max-width: ${theme.breakpoints.sm}) {
-    display: none;
+  @media (max-width: ${(props) => props.theme.breakpoints.sm}) {
+    height: 50vh; /* Adjust height for smaller screens */
     clip-path: path(
-      "M0,0 L1200,0 L1200,180 C960,90 840,350 720,250 C480,30 240,200 0,100 L0,0 Z"
-    );
-  }
-
-  @media (max-width: ${theme.breakpoints.xs}) {
-    display: none;
-    clip-path: path(
-      "M0,0 L400,0 L400,150 C300,70 250,250 200,180 C150,20 80,150 0,80 L0,0 Z"
-    );
+      "M0,0 L100%,0 L100%,450 C800,550 700,350 600,400 C500,450 300,300 0,200 Z"
+    ); /* Slightly different path for very small screens */
   }
 `;
 
 export const CarouselWrapper = styled.div`
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
   z-index: 2;
 
   .slick-list {
-    border-radius: 20px;
+    border-bottom-left-radius: 20px; /* Apply border radius to bottom left */
+    border-bottom-right-radius: 20px; /* Apply border radius to bottom right */
   }
 
-  @media (max-width: ${theme.breakpoints.xxl}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.xxl}) {
     width: 80%;
   }
 
-  @media (max-width: ${theme.breakpoints.xl}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.xl}) {
     width: 85%;
   }
 
-  @media (max-width: ${theme.breakpoints.md}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.md}) {
     width: 90%;
   }
 `;
 
 export const BannerImage = styled.img`
   width: 100%;
-  height: 350px;
+  height: 50vh;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: ${theme.breakpoints.xl}) {
-    height: 300px;
+    height: 55vh;
   }
 
   @media (max-width: ${theme.breakpoints.lg}) {
-    height: 250px;
+    height: 45vh;
   }
 
   @media (max-width: ${theme.breakpoints.md}) {
-    height: 230px;
+    height: 35vh;
   }
 
   @media (max-width: ${theme.breakpoints.xs}) {
-    height: 200px;
+    height: 25vh;
   }
 `;
 
 export const BannerPopularCourses = styled.div`
-  width: 68%;
+  width: 78%;
   margin: 0 auto;
   z-index: 2;
+  // height: 600px;
   margin-top: -20px;
-  padding: 20px;
+  padding: 10px;
   background-color: ${theme.colors.white};
   border-radius: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -158,8 +152,10 @@ export const BannerPopularCourses = styled.div`
 
 export const PopularCoursesHeader = styled.h2`
   margin: 10px 40px;
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 500;
+  font-family: ${theme.typography.fontFamily};
+  color: ${theme.colors.navy};
 
   @media (max-width: ${theme.breakpoints.md}) {
     font-size: 18px;
@@ -174,11 +170,12 @@ export const PopularCoursesHeader = styled.h2`
 export const PopularCourses = styled.div`
   display: flex;
   gap: 20px;
-  margin-left: 40px;
-  margin-right: 40px;
-  overflow-x: auto; /* Enable horizontal scrolling */
+  height: 12vh;
+  margin-left: 20px;
+  margin-right: 20px;
+
   padding: 10px; /* Add some padding for better spacing */
-  scroll-behavior: smooth; /* Smooth scrolling effect */
+
   white-space: nowrap; /* Ensure items are displayed in a single row */
   scrollbar-width: none;
 
@@ -196,7 +193,7 @@ export const PopularCourseCard = styled.div`
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 150px; /* Fixed width of each card */
+  width: 15%; /* Fixed width of each card */
   flex-shrink: 0; /* Prevent the card from shrinking when scrolling */
 
   @media (max-width: ${theme.breakpoints.lg}) {
@@ -223,7 +220,7 @@ export const PopularCoursesClass = styled.h3`
 `;
 
 export const PopularCoursesPrice = styled.p`
-  font-size: 14px;
+  font-size: 18px;
   text-align: center;
 
   @media (max-width: ${theme.breakpoints.xs}) {
@@ -232,7 +229,7 @@ export const PopularCoursesPrice = styled.p`
 `;
 
 export const PopularCoursesName = styled.p`
-  font-size: 14px;
+  font-size: 16px;
   text-align: center;
 
   @media (max-width: ${theme.breakpoints.xs}) {

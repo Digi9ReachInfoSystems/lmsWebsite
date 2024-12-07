@@ -5,7 +5,8 @@ export const ExploreMaterialWarp = styled.div`
   font-family: ${theme.typography.fontFamily};
   width: 80%;
   margin: 100px auto;
-  padding: 20px;
+  margin-top: 20vh;
+  padding-top: 20px;
   text-align: center;
 
   @media (max-width: 990px) {
@@ -51,30 +52,33 @@ export const ExploreMaterialSingleClass = styled.div`
     align-items: center;
   }
 `;
-
 export const ExploreMaterialClass = styled.button`
-  margin: 10px;
+  margin: 20px;
   padding: 10px 20px;
   color: ${(props) =>
     props.isSelected
-      ? theme.colors.white // Corrected to access theme colors through props
-      : theme.colors.black}; // Dynamic text color
+      ? theme.colors.white
+      : theme.colors.frenchGray}; // Dynamic text color
   background-color: ${(props) =>
     props.isSelected
-      ? theme.colors.pink4 // Corrected to access theme colors through props
-      : theme.colors.frenchGray}; // Dynamic background color
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+      ? theme.colors.pink4 // Background color for selected state
+      : theme.colors.white}; // Background color for non-selected state
+  border-radius: 5px;
+  border: 2px solid ${(props) =>
+    props.isSelected ? "#ff0080" : "#d3d3d3"}; // Default border color is grey
+  // box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   font-size: 18px;
+  font
   cursor: pointer;
-  border: none;
-  transition: background-color 0.3s ease, color 0.3s ease; // Smooth transition
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease; // Smooth transition for background, color, and border
 
   &:hover {
     background-color: ${(props) =>
       props.isSelected
-        ? theme.colors.pink3 // Corrected to access theme colors through props
-        : theme.colors.gray700}; // Hover effect
+        ? theme.colors.pink3 // Hover effect for selected state
+        : theme.colors.gray700  }; // Hover effect for non-selected state
+    border-color: #ff0080; // Hover border color
   }
 
   @media (max-width: 990px) {

@@ -1,20 +1,29 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { Form, Input, Button, Alert } from "antd";
+import { Form, Input, Alert } from "antd";
 import { auth } from "../../config/firebaseConfig";
 import { getUserByAuthId } from "../../api/userApi";
-import bgImg from "../../assets/image 32.png";
-import { LoginPageWrap } from "./Login.styles";
+import {
+  LoginPageWrap,
+  Container,
+  LoginFormContainer,
+  Title,
+  SubTitle,
+  LoginButton,
+  ForgotPassword,
+  SubTitle1,
+} from "./Login.styles";
+import bgImg from "../../assets/image 32.png"; // The background image
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // Loading state for button
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async (values) => {
     const { email, password } = values;
-    setIsSubmitting(true); // Start loading
+    setIsSubmitting(true);
 
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -38,87 +47,52 @@ const Login = () => {
         name: profileData.user.name,
         loggedIn: "true",
       };
+
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
 
-      // Navigate to appropriate dashboard
-      if (profileData.user.role === "admin") {
-        navigate("/admin");
-      } else if (profileData.user.role === "student") {
-        navigate("/student");
-      } else if (profileData.user.role === "teacher") {
-        navigate("/teacher");
-      }
+      if (profileData.user.role === "admin") navigate("/admin");
+      else if (profileData.user.role === "student") navigate("/student");
+      else if (profileData.user.role === "teacher") navigate("/teacher");
     } catch (error) {
-      console.error("Login error:", error);
-      setErrorMessage("Incorrect email or password. Please try again.");
-    } finally {
-      setIsSubmitting(false); // Stop loading
+      setErrorMessage(error.message);
     }
+    setIsSubmitting(false);
   };
 
   return (
-    <LoginPageWrap>
-      <div className="login-container">
-        <div className="login-image">
-          <img src={bgImg} alt="The Topper Academy - Unlock Your Future!" />
-        </div>
-        <div className="login-page-form-main-container">
-          <h2>Sign In</h2>
-          <p>Enter your email and password to sign in!</p>
+    <LoginPageWrap style={{ backgroundImage: `url(${bgImg})` }}>
+      {/*
+       */}
 
-          {errorMessage && <Alert type="error" message={errorMessage} showIcon />}
-
-          <Form
-            name="login-form"
-            onFinish={handleLogin}
-            layout="vertical"
-            requiredMark="optional"
+      <LoginFormContainer>
+        <Title>Welcome Back 👋 </Title>
+        <SubTitle>Please sign-in to your account and start learning </SubTitle>
+        <Form className="login-textfields" onFinish={handleLogin}>
+          <p className="caption">EMAIL</p>
+          <Form.Item
+            name="email"
+            rules={[{ required: true, message: "Please input your email!" }]}
           >
-            <Form.Item
-              name="email"
-              label="Email"
-              rules={[
-                { required: true, message: "Please enter your email" },
-                { type: "email", message: "Please enter a valid email" },
-              ]}
-            >
-              <Input placeholder="mail@example.com" />
-            </Form.Item>
-
-            <Form.Item
-              name="password"
-              label="Password"
-              rules={[
-                { required: true, message: "Please enter your password" },
-                { min: 8, message: "Password must be at least 8 characters" },
-              ]}
-            >
-              <Input.Password placeholder="Min. 8 characters" />
-            </Form.Item>
-
-            <div className="options">
-              <a href="/forgot-password">Forget password?</a>
-            </div>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-button"
-                block
-                loading={isSubmitting} // Spinner while submitting
-                disabled={isSubmitting} // Disable button while loading
-              >
-                {isSubmitting ? "Signing In..." : "Sign In"}
-              </Button>
-            </Form.Item>
-          </Form>
-
-          <p>
-            Not registered yet? <a href="/signup">Create an Account</a>
-          </p>
-        </div>
-      </div>
+            <Input placeholder="Email" />
+          </Form.Item>
+          <p className="caption">PASSWORD</p>
+          <Form.Item
+            name="password"
+            rules={[{ required: true, message: "Please input your password!" }]}
+          >
+            <Input.Password placeholder="Password" />
+          </Form.Item>
+          <ForgotPassword>Forgot Password?</ForgotPassword>
+          {errorMessage && <Alert message={errorMessage} type="error" />}
+          <LoginButton type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Logging in..." : "Log In"}
+          </LoginButton>
+        </Form>
+        <SubTitle1>
+          New on our platform? <a href="/signup">Create Account</a>
+        </SubTitle1>
+      </LoginFormContainer>
+      <Container />
     </LoginPageWrap>
   );
 };

@@ -57,9 +57,7 @@ const Header = () => {
         <Link to={"/login"}>
           <Button>Sign In</Button>
         </Link>
-        <Link
-          to={"/signup"}
-        >
+        <Link to={"/signup"}>
           <Button>Sign Up</Button>
         </Link>
       </ButtonGroup>
@@ -74,12 +72,9 @@ const Header = () => {
           <Link to={"/login"}>
             <Button>Sign In</Button>
           </Link>
-          <Link
-            to={"/signup"}
-          >
+          <Link to={"/signup"}>
             <Button>Sign Up</Button>
           </Link>
-
         </MobileMenu>
       )}
     </Navbar>

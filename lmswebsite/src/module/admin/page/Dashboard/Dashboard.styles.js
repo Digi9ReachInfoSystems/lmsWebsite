@@ -16,7 +16,7 @@ export const DashboardScreenWrap = styled.main`
     }
 
     &.ar-three {
-    padding-top: 20px;
+      padding-top: 20px;
       display: block;
     }
 

@@ -3,11 +3,17 @@ import { FiFileText } from "react-icons/fi";
 import { createCircularNotificationApi } from "../../../../api/circularNotificationApi";
 import { Input, Select, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { CircularFormContainer, FormGroup, BackButton } from "./CreateCircular.styles";
+import {
+  CircularFormContainer,
+  FormGroup,
+  BackButton,
+} from "./CreateCircular.styles";
 import { useNavigate } from "react-router-dom";
- 
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast from react-toastify
+import "react-toastify/dist/ReactToastify.css";
+
 const { TextArea } = Input;
- 
+
 const CreateCircular = ({ closeModal }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,14 +24,14 @@ const CreateCircular = ({ closeModal }) => {
   const [successMessage, setSuccessMessage] = useState("");
   const [role, setRole] = useState("all");
   const navigate = useNavigate();
- 
+
   const handleImageChange = (info) => {
     if (info.fileList.length > 0) {
       setMetaImage(info.fileList[0].originFileObj);
       setImagePreview(URL.createObjectURL(info.fileList[0].originFileObj));
     }
   };
- 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setSuccessMessage("");
@@ -34,7 +40,7 @@ const CreateCircular = ({ closeModal }) => {
       setError("All fields are required, including an image.");
       return;
     }
- 
+
     const notificationData = {
       circularName: title,
       validDate,
@@ -42,11 +48,10 @@ const CreateCircular = ({ closeModal }) => {
       imageFile: metaImage,
       role: role,
     };
- 
+
     try {
       const response = await createCircularNotificationApi(notificationData);
-      console.log("Circular created successfully:", response);
-      setSuccessMessage("Circular notification created successfully!");
+      toast.success("Circular created successfully!");
       setError("");
       setTitle("");
       setDescription("");
@@ -55,16 +60,16 @@ const CreateCircular = ({ closeModal }) => {
       setImagePreview("");
       closeModal();
     } catch (error) {
-      console.error("Error creating circular:", error);
+      toast.error("Circular creation failed. Please try again.");
       setError("Failed to create circular. Please try again.");
     }
   };
- 
+
   return (
     <CircularFormContainer>
       {error && <p className="error_message">{error}</p>}
       {successMessage && <p className="success_message">{successMessage}</p>}
- 
+
       <form onSubmit={handleSubmit}>
         <FormGroup>
           <label className="label">Title:</label>
@@ -74,7 +79,7 @@ const CreateCircular = ({ closeModal }) => {
             placeholder="Enter circular title"
           />
         </FormGroup>
- 
+
         <FormGroup>
           <label className="label">Description:</label>
           <TextArea
@@ -84,7 +89,7 @@ const CreateCircular = ({ closeModal }) => {
             rows={4}
           />
         </FormGroup>
- 
+
         <FormGroup>
           <label className="label">Valid Till:</label>
           <Input
@@ -93,16 +98,20 @@ const CreateCircular = ({ closeModal }) => {
             onChange={(e) => setValidDate(e.target.value)}
           />
         </FormGroup>
- 
+
         <FormGroup>
           <label className="label">Role:</label>
-          <Select value={role} onChange={(value) => setRole(value)} style={{ width: "100%" }}>
+          <Select
+            value={role}
+            onChange={(value) => setRole(value)}
+            style={{ width: "100%" }}
+          >
             <Select.Option value="all">All</Select.Option>
             <Select.Option value="student">Student</Select.Option>
             <Select.Option value="teacher">Teacher</Select.Option>
           </Select>
         </FormGroup>
- 
+
         <FormGroup>
           <label className="label">
             {imagePreview ? (
@@ -114,7 +123,7 @@ const CreateCircular = ({ closeModal }) => {
             ) : (
               "Upload Image:"
             )}
-          </label >
+          </label>
           <Upload
             accept="image/*"
             showUploadList={false}
@@ -124,13 +133,22 @@ const CreateCircular = ({ closeModal }) => {
             <Button icon={<UploadOutlined />}>Click to upload</Button>
           </Upload>
         </FormGroup>
- 
-        <Button style={{backgroundColor: "#EE1B7A", color: "white",marginTop:"20px"}} type="primary" htmlType="submit" block>
+
+        <Button
+          style={{
+            backgroundColor: "#EE1B7A",
+            color: "white",
+            marginTop: "20px",
+          }}
+          type="primary"
+          htmlType="submit"
+          block
+        >
           Submit
         </Button>
       </form>
     </CircularFormContainer>
   );
 };
- 
+
 export default CreateCircular;

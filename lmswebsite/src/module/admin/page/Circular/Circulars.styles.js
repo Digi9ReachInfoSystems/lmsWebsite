@@ -21,9 +21,11 @@ export const CircularWrap = styled.div`
 
   .circular-title {
     font-family: ${theme.typography.fontFamily};
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
+    font-size: 24px;
+    // font-weight: bold;
+    // margin: 20px;
+    color: ${theme.colors.frenchGray};
+    flex: 1;
 
     ${media.md`
       text-align: center;
@@ -42,4 +44,3 @@ export const CircularWrap = styled.div`
     }
   }
 `;
-

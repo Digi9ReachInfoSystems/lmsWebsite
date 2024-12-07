@@ -7,7 +7,7 @@ export const Navbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem 9rem;
-  border-radius: 8px;
+
   position: relative;
   background-color: ${theme.colors.white};
 

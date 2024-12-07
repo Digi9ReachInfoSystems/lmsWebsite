@@ -3,7 +3,6 @@ import { theme } from "../../../../style/theme/theme";
 
 export const Container = styled.div`
   padding: 20px;
-  background-color: #fff;
 
   .header {
     display: flex;
@@ -13,9 +12,11 @@ export const Container = styled.div`
 
     h2 {
       font-family: ${theme.typography.fontFamily};
-      font-size: 1.8rem;
-      font-weight: bold;
-      color: ${theme.colors.black};
+      font-size: 24px;
+      // font-weight: bold;
+      // margin: 20px;
+      color: ${theme.colors.frenchGray};
+      flex: 1;
     }
 
     .actions {
@@ -50,5 +51,3 @@ export const Container = styled.div`
     }
   }
 `;
-
-

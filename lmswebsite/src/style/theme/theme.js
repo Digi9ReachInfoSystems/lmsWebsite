@@ -1,31 +1,32 @@
-import { pink,deepPurple, lightBlue } from "@mui/material/colors";
+import { pink, deepPurple, lightBlue } from "@mui/material/colors";
 import { css } from "styled-components";
- 
+
 export const theme = {
   colors: {
     blue: "#5D5FEF",
     lightBlue: "#365EFF",
-    verypaleblue:"#C9E2FF",
+    verypaleblue: "#C9E2FF",
     seasalt: "#FAFBFC",
     gray700: "#737791",
     ashgray: "#a5aea3",
     dodgerBlue: "#0095FF",
+    bgcolor: "#f2f3f7",
     emerald: "#00E096",
     red: "#EF4444",
     violet: "#A700FF",
     yellow: "#FFCF00",
     pink: "#FA5A7D",
-    pink1:"#D64DC7",
+    pink1: "#D64DC7",
     pink2: "#F8E7D8",
     pink3: "#FFC1CD",
     pink4: "#EE1B7A",
     pink5: "#672A47",
-    pink6:"#f562ba",
-    pink7:"#ffcaea",
-    pink8:"#ff007a",
+    pink6: "#f562ba",
+    pink7: "#ffcaea",
+    pink8: "#ff007a",
     lightPink: " #ffcaea",
     salmon: "#FF947A",
-    lightGrayishCyan:"#D7FDEB",
+    lightGrayishCyan: "#D7FDEB",
     cadet: "#151D48",
     malachite: "#3CD856",
     floralWhite: "#FFFAF1",
@@ -42,20 +43,20 @@ export const theme = {
     aquamarine: "#8CFAC7",
     aliceBlue: "#F0F9FF",
     frenchGray: "#bdc9d3",
-    lightslategray:'#7090B014',
-    darkwhite:'#fffcfc',
-    pink10:"#ffd1f0",
-    grey1:"#363232",
+    lightslategray: "#7090B014",
+    darkwhite: "#fffcfc",
+    pink10: "#ffd1f0",
+    grey1: "#363232",
   },
   lineargradients: {
-        pinkGradient: `linear-gradient(90deg,   #672A47 0%, #EE1B7A 100% )`,
-        hoverPinkGradient:` linear-gradient(to right, #ff4f88, #ff0076)`,
+    pinkGradient: `linear-gradient(90deg,   #672A47 0%, #EE1B7A 100% )`,
+    hoverPinkGradient: ` linear-gradient(to right, #ff4f88, #ff0076)`,
   },
- 
+
   typography: {
     fontFamily: "'Public Sans', sans-serif, 'Poppins'",
   },
- 
+
   breakpoints: {
     xs: "480px",
     sm: "576px",
@@ -66,7 +67,7 @@ export const theme = {
     xxxl: "1600px",
   },
 };
- 
+
 // Reusable media query function
 export const media = {
   xxxl: (...args) => css`
