@@ -183,17 +183,49 @@ const Header = () => {
         <span />
       </HamburgerMenu>
 
-      {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
+      <NavLinks menuOpen={menuOpen}>
+        <Dropdown>
+          <button>Courses</button>
+          <div className="dropdown-content">
+            <a href="#">Course 1</a>
+            <a href="#">Course 2</a>
+          </div>
+        </Dropdown>
+
+        <Dropdown>
+          <button>Study Material</button>
+          <div className="dropdown-content">
+            <a href="#">Material 1</a>
+            <a href="#">Material 2</a>
+          </div>
+        </Dropdown>
+
+        <NavLink href="#">Become a Teacher</NavLink>
+        <NavLink href="#">Create Your Enrollment</NavLink>
+        <NavLink href="#">About Us</NavLink>
+      </NavLinks>
+      <ButtonGroup>
+        <Link to={"/login"}>
+          <Button>Sign In</Button>
+        </Link>
+        <Link to={"/signup"}>
+          <Button>Sign Up</Button>
+        </Link>
+      </ButtonGroup>
+
+      {menuOpen && (
         <MobileMenu>
-          <NavLinks>
-            {/* For mobile, you might want to implement similar dynamic fetching or simplify the menu */}
-            <li><a href="#!">Courses</a></li>
-            <li><a href="#!">Study Material</a></li>
-            <li><a href="#!">Become a Teacher</a></li>
-            <li><a href="#!">Create Your Enrollment</a></li>
-            <li><a href="#!">About Us</a></li>
-          </NavLinks>
+          <NavLink href="#">Courses</NavLink>
+          <NavLink href="#">Study Material</NavLink>
+          <NavLink href="#">Become a Teacher</NavLink>
+          <NavLink href="#">Create Your Enrollment</NavLink>
+          <NavLink href="#">About Us</NavLink>
+          <Link to={"/login"}>
+            <Button>Sign In</Button>
+          </Link>
+          <Link to={"/signup"}>
+            <Button>Sign Up</Button>
+          </Link>
         </MobileMenu>
       )}
 

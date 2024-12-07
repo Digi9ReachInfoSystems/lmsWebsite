@@ -148,7 +148,10 @@ export default function TeacherApplicationFormView() {
         width={800}
       >
         {teacherId && (
-          <TeacherApplicationFormReview teacher_Id={teacherId} closeModal={closeModal} />
+          <TeacherApplicationFormReview
+            teacher_Id={teacherId}
+            closeModal={closeModal}
+          />
         )}
 
       </Modal>

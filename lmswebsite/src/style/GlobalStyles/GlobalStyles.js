@@ -14,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
         font-weight: 400;
         font-size: 16px;
         line-height: 1.6;
-        background: ${(props) => props.theme.colors.seasalt};
+        background: ${(props) => props.theme.colors.bgcolor};
     }
 
     html {
@@ -41,18 +41,22 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     /* page settings */
-    .page-wrapper{
-        min-height: 100vh;
-        display: flex;
-        width: 100%;
-    }
+  .page-wrapper{
+      display: flex;
+      min-height: 100vh;
+      transition: margin-left 0.3s ease-in-out;
+  }
 
-    .content-wrapper{
-        flex: 1;
-        max-width: 1600px;
-        margin-right: auto;
-        margin-left: auto;
-    }
+ .content-wrapper{
+      flex-grow: 1; /* Makes content take remaining space */
+      margin-left: 80px; /* Adjust this based on collapsed sidebar width */
+      transition: margin-left 0.3s ease-in-out; /* Smooth transition for resizing */
+  }
+
+    .page-wrapper.sidebar-expanded .content-wrapper {
+      margin-left: 240px; /* Adjust based on expanded sidebar width */
+  }
+
 
     .scrollbar{
         &::-webkit-scrollbar{

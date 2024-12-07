@@ -14,7 +14,7 @@ import {
   StyledCol,
   AvailableSlotsContainer,
   Slot,
-  CustomPackageStatus
+  CustomPackageStatus,
 } from "./StudentLandingPage.style";
 import StudentEnrollmentVideoView from "../../components/StudentEnrollmentVideoView/StudentEnrollmentVideoView";
 import StudentEnrollmentReviews from "../../components/StudentEnrollmentReviews/StudentEnrollmentReviews";
@@ -28,11 +28,10 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import { getClassesByBoardId } from "../../../../api/classApi";
 import { getPackageByClassId } from "../../../../api/packagesApi";
 import { getSubjects } from "../../../../services/createBatch";
-import { createCustomPackage } from "../../../../api/customPackageApi"
+import { createCustomPackage } from "../../../../api/customPackageApi";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
 import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
-
 
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
@@ -49,10 +48,8 @@ export const StudentLandingPage = () => {
   // const loaderData= useLoaderData();
   // console.log("loaderData", loaderData);
   useEffect(() => {
-
     const apiCaller = async () => {
       try {
-
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
           console.error("No session data found.");
@@ -73,31 +70,38 @@ export const StudentLandingPage = () => {
         }
         console.log("studentData", data);
         setStudentDataForm(data);
-        const packageResponse = await getPackageByClassId(data.student.class._id, "normal");
+        const packageResponse = await getPackageByClassId(
+          data.student.class._id,
+          "normal"
+        );
         setPackagesData(packageResponse);
-        console.log("packageResponse", data.student.class._id, "gg", packageResponse);
+        console.log(
+          "packageResponse",
+          data.student.class._id,
+          "gg",
+          packageResponse
+        );
         const subjectResponse = await getSubjects(data.student.class._id);
         setSubjects(subjectResponse);
         console.log("subjectResponse", subjectResponse);
         const response = await getClassesByBoardId(data.student.board_id._id);
         setClassData(response);
 
-        if (data.student.custom_package_status == "approved" || data.student.subscribed_Package) {
-          navigate(`/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`);
+        if (
+          data.student.custom_package_status == "approved" ||
+          data.student.subscribed_Package
+        ) {
+          navigate(
+            `/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`
+          );
         }
-
       } catch (error) {
         console.error("API Caller Error:", error);
       }
-
-
-    }
+    };
 
     apiCaller();
-
   }, []);
-
-
 
   const availableSlots = [
     "5 PM - 6 PM",
@@ -125,36 +129,35 @@ export const StudentLandingPage = () => {
       board_id: studentDataForm.student.board_id._id,
       class_id: studentDataForm.student.class._id,
       subjects: slectedSubject,
-      slot: slot
-    }
-    console.log("sel")
+      slot: slot,
+    };
+    console.log("sel");
     console.log("submissionData", submissionData);
 
     const apiCaller = async () => {
       try {
-        const response = await createCustomPackage({ subject_id: slectedSubject, student_id: studentDataForm.student._id, slots: slot });
+        const response = await createCustomPackage({
+          subject_id: slectedSubject,
+          student_id: studentDataForm.student._id,
+          slots: slot,
+        });
         console.log("response", response);
         alert("Request submitted   successfully!");
         window.location.reload();
       } catch (err) {
         console.error("Error submitting Packages:", err);
       }
-
-
-    }
+    };
     apiCaller();
-
   };
 
   return (
-
-    <> {
-      studentDataForm ?
-
+    <>
+      {" "}
+      {studentDataForm ? (
         <>
-
           <Header />
-          {studentDataForm.student.custom_package_status === "no_package" ?
+          {studentDataForm.student.custom_package_status === "no_package" ? (
             <ApplicationContainer>
               <ApplicationImage>
                 <TeacherFormImage
@@ -170,33 +173,19 @@ export const StudentLandingPage = () => {
                   {/* Row 1: Name, Email, Phone */}
                   <StyledRow>
                     <StyledCol>
-                      <Form.Item
-                        label="Name"
-                        name="name"
-
-                      >
+                      <Form.Item label="Name" name="name">
                         {/* <Input value={studentDataForm.student.user_id.name} readOnly /> */}
                         {studentDataForm.student.user_id.name}
-
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item
-                        label="Email"
-                        name="email"
-
-                      >
+                      <Form.Item label="Email" name="email">
                         {/* <Input value={studentDataForm.student.user_id.email} readOnly /> */}
                         {studentDataForm.student.user_id.email}
-
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item
-                        label="Phone"
-                        name="phone"
-
-                      >
+                      <Form.Item label="Phone" name="phone">
                         {/* <Input value={studentDataForm.student.phone_number} readOnly /> */}
                         {studentDataForm.student.phone_number}
                       </Form.Item>
@@ -206,19 +195,19 @@ export const StudentLandingPage = () => {
                   {/* Row 2: Available Slots */}
                   <StyledRow>
                     <StyledCol>
-                      <Form.Item label="Available Slots"
-                      >
+                      <Form.Item label="Available Slots">
                         <AvailableSlotsContainer>
                           {availableSlots.map((slot, index) => (
-                            <Slot key={index}
+                            <Slot
+                              key={index}
                               onClick={() => {
                                 setSelectedSlot(slot);
                                 setSlot(slot);
                               }}
                               isSelected={slot === selectedSlot}
                             >
-
-                              {slot}</Slot>
+                              {slot}
+                            </Slot>
                           ))}
                         </AvailableSlotsContainer>
                       </Form.Item>
@@ -228,25 +217,16 @@ export const StudentLandingPage = () => {
                   {/* Row 3: Course, Standard, Board */}
                   <StyledRow>
                     <StyledCol>
-                      <Form.Item
-                        label="Select Board"
-                        name="board"
-                      >
+                      <Form.Item label="Select Board" name="board">
                         {/* <Input value={studentDataForm.student.board_id.name} readOnly /> */}
 
-                        {studentDataForm.student.board_id.name}
-
+                        {studentDataForm.student.board_id?.name}
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item
-                        label="Select Class"
-                        name="class"
-
-                      >
+                      <Form.Item label="Select Class" name="class">
                         {/* <Input value={studentDataForm.student.class.classLevel} readOnly /> */}
                         {studentDataForm.student.class.classLevel}
-
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
@@ -273,7 +253,6 @@ export const StudentLandingPage = () => {
                         <Select
                           mode="multiple"
                           placeholder="Select subjects..."
-
                           options={subjects.map((subject) => ({
                             value: subject._id,
                             label: subject.subject_name,
@@ -303,41 +282,42 @@ export const StudentLandingPage = () => {
                         >
                           Submit Application
                         </Button>
-
                       </Form.Item>
                     </StyledCol>
                   </StyledRow>
                 </Form>
               </ApplicationDetails>
-
             </ApplicationContainer>
+          ) : studentDataForm.student.custom_package_status === "pending" ? (
+            <CustomPackageStatus>
+              {" "}
+              Your Custom Package is under review
+            </CustomPackageStatus>
+          ) : (
+            <CustomPackageStatus>
+              {" "}
+              Your Custom Package Request Rejected
+            </CustomPackageStatus>
+          )}
 
-            : studentDataForm.student.custom_package_status === "pending" ?
-              <CustomPackageStatus> Your Custom Package is under review</CustomPackageStatus>
-              : <CustomPackageStatus> Your Custom Package Request Rejected</CustomPackageStatus>
-          }
-
-          {studentDataForm.student.custom_package_status == "no_package" &&
+          {studentDataForm.student.custom_package_status == "no_package" && (
             <>
               <GotoOneToOne />
-              <StudentExistingPackages data={packagesData} studentId={studentDataForm.student._id} />
+              <StudentExistingPackages
+                data={packagesData}
+                studentId={studentDataForm.student._id}
+              />
             </>
-
-          }
+          )}
 
           <StudentEnrollmentVideoView />
           <TeachersSection />
           <StudentEnrollmentReviews />
           <Footer2 />
         </>
-        :
-
+      ) : (
         <LoadingPage />
-
-    }
-
+      )}
     </>
   );
 };
-
-// export  StudentLandingPage;

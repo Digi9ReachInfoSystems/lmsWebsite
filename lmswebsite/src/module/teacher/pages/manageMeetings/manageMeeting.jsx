@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import axios from "axios";
-import "react-big-calendar/lib/css/react-big-calendar.css"; // Default styles for react-big-calendar
+import "react-big-calendar/lib/css/react-big-calendar.css"; 
 import "./ManageMeeting.css"; // Optional custom styles
 import {
   getTeacherByAuthId,

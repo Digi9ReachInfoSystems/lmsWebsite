@@ -8,7 +8,7 @@ export const CustomerQueryWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2em;
+    // padding: 0 2em;
     margin: 0;
 
     ${media.md`
@@ -20,19 +20,20 @@ export const CustomerQueryWrap = styled.div`
 
   .CustomerQueries-batch_title {
     font-family: ${theme.typography.fontFamily};
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
-    flex:1;
+    font-size: 24px;
+    // font-weight: bold;
+    margin: 20px;
+    color: ${theme.colors.frenchGray};
+    flex: 1;
   }
 
   .CustomerQueries-search {
     max-width: 320px;
     width: 100%;
-    margin-right:25px;
+    margin-right: 25px;
     // height:40px;
     flex: 0 0 auto;
-    align-items: center; 
+    align-items: center;
     font-size: 14px;
 
     ${media.md`
@@ -42,7 +43,7 @@ export const CustomerQueryWrap = styled.div`
 
     .ant-input {
       border-radius: 6px;
-      height:auto;
+      height: auto;
       padding: 0 12px;
     }
   }
@@ -50,7 +51,7 @@ export const CustomerQueryWrap = styled.div`
   .CustomerQueries-filter {
     display: flex;
     align-items: center;
-    margin:0px;
+    margin: 0px;
   }
 
   .CustomerQueries-filter-dropdown {

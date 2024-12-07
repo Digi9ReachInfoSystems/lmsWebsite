@@ -48,21 +48,22 @@ export const TeacherApplicationFormViewWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 2em;
+    padding: 0 1em;
     margin: 0;
 
     ${media.md`
       flex-direction: column;
       align-items: stretch;
-      padding: 1em;
+      // padding: 1em;
     `}
   }
 
   .TeachersApplicationFormView-batch_title {
     font-family: ${theme.typography.fontFamily};
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 0;
+    font-size: 24px;
+    // font-weight: bold;
+    margin: 20px;
+    color: ${theme.colors.frenchGray};
     flex: 1;
   }
 
@@ -77,13 +78,13 @@ export const TeacherApplicationFormViewWrap = styled.div`
     `}
 
     .ant-input-affix-wrapper {
-      border-radius: 6px;
+      // border-radius: 6px;
       height: 40px;
       box-shadow: none;
-      border: 1px solid ${theme.colors.gray300};
+      // border: 1px solid ${theme.colors.gray300};
 
       &:hover {
-        border-color: ${theme.colors.gray500};
+        border-color: ${theme.colors.gray700};
       }
 
       .ant-input {
@@ -114,7 +115,7 @@ export const TeacherApplicationFormViewWrap = styled.div`
     .filter-dropdown {
       display: flex;
       align-items: center;
-      border-radius: 4px;
+      // border-radius: 4px;
       padding: 5px;
       background-color: ${theme.colors.white};
 
@@ -127,20 +128,20 @@ export const TeacherApplicationFormViewWrap = styled.div`
       .ant-select {
         width: 150px;
         .ant-select-selector {
-          border-radius: 4px !important;
+          // border-radius: 4px !important;
           height: 40px;
           align-items: center;
           display: flex;
           background-color: ${theme.colors.white};
-          border: 1px solid ${theme.colors.gray300};
+          // border: 1px solid ${theme.colors.gray300};
 
           &:hover {
-            border-color: ${theme.colors.gray500};
+            // border-color: ${theme.colors.gray500};
           }
         }
         .ant-select-selection-item {
           font-size: 14px;
-          color: ${theme.colors.gray700};
+          // color: ${theme.colors.gray700};
         }
       }
     }

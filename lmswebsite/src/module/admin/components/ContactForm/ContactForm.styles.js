@@ -7,7 +7,7 @@ export const ContactFormStylesWrap = styled.div`
   min-width: 240px;
   height: 100%; /* Fill available height */
   // margin: auto;
- margin:10px auto;
+  margin: 10px auto;
   .contact-forms {
     width: 100%;
     height: 100%; /* Ensure the component fills its container height */
@@ -27,8 +27,10 @@ export const ContactFormStylesWrap = styled.div`
     `}
   }
   h2 {
-    margin: 0;
-    font-size: 1.2rem;
+    // margin: 0;
+    font-size: 18px;
+    // font-size: 18px;
+    // font-size: 18px;
     font-weight: bold;
     color: ${(props) => props.theme.colors.gray700};
 

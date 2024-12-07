@@ -22,18 +22,18 @@ const StudentTaskBoard = () => {
     const fetchTaskBoardData = async () => {
       try {
         // Fetching student data from localStorage
-        const sessionData = JSON.parse(localStorage.getItem('sessionData'));
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
-          console.error('User is not authenticated.');
-          throw new Error('User is not authenticated.');
+          console.error("User is not authenticated.");
+          throw new Error("User is not authenticated.");
         }
         const authId = sessionData.userId;
 
         const studentData = await getStudentByAuthId(authId);
 
         if (!studentData.student || !studentData.student._id) {
-          console.error('Student data is incomplete.');
-          throw new Error('Student data is incomplete.');
+          console.error("Student data is incomplete.");
+          throw new Error("Student data is incomplete.");
         }
 
         const studentId = studentData.student._id;
@@ -60,19 +60,33 @@ const StudentTaskBoard = () => {
         await Promise.all(
           allQuizzes.map(async (quiz) => {
             const scoreResponse = await getscoreforstudent(studentId, quiz._id);
-            console.log("Score Response for Quiz ID", quiz._id, ":", scoreResponse);
-            if (scoreResponse && scoreResponse.data && scoreResponse.data.length > 0) {
+            console.log(
+              "Score Response for Quiz ID",
+              quiz._id,
+              ":",
+              scoreResponse
+            );
+            if (
+              scoreResponse &&
+              scoreResponse.data &&
+              scoreResponse.data.length > 0
+            ) {
               responseMap[quiz._id] = scoreResponse.data[0].score;
-              console.log('Response Map Updated for Quiz ID:', quiz._id, 'Score:', scoreResponse.data[0].score);
+              console.log(
+                "Response Map Updated for Quiz ID:",
+                quiz._id,
+                "Score:",
+                scoreResponse.data[0].score
+              );
             }
           })
         );
 
         setResponses(responseMap);
-        console.log('Final Response Map:', responseMap);
+        console.log("Final Response Map:", responseMap);
       } catch (error) {
-        setError('Failed to load quizzes');
-        console.error('Error in fetchTaskBoardData:', error);
+        setError("Failed to load quizzes");
+        console.error("Error in fetchTaskBoardData:", error);
       } finally {
         setLoading(false);
       }
@@ -83,7 +97,9 @@ const StudentTaskBoard = () => {
 
   // Handle navigation to the quiz answering page
   const handleNavigateToQuiz = (quiz) => {
-    navigate(`/student/dashboard/taskBoard/quiz/${quiz._id}`, { state: { quiz, studentId } });
+    navigate(`/student/dashboard/taskBoard/quiz/${quiz._id}`, {
+      state: { quiz, studentId },
+    });
   };
 
   // Loading and error states
@@ -122,13 +138,16 @@ const StudentTaskBoard = () => {
                     <PrimaryButton
                       type="primary"
                       onClick={() => handleNavigateToQuiz(quiz)}
-                      style={{ backgroundColor: '#e91e63', borderColor: '#e91e63' }}
+                      style={{
+                        backgroundColor: "#e91e63",
+                        borderColor: "#e91e63",
+                      }}
                     >
                       Answer
                     </PrimaryButton>
                   )
                 }
-                style={{ width: '100%', marginBottom: '20px' }}
+                style={{ width: "100%", marginBottom: "20px" }}
                 hoverable
               >
                 <Subheading>{quiz.quiz_title}</Subheading>

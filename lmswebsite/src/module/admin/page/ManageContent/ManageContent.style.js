@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { media, theme } from "../../../../style/theme/theme";
 // Container for the entire page
 export const Container = styled.div`
   // margin: 20px;
@@ -26,6 +27,15 @@ export const Header = styled.div`
       color: #000;
     }
   }
+`;
+
+export const title = styled.h2`
+  font-family: ${theme.typography.fontFamily};
+  font-size: 24px;
+  // font-weight: bold;
+  margin: 20px;
+  color: ${theme.colors.frenchGray};
+  flex: 1;
 `;
 
 export const BackIcon = styled.a`

@@ -16,7 +16,7 @@ export const BenefitsContainerWarp = styled.div`
 
 export const BenefitsContiner = styled.div`
   width: 100%;
-  margin-top: 20%;
+  margin-top: 15%;
   margin-left: 40px;
 
   ${media.xl`
@@ -41,7 +41,7 @@ export const DetailsBenefits = styled.div`
   display: flex;
   flex-direction: row;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: 40px;
   margin-left: 10px;
 
   ${media.md`
@@ -50,9 +50,9 @@ export const DetailsBenefits = styled.div`
 `;
 
 export const BenefitsHeader = styled.h2`
-  width: 60%;
-  font-size: 42px;
-  font-weight: 800;
+  // width: 60%;
+  font-size: 32px;
+  font-weight: 600;
 
   ${media.xl`
     font-size: 36px;
@@ -78,6 +78,7 @@ font-size: 32px;
 export const BenefitsDetails = styled.div`
   gap: 10px;
   display: flex;
+  // padding-top: 40px;
   flex-direction: column;
 `;
 
@@ -85,7 +86,7 @@ export const BenefitsColor = styled.div`
   .color {
     width: 30px;
     height: 30px;
-    border: 2px solid ${theme.colors.frenchGray};
+    // border: 2px solid ${theme.colors.frenchGray};
     border-radius: 50px;
 
     ${media.md`
@@ -96,8 +97,9 @@ export const BenefitsColor = styled.div`
 `;
 
 export const BenefitsSubtitle = styled.h3`
-  font-size: 20px;
-  width: 50%;
+  font-size: 18px;
+  // width: 50%;
+  color: ${theme.colors.pink4};
 
   ${media.xl`
     font-size: 18px;
@@ -113,7 +115,7 @@ export const BenefitsSubtitle = styled.h3`
 `;
 
 export const BenefitsContent = styled.p`
-  font-size: 18px;
+  font-size: 16px;
   width: 70%;
   text-align: justify;
 
@@ -158,8 +160,8 @@ export const ImageContainer = styled.div`
 
 export const ImageDiv = styled.div`
   position: relative;
-  width: 500px;
-  height: 500px;
+  width: 35vw;
+  height: 50vh;
   margin-right: 20%;
   background-color: #7684ff;
   display: flex;

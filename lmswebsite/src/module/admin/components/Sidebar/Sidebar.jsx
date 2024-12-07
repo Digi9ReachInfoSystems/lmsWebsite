@@ -1,293 +1,197 @@
-import React, { useState, useEffect } from "react";
-import { RxDashboard } from "react-icons/rx";
-import CloseIcon from "@mui/icons-material/Close";
-// import { IconButton } from "@mui/material";
-
-import {
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-} from "@mui/material";
-import {
-  Dashboard,
-  AddBox,
-  Assignment,
-  AccessTime,
-  Person,
-  Mail,
-  Description,
-  Settings,
-  Menu as MenuIcon,
-} from "@mui/icons-material";
-import { PiListChecksThin } from "react-icons/pi";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { SideBarwrap } from "./Sidebar.styles";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { NavLink } from "react-router-dom";
-import { FaLayerGroup } from "react-icons/fa6";
-import { MdOutlineAssignment } from "react-icons/md";
-import { VscPreview } from "react-icons/vsc";
-import { RiCustomerServiceLine } from "react-icons/ri";
-import { AiTwotoneSchedule } from "react-icons/ai";
-// import { MdOutlineAssignment } from "react-icons/md";
-import { FaWpforms } from "react-icons/fa6";
+import { RxDashboard } from "react-icons/rx";
+import { PiListChecksThin } from "react-icons/pi";
+import { FaLayerGroup, FaWpforms, FaTools } from "react-icons/fa";
 import { AiTwotoneNotification } from "react-icons/ai";
+import { RiCustomerServiceLine } from "react-icons/ri";
 import { MdOutlineSettings } from "react-icons/md";
-import { FaUsersGear } from "react-icons/fa6";
 import { VscSignOut } from "react-icons/vsc";
-import { TbTransactionRupee } from "react-icons/tb";
-import { BiSolidCustomize } from "react-icons/bi";
-import { FaTools } from "react-icons/fa";
+import styled from "styled-components";
+
+// Styled components for Sidebar
+const SidebarWrapper = styled.div`
+  width: ${(props) => (props.isHovered ? "240px" : "80px")};
+  height: 100vh;
+  background-color: #2f3542;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease-in-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
+  &:hover {
+    width: 240px;
+  }
+`;
+
+const SidebarHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: ${(props) => (props.isHovered ? "space-between" : "center")};
+  margin-bottom: 20px;
+  color: white;
+`;
+
+const SidebarToggle = styled.div`
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+  display: ${(props) => (props.isHovered ? "none" : "block")};
+`;
+
+const MenuItem = styled.div`
+  display: flex;
+  align-items: center;
+  color: ${(props) => (props.active ? "#fff" : "#bbb")};
+  margin: 15px 0;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #ff0080;
+  }
+
+  svg {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+  }
+`;
+
+const LogoutButton = styled.button`
+  display: flex;
+  align-items: center;
+  color: ${(props) => (props.active ? "#fff" : "#bbb")};
+  margin: 15px 0;
+  background: none;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  cursor: pointer;
+  width: 100%;
+
+  &:hover {
+    background-color: #ff0080;
+  }
+
+  svg {
+    margin-right: 10px;
+    font-size: 1.2rem;
+  }
+`;
 
 const Sidebar = () => {
+  const [isHovered, setIsHovered] = useState(false);
   const [activeItem, setActiveItem] = useState("Dashboard");
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarExpanded((prev) => !prev);
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true);
+
+  const handleLogout = () => {
+    const isConfirmed = window.confirm("Are you sure you want to log out?");
+    if (isConfirmed) {
+      try {
+        // Perform the logout action here (e.g., clear localStorage or call logout API)
+        // For example, clearing token:
+        localStorage.clear();
+
+        // If using a global state management (like Context or Redux), dispatch a logout action here
+        // e.g., dispatch(logout());
+
+        // Navigate to login page or home page
+        navigate("/login");
+      } catch (error) {
+        console.error("Logout failed:", error);
+        // Optionally, show an error message to the user
+      }
+    }
+  };
 
   const menuItems = [
-    { name: "Dashboard", icon: <Dashboard />, link: "/admin/" },
+    { name: "Dashboard", icon: <RxDashboard />, link: "/admin/" },
     {
-      name: "Assigned Batches",
-      icon: <AddBox />,
+      name: "Manage Batches",
+      icon: <FaLayerGroup />,
       link: "/admin/createdBatches",
     },
     {
       name: "Customer Queries",
-      icon: <AddBox />,
+      icon: <RiCustomerServiceLine />,
       link: "/admin/customerQueries",
     },
     {
-      name: "Application Form Review",
-      icon: <Assignment />,
+      name: "Application Form",
+      icon: <FaWpforms />,
       link: "/admin/applicationFormReview",
     },
-    { name: "Circulars", 
-      icon: <Description />, 
-      link: "/admin/circular" 
-    },
     {
-       name: "Settings", 
-       icon: <Settings />,
-        link: "/admin/setting" 
-      },
+      name: "Circulars",
+      icon: <AiTwotoneNotification />,
+      link: "/admin/circular",
+    },
+    { name: "Manage Content", icon: <FaTools />, link: "/admin/manageContent" },
+    {
+      name: "Manage Attendance",
+      icon: <PiListChecksThin />,
+      link: "/admin/manageAttendance",
+    },
+    { name: "Settings", icon: <MdOutlineSettings />, link: "/admin/settings" },
   ];
 
-  const handleLogout = () => {
-    localStorage.clear(); // Clear all items in localStorage
-    navigate("/login"); // Redirect to the login page or desired route
+  const handleItemClick = (item) => {
+    setActiveItem(item.name);
+    navigate(item.link);
   };
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 768) {
-        setIsOpen(false);
-      } else {
-        setIsOpen(true);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Initial check
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
-    <>
-      <div className="sidebar-toggle-btn"></div>
-      <SideBarwrap isOpen>
-        <div className="sidebar-top">
-          <div className="sidebar-brand">
-            <span className="brand-logo">
-              <img
-                src="https://www.logoai.com/oss/icons/2021/10/27/rA73APprj8wskQ0.png"
-                alt="Logo"
-                className="logo"
-              />
-            </span>
-            <div className="sidebar-logo">
-              <IconButton onClick={() => setIsOpen(!isOpen)}>
-                {isOpen ? <CloseIcon /> : <MenuIcon />}
-              </IconButton>
-            </div>
-          </div>
-        </div>
-        <div className="sidebar-body">
-          <div className="sidebar-menu">
-            <ul className="menu-list">
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <RxDashboard />
-                  </span>
-                  <span className="menu-link-text">DashBoard</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/createdBatches"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <FaLayerGroup />
-                  </span>
-                  <span className="menu-link-text">Manage Batches</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/customerQueries"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <RiCustomerServiceLine />
-                  </span>
-                  <span className="menu-link-text">Customer Queries</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/customPayments"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                  <TbTransactionRupee />
-                  </span>
-                  <span className="menu-link-text">Manage Payment</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/customPackage"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                  <BiSolidCustomize />
-                  </span>
-                  <span className="menu-link-text">Custom Package</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/applicationFormReview"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <FaWpforms />
-                  </span>
-                  <span className="menu-link-text">Application Form</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/userManagement"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <FaUsersGear />
-                  </span>
-                  <span className="menu-link-text">User Management</span>
-                </NavLink>
-              </li>
-
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/circular"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <AiTwotoneNotification />
-                  </span>
-                  <span className="menu-link-text">Circulars</span>
-                </NavLink>
-              </li>
-
-              
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/manageContent"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                  <FaTools />
-                  </span>
-                  <span className="menu-link-text">Manage Content</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/manageAttendance"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                  <PiListChecksThin />
-                  </span>
-                  <span className="menu-link-text">Manage Attendance</span>
-                </NavLink>
-              </li>
-
-             
-              {/* <li className="menu-item">
-                <NavLink
-                  to="/admin/customPackage"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <MdPayment />
-                  </span>
-                  <span className="menu-link-text">Custom Package</span>
-                </NavLink>
-              </li> */}
-
-
-
-              <li className="menu-item">
-                <NavLink
-                  to="/admin/setting"
-                  activeClassName="active"
-                  className="menu-link"
-                >
-                  <span className="menu-link-icon">
-                    <MdOutlineSettings />
-                  </span>
-                  <span className="menu-link-text">Settings</span>
-                </NavLink>
-              </li>
-              <li className="menu-item">
-                <NavLink
-                  to="/login" // Optional: Redirect route after logout
-                  className="menu-link"
-                  onClick={handleLogout} // Logout function attached here
-                >
-                  <span className="menu-link-icon">
-                    <VscSignOut />
-                  </span>
-                  <span className="menu-link-text">Sign Out</span>
-                </NavLink>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </SideBarwrap>
-    </>
+    <SidebarWrapper
+      isHovered={isHovered}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <SidebarHeader isHovered={isHovered}>
+        {!isHovered && (
+          <SidebarToggle isHovered={isHovered} onClick={toggleSidebar}>
+            ☰
+          </SidebarToggle>
+        )}
+        {isHovered && (
+          <span style={{ color: "white", fontSize: "20px" }}>Admin Panel</span>
+        )}
+      </SidebarHeader>
+      {menuItems.map((item) => (
+        <MenuItem
+          key={item.name}
+          active={activeItem === item.name}
+          onClick={() => handleItemClick(item)}
+        >
+          <Link to={item.link}>
+            {item.icon}
+            {isHovered && item.name}
+          </Link>
+        </MenuItem>
+      ))}
+      {/* Logout Button */}
+      <LogoutButton active={activeItem === "Logout"} onClick={handleLogout}>
+        <VscSignOut />
+        {isHovered && "Logout"}
+      </LogoutButton>
+    </SidebarWrapper>
   );
 };
 

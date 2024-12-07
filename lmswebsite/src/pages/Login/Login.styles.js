@@ -1,109 +1,170 @@
 import styled from "styled-components";
-import {media,theme} from '../../style/theme/theme';
+import { media } from "../../style/theme/theme";
 
+// Full-page container
 export const LoginPageWrap = styled.div`
-  .login-container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
-    background-color: ${( props) => props.theme.colors.darkwhite};
-    margin: 0;
+  display: flex;
+  height: 100vh;
 
-    ${media.md`
-      flex-direction: column;
-      align-items: center;
-    `}
+  background: ${(props) => props.theme.colors.pink3};
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .login-textfields {
+    padding: 2em;
   }
 
-  .login-image {
-    flex: 3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background:  ${(props) => props.theme.lineargradients.hoverPinkGradient};
-    position: relative;
-
-    ${media.md`
-      height: 50vh;
-      flex: none;
-      width: 100%;
-    `}
-  }
-
-  .login-image img {
-    max-width: 100%;
-    height: 100vh;
-
-    ${media.md`
-      height: auto;
-      max-height: 100%;
-    `}
-  }
-
-  .login-page-form-main-container {
-    flex: 2;
-    padding: 5rem;
-    background-color: ${(props) => props.theme.colors.darkwhite};
+  .left-container {
+    flex: 1;
+    background: #4f4f4f; /* Background for left side */
+    color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    ${media.xl`
-      padding: 4rem;
-    `}
-
-    ${media.md`
-      padding: 2rem;
-      width: 90%;
-    `}
-  }
-
-  h2 {
-    color: ${(props) => props.theme.colors.gray700};
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
-  }
-
-  p {
-    color: ${(props) => props.theme.colors.frenchGray};
-    margin-bottom: 1.5rem;
-  }
-
-  .error-message {
-    color: red;
-    margin-bottom: 1rem;
-  }
-
-  .options {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-
-    a {
-      color: ${(props) => props.theme.colors.pink4};
-      text-decoration: none;
+    align-items: center;
+    padding: 2rem;
+    h1 {
+      font-size: 3rem;
       font-weight: bold;
     }
-  }
-
-  .login-button {
-    padding: 1rem;
-    background: ${(props) => props.theme.lineargradients.pinkGradient};
-    border: none;
-    border-radius: 2.2rem;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s ease;
-
-    &:hover {
-      background: ${(props) => props.theme.lineargradients.hoverPinkGradient}!important;
+    p {
+      font-size: 1.25rem;
+      margin-top: 1rem;
     }
   }
 
-  p a {
-    color: ${(props) => props.theme.colors.pink4};
+  .right-container {
+    flex: 1;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  .caption {
+    padding-bottom: 0.7em;
+    font-size: 10px;
+    color: ${(props) => props.theme.colors.gray700};
+  }
+`;
+
+// Background containers
+export const Container = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 70%;
+  background: ${(props) => props.theme.colors.white || "transparent"};
+  // z-index: -;
+
+  &:nth-child(1) {
+    left: 0;
+    background: ${(props) => props.theme.lineargradients.leftGradient};
+  }
+
+  &:nth-child(2) {
+    right: 0;
+    background: ${(props) => props.theme.lineargradients.rightGradient};
+  }
+
+  ${media.md`
+    width: 100%;
+    height: 50%;
+  `}
+`;
+
+// Container for the login form
+export const LoginFormContainer = styled.div`
+  background: ${(props) => props.theme.colors.darkwhite};
+  padding: 4rem;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 550px;
+  // max-height: 500px;
+  height: 65vh;
+  z-index: 6;
+  margin-left: 40vw;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+  // align-items: center;
+
+  ${media.md`
+    padding: 2rem;
+  `}
+`;
+
+// Title Styling
+export const Title = styled.h2`
+  color: ${(props) => props.theme.colors.gray700};
+  font-size: 24px;
+  margin-bottom: 1rem;
+  padding-top: 3rem;
+  padding-left: 2rem;
+`;
+export const SubTitle = styled.h2`
+  color: ${(props) => props.theme.colors.gray700};
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  // padding-top: 3rem;
+  padding-left: 2rem;
+`;
+
+export const ForgotPassword = styled.a`
+  color: ${(props) => props.theme.colors.pink};
+  // text-align: left;
+  font-size: 0.7rem;
+  cursor: pointer;
+  margin-bottom: 1rem;
+  text-decoration: none;
+
+  ]
+  //
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+// Create Account link (styled to be bold and colored)
+export const SubTitle1 = styled.p`
+  color: ${(props) => props.theme.colors.primary};
+  // font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+  // margin-top: 1rem;
+
+  a {
+    color: ${(props) => props.theme.colors.pink};
     text-decoration: none;
-    font-weight: bold;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+export const LoginButton = styled.button`
+  width: 100%;
+  padding: 0.8rem;
+  background-color: ${(props) => props.theme.colors.pink};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.primaryDark};
+  }
+
+  &:disabled {
+    background-color: ${(props) => props.theme.colors.gray300};
+    cursor: not-allowed;
   }
 `;

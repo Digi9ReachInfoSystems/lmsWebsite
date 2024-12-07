@@ -5,9 +5,9 @@ export const ChartWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 400px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-
+  background-color: #fff;
   @media (max-width: 768px) {
     height: 500px;
   }

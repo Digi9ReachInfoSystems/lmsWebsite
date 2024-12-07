@@ -5,7 +5,7 @@ import { FaBookReader } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai"; // Importing left and right arrow icons
-import {getStatisticsData }from "../../../api/statsApi"; // Import API configuration
+import { getStatisticsData } from "../../../api/statsApi"; // Import API configuration
 import {
   BannerContainerWarp,
   BannerClip,
@@ -81,12 +81,12 @@ const Banner = ({ data }) => {
 
   // Colors for popular courses
   const backgroundColors = [
-    "#FFD700", // Gold
-    "#FF4500", // Orange Red
-    "#00BFFF", // Deep Sky Blue
-    "#32CD32", // Lime Green
-    "#FF69B4", // Hot Pink
-    "#8A2BE2", // Blue Violet
+    "#F8E7D8", // Gold
+    "#D7FDEB", // Orange Red
+    "#FFDFF8", // Deep Sky Blue
+    "#FFC1CD", // Lime Green
+    "#C9E2FF", // Hot Pink
+    "#C9E2FF", // Blue Violet
   ];
 
   // Generate a background color based on the index
@@ -120,7 +120,6 @@ const Banner = ({ data }) => {
     }
   };
 
-  // Create a looped version of courses
   const loopedCourses = [...courses]; // Duplicate the courses list for looping
 
   return (
@@ -143,9 +142,6 @@ const Banner = ({ data }) => {
       <BannerPopularCourses>
         <PopularCoursesHeader>Popular Courses</PopularCoursesHeader>
         <div style={{ position: "relative" }}>
-          <ArrowButtonLeft onClick={scrollLeft}>
-            <AiOutlineLeft /> {/* Left arrow icon */}
-          </ArrowButtonLeft>
           <PopularCourses ref={coursesRef}>
             {loopedCourses.map((item, index) => (
               <PopularCourseCard
@@ -160,9 +156,6 @@ const Banner = ({ data }) => {
               </PopularCourseCard>
             ))}
           </PopularCourses>
-          <ArrowButtonRight onClick={scrollRight}>
-            <AiOutlineRight /> {/* Right arrow icon */}
-          </ArrowButtonRight>
         </div>
       </BannerPopularCourses>
 
