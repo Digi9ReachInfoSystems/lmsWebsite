@@ -18,14 +18,14 @@ import {
 } from "./BoardDetailPage.style";
 
 const BoardDetailPage = () => {
-//   const { boardId } = useParams(); // Get the board ID from the URL parameters
+  const { boardId } = useParams(); // Get the board ID from the URL parameters
   const navigate = useNavigate(); // Initialize useNavigate
   const [classes, setClasses] = useState([]);
   const [loadingClasses, setLoadingClasses] = useState(true);
   const [classesError, setClassesError] = useState(null);
   const [boardInfo, setBoardInfo] = useState(null); // Board info state
 
-  const boardId = "67515aa074d2a39e7a44ac48";
+//   const boardId = "67515aa074d2a39e7a44ac48";
   useEffect(() => {
     if (!boardId) {
       setClassesError(new Error("No board ID provided"));

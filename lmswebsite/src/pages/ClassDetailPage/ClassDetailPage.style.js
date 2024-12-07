@@ -4,7 +4,6 @@ import styled from 'styled-components';
 // Container for the entire page
 export const Container = styled.div`
   padding: 20px;
-//   max-width: 1200px;
 width: 80%; 
   margin: 0 auto;
 `;
@@ -42,17 +41,21 @@ export const NoPackagesMessage = styled.div`
 // Grid for package cards
 export const PackageGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 30px;
+  width: 100%;
+
 `;
 
 // Individual package card
 export const PackageCard = styled.div`
   background-color: #f9f9f9;
+  width: 400px;
   border: 1px solid #ccc;
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  gap: 50px;
 `;
 
 // Package title

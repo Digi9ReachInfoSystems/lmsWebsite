@@ -1,207 +1,237 @@
+// Header.style.js
 import styled from "styled-components";
-import { media, theme } from "../../../style/theme/theme";
+import { theme, media } from "../../../style/theme/theme";
 
-export const Navbar = styled.nav`
-  font-family: ${theme.typography.fontFamily};
+export const HeaderContainer = styled.header`
+  background-color: ${theme.colors.black};
+  padding: 10px 20px;
+  color: ${theme.colors.white};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.5rem 9rem;
-  border-radius: 8px;
   position: relative;
-  background-color: ${theme.colors.white};
-
-  ${media.lg`
-    padding: 0.5rem 1.5rem;
-  `}
-
-  ${media.md`
-    flex-wrap: wrap;
-    padding: 0.5rem 1rem;
-  `}
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Ensures header is above other components */
 `;
 
 export const Logo = styled.div`
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    height: 50px;
+    width: auto;
+
+    ${media.sm`
+      height: 40px;
+    `}
+  }
+`;
+
+export const NavMenu = styled.nav`
+  flex: 1;
   display: flex;
+  justify-content: center;
   align-items: center;
 
-  img {
-    height: 50px;
-    margin-right: 10px;
-
-    ${media.lg`
-      height: 40px;
-      margin-right: 5px;
-    `}
-  }
-
-  ${media.md`
-    justify-content: center;
-    margin-bottom: 1rem;
-    width: 100%;
+  ${media.sm`
+    display: none; /* Hide on small screens */
   `}
 `;
 
-export const NavLinks = styled.div`
+export const NavLinks = styled.ul`
+  list-style: none;
   display: flex;
-  gap: 2rem;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
 
-  ${media.lg`
-    gap: 1rem;
-    font-size: 0.9rem;
-  `}
-
-  ${media.md`
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  `}
-`;
-
-export const NavLink = styled.a`
-  text-decoration: none;
-  color: ${theme.colors.black};
-  font-size: 16px;
-  font-weight: 500;
-  margin-top: 0.5rem;
-
-  &:hover {
-    color: ${theme.colors.pink4};
+  > li {
+    position: relative; /* Allows absolute positioning of dropdowns */
   }
 
-  ${media.xl`
-    font-size: 14px;
-
-  `}
-
-  ${media.md`
-    padding: 0.5rem 0;
-    width: 100%;
-    text-align: center;
-  `}
-`;
-
-export const Dropdown = styled.div`
-  position: relative;
-
-  button {
-    background: none;
-    border: none;
-    font-size: 16px;
-    color: ${theme.colors.black};
-    cursor: pointer;
-    padding: 0.5rem;
+  a {
+    color: ${theme.colors.white};
+    text-decoration: none;
+    font-weight: 500;
+    padding: 10px;
+    display: block;
 
     &:hover {
-      color: ${theme.colors.pink4};
+      color: ${theme.colors.primary};
     }
-
-    ${media.xl`
-    font-size: 14px;
-
-  `}
-
-    ${media.md`
-      width: 100%;
-      text-align: center;
-    `}
   }
+`;
 
-  .dropdown-content {
-    display: none;
+export const DropdownWrapper = styled.li`
+  position: relative; /* Establishes a positioning context */
+
+  /* Boards Menu */
+  .boards-menu {
     position: absolute;
-    background-color: ${theme.colors.white};
-    border: 1px solid ${theme.colors.frenchGray};
-    padding: 0.5rem;
-    z-index: 10;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-    a {
-      display: block;
-      text-decoration: none;
-      color: ${theme.colors.black};
-      margin: 0.5rem 0;
-
-      &:hover {
-        color: ${theme.colors.pink4};
-      }
-    }
-  }
-
-  &:hover .dropdown-content {
+    top: 100%;
+    left: 0;
+    background-color: ${theme.colors.black};
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 160px;
+    z-index: 1000;
     display: block;
   }
-`;
 
-export const ButtonGroup = styled.div`
-  display: flex;
-  gap: 1rem;
-
-  ${media.md`
-    /* align-items: center;
-    gap: 1.5rem;
-    width: 100%; */
+  /* Hide nested menus by default */
+  .boards-menu .classes-menu,
+  .classes-menu .packages-menu {
     display: none;
-  `}
-`;
-
-export const Button = styled.button`
-  padding: 0.8vh 0.8vw;
-  border: 1px solid ${theme.colors.pink4};
-  background-color: ${theme.colors.white};
-  color: ${theme.colors.pink4};
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: 600;
-
-  &.primary {
-    background-color: ${theme.colors.pink4};
-    color: ${theme.colors.white};
   }
 
-  &:hover {
-    background-color: ${theme.colors.pink3};
-    color: ${theme.colors.white};
+  /* Show Classes Menu on hover of Boards */
+  .boards-menu li:hover > .classes-menu {
+    display: block;
   }
 
-  ${media.md`
-  padding: 10px;
-    width: 100%;
-  `}
+  /* Show Packages Menu on hover of Classes */
+  .classes-menu li:hover > .packages-menu {
+    display: block;
+  }
+
+  /* Classes Menu */
+  .classes-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: ${theme.colors.black};
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 160px;
+    z-index: 1000;
+  }
+
+  /* Packages Menu */
+  .packages-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background-color: ${theme.colors.black};
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 160px;
+    z-index: 1000;
+  }
+
+  /* Styles for Boards Links */
+  .boards-menu > li > a {
+    color: ${theme.colors.white};
+    padding: 8px 16px;
+    display: block;
+
+    &:hover {
+      background-color: ${theme.colors.darkred};
+      color: ${theme.colors.white};
+    }
+  }
+
+  /* Styles for Classes Links */
+  .classes-menu > li > a {
+    color: ${theme.colors.white};
+    padding: 8px 16px;
+    display: block;
+
+    &:hover {
+      background-color: ${theme.colors.darkred};
+      color: ${theme.colors.white};
+    }
+  }
+
+  /* Styles for Packages Links */
+  .packages-menu > li > a {
+    color: ${theme.colors.white};
+    padding: 8px 16px;
+    display: block;
+
+    &:hover {
+      background-color: ${theme.colors.darkred};
+      color: ${theme.colors.white};
+    }
+  }
 `;
 
+// Hamburger Icon for Mobile View
 export const HamburgerMenu = styled.div`
   display: none;
   flex-direction: column;
+  gap: 4px;
   cursor: pointer;
 
   span {
-    width: 25px;
-    height: 3px;
-    background: ${theme.colors.black};
-    margin: 4px 0;
-    transition: 0.3s ease;
+    display: block;
+    height: 2px;
+    width: 24px;
+    background-color: ${theme.colors.white};
   }
 
-  ${media.md`
+  ${media.sm`
     display: flex;
-    position: absolute;
-    right: 1rem;
-    top: 1rem;
   `}
 `;
 
+// Mobile Navigation Menu
 export const MobileMenu = styled.div`
   display: none;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem 0;
-  width: 100%;
-  background-color: ${theme.colors.white};
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
-  ${media.md`
-    display: flex;
+  ${media.sm`
+    display: block;
+    position: absolute;
+    top: 60px; /* Adjust based on header height */
+    left: 0;
+    width: 100%;
+    background-color: ${theme.colors.backgroundDark};
+    padding: 10px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 999; /* Ensures mobile menu is above other content */
+  `}
+
+  ${NavLinks} {
+    flex-direction: column;
+    gap: 10px;
+
+    li {
+      text-align: left;
+    }
+
+    a {
+      color: ${theme.colors.white};
+      padding: 10px 0;
+
+      &:hover {
+        color: ${theme.colors.primary};
+      }
+    }
+  }
+`;
+
+// Logout Button
+export const SignUpButton = styled.button`
+  background-color: #ff0080;
+  color: white;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e60073;
+  }
+
+  ${media.sm`
+    display: none; /* Hide on small screens if needed */
   `}
 `;
