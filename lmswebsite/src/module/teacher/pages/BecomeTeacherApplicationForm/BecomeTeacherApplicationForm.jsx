@@ -33,7 +33,8 @@ import { useNavigate } from "react-router-dom";
 import { getUserByAuthId } from "../../../../api/userApi";
 import { getAllSubjects } from "../../../../api/subjectApi";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
-import{updateAccessToken} from "../../../../api/refreshTokenApi";
+import { updateAccessToken } from "../../../../api/refreshTokenApi";
+import {PageContainer,Heading,Subheading,BodyText,PrimaryButton} from "../../../../style/PrimaryStyles/PrimaryStyles";
 
 const { Option } = Select;
 
@@ -49,7 +50,7 @@ const BecomeTeacherApplicationForm = () => {
   const [selectedBoard, setSelectedBoard] = useState("");
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
- 
+
 
   const [form] = Form.useForm();
 
@@ -178,7 +179,7 @@ const BecomeTeacherApplicationForm = () => {
   };
 
   return (
-    <>
+    <><PageContainer>
       {userData ?
         <>
           <Header />
@@ -192,12 +193,12 @@ const BecomeTeacherApplicationForm = () => {
                 />
               </div>
               <div className="applicationDetails">
-                <h2 className="applicationFormTitle">
+                <Heading>
                   Love Teaching Students? Join Us
-                </h2>
-                <p className="applicationFormSubtitle">
+                </Heading>
+                <Subheading>
                   Become a Teacher and train students all around the world.
-                </p>
+                </Subheading>
                 <StyledForm>
                   <Form
                     form={form}
@@ -215,6 +216,7 @@ const BecomeTeacherApplicationForm = () => {
                         rules={[
                           { required: true, message: "Please enter your name" },
                           { max: 50, message: "Name cannot exceed 50 characters" },
+                          { pattern: /^[A-Za-z\s]+$/, message: "Please enter a valid name (letters only)" }, // Accept only alphabets and spaces
                         ]}
                       >
                         <Input placeholder="Name" />
@@ -389,7 +391,13 @@ const BecomeTeacherApplicationForm = () => {
                       >
                         <Select
                           placeholder="Select Board"
-                          onChange={(value) => setSelectedBoard(value)}
+                          onChange={(value) =>{ 
+                            setSelectedBoard(value)
+                            setSelectedClass([])
+                            setSelectedSubject([])
+                            form.setFieldsValue({ class_id: undefined });
+                            form.setFieldsValue({ subject_id: undefined });
+                          }}
                           allowClear
                         >
                           {boardData.map((board) => (
@@ -413,7 +421,11 @@ const BecomeTeacherApplicationForm = () => {
                           <Select
                             mode="multiple"
                             placeholder="Select classes..."
-                            onChange={(values) => setSelectedClass(values)}
+                            onChange={(values) => {
+                              setSelectedClass(values)
+                             setSelectedSubject([])
+                             form.setFieldsValue({ subject_id: undefined });
+                            }}
                             allowClear
                           >
                             {classes.map((classItem) => (
@@ -452,12 +464,12 @@ const BecomeTeacherApplicationForm = () => {
                     </div>
 
                     <Form.Item>
-                      <Button type="primary" htmlType="submit"
+                      <PrimaryButton htmlType="submit"
                         disabled={isSubmitting}
-                        style={{ background: "#EE1B7A", borderColor: "#EE1B7A" }}
+                        // style={{ background: "#EE1B7A", borderColor: "#EE1B7A" }}
                       >
                         {isSubmitting ? "Submitting..." : "Submit"}
-                      </Button>
+                      </PrimaryButton>
                     </Form.Item>
                   </Form>
                 </StyledForm>
@@ -485,6 +497,7 @@ const BecomeTeacherApplicationForm = () => {
           <LoadingPage />
         </>
       }
+      </PageContainer>
     </>
   );
 };

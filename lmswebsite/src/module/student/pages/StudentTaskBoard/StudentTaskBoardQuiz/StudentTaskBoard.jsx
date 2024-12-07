@@ -1,19 +1,14 @@
 // StudentTaskBoard.jsx
 
-import React, { useEffect, useState } from "react";
-import { getQuizBySubjectId } from "../../../../../api/quizApi";
-import { getBatchesByStudentId } from "../../../../../api/batchApi";
-import { Card, Button } from "antd";
-import {
-  Container,
-  QuizCard,
-  QuizTitle,
-  QuizDescription,
-} from "./StudentTaskBoard.style";
-import { getStudentByAuthId } from "../../../../../api/studentApi";
-import { getscoreforstudent } from "../../../../../api/responseApi";
-import { useNavigate } from "react-router-dom";
-
+import React, { useEffect, useState } from 'react';
+import { getQuizBySubjectId } from '../../../../../api/quizApi';
+import { getBatchesByStudentId } from '../../../../../api/batchApi';
+import { Card, Button } from 'antd';
+import { Container, QuizCard, QuizTitle, QuizDescription } from './StudentTaskBoard.style';
+import { getStudentByAuthId } from '../../../../../api/studentApi';
+import { getscoreforstudent } from '../../../../../api/responseApi';
+import { useNavigate } from 'react-router-dom';
+import { BodyText, Heading, PageContainer, PrimaryButton, Subheading } from '../../../../../style/PrimaryStyles/PrimaryStyles';
 const StudentTaskBoard = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [responses, setResponses] = useState({}); // This will map quiz IDs to scores
@@ -109,16 +104,20 @@ const StudentTaskBoard = () => {
 
   // Loading and error states
   if (loading) {
-    return <div>Loading quizzes...</div>;
+    return <PageContainer>
+      <BodyText>Loading...</BodyText>
+    </PageContainer>;
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return <PageContainer>
+      <BodyText>{error}</BodyText>
+    </PageContainer>;
   }
 
   return (
-    <Container>
-      <h1>Task Board</h1>
+    <PageContainer>
+      <Heading> Task Board</Heading>
       {quizzes.length > 0 ? (
         quizzes.map((quiz) => {
           const score = responses[quiz._id];
@@ -129,14 +128,14 @@ const StudentTaskBoard = () => {
           return (
             <QuizCard key={quiz._id}>
               <Card
-                title={quiz.quiz_title}
+                // title={quiz.quiz_title}
                 extra={
                   studentHasAnswered ? (
-                    <span style={{ color: "green", fontWeight: "bold" }}>
+                    <BodyText style={{ color: 'green', fontWeight: 'bold' }}>
                       Your score is: {score}/{quiz.questions.length}
-                    </span>
+                    </BodyText>
                   ) : (
-                    <Button
+                    <PrimaryButton
                       type="primary"
                       onClick={() => handleNavigateToQuiz(quiz)}
                       style={{
@@ -145,14 +144,14 @@ const StudentTaskBoard = () => {
                       }}
                     >
                       Answer
-                    </Button>
+                    </PrimaryButton>
                   )
                 }
                 style={{ width: "100%", marginBottom: "20px" }}
                 hoverable
               >
-                <QuizTitle>{quiz.quiz_title}</QuizTitle>
-                <QuizDescription>{quiz.description}</QuizDescription>
+                <Subheading>{quiz.quiz_title}</Subheading>
+                <BodyText>{quiz.description}</BodyText>
               </Card>
             </QuizCard>
           );
@@ -160,7 +159,7 @@ const StudentTaskBoard = () => {
       ) : (
         <div>No quizzes available for this student.</div>
       )}
-    </Container>
+    </PageContainer>
   );
 };
 

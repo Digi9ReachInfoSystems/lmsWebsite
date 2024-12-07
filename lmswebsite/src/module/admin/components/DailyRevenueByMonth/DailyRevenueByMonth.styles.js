@@ -12,7 +12,7 @@ export const ChartWrapper = styled.div`
   background-color: #fff;
 
   @media (max-width: 768px) {
-    margin-top: 71vh;
+    margin-top: 91vh;
   }
 `;
 

@@ -8,6 +8,7 @@ import {
   Tooltip,
 } from "recharts";
 import {
+  PaidUnpaidChart,
   ChartWrapper,
   ChartTitle,
   LegendWrapper,
@@ -55,6 +56,7 @@ export default class Example extends PureComponent {
     "https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj";
 
   render() {
+   
     return (
       <ChartWrapper>
         <ChartTitle>Paid and Unpaid Amount</ChartTitle>
@@ -106,5 +108,6 @@ export default class Example extends PureComponent {
         </LegendWrapper>
       </ChartWrapper>
     );
+    
   }
 }

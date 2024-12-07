@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RxDashboard } from "react-icons/rx";
 import CloseIcon from "@mui/icons-material/Close";
 // import { IconButton } from "@mui/material";
-
+ 
 import {
   List,
   ListItem,
@@ -146,12 +146,12 @@ const Sidebar = () => {
         setIsOpen(true);
       }
     };
-
+ 
     window.addEventListener("resize", handleResize);
-
+ 
     // Initial check
     handleResize();
-
+ 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -233,5 +233,6 @@ const Sidebar = () => {
     </SidebarWrapper>
   );
 };
-
+ 
 export default Sidebar;
+ 

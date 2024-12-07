@@ -7,7 +7,7 @@ export const FormContainer = styled.div`
   padding: 20px;
   background: ${theme.colors.white};
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  // box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   font-family: ${theme.typography.fontFamily};
  
   h2 {
@@ -23,7 +23,7 @@ export const FormContainer = styled.div`
   }
  
   .ant-form-item-label > label {
-    font-weight: bold;
+    // font-weight: bold;
     font-family: ${theme.typography.fontFamily};
     font-size: 16px;
     color: ${theme.colors.darkGrey};
@@ -48,9 +48,10 @@ export const FormContainer = styled.div`
     justify-content: center;
     transition: background-color 0.3s ease;
  
-    &:hover {
-      background-color: ${theme.colors.darkPink};
-    }
+      &:hover {
+    background-color: ${theme.colors.pink4} !important;
+    border-color: white !important;
+  }
  
     &:disabled {
       background-color: ${theme.colors.lightGrey};

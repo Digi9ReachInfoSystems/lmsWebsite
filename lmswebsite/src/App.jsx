@@ -74,6 +74,13 @@ import TeacherdashBoardCards from "./module/teacher/components/TeacherdashBoardC
 import StudentMaterial from "./module/student/pages/StudentMaterials/StudentMaterial";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import LandingHome from "./Main/Pages/LandingHome";
+import RescheduleMeeting from "./module/student/pages/RescheduleMeeting/RescheduleMeeting";
+import RescheduleMeetingTeacher from "./module/teacher/pages/RescheduleMeetingTeacher/RescheduleMeetingTeacher";
+import { OneToOneStudentlandingPage } from "./module/student/pages/OneToOneLandingPage/OneToOneLandingPage";
+import Mode from "./module/student/pages/demomodeupdate/Mode/Mode";
+import BoardDetailPage from "./pages/BoardDetailPage/BoardDetailPage";
+import ClassDetailPage from "./pages/ClassDetailPage/ClassDetailPage";
+import PackageDetailPage from "./pages/PackageDetailPage/PackageDetailPage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -100,9 +107,17 @@ function App() {
               </PublicRoute>
             }
           />
+
+<Route path="/testing/:boardId" element={<BoardDetailPage />} />
+<Route path="/testingClass/:classId" element={<ClassDetailPage/>}/>
+<Route path="/testingPackage/:packageId" element={<PackageDetailPage/>}/>
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/student" element={<StudentLandingPage />} />
+          
+          <Route path="/student/mode" element={<Mode />} /> 
+          <Route path="/student/personal" element={<OneToOneStudentlandingPage />} /> 
+
           <Route
             path="/student/course/details"
             element={<StudentCourseDetailsPage />}
@@ -125,7 +140,8 @@ function App() {
           <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
           <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
           <Route path="/student/dashboard/assignedBatches/:batchId" element={<StudentMaterial />} />
-          <Route path="/student/dashboard/attendance" element={<StudentAttendance />} />          
+          <Route path="/student/dashboard/attendance" element={<StudentAttendance />} />  
+          <Route path="/student/dashboard/meetings/reschedule" element={<RescheduleMeeting /> } />        
           </Route>
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
@@ -170,6 +186,10 @@ function App() {
             <Route
               path="/teacher/dashboard/teacherAttendance"
               element={<TeacherAttendance />}
+            />
+            <Route 
+              path="/teacher/dashboard/meetingReschedule"
+              element={<RescheduleMeetingTeacher/>}
             />
           </Route>
           <Route

@@ -31,6 +31,9 @@ import { getSubjects } from "../../../../services/createBatch";
 import { createCustomPackage } from "../../../../api/customPackageApi";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
+import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
+
+
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
 
@@ -68,9 +71,7 @@ export const StudentLandingPage = () => {
         }
         console.log("studentData", data);
         setStudentDataForm(data);
-        const packageResponse = await getPackageByClassId(
-          data.student.class._id
-        );
+        const packageResponse = await getPackageByClassId(data.student.class._id, "normal");
         setPackagesData(packageResponse);
         console.log(
           "packageResponse",
@@ -139,7 +140,8 @@ export const StudentLandingPage = () => {
           slots: slot,
         });
         console.log("response", response);
-        // window.location.reload();
+        alert("Request submitted   successfully!");
+        window.location.reload();
       } catch (err) {
         console.error("Error submitting Packages:", err);
       }
@@ -283,24 +285,22 @@ export const StudentLandingPage = () => {
                   </StyledRow>
                 </Form>
               </ApplicationDetails>
+
             </ApplicationContainer>
-          ) : studentDataForm.student.custom_package_status === "pending" ? (
-            <CustomPackageStatus>
-              {" "}
-              Your Custom Package is under review
-            </CustomPackageStatus>
-          ) : (
-            <CustomPackageStatus>
-              {" "}
-              Your Custom Package Request Rejected
-            </CustomPackageStatus>
-          )}
-          {studentDataForm.student.custom_package_status == "no_package" && (
-            <StudentExistingPackages
-              data={packagesData}
-              studentId={studentDataForm.student._id}
-            />
-          )}
+
+            : studentDataForm.student.custom_package_status === "pending" ?
+              <CustomPackageStatus> Your Custom Package is under review</CustomPackageStatus>
+              : <CustomPackageStatus> Your Custom Package Request Rejected</CustomPackageStatus>
+          }
+
+          {studentDataForm.student.custom_package_status == "no_package" &&
+            <>
+              <GotoOneToOne />
+              <StudentExistingPackages data={packagesData} studentId={studentDataForm.student._id} />
+            </>
+
+          }
+
           <StudentEnrollmentVideoView />
           <TeachersSection />
           <StudentEnrollmentReviews />
