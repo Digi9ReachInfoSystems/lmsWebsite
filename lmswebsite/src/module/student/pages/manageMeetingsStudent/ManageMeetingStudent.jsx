@@ -4,10 +4,20 @@ import moment from "moment";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Default styles for react-big-calendar
 import "./ManageMeeting.css"; // Optional custom styles
-import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
+import {
+  getStudentAttendance,
+  getStudentByAuthId,
+  getStudentscheduleById,
+  studentClockIn,
+  studentClockOut,
+} from "../../../../api/studentApi";
 import { clockIn, clockOut } from "../../../../api/teacherApi";
-import { useNavigate ,Link} from "react-router-dom";
-import { Heading,PageContainer,PrimaryButton } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import { useNavigate, Link } from "react-router-dom";
+import {
+  Heading,
+  PageContainer,
+  PrimaryButton,
+} from "../../../../style/PrimaryStyles/PrimaryStyles";
 
 const localizer = momentLocalizer(moment);
 
@@ -30,7 +40,9 @@ function ManageMeetingStudent() {
         setStudentMode(studentData.student.mode);
         console.log("studentData", studentData.student._id);
         const response = await getStudentscheduleById(studentData.student._id);
-        const studentAttendanceData = await getStudentAttendance(studentData.student._id);
+        const studentAttendanceData = await getStudentAttendance(
+          studentData.student._id
+        );
         // const response = await axios.get(
         //   `http://localhost:5000/students/student/67442e833781bb93207b0dbf/schedule`
         // );
@@ -45,12 +57,11 @@ function ManageMeetingStudent() {
           end: new Date(new Date(item.date).getTime() + 60 * 60 * 1000), // Assume 1-hour meetings
           meetingId: item.meeting_id, // Use meeting_id to track clocking
           meeting_url: item.meeting_url || null, // Include meeting URL
-          meeting_reschedule:item.meeting_reschedule,
+          meeting_reschedule: item.meeting_reschedule,
           clockIn: false,
           clockOut: false,
         }));
         studentAttendanceData.attendance.map((item) => {
-
           formattedEvents = formattedEvents.map((event) => {
             if (item.meeting_id === event.meetingId) {
               return {
@@ -102,7 +113,10 @@ function ManageMeetingStudent() {
     try {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const studentData = await getStudentByAuthId(authId);
-      const response = await studentClockOut(studentData.student._id, meetingId); // Pass teacherId and meetingId
+      const response = await studentClockOut(
+        studentData.student._id,
+        meetingId
+      ); // Pass teacherId and meetingId
 
       setAttendanceStatus((prevStatus) => ({
         ...prevStatus,
@@ -127,7 +141,6 @@ function ManageMeetingStudent() {
 
   // Custom event rendering
   const renderEvent = ({ event }) => {
-
     return (
       <div>
         <strong>{event.title}</strong>
@@ -137,78 +150,87 @@ function ManageMeetingStudent() {
           {moment(event.end).format("hh:mm A")}
         </span>
         <br />
-     { !(event.meeting_reschedule)?( <> {event.meeting_url ? (
-          !event.clockIn ?
-            (<>
-            <button
-              onClick={() => handleSelectEvent(event)}
-              style={{
-                backgroundColor: "#4CAF50",
-                color: "white",
-                padding: "5px 10px",
-                marginTop: "5px",
-              }}
-            >
-              Join Meeting
-            </button>
-            <Link state={{ meetingId: event.meetingId }} to={`/student/dashboard/meetings/reschedule`}>
-           
-           { studentMode==='personal'&&<button
-              onClick={() => { naviagte("/student/dashboard/meetings/reschedule")}}
-              style={{
-                backgroundColor: "#ff6347",
-                color: "white",
-                padding: "5px 10px",
-                marginTop: "5px",
-              }}
-            >
-              Reschedule
-            </button>}
-            </Link>
-            </>
-          ) :
-            null
-        ) : null}
-        <br />
-
-        {!event.clockIn && !event.clockOut ? (
-          <button
-            onClick={() => handleClockIn(event.meetingId)}
-            style={{
-              backgroundColor: "#4CAF50",
-              color: "white",
-              padding: "5px 10px",
-              marginTop: "5px",
-            }}
-          >
-            Clock In
-          </button>
-        ) : event.clockIn && !event.clockOut ? (
-          <button
-            onClick={() => { handleClockOut(event.meetingId) }}
-            style={{
-              backgroundColor: "#FF6347",
-              color: "white",
-              padding: "5px 10px",
-              marginTop: "5px",
-            }}
-          >
-            Clock Out
-          </button>
+        {!event.meeting_reschedule ? (
+          <>
+            {" "}
+            {event.meeting_url ? (
+              !event.clockIn ? (
+                <>
+                  <button
+                    onClick={() => handleSelectEvent(event)}
+                    style={{
+                      backgroundColor: "#4CAF50",
+                      color: "white",
+                      padding: "5px 10px",
+                      marginTop: "5px",
+                    }}
+                  >
+                    Join Meeting
+                  </button>
+                  <Link
+                    state={{ meetingId: event.meetingId }}
+                    to={`/student/dashboard/meetings/reschedule`}
+                  >
+                    {studentMode === "personal" && (
+                      <button
+                        onClick={() => {
+                          naviagte("/student/dashboard/meetings/reschedule");
+                        }}
+                        style={{
+                          backgroundColor: "#ff6347",
+                          color: "white",
+                          padding: "5px 10px",
+                          marginTop: "5px",
+                        }}
+                      >
+                        Reschedule
+                      </button>
+                    )}
+                  </Link>
+                </>
+              ) : null
+            ) : null}
+            <br />
+            {!event.clockIn && !event.clockOut ? (
+              <button
+                onClick={() => handleClockIn(event.meetingId)}
+                style={{
+                  backgroundColor: "#4CAF50",
+                  color: "white",
+                  padding: "5px 10px",
+                  marginTop: "5px",
+                }}
+              >
+                Clock In
+              </button>
+            ) : event.clockIn && !event.clockOut ? (
+              <button
+                onClick={() => {
+                  handleClockOut(event.meetingId);
+                }}
+                style={{
+                  backgroundColor: "#FF6347",
+                  // color: "white",
+                  padding: "5px 10px",
+                  marginTop: "5px",
+                }}
+              >
+                Clock Out
+              </button>
+            ) : (
+              <span>Clocked Out</span>
+            )}
+          </>
         ) : (
-          <span>Clocked Out</span>
-        )}</>):
-        <span>Meeting Rescheduled</span>
-        }
+          <span>Meeting Rescheduled</span>
+        )}
       </div>
     );
   };
 
-
   return (
-    <PageContainer  >
-      {/* <BaseButton>hello</BaseButton> */}
-       <Heading>Manage Meetings</Heading>
+    <div>
+      <Heading>Manage Meetings</Heading>
       {/* <h1>Manage Meetings</h1> */}
       {loading ? (
         <p>Loading...</p>
@@ -236,7 +258,7 @@ function ManageMeetingStudent() {
           })}
         />
       )}
-    </PageContainer>
+    </div>
   );
 }
 

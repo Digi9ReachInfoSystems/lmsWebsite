@@ -1,13 +1,15 @@
 import styled from "styled-components";
 
-export const StudentCircularWrap = styled.div`
+import { theme } from "../../../../style/theme/theme";
 
-padding: 10px;
+export const StudentCircularWrap = styled.div`
+  // padding: 10px;
+  background-color: ${theme.colors.bgcolor};
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    // margin-bottom: 20px;
 
     h2 {
       font-size: 1.5rem;

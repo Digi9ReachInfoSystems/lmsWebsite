@@ -10,13 +10,38 @@ import {
   MobileMenu,
   SignUpButton,
 } from "./Header.styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation();
+  let currentPath = "/student";
+  const generateBreadcrumbs = () => {
+    const pathnames = location.pathname.split("/").filter((x) => x); // Split the path into segments
+    const breadcrumbItems = [
+      <Breadcrumb.Item key="home">
+        <Link to="/student">Home</Link>
+      </Breadcrumb.Item>,
+    ];
+
+    let currentPath = "/student";
+    // Add the breadcrumbs dynamically based on the path segments
+    pathnames.forEach((segment, index) => {
+      currentPath += `/${segment}`;
+      breadcrumbItems.push(
+        <Breadcrumb.Item key={currentPath}>
+          <Link to={currentPath}>
+            {segment.charAt(0).toUpperCase() + segment.slice(1)} {/* Capitalize first letter */}
+          </Link>
+        </Breadcrumb.Item>
+      );
+    });
+
+    return breadcrumbItems;
+  };
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isStudyMaterialOpen, setIsStudyMaterialOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const toggleCoursesDropdown = () => {
     setIsCoursesOpen(!isCoursesOpen);
     setIsStudyMaterialOpen(false);
@@ -39,7 +64,8 @@ const Header = () => {
   // Close the mobile menu when resizing to desktop view
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 580) { // Adjust this breakpoint as needed
+      if (window.innerWidth > 580) {
+        // Adjust this breakpoint as needed
         setIsMobileMenuOpen(false);
       }
     };
@@ -54,7 +80,7 @@ const Header = () => {
           <img src={logo} alt="The Toppers Academy" className="logo-icon" />
         </a>
       </Logo>
-      
+
       {/* Desktop Nav Menu */}
       <NavMenu>
         <NavLinks>
@@ -63,9 +89,15 @@ const Header = () => {
               Courses
             </a>
             <DropdownContent isOpen={isCoursesOpen}>
-              <li><a href="">Course 1</a></li>
-              <li><a href="">Course 2</a></li>
-              <li><a href="">Course 3</a></li>
+              <li>
+                <a href="">Course 1</a>
+              </li>
+              <li>
+                <a href="">Course 2</a>
+              </li>
+              <li>
+                <a href="">Course 3</a>
+              </li>
             </DropdownContent>
           </li>
           <li className="dropdown">
@@ -73,14 +105,26 @@ const Header = () => {
               Study Material
             </a>
             <DropdownContent isOpen={isStudyMaterialOpen}>
-              <li><a href="">Material 1</a></li>
-              <li><a href="">Material 2</a></li>
-              <li><a href="">Material 3</a></li>
+              <li>
+                <a href="">Material 1</a>
+              </li>
+              <li>
+                <a href="">Material 2</a>
+              </li>
+              <li>
+                <a href="">Material 3</a>
+              </li>
             </DropdownContent>
           </li>
-          <li><a href="">Become a Teacher</a></li>
-          <li><a href="">Create Your Enrollment</a></li>
-          <li><a href="">About Us</a></li>
+          <li>
+            <a href="">Become a Teacher</a>
+          </li>
+          <li>
+            <a href="">Create Your Enrollment</a>
+          </li>
+          <li>
+            <a href="">About Us</a>
+          </li>
         </NavLinks>
       </NavMenu>
 
@@ -95,11 +139,21 @@ const Header = () => {
       {isMobileMenuOpen && (
         <MobileMenu>
           <NavLinks>
-            <li><a href="">Courses</a></li>
-            <li><a href="">Study Material</a></li>
-            <li><a href="">Become a Teacher</a></li>
-            <li><a href="">Create Your Enrollment</a></li>
-            <li><a href="">About Us</a></li>
+            <li>
+              <a href="">Courses</a>
+            </li>
+            <li>
+              <a href="">Study Material</a>
+            </li>
+            <li>
+              <a href="">Become a Teacher</a>
+            </li>
+            <li>
+              <a href="">Create Your Enrollment</a>
+            </li>
+            <li>
+              <a href="">About Us</a>
+            </li>
           </NavLinks>
         </MobileMenu>
       )}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RxDashboard } from "react-icons/rx";
 import CloseIcon from "@mui/icons-material/Close";
 // import { IconButton } from "@mui/material";
- 
+
 import {
   List,
   ListItem,
@@ -146,12 +146,12 @@ const Sidebar = () => {
         setIsOpen(true);
       }
     };
- 
+
     window.addEventListener("resize", handleResize);
- 
+
     // Initial check
     handleResize();
- 
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
@@ -177,11 +177,15 @@ const Sidebar = () => {
       icon: <AiTwotoneNotification />,
       link: "/student/dashboard/attendance",
     },
-    { name: "Meeting", icon: <FaTools />, link: "/student/dashboard/meetings" },
+    {
+      name: "Meeting",
+      icon: <AiTwotoneNotification />,
+      link: "/student/dashboard/meetings",
+    },
     {
       name: "Manage Attendance",
       icon: <PiListChecksThin />,
-      link: "/admin/manageAttendance",
+      link: "/student/dashboard/attendance",
     },
     {
       name: "Settings",
@@ -233,6 +237,5 @@ const Sidebar = () => {
     </SidebarWrapper>
   );
 };
- 
+
 export default Sidebar;
- 

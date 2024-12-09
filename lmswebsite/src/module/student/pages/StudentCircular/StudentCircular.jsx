@@ -4,7 +4,10 @@ import { SearchOutlined } from "@ant-design/icons";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
 import { StudentCircularWrap } from "./StudentCircular.style";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
-import { BodyText, Heading } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import {
+  BodyText,
+  Heading,
+} from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
 
 const StudentCircular = () => {
@@ -18,7 +21,7 @@ const StudentCircular = () => {
   useEffect(() => {
     const fetchCirculars = async () => {
       try {
-        const data = await getAllCircularNotificationsApi('student');
+        const data = await getAllCircularNotificationsApi("student");
         if (data?.circularNotifications) {
           const formattedData = data.circularNotifications.map((circular) => ({
             key: circular._id, // Unique key for Ant Design Table
@@ -92,41 +95,40 @@ const StudentCircular = () => {
   ];
 
   return (
-    <PageContainer>
-    <StudentCircularWrap>{circulars ?
-      <>
-        <div className="header">
-         <Heading> Circulars </Heading>
-          <Input
-            placeholder="Search by Circular Name"
-            value={searchInput}
-            onChange={handleSearch}
-            allowClear
-            prefix={<SearchOutlined />}
-            style={{ width: 300 }}
+    <StudentCircularWrap>
+      {circulars ? (
+        <>
+          <div className="header">
+            <Heading> Circulars </Heading>
+            <Input
+              placeholder="Search by Circular Name"
+              value={searchInput}
+              onChange={handleSearch}
+              allowClear
+              prefix={<SearchOutlined />}
+              style={{ width: 300 }}
+            />
+          </div>
+          <Table
+            dataSource={filteredCirculars}
+            columns={columns}
+            pagination={{ pageSize: 5 }}
+            bordered
           />
-        </div>
-        <Table
-          dataSource={filteredCirculars}
-          columns={columns}
-          pagination={{ pageSize: 5 }}
-          bordered
-        />
-        <Modal
-          // title="View Image"
-          visible={isModalVisible}
-          onCancel={closeModal}
-          footer={null}
-          centered
-        >
-          <Image src={selectedImage} alt="Circular" width="100%" />
-        </Modal>
-      </>
-      :
-      <LoadingPage />
-    }
+          <Modal
+            // title="View Image"
+            visible={isModalVisible}
+            onCancel={closeModal}
+            footer={null}
+            centered
+          >
+            <Image src={selectedImage} alt="Circular" width="100%" />
+          </Modal>
+        </>
+      ) : (
+        <LoadingPage />
+      )}
     </StudentCircularWrap>
-    </PageContainer>
   );
 };
 

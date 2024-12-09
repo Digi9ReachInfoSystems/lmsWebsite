@@ -1,4 +1,3 @@
-// Header.jsx
 import React, { useState, useRef, useEffect } from "react";
 import logo from "../../../assets/logo.png";
 import {
@@ -12,24 +11,24 @@ import {
   SignUpButton,
 } from "./Header.styles";
 import { useNavigate } from "react-router-dom";
-import { getBoards } from "../../../api/boardApi"; 
+import { getBoards } from "../../../api/boardApi";
 import { getClassesByBoardId } from "../../../api/classApi";
 import { getPackageByClassId } from "../../../api/packagesApi";
-
+ 
 const Header = () => {
   const navigate = useNavigate();
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+ 
   const [boards, setBoards] = useState([]);
   const [classes, setClasses] = useState({});
   const [packages, setPackages] = useState({});
-  
+ 
   const [hoveredBoardId, setHoveredBoardId] = useState(null);
   const [hoveredClassId, setHoveredClassId] = useState(null);
-  
+ 
   const dropdownRef = useRef(null);
-
+ 
   // Click outside handler to close the Courses dropdown
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -42,18 +41,18 @@ const Header = () => {
         setHoveredClassId(null);
       }
     };
-
+ 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
+ 
   // Toggle the "Courses" dropdown and fetch boards if not already fetched
   const handleCoursesClick = async (e) => {
     e.preventDefault();
     setIsCoursesOpen((prev) => !prev);
-    
+   
     if (boards.length === 0 && !isCoursesOpen) {
       try {
         const fetchedBoards = await getBoards();
@@ -63,7 +62,7 @@ const Header = () => {
       }
     }
   };
-  
+ 
   // Handle hover on a board to fetch classes
   const handleBoardMouseEnter = async (boardId) => {
     setHoveredBoardId(boardId);
@@ -76,11 +75,11 @@ const Header = () => {
       }
     }
   };
-  
+ 
   const handleBoardMouseLeave = () => {
     setHoveredBoardId(null);
   };
-  
+ 
   // Handle hover on a class to fetch packages
   const handleClassMouseEnter = async (classId) => {
     setHoveredClassId(classId);
@@ -94,22 +93,22 @@ const Header = () => {
       }
     }
   };
-  
+ 
   const handleClassMouseLeave = () => {
     setHoveredClassId(null);
   };
-  
+ 
   // Handle logout functionality
   const handleLogout = () => {
     localStorage.clear();
     navigate("/");
   };
-  
+ 
   // Toggle the mobile menu
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
-  
+ 
   return (
     <HeaderContainer>
       <Logo>
@@ -117,7 +116,7 @@ const Header = () => {
           <img src={logo} alt="The Toppers Academy" className="logo-icon" />
         </a>
       </Logo>
-
+ 
       {/* Desktop Navigation Menu */}
       <NavMenu>
         <NavLinks>
@@ -162,77 +161,45 @@ const Header = () => {
               </ul>
             )}
           </DropdownWrapper>
-
+ 
           {/* Study Material Dropdown (if needed) */}
           <DropdownWrapper>
             <a href="#!">Study Material</a>
             {/* Implement similar nested structure if required */}
           </DropdownWrapper>
-
+ 
           {/* Other Navigation Links */}
           <li><a href="#!">Become a Teacher</a></li>
           <li><a href="#!">Create Your Enrollment</a></li>
           <li><a href="#!">About Us</a></li>
         </NavLinks>
       </NavMenu>
-
+ 
       {/* Hamburger Menu for Mobile */}
       <HamburgerMenu onClick={toggleMobileMenu}>
         <span />
         <span />
         <span />
       </HamburgerMenu>
-
-      <NavLinks menuOpen={menuOpen}>
-        <Dropdown>
-          <button>Courses</button>
-          <div className="dropdown-content">
-            <a href="#">Course 1</a>
-            <a href="#">Course 2</a>
-          </div>
-        </Dropdown>
-
-        <Dropdown>
-          <button>Study Material</button>
-          <div className="dropdown-content">
-            <a href="#">Material 1</a>
-            <a href="#">Material 2</a>
-          </div>
-        </Dropdown>
-
-        <NavLink href="#">Become a Teacher</NavLink>
-        <NavLink href="#">Create Your Enrollment</NavLink>
-        <NavLink href="#">About Us</NavLink>
-      </NavLinks>
-      <ButtonGroup>
-        <Link to={"/login"}>
-          <Button>Sign In</Button>
-        </Link>
-        <Link to={"/signup"}>
-          <Button>Sign Up</Button>
-        </Link>
-      </ButtonGroup>
-
-      {menuOpen && (
+ 
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
         <MobileMenu>
-          <NavLink href="#">Courses</NavLink>
-          <NavLink href="#">Study Material</NavLink>
-          <NavLink href="#">Become a Teacher</NavLink>
-          <NavLink href="#">Create Your Enrollment</NavLink>
-          <NavLink href="#">About Us</NavLink>
-          <Link to={"/login"}>
-            <Button>Sign In</Button>
-          </Link>
-          <Link to={"/signup"}>
-            <Button>Sign Up</Button>
-          </Link>
+          <NavLinks>
+            {/* For mobile, you might want to implement similar dynamic fetching or simplify the menu */}
+            <li><a href="#!">Courses</a></li>
+            <li><a href="#!">Study Material</a></li>
+            <li><a href="#!">Become a Teacher</a></li>
+            <li><a href="#!">Create Your Enrollment</a></li>
+            <li><a href="#!">About Us</a></li>
+          </NavLinks>
         </MobileMenu>
       )}
-
+ 
       {/* Logout Button */}
       <SignUpButton onClick={handleLogout}>Logout</SignUpButton>
     </HeaderContainer>
   );
 };
-
+ 
 export default Header;
