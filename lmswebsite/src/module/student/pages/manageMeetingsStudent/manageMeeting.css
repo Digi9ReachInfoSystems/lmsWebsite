@@ -30,3 +30,61 @@
 .e-quick-popup .e-content-wrap {
   margin-top: 10px;
 }
+
+/* ManageMeeting.css */
+
+/* Page container style */
+.PageContainer {
+  padding: 20px;
+  background-color: #f4f4f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Heading style */
+.Heading {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Calendar container style */
+.calendar-container {
+  margin-bottom: 20px;
+}
+
+/* Button group styling */
+.meeting-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.PrimaryButton {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.PrimaryButton:hover {
+  background-color: #0056b3;
+}
+
+/* Link button style */
+.Link {
+  text-decoration: none;
+  margin-top: 20px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.Link .PrimaryButton {
+  background-color: #28a745;
+}

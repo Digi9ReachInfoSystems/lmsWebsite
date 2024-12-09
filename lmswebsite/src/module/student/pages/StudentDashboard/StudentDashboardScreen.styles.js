@@ -1,7 +1,21 @@
 import styled from "styled-components";
 import { media } from "../../../../style/theme/theme";
+import { theme } from "../../../../style/theme/theme";
 
 export const StudentDashboardScreenWrap = styled.main`
+  width: 85vw;
+  .welcome-Container {
+    // display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 56vw;
+    border-radius: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: ${theme.colors.nyanza};
+  }
+
   .area-row {
     display: flex;
     gap: 24px;
@@ -47,7 +61,7 @@ export const WelcomeTitle = styled.h1`
 
 export const WelcomeMessage = styled.p`
   font-size: 18px;
-  color: ${({theme})=>theme.colors.cadet};
+  color: ${({ theme }) => theme.colors.cadet};
   margin: 0;
   margin-bottom: 20px;
   font-weight: 600;

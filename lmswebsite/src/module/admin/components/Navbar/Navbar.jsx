@@ -6,7 +6,7 @@ import { Link, useLocation } from "react-router-dom"; // Importing useLocation f
 import { AppBarWrap } from "./Navbar.Styles"; // Adjust the path accordingly
 
 function NavBar() {
-  const location = useLocation(); // Hook to get current location
+  const location = useLocation(); 
 
   // Function to generate breadcrumb items based on the current route
   const generateBreadcrumbs = () => {

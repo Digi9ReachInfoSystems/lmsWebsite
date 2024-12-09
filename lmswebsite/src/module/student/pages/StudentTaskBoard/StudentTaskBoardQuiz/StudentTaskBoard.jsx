@@ -1,14 +1,25 @@
 // StudentTaskBoard.jsx
 
-import React, { useEffect, useState } from 'react';
-import { getQuizBySubjectId } from '../../../../../api/quizApi';
-import { getBatchesByStudentId } from '../../../../../api/batchApi';
-import { Card, Button } from 'antd';
-import { Container, QuizCard, QuizTitle, QuizDescription } from './StudentTaskBoard.style';
-import { getStudentByAuthId } from '../../../../../api/studentApi';
-import { getscoreforstudent } from '../../../../../api/responseApi';
-import { useNavigate } from 'react-router-dom';
-import { BodyText, Heading, PageContainer, PrimaryButton, Subheading } from '../../../../../style/PrimaryStyles/PrimaryStyles';
+import React, { useEffect, useState } from "react";
+import { getQuizBySubjectId } from "../../../../../api/quizApi";
+import { getBatchesByStudentId } from "../../../../../api/batchApi";
+import { Card, Button } from "antd";
+import {
+  Container,
+  QuizCard,
+  QuizTitle,
+  QuizDescription,
+} from "./StudentTaskBoard.style";
+import { getStudentByAuthId } from "../../../../../api/studentApi";
+import { getscoreforstudent } from "../../../../../api/responseApi";
+import { useNavigate } from "react-router-dom";
+import {
+  BodyText,
+  Heading,
+  PageContainer,
+  PrimaryButton,
+  Subheading,
+} from "../../../../../style/PrimaryStyles/PrimaryStyles";
 const StudentTaskBoard = () => {
   const [quizzes, setQuizzes] = useState([]);
   const [responses, setResponses] = useState({}); // This will map quiz IDs to scores
@@ -104,19 +115,23 @@ const StudentTaskBoard = () => {
 
   // Loading and error states
   if (loading) {
-    return <PageContainer>
-      <BodyText>Loading...</BodyText>
-    </PageContainer>;
+    return (
+      <PageContainer>
+        <BodyText>Loading...</BodyText>
+      </PageContainer>
+    );
   }
 
   if (error) {
-    return <PageContainer>
-      <BodyText>{error}</BodyText>
-    </PageContainer>;
+    return (
+      <PageContainer>
+        <BodyText>{error}</BodyText>
+      </PageContainer>
+    );
   }
 
   return (
-    <PageContainer>
+    <div>
       <Heading> Task Board</Heading>
       {quizzes.length > 0 ? (
         quizzes.map((quiz) => {
@@ -131,7 +146,7 @@ const StudentTaskBoard = () => {
                 // title={quiz.quiz_title}
                 extra={
                   studentHasAnswered ? (
-                    <BodyText style={{ color: 'green', fontWeight: 'bold' }}>
+                    <BodyText style={{ color: "green", fontWeight: "bold" }}>
                       Your score is: {score}/{quiz.questions.length}
                     </BodyText>
                   ) : (
@@ -159,7 +174,7 @@ const StudentTaskBoard = () => {
       ) : (
         <div>No quizzes available for this student.</div>
       )}
-    </PageContainer>
+    </div>
   );
 };
 
