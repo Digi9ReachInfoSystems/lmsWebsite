@@ -2,7 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
-import { getClassesByBoardId } from "../../api/classApi";
+import { getClassesByBoardId } from "../../../api/classApi";
+// import { fetchLandingPageData } from "../../api/landingPageApi";
+import fallbackImage from "../assets/fallbackImage.png";
 import {
   Container,
   Header,
@@ -15,10 +17,12 @@ import {
   ClassLevel,
   BoardName,
   BoardDescription,
-} from "./BoardDetailPage.style";
+  BoardDescription1,
+  BannerImage,
+} from "./BatchesBoardDetailPage.style";
 
 const BoardDetailPage = () => {
-  const { boardId } = useParams(); // Get the board ID from the URL parameters
+    const { boardId } = useParams(); // Get the board ID from the URL parameters
   const navigate = useNavigate(); // Initialize useNavigate
   const [classes, setClasses] = useState([]);
   const [loadingClasses, setLoadingClasses] = useState(true);
@@ -53,14 +57,9 @@ const BoardDetailPage = () => {
     fetchClasses();
   }, [boardId]);
 
-/*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Navigate to SubjectDetailsPage with the given classId
-   * @param {string} classId - The ID of the class to navigate to
-/******  f0f4214c-cdc1-4b9c-b6a6-96ec01a9fb1b  *******/
   const handleClassClick = (classId) => {
     // Navigate to SubjectDetailsPage with the classId
-    navigate(`/testing/${classId}`);
+    navigate(`/pages/BatchesDetailPage/BatchesLandingPage/${classId}`);
   };
 
   if (loadingClasses) {
@@ -74,7 +73,9 @@ const BoardDetailPage = () => {
   if (classesError) {
     return (
       <Container>
-        <ErrorMessage>Error loading classes: {classesError?.message}</ErrorMessage>
+        <ErrorMessage>
+          Error loading classes: {classesError?.message}
+        </ErrorMessage>
       </Container>
     );
   }
@@ -97,9 +98,21 @@ const BoardDetailPage = () => {
               key={classItem._id}
               onClick={() => handleClassClick(classItem._id)} // Add onClick handler
             >
+              {/* <BannerImage
+                  src={classItem.banner_image}
+                  // alt={`Slide ${index + 1}`}
+                /> */}
+              <BannerImage
+                src={classItem.banner_image || fallbackImage}
+                alt="Class banner"
+              />
+
               <ClassTitle>{classItem.className}</ClassTitle>
+              <BoardDescription1>{boardInfo.description}</BoardDescription1>
+              <BoardName>
+                Board: {classItem.curriculum?.name || "N/A"}
+              </BoardName>
               <ClassLevel>Level: {classItem.classLevel}</ClassLevel>
-              <BoardName>Board: {classItem.curriculum?.name || "N/A"}</BoardName>
             </ClassCard>
           ))}
         </ClassGrid>

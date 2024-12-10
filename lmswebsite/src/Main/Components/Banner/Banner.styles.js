@@ -173,6 +173,9 @@ export const PopularCourses = styled.div`
   height: 12vh;
   margin-left: 20px;
   margin-right: 20px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  width: 90%;
 
   padding: 10px; /* Add some padding for better spacing */
 
