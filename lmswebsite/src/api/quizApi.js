@@ -15,6 +15,7 @@ export const createQuiz = async (responseData) => {
 
 export const getQuizForSpecificBatcAndClass = async (batch_index, class_level) => {
     try {
+      
         // Call the backend API using the Axios instance
         const response = await api.get(`/quizzes/batch/${batch_index}/class/${class_level}`);
         console.log("Quiz fetched successfully:", response.data);
