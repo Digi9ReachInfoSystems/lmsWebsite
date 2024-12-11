@@ -11,21 +11,23 @@ import {
 import { FaUser } from "react-icons/fa"; // Example icon, using FontAwesome for the user icon
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
-import{getUserByAuthId}from "../../../../../api/userApi"
-import{getTeacherByAuthId}from "../../../../../api/teacherApi"
+import { getUserByAuthId } from "../../../../../api/userApi"
+import { getTeacherByAuthId } from "../../../../../api/teacherApi"
 import { updateUserByAuthId } from "../../../../../api/userApi";
-
+import Animation from "../../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const AccountSettings = () => {
-  
+
   const [firstName, setFirstName] = useState("Student");
   const [userName, setUsername] = useState("student_k");
   const [email, setEmail] = useState("Student@gmail.com");
   const [phone, setPhone] = useState("7837292020");
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
-    console.log("hello2"); 
-    const apiCaller=async() => {
-      const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
-      const DataTeacher= await getTeacherByAuthId(authId);
+    setLoading(true);
+    const apiCaller = async () => {
+      const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const DataTeacher = await getTeacherByAuthId(authId);
       console.log(DataTeacher);
       setFirstName(DataTeacher.teacher.user_id.name);
       setUsername(DataTeacher.teacher.user_id.email);
@@ -33,6 +35,7 @@ const AccountSettings = () => {
       setPhone(DataTeacher.teacher.phone_number);
     }
     apiCaller();
+    setLoading(false);
 
   }, []);
 
@@ -43,10 +46,42 @@ const AccountSettings = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
-    const responseUser = await updateUserByAuthId(authId,{name:firstName,phone_number:phone});
+    const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
+    const responseUser = await updateUserByAuthId(authId, { name: firstName, phone_number: phone });
     alert("Profile updated successfully!");
     window.location.reload();
+  }
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)",
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
   }
 
   return (

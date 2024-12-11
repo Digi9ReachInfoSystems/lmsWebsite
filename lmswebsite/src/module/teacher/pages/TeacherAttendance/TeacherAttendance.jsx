@@ -11,7 +11,8 @@ import { getTeacherAttendance } from '../../../../api/teacherApi';
 import { getTeacherByAuthId } from '../../../../api/teacherApi';
 import { BodyText, Heading, PageContainer } from '../../../../style/PrimaryStyles/PrimaryStyles';
 import { TeacherAttendanceWrap } from './TeacherAttendance.styles';
-
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 export const TeacherAttendance = () => {
     const [attendance, setAttendance] = useState([]);
     const [filteredAttendance, setFilteredAttendance] = useState([]);
@@ -121,6 +122,38 @@ export const TeacherAttendance = () => {
         },
     ];
 
+    if (loading) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <div
+              style={{
+                width: "300px",
+                height: "300px",
+                overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                // Scale down the animation using transform
+                transform: "scale(0.5)", 
+                transformOrigin: "center center",
+              }}
+            >
+              <Lottie
+                animationData={Animation}
+                loop={true}
+              />
+            </div>
+          </div>
+        );
+    }
+
     return (
         <PageContainer>
             <TeacherAttendanceWrap>
@@ -136,7 +169,7 @@ export const TeacherAttendance = () => {
                 </div>
 
                 {loading ? (
-                    <Spin tip="Loading..." />
+                    <Lottie animationData={Animation} loop={true} />
                 ) : error ? (
                     <Alert message={error} type="error" />
                 ) : (

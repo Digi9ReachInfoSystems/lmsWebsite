@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, DatePicker, Typography, Row, Col } from "antd";
+import { Form, Typography, Row, Col } from "antd";
 import dayjs from "dayjs"; // Import dayjs for date handling
 import { getTeacherByAuthId } from "../../../../../api/teacherApi";
 import { StyledDatePicker, StyledInput } from "./GeneralSettings.style";
-
 const { Title } = Typography;
-
+import Animation from "../../../../teacher/assets/Animation.json";
+import Lottie from "lottie-react";
 const GeneralSettings = () => {
   const [form] = Form.useForm();
   const [fullName, setFullName] = useState();
@@ -15,9 +15,10 @@ const GeneralSettings = () => {
   const [dob, setDob] = useState(); // Default date as string
   const[microsoft_id,setMicrosoft_id]=useState(); 
   const [microsoft_principal_name, setMicrosoft_principal_name] = useState(); 
-
+const [loading, setLoading] = useState(true);
   useEffect(() => {
     const apiCaller = async () => {
+      setLoading(true);
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const DataTeacher = await getTeacherByAuthId(authId);
       console.log("dfghjk",DataTeacher);
@@ -37,8 +38,39 @@ const GeneralSettings = () => {
       setDob(formattedDate);
     };
     apiCaller();
+    setLoading(false);
   }, []);
-  console.log("ddd", fullName);
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
   return (
     <>
       {fullName &&

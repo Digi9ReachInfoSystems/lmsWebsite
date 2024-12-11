@@ -30,7 +30,9 @@ import {
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalBody } from '../../../../../style/PrimaryStyles/PrimaryStyles';
-
+import Animation from "../../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
+import { set } from 'lodash';
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -60,6 +62,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
 
 
   useEffect(() => {
+    setLoading(true);
     console.log("Selected Batch Index:", selectedBatchIndex);
     if (selectedBatchIndex !== null) {
       setSubjectData(batches.filter((batch, index) => {
@@ -85,7 +88,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
       form.setFieldsValue({ ClassLevel: classD.name });
 
       setClassData(classD);
-      console.log("Class Data:", classD);
+      setLoading(false);
     }
   }, [selectedBatchIndex])
 
@@ -93,6 +96,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
 
   // Fetch batches, subjects, and class levels on component mount
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       try {
 
@@ -116,17 +120,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
 
         const sessionData = localStorage.getItem('sessionData');
         const userData = await getUserProfile(sessionData.userId);
-        // console.log('User Data:', userData.user._id);
-
-        // Fetch all subjects
-        // const subjectsData = await getTeacherById(userData.user._id);
-        // // console.log('Subjects Data:', subjectsData);
-        // setSubjects(Array.isArray(subjectsData) ? subjectsData : []);
-
-        // // Fetch all class levels
-        // const classLevelsData = await fetchClassLevels();
-        // setClassLevels(Array.isArray(classLevelsData) ? classLevelsData : []);
-
+    
         setLoading(false);
       } catch (err) {
         console.error('Error fetching data:', err);
@@ -191,15 +185,47 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
     }
   };
 
+  // if (loading) {
+  //   return (
+  //     <ModalOverlay>
+  //       <ModalContent>
+  //         <p>Loading...</p>
+  //       </ModalContent>
+  //     </ModalOverlay>
+  //   );
+  // }
+
   if (loading) {
     return (
-      <ModalOverlay>
-        <ModalContent>
-          <p>Loading...</p>
-        </ModalContent>
-      </ModalOverlay>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
     );
-  }
+}
 
   if (error) {
     return (
