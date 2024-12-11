@@ -24,11 +24,14 @@ import {
   LoadingContainer,
   ModalContent,
 } from "./ManagePayment.styles";
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 const ManagePayment = () => {
   const [payments, setPayments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [searchInput, setSearchInput] = useState(""); // Search term state
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPayments = async () => {
@@ -138,6 +141,38 @@ const ManagePayment = () => {
     setIsModalVisible(false);
     setSelectedPayment(null);
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Container>

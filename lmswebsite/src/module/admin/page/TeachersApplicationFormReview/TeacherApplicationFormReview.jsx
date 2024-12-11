@@ -7,11 +7,14 @@ import {
 } from "../../../../api/teachersApplicationApi";
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast from react-toastify
 import "react-toastify/dist/ReactToastify.css";
+import Animation from "../../../admin/assets/Animation.json"; 
+import Lottie from "lottie-react";
 const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const navigate = useNavigate();
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  
 
   useEffect(() => {
     const fetchTeacherDetails = async () => {
@@ -65,6 +68,39 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       toast.error("No resume found.");
     }
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <TeacherApplicationFormReviewWrap>
       <div className="modal-header">

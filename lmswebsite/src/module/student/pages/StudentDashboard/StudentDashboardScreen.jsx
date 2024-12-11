@@ -26,10 +26,12 @@ import ActivePackage from "../../components/MaterialComponent/material";
 import ExploreContent from "../../components/DownloadContent/BatchDetails";
 import MaterialFile from "../../components/MaterialUploaded/materialFile";
 import BatchDetailsContent from "../../components/DownloadContent/BatchDetails";
+import  Animation from "../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 
 const StudentDashboardScreen = () => {
   const [dashboardCards, setDashboardCards] = useState([]);
-
+const [loading, setLoading] = useState(true);
   useEffect(() => {
     const apiCaller = async () => {
       const response = await getStatisticsData();
@@ -53,9 +55,41 @@ const StudentDashboardScreen = () => {
           background: "#C9E2FF",
         },
       ]);
+      setLoading(false);
     };
     apiCaller();
   }, []);
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <StudentDashboardScreenWrap className="content-area">

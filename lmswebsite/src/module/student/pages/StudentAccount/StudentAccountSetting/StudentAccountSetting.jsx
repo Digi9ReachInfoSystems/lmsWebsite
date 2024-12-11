@@ -15,13 +15,16 @@ import{getUserByAuthId}from "../../../../../api/userApi"
 import{getStudentByAuthId}from "../../../../../api/studentApi"
 import { updateUserByAuthId } from "../../../../../api/userApi";
 import { BodyText, PageContainer, PrimaryButton, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
-
+import Animation from "../../../../student/assets/animation.json";
+import Lottie from "lottie-react";
+import { set } from "lodash";
 const StudentAccountSettings = () => {
   
   const [firstName, setFirstName] = useState("Student");
   const [userName, setUsername] = useState("student_k");
   const [email, setEmail] = useState("Student@gmail.com");
   const [phone, setPhone] = useState("7837292020");
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     console.log("hello2"); 
     const apiCaller=async() => {
@@ -34,6 +37,7 @@ const StudentAccountSettings = () => {
       setPhone(DataStudent.student.phone_number);
     }
     apiCaller();
+    setLoading(false);
 
   }, []);
 
@@ -48,6 +52,39 @@ const StudentAccountSettings = () => {
     const responseUser = await updateUserByAuthId(authId,{name:firstName,phone_number:phone});
     alert("Profile updated successfully!");
     window.location.reload();
+setLoading(false);
+  }
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
   }
 
   return (

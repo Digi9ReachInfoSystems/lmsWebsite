@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Input, Button, Alert, message, Spin } from "antd"; // Ant Design components
 import { FormContainer } from "./BenifitsForm.styles"; // Import updated styles
 import { createBenefit } from "../../../../../api/benefitsApi"; // Adjust path to your API function
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
  
 const BenefitForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +14,7 @@ const BenefitForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
  
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +38,7 @@ const BenefitForm = () => {
     }
  
     try {
+      setLoading(true);
       await createBenefit(formData); // Call API
       setSuccessMessage("Benefit created successfully!");
       message.success("Benefit created successfully!");
@@ -47,9 +51,42 @@ const BenefitForm = () => {
       setError(err.response?.data?.message || "Failed to create benefit");
     } finally {
       setIsSubmitting(false);
+      setLoading(false);
     }
   };
  
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <FormContainer>
       <h2>Create Benefit</h2>

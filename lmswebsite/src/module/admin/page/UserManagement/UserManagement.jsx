@@ -4,6 +4,9 @@ import { getAllTeachers } from "../../../../api/teacherApi";
 import { UserManagementWrap } from "./UserManagement.styles";
 import { FaFilter, FaSearch } from "react-icons/fa";
 import { Input, Select, Table } from "antd";
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
+import { set } from "lodash";
 
 const { Option } = Select;
 
@@ -13,8 +16,10 @@ export default function UserManagement() {
   const [originalData, setOriginalData] = useState([]);
   const [statusFilter, setStatusFilter] = useState("students");
   const [columns, setColumns] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       if (statusFilter === "students") {
         const studentData = await getAllStudents();
@@ -58,6 +63,7 @@ export default function UserManagement() {
     };
 
     fetchData();
+    setLoading(false);
   }, [statusFilter]);
 
   useEffect(() => {
@@ -69,6 +75,39 @@ export default function UserManagement() {
     );
     setData(filteredData);
   }, [searchInput, originalData]);
+
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <UserManagementWrap>

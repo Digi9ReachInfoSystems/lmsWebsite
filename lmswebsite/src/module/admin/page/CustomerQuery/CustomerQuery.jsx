@@ -5,6 +5,8 @@ import { CustomerQueryWrap } from "./CustomerQuery.styles";
 import { getAllQuerys } from "../../../../api/customerQueryApi";
 import CustomerQueryViewForm from "../CustomerQueryViewForm/CustomerQueryViewForm";
 import { Table, Button, Modal, Input, Select } from 'antd';
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 
 const { Option } = Select;
 
@@ -15,6 +17,7 @@ export default function CustomerQuery() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState("pending");
   const [queryId, setQueryId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const columns = [
     {
@@ -59,6 +62,7 @@ export default function CustomerQuery() {
   useEffect(() => {
     const apiCaller = async () => {
       try {
+        setLoading(true);
         const data = await getAllQuerys();
         const filteredQueries = data?.queries?.filter(
           (query) => query.queryStatus === statusFilter
@@ -75,6 +79,7 @@ export default function CustomerQuery() {
           });
           setOriginalData(dataFilter);
           setFilterData(dataFilter);
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching queries:", error);
@@ -94,6 +99,38 @@ export default function CustomerQuery() {
       setFilterData(originalData); // Reset to original data if search is empty
     }
   }, [searchInput, originalData]);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <CustomerQueryWrap className="content-area">

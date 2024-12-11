@@ -4,15 +4,17 @@ import { PlusOutlined } from "@ant-design/icons";
 import { getAllBatches } from "../../../../api/batchApi";
 import CreateNewBatch from "../createNewBatch/CreateNewBatch";
 import { Container } from "./CreatedBatches.styles";
-
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 const CreatedBatch = () => {
   const [batches, setBatches] = useState([]);
   const [filteredBatches, setFilteredBatches] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+const [loading, setLoading] = useState(false);
   const fetchBatches = async () => {
     try {
+      setLoading(true);
       const data = await getAllBatches();
       if (data && Array.isArray(data.batches)) {
         const formattedData = data.batches.map((batch) => ({
@@ -26,6 +28,8 @@ const CreatedBatch = () => {
         }));
         setBatches(formattedData);
         setFilteredBatches(formattedData);
+        
+    setLoading(false);
       } else {
         message.error("Unexpected data format from server.");
       }
@@ -37,6 +41,7 @@ const CreatedBatch = () => {
 
   useEffect(() => {
     fetchBatches();
+
   }, []);
 
   const handleSearch = (e) => {
@@ -87,6 +92,38 @@ const CreatedBatch = () => {
       key: "class",
     },
   ];
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Container>

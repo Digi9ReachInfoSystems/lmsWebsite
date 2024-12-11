@@ -4,6 +4,8 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { getBatchesByStudentId } from "../../../../api/batchApi";
 import { getQuizBySubjectId } from "../../../../api/quizApi";
+// import  Animation from "../../../student/assets/Animation.json";
+import Lottie from "lottie-react";
 
 const { Title, Text } = Typography;
 
@@ -13,7 +15,7 @@ const QuizScore = () => {
   const [answeredCount, setAnsweredCount] = useState(0);
   const [totalQuizzes, setTotalQuizzes] = useState(0);
   const [percentage, setPercentage] = useState(0);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -73,23 +75,47 @@ const QuizScore = () => {
         setTotalQuizzes(total);
         setPendingQuizzes(pending);
         setPercentage(Math.round(completionPercentage));
-        setLoading(false);
+        // setLoading(false);
       } catch (err) {
         setError(err.message);
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
     apiCaller();
   }, []);
 
-  if (loading) {
-    return (
-      <div style={{ textAlign: "center", padding: "50px 0" }}>
-        <Spin size="large" />
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div
+  //       style={{
+  //         display: "flex",
+  //         justifyContent: "center",
+  //         alignItems: "center",
+  //         height: "100vh",
+  //       }}
+  //     >
+  //       <div
+  //         style={{
+  //           width: "300px",
+  //           height: "300px",
+  //           overflow: "hidden",
+  //           display: "flex",
+  //           justifyContent: "center",
+  //           alignItems: "center",
+  //           // Scale down the animation using transform
+  //           transform: "scale(0.5)", 
+  //           transformOrigin: "center center",
+  //         }}
+  //       >
+  //         <Lottie
+  //           animationData={Animation}
+  //           loop={true}
+  //         />
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   if (error) {
     return (
