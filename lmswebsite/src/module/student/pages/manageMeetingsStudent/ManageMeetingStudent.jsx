@@ -18,6 +18,8 @@ import {
   PageContainer,
   PrimaryButton,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import Animation from "../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 
 const localizer = momentLocalizer(moment);
 
@@ -228,12 +230,44 @@ function ManageMeetingStudent() {
     );
   };
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Heading>Manage Meetings</Heading>
       {/* <h1>Manage Meetings</h1> */}
       {loading ? (
-        <p>Loading...</p>
+       <Lottie animationData={Animation} loop={true} />
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (
