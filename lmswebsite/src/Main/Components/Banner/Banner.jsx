@@ -72,8 +72,6 @@ const Banner = ({ data }) => {
           />
         </div>
       </div>
-
-      {/* Stats Section */}
       <div className="stats-section">
         {statsData.map((stat, index) => (
           <div key={index} className="stat-card">
@@ -83,6 +81,21 @@ const Banner = ({ data }) => {
           </div>
         ))}
       </div>
+      <div className="hero-curve">
+        <svg
+          viewBox="0 0 1440 320"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <path
+            className="curve"
+            fill="#f0f9ff" /* Match this with your next section's color */
+            d="M0,128L80,138.7C160,149,320,171,480,186.7C640,203,800,213,960,192C1120,171,1280,117,1360,90.7L1440,64V320H0Z"
+          ></path>
+        </svg>
+      </div>
+
+      {/* Stats Section */}
     </div>
   );
 };

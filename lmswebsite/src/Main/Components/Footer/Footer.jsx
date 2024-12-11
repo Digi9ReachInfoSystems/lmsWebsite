@@ -1,37 +1,52 @@
 import React from "react";
+import "./Footer.css";
 import {
-  FooterContainer,
-  FooterBottom,
-  FooterText,
-  FooterLinks,
-  FooterLink,
-  FooterSocial,
-  SocialIcon,
-} from "./Footer.styles";
-import { FaFacebook, FaLinkedin, FaTwitter } from "react-icons/fa";
+  FaFacebook,
+  FaLinkedin,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <FooterContainer>
-      <FooterBottom>
-        <FooterText>© 2024. ToppersAcademy.com. All rights reserved</FooterText>
-        <FooterLinks>
-          <FooterLink href="#">Privacy Policy</FooterLink>
-          <FooterLink href="#">Terms and Conditions</FooterLink>
-        </FooterLinks>
-        <FooterSocial>
-          <SocialIcon href="#">
-            <FaFacebook />
-          </SocialIcon>
-          <SocialIcon href="#">
-            <FaLinkedin />
-          </SocialIcon>
-          <SocialIcon href="#">
-            <FaTwitter />
-          </SocialIcon>
-        </FooterSocial>
-      </FooterBottom>
-    </FooterContainer>
+    <footer className="footer">
+      {/* Legal Links */}
+      <div className="footer-legal-links">
+        <a href="#">Legal link</a>
+        <a href="#">Legal link</a>
+        <a href="#">Legal link</a>
+        <a href="#">Legal link</a>
+        <a href="#">Legal link</a>
+        <a href="#">Legal link</a>
+        <a href="#">Legal link</a>
+      </div>
+
+      {/* Social Media Icons */}
+      <div className="footer-social-icons">
+        <a href="#" aria-label="Facebook">
+          <FaFacebook />
+        </a>
+        <a href="#" aria-label="Instagram">
+          <FaInstagram />
+        </a>
+        <a href="#" aria-label="LinkedIn">
+          <FaLinkedin />
+        </a>
+        <a href="#" aria-label="Twitter">
+          <FaTwitter />
+        </a>
+        <a href="#" aria-label="YouTube">
+          <FaYoutube />
+        </a>
+      </div>
+
+      {/* Bottom Section */}
+      <div className="footer-bottom">
+        <p>© Copyright Topper's Academy 2024 All rights reserved.</p>
+        <strong>Toppers academy</strong>
+      </div>
+    </footer>
   );
 };
 

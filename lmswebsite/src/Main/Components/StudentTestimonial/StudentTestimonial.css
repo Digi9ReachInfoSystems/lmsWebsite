@@ -1,0 +1,111 @@
+/* General Section */
+.student-testimonials {
+  background: linear-gradient(
+    to bottom,
+    white,
+    #f0f9ff
+  ); /* Gradient from white to light blue */
+  padding-left: 18vw;
+  padding-right: 18vw;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  height: auto; /* Adjust height dynamically based on content */
+}
+
+/* Header */
+.testimonials-header {
+  margin-bottom: 2rem;
+}
+
+.testimonials-label {
+  font-size: 0.9rem;
+  color: #999;
+}
+
+.testimonials-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.testimonials-subtitle {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Testimonial Grid */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.testimonial-card {
+  position: relative;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  text-align: left;
+  transition: transform 0.3s ease-in-out;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+}
+
+.testimonial-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.testimonial-content h4 {
+  margin: 1rem 0 0.2rem;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.testimonial-handle {
+  font-size: 0.85rem;
+  color: #888;
+  margin-bottom: 1rem;
+}
+
+.testimonial-review {
+  font-size: 0.9rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+/* Close Button */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  color: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .testimonials-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
