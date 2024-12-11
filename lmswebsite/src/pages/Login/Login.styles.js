@@ -122,8 +122,6 @@ export const ForgotPassword = styled.a`
   cursor: pointer;
   margin-bottom: 1rem;
   text-decoration: none;
-
-  ]
   //
   &:hover {
     text-decoration: underline;
