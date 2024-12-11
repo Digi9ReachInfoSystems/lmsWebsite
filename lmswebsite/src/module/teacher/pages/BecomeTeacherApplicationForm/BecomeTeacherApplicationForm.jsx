@@ -35,7 +35,8 @@ import { getAllSubjects } from "../../../../api/subjectApi";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 import { updateAccessToken } from "../../../../api/refreshTokenApi";
 import {PageContainer,Heading,Subheading,BodyText,PrimaryButton} from "../../../../style/PrimaryStyles/PrimaryStyles";
-
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const { Option } = Select;
 
 const BecomeTeacherApplicationForm = () => {
@@ -49,6 +50,7 @@ const BecomeTeacherApplicationForm = () => {
   const [boardData, setBoardData] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState("");
   const [userData, setUserData] = useState();
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
@@ -60,6 +62,7 @@ const BecomeTeacherApplicationForm = () => {
     const session = JSON.parse(localStorage.getItem("sessionData"));
     const apicaller = async () => {
       try {
+        setLoading(true);
         const board = await getBoards();
         setBoardData(board);
         updateAccessToken();
@@ -91,10 +94,12 @@ const BecomeTeacherApplicationForm = () => {
       }
     };
     apicaller();
+    setLoading(false);
   }, []);
 
   useEffect(() => {
     const apicaller = async () => {
+      setLoading(true);
       if (selectedBoard) {
         const classData = await getClassesByBoardId(selectedBoard);
         setClasses(classData);
@@ -104,10 +109,12 @@ const BecomeTeacherApplicationForm = () => {
       }
     };
     apicaller();
+    setLoading(false);
   }, [selectedBoard]);
 
   useEffect(() => {
     const apicaller = async () => {
+      setLoading(true);
       console.log("selectedClass", selectedClass);
       if (selectedClass.length > 0) {
         let fetchedSubjects = [];
@@ -122,6 +129,7 @@ const BecomeTeacherApplicationForm = () => {
       }
     };
     apicaller();
+    setLoading(false);
   }, [selectedClass]);
 
   const handleSubmit = async (values) => {
@@ -177,6 +185,38 @@ const BecomeTeacherApplicationForm = () => {
     return e && e.fileList;
 
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
 
   return (
     <><PageContainer>

@@ -3,7 +3,8 @@ import { Table, Button, Input, Modal, Image, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
 import { TeacherCircularWrap } from "./TeacherCircular.styles";
-import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 import { Heading, PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
 
 const TeacherCircular = () => {
@@ -12,11 +13,12 @@ const TeacherCircular = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
+const [loading, setLoading] = useState(true);
   // Fetch circular data
   useEffect(() => {
     const fetchCirculars = async () => {
       try {
+        setLoading(true);
         const data = await getAllCircularNotificationsApi('teacher');
         if (data?.circularNotifications) {
           const formattedData = data.circularNotifications.map((circular) => ({
@@ -37,6 +39,7 @@ const TeacherCircular = () => {
     };
 
     fetchCirculars();
+    setLoading(false);
   }, []);
 
   // Handle search functionality
@@ -90,6 +93,37 @@ const TeacherCircular = () => {
     },
   ];
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
   return (
     <PageContainer>
 
@@ -124,7 +158,10 @@ const TeacherCircular = () => {
           </Modal>
         </>
         :
-        <LoadingPage />
+        <Lottie
+          animationData={Animation}
+          loop={true}
+        />
       }
       </TeacherCircularWrap>
     </PageContainer>

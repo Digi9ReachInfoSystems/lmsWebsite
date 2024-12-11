@@ -11,14 +11,15 @@ import { IoMdClose } from "react-icons/io";
 import { FaEye } from "react-icons/fa";
 import { getTeacherByAuthId } from "../../../../../api/teacherApi";
 import { useNavigate } from "react-router-dom";
-import LoadingPage from "../../../../../pages/LoadingPage/LoadingPage";
+// import LoadingPage from "../../../../../pages/LoadingPage/LoadingPage";
 import {
   Heading,
   PageContainer,
 } from "../../../../../style/PrimaryStyles/PrimaryStyles";
 import { Table, Button, Input, Modal, Image, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-
+import Animation from "../../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 export default function QuizBatches() {
   const [searchInput, setSearchInput] = useState("");
   const [filterData, setFilterData] = useState([]);
@@ -44,6 +45,7 @@ export default function QuizBatches() {
   useEffect(() => {
     const fetchBatches = async () => {
       try {
+        setLoading(true);
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const teacherData = await getTeacherByAuthId(authId);
         console.log("Teacher Data:", teacherData);
@@ -92,6 +94,38 @@ export default function QuizBatches() {
     }
   }, [stdTableIndex, originalData]);
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
+
   return (
     <>
       <QuizBatcheswrap>
@@ -111,9 +145,10 @@ export default function QuizBatches() {
         </div>
         <div className="area-row ar-three">
           {loading ? (
-            <>
-              <LoadingPage />
-            </>
+           <Lottie
+            animationData={Animation}
+            loop={true}
+          />
           ) : error ? (
             <p style={{ color: "red" }}>{error}</p>
           ) : batches && filterData.length > 0 ? (

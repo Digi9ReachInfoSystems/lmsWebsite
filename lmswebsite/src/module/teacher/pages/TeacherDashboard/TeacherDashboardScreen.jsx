@@ -22,6 +22,8 @@ import { Ri24HoursFill } from "react-icons/ri";
 import { PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { Grid } from "@mui/material";
 import welcomeImage from "../../../../assets/image.png";
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const iconMap = {
   "Total students": <ImUser />,
   "Total Batches": <MdLiveTv />,
@@ -37,11 +39,12 @@ const TeacherDashBoardScreen = () => {
   const [dashboardCards, setDashboardCards] = useState([]);
   const [recentQuiz, setRecentQuiz] = useState(null); // State to store recent quiz data
   const [quizCardData, setQuizCardData] = useState(null); // State to store quiz card data
-
+  const [loading, setLoading] = useState(false); // State for loading
   // Fetch teacher data and set teacherId
   useEffect(() => {
     const fetchTeacherData = async () => {
       try {
+        setLoading(true);
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
           throw new Error("User is not authenticated.");
@@ -57,6 +60,7 @@ const TeacherDashBoardScreen = () => {
     };
 
     fetchTeacherData();
+    setLoading(false);
   }, []);
 
   // Fetch batch and student counts when teacherId is available
@@ -64,6 +68,7 @@ const TeacherDashBoardScreen = () => {
     if (!teacherId) return;
 
     const fetchCounts = async () => {
+      setLoading(true);
       try {
         const batchCount = await getBatchesCount(teacherId);
         const studentCount = await getStudentsCount(teacherId);
@@ -96,6 +101,7 @@ const TeacherDashBoardScreen = () => {
     };
 
     fetchCounts();
+    setLoading(false);
   }, [teacherId]); // Trigger when teacherId changes
 
   // Fetch recent quiz for the teacher once teacherId is available
@@ -104,6 +110,7 @@ const TeacherDashBoardScreen = () => {
 
     const fetchRecentQuiz = async () => {
       try {
+        setLoading(true);
         const recentQuizData = await getRecentQuizForTeacher(teacherId);
         setRecentQuiz(recentQuizData);
         console.log("Recent Quiz fetched:", recentQuizData);
@@ -124,13 +131,41 @@ const TeacherDashBoardScreen = () => {
     };
 
     fetchRecentQuiz();
+    setLoading(false);
   }, [teacherId]);
 
-  if (!teacherId) {
-    return <div>Loading...</div>;
-  }
-  console.log("Recent Quiz:", quizCardData);
-  return (
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
+ return (
     <>
       <TeacherDashBoardCardswrap className="content-area">
         <Grid Container spacing={3}>

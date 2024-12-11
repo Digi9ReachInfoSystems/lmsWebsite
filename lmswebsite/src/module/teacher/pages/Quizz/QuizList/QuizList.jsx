@@ -38,7 +38,8 @@ import {
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { SubHeading } from "../../../../../components/common/landingPageComponents/SingleCoursePerClass.styles";
-
+import Animation from "../../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
@@ -64,6 +65,7 @@ export default function QuizList() {
   const batchId = param.batchId;
   useEffect(() => {
     const apicaller = async () => {
+        setLoading(true);
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const teacherData = await getTeacherByAuthId(authId);
       console.log("Teacher Data:", teacherData);
@@ -78,6 +80,7 @@ export default function QuizList() {
       setTeacherId(teacherData.teacher._id);
     };
     apicaller();
+    setLoading(false);
   }, [batchId]);
 
   // Handle showing the dialog
@@ -188,6 +191,37 @@ export default function QuizList() {
     },
   ];
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
   return (
     <>
       <QuizListWrap>
@@ -217,7 +251,7 @@ export default function QuizList() {
         </div>
         <div className="area-row ar-two"></div>
         <div className="area-row ar-three">
-          {loading && <p>Creating quiz...</p>}
+          {loading && <Lottie animationData={Animation} loop={true} />} 
           {error && <p style={{ color: "red" }}>{error}</p>}
           {success && <p style={{ color: "green" }}>{success}</p>}
           <QuizzesContainer>
