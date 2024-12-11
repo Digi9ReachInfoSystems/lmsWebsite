@@ -1,44 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Carousel } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button } from "@nextui-org/react";
+import { getStatisticsData } from "../../../api/statsApi";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { FaBookReader } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
-import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai"; // Importing left and right arrow icons
-import { getStatisticsData } from "../../../api/statsApi"; // Import API configuration
-import {
-  BannerContainerWarp,
-  BannerClip,
-  CarouselWrapper,
-  BannerImage,
-  BannerPopularCourses,
-  PopularCoursesHeader,
-  PopularCourses,
-  PopularCourseCard,
-  PopularCoursesClass,
-  PopularCoursesPrice,
-  PopularCoursesName,
-  BannerStats,
-  StatsBatches,
-  StatsBatchesIcon,
-  TotalStatsBatches,
-  ArrowButtonLeft,
-  ArrowButtonRight,
-} from "./Banner.styles";
+import "./Banner.css";
 
 const Banner = ({ data }) => {
-  const { banners = [] } = data;
-  const [stats, setStats] = useState({}); // State to hold stats data
-  const { courses = [] } = data;
-  const coursesRef = useRef(null); // Ref for the courses container
+  const [stats, setStats] = useState({});
 
-  // Fetch stats data
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await getStatisticsData(); // Fetch stats
-        console.log("Stats data:", response);
-        setStats(response); // Update state with stats data
+        const response = await getStatisticsData();
+        setStats(response);
       } catch (error) {
         console.error("Error fetching stats:", error);
       }
@@ -47,133 +23,67 @@ const Banner = ({ data }) => {
     fetchStats();
   }, []);
 
-  // Stats data for rendering
   const statsData = [
     {
       icon: <AiOutlineUsergroupAdd />,
       value: stats.totalBatches || 0,
       label: "Batches",
-      bgColor: "#6cbaff", // Light blue
-      boxShadow: "10px -10px 0px #6cbaff", // Blue shadow
     },
     {
       icon: <FaBookReader />,
       value: stats.totalCourses || 0,
       label: "Courses",
-      bgColor: "#fffacd", // Light yellow
-      boxShadow: "10px -10px 0px #fffacd", // Yellow shadow
     },
     {
       icon: <PiStudentBold />,
       value: stats.totalStudents || 0,
       label: "Students",
-      bgColor: "#e0ffe0", // Light green
-      boxShadow: "10px -10px 0px #e0ffe0", // Green shadow
     },
     {
       icon: <LiaChalkboardTeacherSolid />,
       value: stats.totalTeachers || 0,
       label: "Teachers",
-      bgColor: "#ffe4e1", // Light pink
-      boxShadow: "10px -10px 0px #ffe4e1", // Red shadow
     },
   ];
 
-  // Colors for popular courses
-  const backgroundColors = [
-    "#F8E7D8", // Gold
-    "#D7FDEB", // Orange Red
-    "#FFDFF8", // Deep Sky Blue
-    "#FFC1CD", // Lime Green
-    "#C9E2FF", // Hot Pink
-    "#C9E2FF", // Blue Violet
-  ];
-
-  // Generate a background color based on the index
-  const getBackgroundColor = (index) =>
-    backgroundColors[index % backgroundColors.length];
-
-  // Scroll handler for left and right buttons with looping
-  const scrollLeft = () => {
-    if (coursesRef.current) {
-      const maxScrollLeft = coursesRef.current.scrollWidth;
-      if (coursesRef.current.scrollLeft === 0) {
-        coursesRef.current.scrollLeft =
-          maxScrollLeft - coursesRef.current.clientWidth;
-      } else {
-        coursesRef.current.scrollLeft -= 200; // Scroll left by 200px
-      }
-    }
-  };
-
-  const scrollRight = () => {
-    if (coursesRef.current) {
-      const maxScrollLeft = coursesRef.current.scrollWidth;
-      if (
-        coursesRef.current.scrollLeft + coursesRef.current.clientWidth >=
-        maxScrollLeft
-      ) {
-        coursesRef.current.scrollLeft = 0;
-      } else {
-        coursesRef.current.scrollLeft += 200; // Scroll right by 200px
-      }
-    }
-  };
-
-  const loopedCourses = [...courses]; // Duplicate the courses list for looping
-
   return (
-    <BannerContainerWarp>
-      {banners?.length > 0 && (
-        <CarouselWrapper>
-          <Carousel autoplay dots>
-            {banners.map((item, index) => (
-              <div key={index}>
-                <BannerImage
-                  src={item.banner_image}
-                  alt={`Slide ${index + 1}`}
-                />
-              </div>
-            ))}
-          </Carousel>
-        </CarouselWrapper>
-      )}
-
-      <BannerPopularCourses>
-        <PopularCoursesHeader>Popular Courses</PopularCoursesHeader>
-        <div style={{ position: "relative" }}>
-          <PopularCourses ref={coursesRef}>
-            {loopedCourses.map((item, index) => (
-              <PopularCourseCard
-                key={index}
-                style={{
-                  backgroundColor: getBackgroundColor(index),
-                }}
-              >
-                <PopularCoursesClass>{item.class}</PopularCoursesClass>
-                <PopularCoursesPrice>{item.price}</PopularCoursesPrice>
-                <PopularCoursesName>{item.name}</PopularCoursesName>
-              </PopularCourseCard>
-            ))}
-          </PopularCourses>
+    <div className="hero-container">
+      {/* Hero Section */}
+      <div className="hero-section">
+        <div className="hero-content">
+          <h1 className="hero-title">Start Learning Today</h1>
+          <p className="hero-subtitle">
+            Learn and grow with the best resources and instructors. <br />
+            The place to learn and grow.
+          </p>
+          <div className="hero-buttons">
+            <Button className="green-button" size="lg" auto>
+              Get Started
+            </Button>
+            <Button color="secondary" size="lg" variant="flat">
+              Learn More
+            </Button>
+          </div>
         </div>
-      </BannerPopularCourses>
+        <div className="hero-image">
+          <img
+            src="https://th.bing.com/th/id/R.53524cf38d5cdb0660aea452ce77eb9e?rik=L7boYxk1Jaxmng&riu=http%3a%2f%2fclipart-library.com%2fimages_k%2feducation-transparent-background%2feducation-transparent-background-21.png&ehk=IpXVpbYQGSTxxpjABUK9UarAThLKehuiCwseXE5k5Qg%3d&risl=&pid=ImgRaw&r=0"
+            alt="Hero Section"
+          />
+        </div>
+      </div>
 
-      <BannerStats>
+      {/* Stats Section */}
+      <div className="stats-section">
         {statsData.map((stat, index) => (
-          <StatsBatches key={index} boxShadow={stat.boxShadow}>
-            <StatsBatchesIcon bgColor={stat.bgColor}>
-              {stat.icon}
-            </StatsBatchesIcon>
-            <TotalStatsBatches>
-              <span>{stat.value}</span> <br /> {stat.label}
-            </TotalStatsBatches>
-          </StatsBatches>
+          <div key={index} className="stat-card">
+            <div className="stat-icon">{stat.icon}</div>
+            <h3 className="stat-value">{stat.value}</h3>
+            <p className="stat-label">{stat.label}</p>
+          </div>
         ))}
-      </BannerStats>
-
-      <BannerClip />
-    </BannerContainerWarp>
+      </div>
+    </div>
   );
 };
 
