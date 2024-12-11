@@ -243,7 +243,7 @@ export default function QuizList() {
                   <div className="class">
                     <p>
                       <strong>Class :</strong> {quiz.class_level?.classLevel}{" "}
-                      {/* Assuming populated */}
+                      {/* Assumig populated */}
                     </p>
                   </div>
 
@@ -251,7 +251,7 @@ export default function QuizList() {
                     <p>
                       <strong>Description:</strong> {quiz.description}
                     </p>
-                  </div>
+                  </div>   
                 </div>
 
                 <div className="view-questions-button">
