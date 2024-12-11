@@ -49,7 +49,7 @@ export const GlobalStyles = createGlobalStyle`
 
  .content-wrapper{
       flex-grow: 1; /* Makes content take remaining space */
-      margin-left: 80px; /* Adjust this based on collapsed sidebar width */
+      /* margin-left: 80px; Adjust this based on collapsed sidebar width */
       transition: margin-left 0.3s ease-in-out; /* Smooth transition for resizing */
   }
 

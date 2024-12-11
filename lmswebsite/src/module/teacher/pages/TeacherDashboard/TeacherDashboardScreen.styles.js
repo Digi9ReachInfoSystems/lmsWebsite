@@ -1,7 +1,20 @@
 import styled from "styled-components";
-import { media } from "../../../../style/theme/theme";
+import { media, theme } from "../../../../style/theme/theme";
 
 export const TeacherDashBoardCardswrap = styled.main`
+  background-color: ${theme.colors.bgcolor};
+
+  .welcome-Container {
+    // display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 56vw;
+    border-radius: 20px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: ${theme.colors.nyanza};
+  }
   .area-row {
     display: flex;
     gap: 24px;
