@@ -72,7 +72,7 @@ import { StudentAttendance } from "./module/student/pages/StudentAttendance/Stud
 import { ManageAttendance } from "./module/admin/page/ManageAttendance/ManageAttendance";
 import TeacherdashBoardCards from "./module/teacher/components/TeacherdashBoardCards/TeacherdashBoardCards";
 import StudentMaterial from "./module/student/pages/StudentMaterials/StudentMaterial";
-import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+
 import LandingHome from "./Main/Pages/LandingHome";
 import RescheduleMeeting from "./module/student/pages/RescheduleMeeting/RescheduleMeeting";
 import RescheduleMeetingTeacher from "./module/teacher/pages/RescheduleMeetingTeacher/RescheduleMeetingTeacher";
@@ -81,6 +81,8 @@ import Mode from "./module/student/pages/demomodeupdate/Mode/Mode";
 import BoardDetailPage from "./pages/BoardDetailPage/BoardDetailPage";
 import ClassDetailPage from "./pages/ClassDetailPage/ClassDetailPage";
 import PackageDetailPage from "./pages/PackageDetailPage/PackageDetailPage";
+import PackageExpiryAlertPage from "./module/student/pages/PackageExpiryAlertPage/PackageExpiryAlertPage";
+import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -112,7 +114,7 @@ function App() {
 <Route path="/testingClass/:classId" element={<ClassDetailPage/>}/>
 <Route path="/testingPackage/:packageId" element={<PackageDetailPage/>}/>
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/student" element={<StudentLandingPage />} />
           
           <Route path="/student/mode" element={<Mode />} /> 
@@ -129,6 +131,10 @@ function App() {
           <Route
             path="/student/package/paymentSucces"
             element={<PaymentSuccess />}
+          />
+          <Route
+            path="/student/package/expiryAlert"
+            element={<PackageExpiryAlertPage/>}
           />
 
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>

@@ -26,6 +26,7 @@ const PackageForm = () => {
     price: "",
     image: null,
     mode: "normal",
+    duration: 0,
   });
 
   const [classes, setClasses] = useState([]);
@@ -183,6 +184,7 @@ const PackageForm = () => {
         subject_id: [],
         price: "",
         image: null,
+        duration:0
       });
     } catch (error) {
       setError(
@@ -361,6 +363,17 @@ const PackageForm = () => {
               required
             />
           </FormItem>
+          <FormItem>
+            <label htmlFor="duration">Duration</label>
+            <Input
+              type="number"
+              id="duration"
+              name="duration"
+              value={formData.duration}
+              onChange={handleChange}
+              required
+            />
+          </FormItem>
 
           <FormItem>
             <label htmlFor="image">Image</label>
@@ -373,6 +386,7 @@ const PackageForm = () => {
               required
             />
           </FormItem>
+          
 
           <FormItem>
             <Button
