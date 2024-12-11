@@ -2,10 +2,81 @@ import styled from "styled-components";
 import { theme } from "../../../style/theme/theme";
 
 export const BannerContainerWarp = styled.div`
+  .hero-container {
+    background-color: #101827;
+    color: #ffffff;
+    padding: 3rem 5rem;
+  }
+
+  .hero-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .hero-content {
+    flex: 1;
+  }
+
+  .hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .hero-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-image img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+
+  .stats-section {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2rem;
+  }
+
+  .stat-card {
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+    color: #10b981; /* Green */
+  }
+
+  .stat-value {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    color: #d1d5db; /* Gray */
+  }
+
   font-family: ${theme.typography.fontFamily};
-  background-color: ${theme.colors.pink4};
-  height: 80vh;
-  width: 80vw;
+  background-color: ${theme.colors.pink2};
+  height: 90vh;
+  width: 100vw;
   position: relative;
   display: flex;
   margin: 0 auto;
@@ -73,9 +144,11 @@ export const BannerClip = styled.div`
 `;
 
 export const CarouselWrapper = styled.div`
-  width: 80%;
+  width: 20%;
   margin: 0 auto;
-  z-index: 2;
+  margin-top: 40px;
+  height: 20vh;
+  // z-index: 2;
 
   .slick-list {
     border-bottom-left-radius: 20px; /* Apply border radius to bottom left */

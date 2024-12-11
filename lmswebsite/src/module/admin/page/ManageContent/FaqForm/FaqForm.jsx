@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Input, Alert, Spin, message } from "antd"; // Ant Design components
 import { FormContainer, StyledButton } from "./FaqForm.style"; // Import styles
 import { createFAQ } from "../../../../../api/faq"; // Adjust the path to your API function
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
  
 const FaqForm = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +12,7 @@ const FaqForm = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const  [loading, setLoading] = useState(false);
  
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +29,7 @@ const FaqForm = () => {
     setError(null);
  
     try {
+      setLoading(true);
       if (!formData.question || !formData.answer) {
         setError("Both question and answer are required.");
         setIsSubmitting(false);
@@ -49,9 +53,41 @@ const FaqForm = () => {
       console.error("Error creating FAQ:", error.response?.data || error);
     } finally {
       setIsSubmitting(false);
+      setLoading(false);
     }
   };
- 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <FormContainer>
       <h2>Create FAQ</h2>

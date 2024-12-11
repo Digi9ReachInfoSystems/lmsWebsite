@@ -1,17 +1,13 @@
-// StudentTaskBoard.jsx
+// src/module/teacher/pages/BecomeTeacherApplicationForm/TaskBoard/QuizPage/AssignedTeacherBatch.jsx
 
 import React, { useEffect, useState } from "react";
 import { getQuizBySubjectId } from "../../../../../api/quizApi";
 import { getBatchesByStudentId } from "../../../../../api/batchApi";
-import { Card, Button } from "antd";
-import {
-  Container,
-  QuizCard,
-  QuizTitle,
-  QuizDescription,
-} from "./StudentTaskBoard.style";
+import { Card, Button, Row, Col, Tag, Progress, Spin, Alert } from "antd";
 import { getStudentByAuthId } from "../../../../../api/studentApi";
 import { getscoreforstudent } from "../../../../../api/responseApi";
+import  Animation from "../../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import {
   BodyText,
@@ -20,9 +16,31 @@ import {
   PrimaryButton,
   Subheading,
 } from "../../../../../style/PrimaryStyles/PrimaryStyles";
+import { FaEye } from "react-icons/fa";
+import styled from "styled-components";
+
+const { Meta } = Card;
+
+// Styled Components
+const Container = styled.div`
+  padding: 20px;
+`;
+
+const QuizGrid = styled(Row)`
+  margin-top: 20px;
+`;
+
+const StyledCard = styled(Card)`
+  margin-bottom: 20px;
+`;
+
+const StatusTag = styled(Tag)`
+  margin-top: 10px;
+`;
+
 const StudentTaskBoard = () => {
   const [quizzes, setQuizzes] = useState([]);
-  const [responses, setResponses] = useState({}); // This will map quiz IDs to scores
+  const [responses, setResponses] = useState({}); // Maps quiz IDs to scores
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [studentId, setStudentId] = useState(null);
@@ -52,6 +70,12 @@ const StudentTaskBoard = () => {
 
         // Fetch batches based on student ID
         const fetchedBatches = await getBatchesByStudentId(studentId);
+
+        if (!fetchedBatches || fetchedBatches.length === 0) {
+          setQuizzes([]);
+          setLoading(false);
+          return;
+        }
 
         // Extract unique subject IDs from the batches
         const subjectIds = fetchedBatches.map((batch) => batch.subject_id._id);
@@ -113,68 +137,138 @@ const StudentTaskBoard = () => {
     });
   };
 
+  // Determine quiz status
+  const getQuizStatus = (quiz) => {
+    const score = responses[quiz._id];
+    const studentHasAnswered = quiz.answered_by.some(
+      (entry) => entry.student_id === studentId
+    );
+
+    if (studentHasAnswered) {
+      return <StatusTag color="green">Completed</StatusTag>;
+    } else {
+      return <StatusTag color="volcano">Pending</StatusTag>;
+    }
+  };
+
   // Loading and error states
   if (loading) {
     return (
-      <PageContainer>
-        <BodyText>Loading...</BodyText>
-      </PageContainer>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
     );
   }
+  
 
   if (error) {
     return (
       <PageContainer>
-        <BodyText>{error}</BodyText>
+        <Alert message="Error" description={error} type="error" showIcon />
       </PageContainer>
     );
   }
 
   return (
-    <div>
-      <Heading> Task Board</Heading>
-      {quizzes.length > 0 ? (
-        quizzes.map((quiz) => {
-          const score = responses[quiz._id];
-          const studentHasAnswered = quiz.answered_by.some(
-            (entry) => entry.student_id === studentId
-          );
+    <Container>
+      <Heading>Task Board</Heading>
 
-          return (
-            <QuizCard key={quiz._id}>
-              <Card
-                // title={quiz.quiz_title}
-                extra={
-                  studentHasAnswered ? (
-                    <BodyText style={{ color: "green", fontWeight: "bold" }}>
-                      Your score is: {score}/{quiz.questions.length}
-                    </BodyText>
+      {quizzes.length > 0 ? (
+        <QuizGrid gutter={[16, 16]}>
+          {quizzes.map((quiz) => {
+            const score = responses[quiz._id];
+            const studentHasAnswered = quiz.answered_by.some(
+              (entry) => entry.student_id === studentId
+            );
+
+            return (
+              <Col xs={24} sm={12} md={8} lg={6} key={quiz._id}>
+                <StyledCard
+                  hoverable
+                  title={quiz.quiz_title}
+                  extra={getQuizStatus(quiz)}
+                >
+                  <Meta
+
+                    description={
+                      <>
+                        <Subheading>{quiz.description}</Subheading>
+                        <BodyText style={{ marginTop: "10px" }}>
+                          Number of Questions: {quiz.questions?.length}
+                        </BodyText>
+                      </>
+                    }
+                    
+                  />
+                  {studentHasAnswered ? (
+                    <div style={{ marginTop: "10px" }}>
+                      <Progress
+                        percent={(
+                          (score / quiz.questions.length) *
+                          100
+                        ).toFixed(2)}
+                        status="active"
+                        showInfo={false}
+                      />
+                      <BodyText style={{ marginTop: "5px" }}>
+                        Your score: {score}/{quiz.questions.length}
+                      </BodyText>
+                    </div>
                   ) : (
                     <PrimaryButton
                       type="primary"
                       onClick={() => handleNavigateToQuiz(quiz)}
                       style={{
+                        marginTop: "15px",
                         backgroundColor: "#e91e63",
                         borderColor: "#e91e63",
                       }}
+                      block
                     >
+                      <FaEye style={{ marginRight: "5px" }} />
                       Answer
                     </PrimaryButton>
-                  )
-                }
-                style={{ width: "100%", marginBottom: "20px" }}
-                hoverable
-              >
-                <Subheading>{quiz.quiz_title}</Subheading>
-                <BodyText>{quiz.description}</BodyText>
-              </Card>
-            </QuizCard>
-          );
-        })
+                  )}
+                </StyledCard>
+              </Col>
+            );
+          })}
+        </QuizGrid>
       ) : (
-        <div>No quizzes available for this student.</div>
+        <div style={{ textAlign: "center", marginTop: "50px" }}>
+          <Alert
+            message="No Quizzes Available"
+            description="You have no quizzes assigned at the moment."
+            type="info"
+            showIcon
+          />
+        </div>
       )}
-    </div>
+    </Container>
   );
 };
 

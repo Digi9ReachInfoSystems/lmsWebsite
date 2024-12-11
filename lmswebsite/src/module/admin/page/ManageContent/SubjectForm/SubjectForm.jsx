@@ -4,6 +4,8 @@ import { createSubject } from "../../../../../api/subjectApi";
 import { getBoards } from "../../../../../api/boadApi";
 import { getClassesByBoardId } from "../../../../../api/classApi";
 import { FormContainer } from "./SubjectForm.style";
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
  
 const { Option } = Select;
  
@@ -16,10 +18,12 @@ const SubjectForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [boardsError, setBoardsError] = useState(null);
   const [classesError, setClassesError] = useState(null);
+  const [loading, setLoading] = useState(false);
  
   // Fetch all boards on component mount
   useEffect(() => {
     const fetchBoards = async () => {
+      setLoading(true);
       setLoadingBoards(true);
       setBoardsError(null);
       try {
@@ -32,6 +36,7 @@ const SubjectForm = () => {
       }
     };
     fetchBoards();
+    setLoading(false);
   }, []);
  
   // Fetch classes whenever the board_id changes
@@ -67,7 +72,38 @@ const SubjectForm = () => {
       setIsSubmitting(false);
     }
   };
- 
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <FormContainer>
       <h2>Create Subject</h2>

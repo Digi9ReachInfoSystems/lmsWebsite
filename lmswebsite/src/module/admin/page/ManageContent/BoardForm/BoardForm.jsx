@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, Spin, message, Alert } from 'antd';
 import { createBoard } from '../../../../../api/boardApi';
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
+import { set } from 'lodash';
  
 const BoardForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
  
   const handleSubmit = async (values) => {
     console.log('Form Values:', values); // Log form values
@@ -12,6 +16,7 @@ const BoardForm = () => {
     setError(null);
  
     try {
+    setLoading(true);
       const response = await createBoard(values);
       console.log('API Response:', response); // Log API response
       message.success('Board created successfully!');
@@ -25,9 +30,42 @@ const BoardForm = () => {
       message.error(errorMsg);
     } finally {
       setIsSubmitting(false);
+      setLoading(false);
     }
   };
  
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div style={{ maxWidth: 600, margin: '0 auto', padding: 24 }}>
       <h2>Create Board</h2>

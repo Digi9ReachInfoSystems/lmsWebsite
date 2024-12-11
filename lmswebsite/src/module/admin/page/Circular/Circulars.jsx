@@ -5,6 +5,9 @@ import { getAllCircularNotificationsApi } from "../../../../api/circularNotifica
 import { Button, Input, Modal, Table, Select } from "antd";  // Import Select component
 import { CircularWrap } from "./Circulars.styles";
 import CreateCircular from "../CreateCircular/CreateCircular";
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
+import { set } from "lodash";
 
 const { Option } = Select;  // Destructure Option from Select
 
@@ -16,7 +19,7 @@ export default function Circulars() {
   const [selectedImage, setSelectedImage] = useState(null);
   const [isCreateCircularModalOpen, setIsCreateCircularModalOpen] = useState(false);
   const [filter, setFilter] = useState("all");  // New state variable for filter
-
+const [loading, setLoading] = useState(false);
   const columns = [
     {
       title: "Title",
@@ -66,6 +69,7 @@ export default function Circulars() {
   // Fetch data on component mount
   useEffect(() => {
     const apiCaller = async () => {
+      setLoading(true);
       const data = await getAllCircularNotificationsApi(filter);
       console.log("Fetched Circulars:", data);
       if (data) {
@@ -79,6 +83,8 @@ export default function Circulars() {
         }));
         setOriginalData(formattedData);
         setData(formattedData);
+        
+    setLoading(false);
       }
     };
     apiCaller();
@@ -105,6 +111,38 @@ export default function Circulars() {
   const closeCreateCircularModal = () => {
     setIsCreateCircularModalOpen(false);
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <CircularWrap>

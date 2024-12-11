@@ -3,6 +3,9 @@ import { Form, Input, Button, message } from "antd"; // Ant Design imports
 import { FormContainer } from "./BannerForm.style"; // Import styles
 import { createBanner } from "../../../../../api/bannerApi"; // Adjust the path to your API function
 import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase";
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
+import { set } from "lodash";
  
 const BannerForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +15,7 @@ const BannerForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,11 +49,13 @@ const BannerForm = () => {
     setSuccessMessage("");
  
     try {
+      setLoading(true);
       if (!formData.banner_name || !formData.banner_image) {
         setError("Both banner name and image are required.");
         setIsSubmitting(false);
         return;
       }
+      setLoading(true);
  
       // Upload file to Firebase and get download URL
       const downloadUrl = await uploadFileToFirebase(formData.banner_image, "bannerImages");
@@ -67,14 +73,47 @@ const BannerForm = () => {
         banner_name: "",
         banner_image: null,
       });
+      setLoading(false);
     } catch (error) {
       setError(error.response?.data?.error || "Failed to create banner. Please try again later.");
       message.error("Failed to create banner. Please try again later."); // Show error message
       console.error("Error creating banner:", error.response?.data || error);
     } finally {
       setIsSubmitting(false);
+      setLoading(false);
     }
   };
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
  
   return (
     <FormContainer>

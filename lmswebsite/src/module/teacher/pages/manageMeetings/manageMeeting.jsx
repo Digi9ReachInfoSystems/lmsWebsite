@@ -13,7 +13,8 @@ import {
 } from "../../../../api/teacherApi"; // Adjust this import path as necessary
 import { Heading, PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { ManageMeetingwrap } from "./manageMeetings.Styles";
-
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const localizer = momentLocalizer(moment);
 
 function ManageMeeting() {
@@ -185,6 +186,37 @@ function ManageMeeting() {
       </div>
     );
   };
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
 
   return (
     <PageContainer>
@@ -193,7 +225,7 @@ function ManageMeeting() {
            <Heading>Meeting Schedule</Heading>
         </div>
         {loading ? (
-          <p>Loading schedule...</p>
+          <Lottie animationData={Animation} loop={true} />
         ) : error ? (
           <p>{error}</p>
         ) : (

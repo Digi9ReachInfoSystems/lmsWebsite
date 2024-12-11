@@ -15,6 +15,8 @@ export const SideBarwrap = styled.div`
   transition: all 300ms ease-in-out;
   left: 0;
   top: 0;
+  overflow-y: auto;
+  height: 100vh;
   // position: fixed;
 
   ${media.xl`
@@ -43,7 +45,17 @@ export const SideBarwrap = styled.div`
 
   .sidebar-bottom {
     flex: 1;
+
+    overflow-y: auto;
   }
+
+  ${media.xs`
+    padding: 15px 10px;  /* Reduce padding */
+    .brand-logo {
+      width: 35px; 
+      height: 35px;
+    }
+  `}
 
   .sidebar-brand {
     display: flex;

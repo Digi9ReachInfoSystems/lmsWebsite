@@ -4,6 +4,9 @@ import { FormContainer } from "./ChooseUSForm.styles"; // Import styles
 import { createChooseUsFeature } from "../../../../../api/chooseUsApi"; // Adjust the path to your API function
 import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase"; // Assuming this function handles file upload
 import { UploadOutlined } from "@ant-design/icons"; // Ant Design icons
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
+import { set } from "lodash";
  
 const ChooseUsForm = () => {
   const [formData, setFormData] = useState({
@@ -15,6 +18,7 @@ const ChooseUsForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,6 +55,7 @@ const ChooseUsForm = () => {
     setSuccessMessage("");
  
     try {
+      setLoading(true);
       if (!formData.name || !formData.description || !formData.imageUrl) {
         setError("Please fill out all fields and upload an image.");
         setIsSubmitting(false);
@@ -77,8 +82,41 @@ const ChooseUsForm = () => {
       setError("Error creating feature: " + error.message);
     } finally {
       setIsSubmitting(false);
+      setLoading(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
  
   return (
     <FormContainer>

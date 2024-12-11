@@ -12,6 +12,8 @@ import { getClassesByBoardId } from "../../../../../api/classApi"; // Fetch clas
 import { getSubjects } from "../../../../../services/createBatch"; // Fetch subjects by class
 import { getBoards } from "../../../../../api/boadApi"; // Fetch boards
 import { message, Spin, Alert, Select, Radio } from "antd";
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 
 const { Option } = Select;
 
@@ -39,18 +41,19 @@ const PackageForm = () => {
   const [error, setError] = useState(null);
   const[mode, setMode] = useState('');
   const [subjectError, setSubjectError] = useState(null); // New state for subject selection error
+  const [loading, setLoading] = useState(false);
 
   // Fetch boards on component mount
   useEffect(() => {
     const fetchBoards = async () => {
-      setLoadingBoards(true);
+      setLoading(true);
       try {
         const response = await getBoards();
         setBoards(response);
       } catch (error) {
         setError("Failed to fetch boards. Please try again later.");
       } finally {
-        setLoadingBoards(false);
+        setLoading(false);
       }
     };
 
@@ -196,6 +199,38 @@ const PackageForm = () => {
       setIsSubmitting(false);
     }
   };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <FormContainer>

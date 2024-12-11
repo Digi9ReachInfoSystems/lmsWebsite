@@ -23,7 +23,8 @@ import moment from "moment";
 import { set } from "lodash";
 import { BodyText, Heading, PageContainer, PrimaryButton } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { AssignedBatchStudentsListContainer } from "./AssignedBatchStudentsList.style"
-
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const { RangePicker } = DatePicker;
 
 const AssignedBatchStudentsList = () => {
@@ -44,6 +45,7 @@ const AssignedBatchStudentsList = () => {
   useEffect(() => {
     const fetchBatchDetails = async () => {
       try {
+        setLoading(true);
         if (!batchId) {
           throw new Error("No batch ID provided.");
         }
@@ -219,17 +221,43 @@ const AssignedBatchStudentsList = () => {
   };
 
 
-
   if (loading) {
-    return <Spin size="large" />;
-  }
-
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+}
   if (error) {
     return <Alert message={error} type="error" showIcon />;
   }
 
   return (
-    <PageContainer>
+    <>
       <AssignedBatchStudentsListContainer>
         <div
           className="assigned-students-header-row"
@@ -360,7 +388,7 @@ const AssignedBatchStudentsList = () => {
           </Button>
         </Modal>
       </AssignedBatchStudentsListContainer>
-    </PageContainer>
+    </>
 
     // </div>
 

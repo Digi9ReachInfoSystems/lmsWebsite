@@ -9,6 +9,8 @@ import {
   Heading,
   PageContainer,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import Animation from "../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 
 export const StudentAttendance = () => {
   const [attendance, setAttendance] = useState([]);
@@ -120,6 +122,37 @@ export const StudentAttendance = () => {
       },
     },
   ];
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

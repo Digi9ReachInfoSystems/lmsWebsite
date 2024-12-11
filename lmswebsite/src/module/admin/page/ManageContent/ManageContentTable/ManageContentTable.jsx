@@ -23,18 +23,23 @@ import { getAllFAQ, createFAQ, deleteFAQ } from '../../../../../api/faq';
 import { getBanners, createBanner, deleteBanner } from '../../../../../api/bannerApi';
 import { createChooseUsFeature, deleteChooseUsFeature, getChooseUsData } from '../../../../../api/chooseUsApi';
 import { createBenefit, getAllBenefits, deleteBenefit } from '../../../../../api/benefitsApi';
+import Animation from "../../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 const ManageContentTable = ({ contentType }) => {
   const [data, setData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Helper function to extract ID from various formats
   const getId = (doc) => doc._id?.$oid || doc._id || doc.id;
 
   // Fetch data from API when contentType changes
   useEffect(() => {
+    setLoading(true);
     fetchData();
+    setLoading(false);
   }, [contentType]);
 
   const fetchData = async () => {
@@ -601,6 +606,38 @@ const ManageContentTable = ({ contentType }) => {
 
     default:
       break;
+  }
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
   }
 
   return (

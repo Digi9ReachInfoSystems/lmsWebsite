@@ -8,9 +8,12 @@ import {
   getBatchesByStudentId,
   getBatchesByTeacherId,
 } from "../../../../api/batchApi";
+import { Table, Input, Button, Space, Row, Col } from "antd";
 import BatchCard from "../../components/BatchCard/BatchCard";
 import { getTeacherByAuthId } from "../../../../api/teacherApi";
-import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
+// import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
+import Animation from "../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 
 export default function StudentAssignedBatches() {
@@ -76,72 +79,108 @@ export default function StudentAssignedBatches() {
     });
   };
 
-  return (
-    <StudentAssignedBatchWrap className="content-area">
-      <div className="area-row ar-one">
-        <div className="AssignedTeacherBatch-batches_nav">
-          <h2 className="AssignedTeacherBatch-batch_title">Assigned Batches</h2>
-          <div className="AssignedTeacherBatch-search">
-            <form>
-              <div className="input-group">
-                <span className="input-icon">
-                  <FaSearch />
-                </span>
-                <input
-                  type="text"
-                  className="input-control"
-                  placeholder="Search by Batch Name"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                />
-              </div>
-            </form>
-          </div>
+  const columns = [
+    {
+      title: "Batch Name",
+      dataIndex: "batchName",
+      key: "batchName",
+      render: (text) => <a>{text}</a>, // Link to batch details or actions
+    },
+    {
+      title: "Expiry Date",
+      dataIndex: "expiryDate",
+      key: "expiryDate",
+    },
+    {
+      title: "Teacher Assigned",
+      dataIndex: "teacherAssigned",
+      key: "teacherAssigned",
+    },
+    {
+      title: "Action",
+      key: "action",
+      render: (_, record) => (
+        <Space size="middle">
+          <Button
+            type="link"
+            icon={<FaEye />}
+            onClick={() => navigate(`/batch-details/${record.batchId}`)} // Assuming you have a batch details page
+          >
+            View Details
+          </Button>
+        </Space>
+      ),
+    },
+  ];
+
+  const handleBatchClick = (batchId) => {
+    // Navigate to the respective batch details page
+    navigate(`/student/dashboard/assignedBatches/${batchId}`);
+  };
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
         </div>
       </div>
-      <div className="area-row ar-two">
-        {/* Additional content can go here */}
-      </div>
-      <div className="area-row ar-three">
-        {loading ? (
-          <>
-            <LoadingPage />
-          </>
-        ) : error ? (
-          <div>
-            <p>Error: {error}</p>
-          </div>
-        ) : batches && filterData.length > 0 ? (
-          filterData.map((batch) => {
-            const batchData = {
-              batch_image: batch.batch_image,
-              batch_name: batch.batch_name,
-              class_id: batch.class_id,
-              subject_id: batch.subject_id,
-              teacher_id: batch.teacher_id,
-              date: batch.date,
-              studentcount: batch.students.length,
-              action: (
-                <button>
-                  <Link to={`/student/dashboard/assignedBatches/${batch._id}`}>
-                    <FaEye style={{ marginRight: "5px" }} />
-                    View Materials
-                  </Link>
-                </button>
-              ),
-            };
-            return <BatchCard key={batch._id} batch={batchData} />;
-          })
+    );
+  }
+  return (
+    <StudentAssignedBatchWrap>
+      <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>
+        <Col
+          span={24}
+          style={{ display: "flex", justifyContent: "center" }}
+        ></Col>
+      </Row>
+      <Row gutter={[16, 24]}>
+        {filterData.length > 0 ? (
+          filterData.map((batch) => (
+            <Col xs={24} sm={12} md={8} lg={6} key={batch._id}>
+              <BatchCard
+                batch={batch}
+                onClick={() => handleBatchClick(batch._id)}
+              />
+              <button>
+                <Link to={`/student/dashboard/assignedBatches/${batch._id}`}>
+                  <FaEye style={{ marginRight: "5px" }} />
+                  View Materials
+                </Link>
+              </button>
+            </Col>
+          ))
         ) : (
-          <>
-            <div className="assignedBatches-batchNotFound">
-              <h2 className="AssignedTeacherBatch-batch_title">
-                No batches Assigned for you.
-              </h2>
-            </div>
-          </>
+          <Col span={24}>
+            <Card>
+              <h3>No Batches Found</h3>
+            </Card>
+          </Col>
         )}
-      </div>
+      </Row>
     </StudentAssignedBatchWrap>
   );
 }

@@ -1,76 +1,59 @@
 import React from "react";
-import Benefit1 from "../../assets/Benefit1.jpg";
-import Benefit2 from "../../assets/Benefit2.jpeg";
-import Benefit3 from "../../assets/Benefit3.jpg";
-import Benefit4 from "../../assets/Benefit4.jpeg";
-import Benefit5 from "../../assets/Benefit5.jpg";
-import Benefit6 from "../../assets/Benefit6.jpeg";
-import {
-  BenefitsContainerWarp,
-  BenefitsContiner,
-  BenefitsHeader,
-  BenefitsColor,
-  BenefitsSubtitle,
-  BenefitsContent,
-  ImageContainer,
-  ImageDiv,
-  StyledImage,
-  BenefitsDetails,
-  DetailsBenefits,
-} from "./Benefits.styles"; // Import your styled components
+import "./Benefits.css";
 
 const Benefits = ({ data }) => {
-  // Destructure benefits from data with a default empty array to prevent errors
-  const { benefits = [] } = data || {};
-  const images = [
-    { src: Benefit1, alt: "Image 1" },
-    { src: Benefit2, alt: "Image 2" },
-    { src: Benefit3, alt: "Image 3" },
-    { src: Benefit4, alt: "Image 4" },
-    { src: Benefit5, alt: "Image 5" },
-    { src: Benefit6, alt: "Image 6" },
+  const benefitsData = [
+    {
+      title: "UI/UX Design",
+      description: "Learn the latest tools and trends in UI/UX Design.",
+      color: "#DEF7EC", // Light Green
+    },
+    {
+      title: "Graphic Design",
+      description: "Create stunning graphics for the digital world.",
+      color: "#FEE2E2", // Light Red
+    },
+    {
+      title: "Web Development",
+      description: "Build responsive and interactive websites.",
+      color: "#EDE9FE", // Light Purple
+    },
+    {
+      title: "Digital Marketing",
+      description: "Master strategies for online marketing success.",
+      color: "#DBEAFE", // Light Blue
+    },
   ];
 
   return (
-    <BenefitsContainerWarp>
-      <BenefitsContiner>
-        {/* Header for the benefits section */}
-        <BenefitsHeader>Benefits from our website</BenefitsHeader>
+    <section className="benefits-section">
+      <div className="benefits-container">
+        {/* Left Section */}
+        <div className="benefits-header">
+          <h2>Grow Your Career By Learning <span>Powerful Skills.</span></h2>
+          <p>Explore our best-in-class courses designed for professionals and beginners alike.</p>
+        </div>
 
-        {/* Map through the API-provided benefits data */}
-        {benefits.slice(-3).map((benefit, index) => (
-          <DetailsBenefits key={index}>
-            <BenefitsColor>
-              <div
-                style={{
-                  backgroundColor: benefit.color || "#ccc", // Use color from API, fallback to #ccc
-                }}
-                className="color"
-              ></div>
-            </BenefitsColor>
-            <BenefitsDetails>
-              {/* Dynamically render subtitle and content from the API */}
-              <BenefitsSubtitle>{benefit.title}</BenefitsSubtitle>
-              <BenefitsContent>{benefit.description}</BenefitsContent>
-            </BenefitsDetails>
-          </DetailsBenefits>
-        ))}
-      </BenefitsContiner>
-
-      {/* Render the images */}
-      <ImageContainer>
-        <ImageDiv>
-          {images.map((image, index) => (
-            <StyledImage
+        {/* Right Section - Benefits Cards */}
+        <div className="benefits-cards">
+          {benefitsData.map((benefit, index) => (
+            <div
               key={index}
-              src={image.src}
-              alt={image.alt}
-              className={`image${index + 1}`}
-            />
+              className="benefit-card"
+              style={{ backgroundColor: benefit.color }}
+            >
+              <div className="benefit-icon">
+                <span>{benefit.title.charAt(0)}</span> {/* First Letter */}
+              </div>
+              <div className="benefit-info">
+                <h4 className="benefit-title">{benefit.title}</h4>
+                <p className="benefit-description">{benefit.description}</p>
+              </div>
+            </div>
           ))}
-        </ImageDiv>
-      </ImageContainer>
-    </BenefitsContainerWarp>
+        </div>
+      </div>
+    </section>
   );
 };
 

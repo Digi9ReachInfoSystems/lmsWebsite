@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { theme, media } from "../../../../style/theme/theme";
 
 export const StudentAssignedBatchWrap = styled.div`
-
   .AssignedTeacherBatch-batches_nav {
     width: 100%;
     display: flex;
@@ -25,16 +24,16 @@ export const StudentAssignedBatchWrap = styled.div`
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0;
-    flex:1;
+    flex: 1;
   }
 
   .AssignedTeacherBatch-search {
     max-width: 320px;
     width: 100%;
-    margin-right:25px;
-    
+    margin-right: 25px;
+
     flex: 0 0 auto;
-    align-items: center; 
+    align-items: center;
 
     ${media.md`
       max-width: 100%;
@@ -45,9 +44,9 @@ export const StudentAssignedBatchWrap = styled.div`
       width: 100%;
       background-color: ${(props) => props.theme.colors.white};
       border-radius: 6px;
-      height: 40px; 
-      margin-top:40px;
-      padding-right:10px;
+      height: 40px;
+      margin-top: 40px;
+      padding-right: 10px;
       display: flex;
       align-items: center;
       padding: 4px 12px;
@@ -111,7 +110,7 @@ export const StudentAssignedBatchWrap = styled.div`
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 999; /* Should be lower than modal container */
   }
 
@@ -169,11 +168,6 @@ export const StudentAssignedBatchWrap = styled.div`
     outline: none;
   }
 
-
-  
-
- 
-
   /* Scrollable Table on Small Screens */
   @media (max-width: 768px) {
     .assignedBatch-table-container {
@@ -186,16 +180,14 @@ export const StudentAssignedBatchWrap = styled.div`
     .assignedBatch-table-container {
       overflow-x: auto;
     }
-
-  
   }
 
-.assignedBatches-batchNotFound{
-display:flex;
-align-items:center;
-justify-content:center;
-flex-direction:column;
-height:100vh;
-gap:20px;}
-
+  .assignedBatches-batchNotFound {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    gap: 20px;
+  }
 `;

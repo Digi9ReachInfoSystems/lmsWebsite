@@ -8,7 +8,8 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import  {DailyScheduleContainerWrap} from "./DailySchedule.styles";
-
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 const localizer = momentLocalizer(moment);
 
 export default function DailySchedule() {
@@ -78,6 +79,38 @@ export default function DailySchedule() {
             </div>
         );
     };
+
+    if (loading) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <div
+              style={{
+                width: "300px",
+                height: "300px",
+                overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                // Scale down the animation using transform
+                transform: "scale(0.5)", 
+                transformOrigin: "center center",
+              }}
+            >
+              <Lottie
+                animationData={Animation}
+                loop={true}
+              />
+            </div>
+          </div>
+        );
+    }
 
 
 
