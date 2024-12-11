@@ -229,7 +229,7 @@ const AssignedBatchStudentsList = () => {
   }
 
   return (
-    <PageContainer>
+    <>
       <AssignedBatchStudentsListContainer>
         <div
           className="assigned-students-header-row"
@@ -360,7 +360,7 @@ const AssignedBatchStudentsList = () => {
           </Button>
         </Modal>
       </AssignedBatchStudentsListContainer>
-    </PageContainer>
+    </>
 
     // </div>
 
