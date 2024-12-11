@@ -12,6 +12,8 @@ import { getAllTeachers, getTeacherAttendance } from '../../../../api/teacherApi
 import { getTeacherByAuthId } from '../../../../api/teacherApi';
 import { getStudentAttendance, getStudentsForAttendance } from '../../../../api/studentApi';
 import { set } from 'lodash';
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 
 export const ManageAttendance = () => {
     const [attendance, setAttendance] = useState([]);
@@ -168,6 +170,37 @@ export const ManageAttendance = () => {
         },
     ];
 
+    if (loading) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <div
+              style={{
+                width: "300px",
+                height: "300px",
+                overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                // Scale down the animation using transform
+                transform: "scale(0.5)", 
+                transformOrigin: "center center",
+              }}
+            >
+              <Lottie
+                animationData={Animation}
+                loop={true}
+              />
+            </div>
+          </div>
+        );
+      }
     return (
         <div style={{ padding: "20px" }}>
             <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", justifyContent: "space-between" }}>
@@ -212,7 +245,7 @@ export const ManageAttendance = () => {
             </div>
 
             {loading ? (
-                <Spin tip="Loading..." />
+               <Lottie animationData={Animation} />
             ) : error ? (
                 <Alert message={error} type="error" />
             ) : (

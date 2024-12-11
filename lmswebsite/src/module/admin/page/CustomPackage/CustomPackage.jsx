@@ -3,6 +3,8 @@ import { Table, Button, Modal, Form, Input, message } from "antd";
 import { getPackages } from "../../../../api/customPackageApi";
 import { Container, SearchContainer } from "./CustomPackage.style";
 import {createPaymentForCustomPackage} from "../../../../api/paymentsApi";
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 
 const CustomPackage = () => {
   const [packages, setPackages] = useState([]);
@@ -11,8 +13,8 @@ const CustomPackage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [editedPrice, setEditedPrice] = useState(null);
-
   const [form] = Form.useForm();
+  const  [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPackages = async () => {
@@ -30,6 +32,7 @@ const CustomPackage = () => {
     };
 
     fetchPackages();
+    setLoading(false);
   }, []);
 
   // Handle search functionality
@@ -131,6 +134,38 @@ const CustomPackage = () => {
       ),
     },
   ];
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Container>

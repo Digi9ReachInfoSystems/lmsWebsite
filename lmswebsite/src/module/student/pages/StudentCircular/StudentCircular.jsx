@@ -3,12 +3,12 @@ import { Table, Button, Input, Modal, Image, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
 import { StudentCircularWrap } from "./StudentCircular.style";
-import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 import {
   BodyText,
   Heading,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import { PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import Animation from "../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 
 const StudentCircular = () => {
   const [circulars, setCirculars] = useState([]);
@@ -16,6 +16,7 @@ const StudentCircular = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   // Fetch circular data
   useEffect(() => {
@@ -31,6 +32,7 @@ const StudentCircular = () => {
           }));
           setCirculars(formattedData);
           setFilteredCirculars(formattedData);
+          setLoading(false);
         } else {
           message.error("Failed to fetch circular notifications.");
         }
@@ -42,6 +44,38 @@ const StudentCircular = () => {
 
     fetchCirculars();
   }, []);
+  
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   // Handle search functionality
   const handleSearch = (e) => {
@@ -96,7 +130,7 @@ const StudentCircular = () => {
 
   return (
     <StudentCircularWrap>
-      {circulars ? (
+      
         <>
           <div className="header">
             <Heading> Circulars </Heading>
@@ -125,9 +159,7 @@ const StudentCircular = () => {
             <Image src={selectedImage} alt="Circular" width="100%" />
           </Modal>
         </>
-      ) : (
-        <LoadingPage />
-      )}
+      
     </StudentCircularWrap>
   );
 };

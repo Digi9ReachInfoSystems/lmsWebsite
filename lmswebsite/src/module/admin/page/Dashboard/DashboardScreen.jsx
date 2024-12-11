@@ -5,6 +5,8 @@ import student_icon from "../../assets/total_students_icon.png";
 import teacher_icon from "../../assets/total_teachers_icon.png";
 // import revenue_icon from "../../assets/total_revenue_icon.png";
 import Cards from "../../components/dashBoardCards/cards";
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
 import {
   getTotalNumberOfBatches,
   getTotalNumberOfStudents,
@@ -24,6 +26,7 @@ const Dashboard = () => {
   const [unpaidAmount, setUnpaidAmount] = useState(0);
   const [weeklyTeacherApplication, setWeeklyTeacherApplication] = useState([]); // State for weekly teacher application data
   const [dailyRevenue, setDailyRevenue] = useState([]);
+  const [loading, setLoading] = useState(true);
  
   useEffect(() => {
     const apiCaller = async () => {
@@ -75,7 +78,40 @@ const Dashboard = () => {
     };
  
     apiCaller();
+ 
+    setLoading(false);
   }, []); // Empty dependency array to run once when the component mounts
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
  
   return (
     <DashboardScreenWrap className="content-area">
