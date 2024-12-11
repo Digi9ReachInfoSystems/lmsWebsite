@@ -14,7 +14,8 @@ import { set } from 'lodash';
 import { createMeeting } from '../../../../api/batchApi';
 import { BodyText, Heading, PageContainer, PrimaryButton } from '../../../../style/PrimaryStyles/PrimaryStyles';
 import { RescheduleMeetingTeacherWrap } from './RescheduleMeetingTeacher.styles';
-
+import Animation from "../../../teacher/assets/animation.json";
+import Lottie from "lottie-react";
 function RescheduleMeetingTeacher() {
     const [rescheduleData, setRescheduleData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
@@ -203,7 +204,37 @@ function RescheduleMeetingTeacher() {
 
         }
     ];
-
+    if (loading) {
+        return (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <div
+              style={{
+                width: "300px",
+                height: "300px",
+                overflow: "hidden",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                // Scale down the animation using transform
+                transform: "scale(0.5)", 
+                transformOrigin: "center center",
+              }}
+            >
+              <Lottie
+                animationData={Animation}
+                loop={true}
+              />
+            </div>
+          </div>
+        );
+    }
 
     return (
         <PageContainer>
@@ -220,7 +251,7 @@ function RescheduleMeetingTeacher() {
                 </div>
 
                 {loading ? (
-                    <Spin tip="Loading..." />
+                   <Lottie animationData={Animation} loop={true} />
                 ) : (
                     <Table
                         columns={columns}

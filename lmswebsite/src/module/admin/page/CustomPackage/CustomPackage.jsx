@@ -13,6 +13,8 @@ const CustomPackage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [editedPrice, setEditedPrice] = useState(null);
+  const [duration, setDuration] = useState(0);
+
   const [form] = Form.useForm();
   const  [loading, setLoading] = useState(false);
 
@@ -59,6 +61,7 @@ const CustomPackage = () => {
       packagePrice: record.package_price || 0,
       isApproved: record.is_approved ? "Yes" : "No",
       isActive: record.is_active ? "Yes" : "No",
+      duration: record?.duration || 0,
     });
   };
 
@@ -66,6 +69,7 @@ const CustomPackage = () => {
     setSelectedPackage(null);
     setIsModalVisible(false);
     setEditedPrice(null);
+    setDuration(0); 
     form.resetFields();
   };
 
@@ -80,6 +84,7 @@ const CustomPackage = () => {
         package_id: selectedPackage._id,
         amount: editedPrice,
         student_id: selectedPackage.student_id,
+        duration: duration
       })
       console.log("Payment data:", paymentData);
       message.success("Payment request sent successfully.");
@@ -229,6 +234,17 @@ const CustomPackage = () => {
             </Form.Item>
             <Form.Item label="Slots" name="slots">
               <Input disabled />
+            </Form.Item>
+            <Form.Item label="duration" name="duration">
+            {selectedPackage.is_approved ? (
+                <Input disabled />
+              ) : (
+                <Input
+                  type="number"
+                  defaultValue={selectedPackage.duration}
+                  onChange={(e) => setDuration(e.target.value)}
+                />
+              )}
             </Form.Item>
             <Form.Item label="Package Price" name="packagePrice">
               {selectedPackage.is_approved ? (

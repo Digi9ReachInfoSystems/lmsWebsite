@@ -144,6 +144,11 @@ const Sidebar = () => {
       icon: <AiTwotoneNotification />,
       link: "/admin/circular",
     },
+    {
+      name: "Custom Package",
+      icon: <AiTwotoneNotification />,
+      link: "/admin/customPackage",
+    },
     { name: "Manage Content", icon: <FaTools />, link: "/admin/manageContent" },
     {
       name: "Manage Attendance",

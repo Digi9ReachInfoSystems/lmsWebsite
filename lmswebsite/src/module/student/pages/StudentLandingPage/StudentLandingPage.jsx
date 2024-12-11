@@ -89,11 +89,18 @@ export const StudentLandingPage = () => {
 
         if (
           data.student.custom_package_status == "approved" ||
-          data.student.subscribed_Package
+         ( data.student.subscribed_Package!=""&&data.student.is_paid==true)
         ) {
-          navigate(
-            `/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`
-          );
+          // navigate(
+          //   `/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`
+          // );
+          navigate("/student/dashboard");
+        }else if(
+          data.student.custom_package_status == "expired" ||
+          ( data.student.subscribed_Package!=""&&data.student.is_paid==false)
+        ){
+          // navigate("/student/package/expiryAlert")
+          // alert("Your Package has expired. ")
         }
       } catch (error) {
         console.error("API Caller Error:", error);
@@ -153,11 +160,12 @@ export const StudentLandingPage = () => {
 
   return (
     <>
-      {" "}
+   
       {studentDataForm ? (
         <>
           <Header />
-          {studentDataForm.student.custom_package_status === "no_package" ? (
+          {/* studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" */}
+          {studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" ? (
             <ApplicationContainer>
               <ApplicationImage>
                 <TeacherFormImage
@@ -293,14 +301,15 @@ export const StudentLandingPage = () => {
               {" "}
               Your Custom Package is under review
             </CustomPackageStatus>
-          ) : (
+          ) : studentDataForm.student.custom_package_status == "rejected"&&(
             <CustomPackageStatus>
               {" "}
               Your Custom Package Request Rejected
             </CustomPackageStatus>
-          )}
+          )
+          }
 
-          {studentDataForm.student.custom_package_status == "no_package" && (
+          {studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired" && (
             <>
               <GotoOneToOne />
               <StudentExistingPackages

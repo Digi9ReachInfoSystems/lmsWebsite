@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Form, Input, Alert } from "antd";
 import { auth } from "../../config/firebaseConfig";
@@ -15,6 +15,7 @@ import {
   SubTitle1,
 } from "./Login.styles";
 import bgImg from "../../assets/image 32.png"; // The background image
+import { getStudentByAuthId } from "../../api/studentApi";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -51,7 +52,16 @@ const Login = () => {
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
 
       if (profileData.user.role === "admin") navigate("/admin");
-      else if (profileData.user.role === "student") navigate("/student");
+      else if (profileData.user.role === "student") {
+        const studentData= await getStudentByAuthId(user.uid);
+        if(studentData.student.custom_package_status == "expired"&&studentData.student.is_paid==false){
+          navigate("/student/package/expiryAlert")
+        }else{
+          navigate("/student");
+        }
+        // navigate("/student");
+
+      }
       else if (profileData.user.role === "teacher") navigate("/teacher");
     } catch (error) {
       setErrorMessage(error.message);
@@ -82,7 +92,8 @@ const Login = () => {
           >
             <Input.Password placeholder="Password" />
           </Form.Item>
-          <ForgotPassword>Forgot Password?</ForgotPassword>
+          <Link to="/forgot-password"><ForgotPassword>Forgot Password?</ForgotPassword></Link>
+         
           {errorMessage && <Alert message={errorMessage} type="error" />}
           <LoginButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Logging in..." : "Log In"}

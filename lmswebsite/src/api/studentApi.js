@@ -175,3 +175,14 @@ export const updateMode = async (studentId) => {
     throw error;
   }
 }
+
+export const getStudentscheduleForSevenDaysById = async (studentId) => {
+  try {
+    const response = await api.get(`/students/student/${studentId}/scheduleSevenDays`);
+    console.log('Student schedule fetched successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.error('Error fetching student schedule:', error);
+    throw error;
+  }
+}

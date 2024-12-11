@@ -60,11 +60,6 @@ const TeacherForm = ({ boards, navigate }) => {
       const {
         email,
         password,
-        first_name,
-        last_name,
-        board_id,
-        class_id,
-        profile_picture,
       } = values;
 
       // Handle Firebase signup
@@ -83,27 +78,26 @@ const TeacherForm = ({ boards, navigate }) => {
       );
 
       // If there's a profile picture, upload it
-      if (profile_picture) {
-        const profilePicUrl = await uploadFileToFirebase(profile_picture);
-        console.log("Profile Picture URL:", profilePicUrl);
-      }
+      // if (profile_picture) {
+      //   const profilePicUrl = await uploadFileToFirebase(profile_picture);
+      //   console.log("Profile Picture URL:", profilePicUrl);
+      // }
 
       // Send email verification
       await sendEmailVerification(user);
 
       // You can send other user details (like first_name, last_name, etc.) to your backend for storage
       await signupUser({
-        first_name,
-        last_name,
+        role: "teacher",
         email,
-        board_id,
-        class_id,
-        profile_picture: profile_picture ? profile_picture.name : "",
+        access_token: user.accessToken,
+        refresh_token: userCredential._tokenResponse.refreshToken,
       });
 
       message.success(
         "Account created successfully. Please verify your email."
       );
+      localStorage.clear();
       navigate("/login");
     } catch (error) {
       message.error(error.message || "Signup failed. Please try again.");
