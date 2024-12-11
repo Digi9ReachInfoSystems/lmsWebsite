@@ -1,0 +1,108 @@
+/* General Section */
+.expert-teachers-section {
+  padding: 4rem 2rem;
+  font-family: Arial, sans-serif;
+  background-color: #f9fafb;
+  text-align: center;
+}
+
+.teachers-header h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #101828;
+}
+
+.teachers-header p {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+/* Teachers Container */
+.teachers-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.teacher-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 280px;
+  text-align: center;
+  /* padding: 1.5rem; */
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.teacher-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.teacher-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.teacher-info {
+  margin-bottom: 1rem;
+}
+
+.teacher-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #101828;
+}
+
+.teacher-location {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+/* Contact Buttons */
+.teacher-contact {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.contact-button {
+  background-color: #f1f5f9;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  color: #3b82f6;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.contact-button:hover {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .teachers-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .teacher-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}

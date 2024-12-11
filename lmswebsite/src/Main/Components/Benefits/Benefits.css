@@ -8,23 +8,16 @@
 
 .benefits-container {
   display: flex;
+  flex-direction: row;
   gap: 2rem;
   max-width: 1200px;
   align-items: center;
 }
 
-/* Left Image Section */
-.benefits-image img {
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-/* Right Content Section */
+/* Left Content Section */
 .benefits-content {
   flex: 1;
+  text-align: left;
 }
 
 .benefits-heading {
@@ -34,6 +27,10 @@
   color: #101828;
 }
 
+.benefits-heading .highlight {
+  color: #3b82f6;
+}
+
 .benefits-description {
   font-size: 1rem;
   color: #6b7280;
@@ -41,52 +38,78 @@
   line-height: 1.6;
 }
 
-.benefits-list {
-  list-style: none;
-  padding: 0;
+/* Cards Section */
+.benefits-cards {
+  flex: 2;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.benefit-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
+.benefit-card {
+  background-color: #ffffff;
+  flex: 1;
+  max-width: 22%; /* Ensures 4 cards fit in one row */
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.benefit-icon .icon-circle {
-  display: inline-block;
-  width: 50px;
-  height: 50px;
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Icon Styling */
+.benefit-icon {
+  width: 60px;
+  height: 60px;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
   border-radius: 50%;
-  background-color: #10b981; /* Default color */
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+/* Card Title and Description */
 .benefit-title {
   font-size: 1.1rem;
-  font-weight: 600;
+  font-weight: bold;
   color: #101828;
-  margin: 0 0 0.3rem 0;
+  margin-bottom: 0.5rem;
 }
 
 .benefit-description {
-  color: #6b7280;
   font-size: 0.95rem;
+  color: #6b7280;
+  line-height: 1.5;
 }
 
-/* Responsive Layout */
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .benefits-cards {
+    gap: 1rem;
+    justify-content: space-around;
+  }
+
+  .benefit-card {
+    max-width: 45%; /* Two cards per row */
+  }
+}
+
 @media (max-width: 768px) {
   .benefits-container {
     flex-direction: column;
-    text-align: center;
+    gap: 2rem;
   }
 
-  .benefits-list {
-    align-items: center;
-  }
-
-  .benefit-item {
-    text-align: left;
+  .benefit-card {
+    max-width: 100%; /* Stack cards vertically */
   }
 }

@@ -51,7 +51,7 @@ export const GlobalStyles = createGlobalStyle`
  .content-wrapper{
     margin-left:4vw;
       flex-grow: 1; /* Makes content take remaining space */
-      /* margin-left: 80px; Adjust this based on collapsed sidebar width */
+     margin-left: 80px; 
       transition: margin-left 0.3s ease-in-out; /* Smooth transition for resizing */
   }
 

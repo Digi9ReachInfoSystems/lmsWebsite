@@ -1,79 +1,83 @@
 import React, { useState } from "react";
-import { Modal } from "antd";
-import {
-  FAQWarp,
-  FAQHeader,
-  FAQContainer,
-  FAQCard,
-  FAQQuestion,
-  FAQSign,
-  ToggleIcon,
-  FAQQueryContainer,
-  FAQQuerySection,
-  FAQQueryDetails,
-  FAQQueryTitle,
-  FAQQuerySubtitle,
-  FAQQueryButton,
-} from "./FAQSection.styles";
-import QueryImage from "../../assets/Contactimage.jpeg";
-import LandingPageContactUs from "../LandingPageContactUs/LandingPageContactUs";
+import "./FAQSection.css";
 
-const FAQSection = ({ data }) => {
+const FAQSection = () => {
   const [expandedFAQ, setExpandedFAQ] = useState(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const faqs = [
+    {
+      question: "How do I get started?",
+      answer:
+        "When you sign up, you'll start with the Free plan. It's ideal for new teams and allows unlimited team members.",
+    },
+    {
+      question: "What is included in the Free Plan?",
+      answer:
+        "The Free plan includes core features such as unlimited tasks, teams, and integrations.",
+    },
+    {
+      question: "How do I cancel my membership?",
+      answer: "To cancel your membership, go to Account Settings > Billing.",
+    },
+    {
+      question: "How do I transfer my membership to a different account?",
+      answer:
+        "You can transfer your membership by navigating to the Account Transfer section.",
+    },
+    {
+      question: "What is the refund policy?",
+      answer:
+        "We offer a 30-day refund policy for any issues with your subscription.",
+    },
+  ];
 
   const handleToggle = (index) => {
     setExpandedFAQ(expandedFAQ === index ? null : index);
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const filteredFAQs = faqs.filter((faq) =>
+    faq.question.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <FAQWarp>
-      <FAQHeader>Frequently Asked Questions</FAQHeader>
-      <FAQContainer>
-        {data && data.length > 0 ? (
-          data.map((FAQ, index) => (
-            <FAQCard key={index}>
-              <FAQQuestion onClick={() => handleToggle(index)}>
-                <span>{FAQ.question}</span>
-                <ToggleIcon>{expandedFAQ === index ? "–" : "+"}</ToggleIcon>
-              </FAQQuestion>
-              {expandedFAQ === index && <FAQSign>{FAQ.answer}</FAQSign>}
-            </FAQCard>
+    <section className="faq-section">
+      <h2 className="faq-title">Frequently Asked Questions</h2>
+
+      {/* Search Input */}
+      <div className="faq-search">
+        <input
+          type="text"
+          placeholder="Search for a question"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
+      {/* FAQ Cards */}
+      <div className="faq-container">
+        {filteredFAQs.length > 0 ? (
+          filteredFAQs.map((faq, index) => (
+            <div
+              key={index}
+              className={`faq-card ${expandedFAQ === index ? "active" : ""}`}
+            >
+              <div className="faq-question" onClick={() => handleToggle(index)}>
+                <span>{faq.question}</span>
+                <span className="toggle-icon">
+                  {expandedFAQ === index ? "×" : "+"}
+                </span>
+              </div>
+              {expandedFAQ === index && (
+                <div className="faq-answer">{faq.answer}</div>
+              )}
+            </div>
           ))
         ) : (
-          <p>No FAQs available at the moment.</p>
+          <p>No FAQs found for your search.</p>
         )}
-      </FAQContainer>
-      <FAQQueryContainer>
-        <FAQQuerySection>
-          <FAQQueryDetails>
-            <FAQQueryTitle>Have a Question? Let’s ask</FAQQueryTitle>
-            <FAQQuerySubtitle>
-              If you are confused or in doubt, you can contact us for free. We
-              will be happy to help.
-            </FAQQuerySubtitle>
-            <FAQQueryButton onClick={showModal}>Contact Us</FAQQueryButton>
-          </FAQQueryDetails>
-          <img src={QueryImage} alt="Query Image" />
-        </FAQQuerySection>
-      </FAQQueryContainer>
-      <Modal
-        title="Contact Us"
-        visible={isModalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
-        <LandingPageContactUs onClose={handleCancel} />
-      </Modal>
-    </FAQWarp>
+      </div>
+    </section>
   );
 };
 

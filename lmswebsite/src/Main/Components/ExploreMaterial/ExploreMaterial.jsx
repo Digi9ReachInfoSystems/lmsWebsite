@@ -1,32 +1,11 @@
 import React, { useState } from "react";
-import {
-  ExploreMaterialWarp,
-  ExploreMaterialHeader,
-  ExploreMaterialSingleClass,
-  ExploreMaterialClass,
-  ExploreMaterialCard,
-  MaterialCard,
-  MaterialTitle,
-  MaterialSubtitle,
-} from "./ExploreMaterial.style";
+import "./ExploreMaterial.css";
 
 const ExploreMaterial = () => {
-  // Set the first class as the default selected class
   const [selectedClass, setSelectedClass] = useState("Class 6");
 
   // Static data for classes
-  const classes = [
-    { name: "Class 6" },
-    { name: "Class 7" },
-    { name: "Class 8" },
-    { name: "Class 9" },
-    { name: "Class 10" },
-  ];
-
-  // Handle click on a class and update the selected class
-  const handleClassClick = (className) => {
-    setSelectedClass(className); // Update the selected class
-  };
+  const classes = ["Class 6", "Class 7", "Class 8", "Class 9", "Class 10"];
 
   // Static data for courses
   const courses = [
@@ -54,29 +33,50 @@ const ExploreMaterial = () => {
   ];
 
   return (
-    <ExploreMaterialWarp>
-      <ExploreMaterialHeader>Explore Study Material</ExploreMaterialHeader>
-      <ExploreMaterialSingleClass>
-        {classes.map((classItem, index) => (
-          <ExploreMaterialClass
-            key={index}
-            isSelected={selectedClass === classItem.name} // Check if the button is selected
-            onClick={() => handleClassClick(classItem.name)} // Update selected class on click
-          >
-            {classItem.name}
-          </ExploreMaterialClass>
-        ))}
-      </ExploreMaterialSingleClass>
-      <ExploreMaterialCard>
-        {courses.map((course, index) => (
-          <MaterialCard key={index}>
-            <MaterialTitle>{course.name}</MaterialTitle>
-            <MaterialSubtitle>{course.detail}</MaterialSubtitle>
-            <img src={course.image} alt={course.name} />
-          </MaterialCard>
-        ))}
-      </ExploreMaterialCard>
-    </ExploreMaterialWarp>
+    <section className="explore-material-section">
+      <div className="container">
+        {/* Header */}
+        <div className="explore-header">
+          <h2>New Courses</h2>
+          <p>
+            All Courses / UI/UX Design / Graphic Design / Digital Marketing /
+            Photography / Web3
+          </p>
+        </div>
+
+        {/* Class Selection */}
+        <div className="class-selection">
+          {classes.map((className, index) => (
+            <button
+              key={index}
+              className={`class-button ${
+                selectedClass === className ? "active" : ""
+              }`}
+              onClick={() => setSelectedClass(className)}
+            >
+              {className}
+            </button>
+          ))}
+        </div>
+
+        {/* Cards Section */}
+        <div className="courses-grid">
+          {courses.map((course, index) => (
+            <div key={index} className="course-card">
+              <img
+                src={course.image}
+                alt={course.name}
+                className="course-image"
+              />
+              <div className="course-content">
+                <h3 className="course-title">{course.name}</h3>
+                <p className="course-description">{course.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 };
 

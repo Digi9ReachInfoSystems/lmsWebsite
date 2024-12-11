@@ -27,30 +27,29 @@ const Benefits = () => {
 
   return (
     <section className="benefits-section">
-      {/* Header */}
-      <div className="benefits-header">
-        <h2>
-          Grow Your Career By Learning <span>Powerful Skills.</span>
-        </h2>
-        <p>
-          Explore our best-in-class courses designed for professionals and
-          beginners alike.
-        </p>
-      </div>
+      <div className="benefits-container">
+        {/* Left Content Section */}
+        <div className="benefits-content">
+          <h2 className="benefits-heading">
+            Grow Your Career By Learning <span className="highlight">Powerful Skills.</span>
+          </h2>
+          <p className="benefits-description">
+            Explore our best-in-class courses designed for professionals and beginners alike.
+          </p>
+        </div>
 
-      {/* Cards Section */}
-      <div className="benefits-grid">
-        {benefitsData.map((benefit, index) => (
-          <div
-            key={index}
-            className="benefit-card"
-            style={{ backgroundColor: benefit.color }}
-          >
-            <div className="benefit-icon">{benefit.title.charAt(0)}</div>
-            <h4 className="benefit-title">{benefit.title}</h4>
-            <p className="benefit-description">{benefit.description}</p>
-          </div>
-        ))}
+        {/* Cards Section */}
+        <div className="benefits-cards">
+          {benefitsData.map((benefit, index) => (
+            <div key={index} className="benefit-card">
+              <div className="benefit-icon" style={{ backgroundColor: benefit.color }}>
+                {benefit.title.charAt(0)}
+              </div>
+              <h4 className="benefit-title">{benefit.title}</h4>
+              <p className="benefit-description">{benefit.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
