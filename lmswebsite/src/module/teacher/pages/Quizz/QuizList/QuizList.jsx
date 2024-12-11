@@ -228,7 +228,7 @@ export default function QuizList() {
                 <div className="batch">
                   <p className="red">
                     <strong>Batch:</strong> {quiz.batch_index.batch_name}{" "}
-                    {/* Assuming populated */}
+                    {/* Asming populated */}
                   </p>
                 </div>
 
