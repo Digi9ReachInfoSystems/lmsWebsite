@@ -28,7 +28,7 @@ const SignUpPage = () => {
       try {
         const boardData = await getBoards();
         console.log("Fetched Boards:", boardData);
-        setBoards(boardData);
+        setBoard(boardData);
       } catch (error) {
         console.error("Error fetching boards:", error);
         message.error("Failed to load boards. Please try again later.");
@@ -139,12 +139,12 @@ const SignUpPage = () => {
         <Tabs defaultActiveKey="student" centered size="large">
           <TabPane tab="Student" key="student">
             <ScrollableForm>
-              <StudentForm boards={boards} navigate={navigate} />
+              <StudentForm boards={board} navigate={navigate} />
             </ScrollableForm>
           </TabPane>
           <TabPane tab="Teacher" key="teacher">
             <ScrollableForm>
-              <TeacherForm boards={boards} navigate={navigate} />
+              <TeacherForm boards={board} navigate={navigate} />
             </ScrollableForm>
           </TabPane>
         </Tabs>

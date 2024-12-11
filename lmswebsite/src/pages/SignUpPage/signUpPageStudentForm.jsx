@@ -89,16 +89,16 @@ const StudentForm = ({ boards, navigate }) => {
 
       // Prepare data to send to API
       const data = {
-        role: "teacher",
+        role: "student",
         access_token: user.accessToken,
         refresh_token: userCredential._tokenResponse.refreshToken,
-        // class_id: values.class_id,
-        // profile_image: profileImageUrl,
-        // phone_number: values.phone_number,
-        // student_name: values.student_name,
-        // studentGender: values.studentGender,
-        // studentDOB: values.studentDOB,
-        // board_id: values.board_id,
+        class_id: values.class_id,
+        profile_image: profileImageUrl,
+        phone_number: values.phone_number,
+        student_name: values.student_name,
+        studentGender: values.studentGender,
+        studentDOB: values.studentDOB,
+        board_id: values.board_id,
       };
 
       console.log("Submitting Student Data:", data);

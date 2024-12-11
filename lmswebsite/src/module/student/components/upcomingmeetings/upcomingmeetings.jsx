@@ -1,8 +1,53 @@
-import React from "react";
+import React, { useEffect ,useState} from "react";
 import { List, Button } from "antd";
 import { RightOutlined } from "@ant-design/icons";
+import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, getStudentscheduleForSevenDaysById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
+import { set } from "lodash";
 
 const UpcomingMeetings = () => {
+  const [meetingData, setMeetingData] = React.useState([]);
+  const [studentMode, setStudentMode] = useState("normal");
+  const [attendanceStatus, setAttendanceStatus] = useState({});
+
+  useEffect(() => {
+    const apiCaller = async () => {
+      const autId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const studentData = await getStudentByAuthId(autId);
+      setStudentMode(studentData.student.mode);
+      console.log("studentData", studentData.student._id);
+      const response = await getStudentscheduleForSevenDaysById(studentData.student._id);
+      const studentAttendanceData = await getStudentAttendance(studentData.student._id);
+      const schedule = response.data.schedule;
+      console.log("schedule", schedule);
+      // Map the schedule into events for react-big-calendar
+      let formattedEvents = schedule.map((item, index) => ({
+        id: index,
+        title: item.meeting_title || "No Title", // Use the meeting title from the API response
+        start: new Date(item.date),
+        end: new Date(new Date(item.date).getTime() + 60 * 60 * 1000), // Assume 1-hour meetings
+        meetingId: item.meeting_id, // Use meeting_id to track clocking
+        meeting_url: item.meeting_url || null, // Include meeting URL
+        meeting_reschedule: item.meeting_reschedule,
+        clockIn: false,
+        clockOut: false,
+      }));
+      studentAttendanceData.attendance.map((item) => {
+        formattedEvents = formattedEvents.map((event) => {
+          if (item.meeting_id === event.meetingId) {
+            return {
+              ...event,
+              clockIn: item.clock_in_time ? true : false,
+              clockOut: item.clock_out_time ? true : false,
+            };
+          } else {
+            return event;
+          }
+        });
+      });
+      setMeetingData(formattedEvents);
+    }
+    apiCaller();
+  }, [])
   // Sample data for the meetings
   const data = [
     { title: "Math Class", time: "10:00 AM - 11:00 AM" },
@@ -17,7 +62,60 @@ const UpcomingMeetings = () => {
     { title: "Geography Class", time: "04:00 PM - 05:00 PM" },
     { title: "Geography Class", time: "04:00 PM - 05:00 PM" },
   ];
+  console.log("meetingData", meetingData);
 
+  // Handle when a user clicks on an event
+  const handleSelectEvent = (event) => {
+  console.log("event", event);
+    if (event.meeting_url) {
+      window.open(event.meeting_url, "_blank"); // Open the meeting URL in a new tab
+      handleClockIn(event.meetingId);
+    } else {
+      alert("Meeting link is not available.");
+    }
+  };
+  const handleClockIn = async (meetingId) => {
+    try {
+      const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const studentData = await getStudentByAuthId(authId);
+
+      // Clock-in API requires teacherId and meetingId
+      const response = await studentClockIn(studentData.student._id, meetingId); // Make sure you pass teacher._id
+
+      setAttendanceStatus((prevStatus) => ({
+        ...prevStatus,
+        [meetingId]: "clocked-in", // Update the status to clocked-in
+      }));
+      if (response) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error clocking in:", error);
+    }
+  };
+
+  // Handle clock-out action
+  const handleClockOut = async (meetingId) => {
+    console.log("meetingId", meetingId);
+    try {
+      const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const studentData = await getStudentByAuthId(authId);
+      const response = await studentClockOut(
+        studentData.student._id,
+        meetingId
+      ); // Pass teacherId and meetingId
+
+      setAttendanceStatus((prevStatus) => ({
+        ...prevStatus,
+        [meetingId]: "clocked-out", // Update the status to clocked-out
+      }));
+      if (response) {
+        window.location.reload(); 
+      }
+    } catch (error) {
+      console.error("Error clocking out:", error);
+    }
+  };
   return (
     <div
       style={{
@@ -30,7 +128,70 @@ const UpcomingMeetings = () => {
       }}
     >
       <h3>Upcoming Meetings</h3>
-      <List
+      {
+      ( meetingData && meetingData.length > 0) &&
+        <List
+          itemLayout="horizontal"
+          dataSource={meetingData}
+          renderItem={(item) => {
+            console.log("item", item);
+            return (
+              <List.Item
+                actions={[!item.clockIn ?
+                  (<>
+                    <Button
+                      type="primary"
+                      icon={<RightOutlined />}
+                      style={{
+                        backgroundColor: "#ff4d94", // Pink color
+                        borderColor: "#ff4d94",
+                        color: "#fff",
+                        fontWeight: "bold",
+                      }}
+                      onClick={() => handleSelectEvent(item)}
+                    >
+                      Join
+                    </Button>
+                    {studentMode === "personal" &&
+                      (<Button
+                        type="primary"
+                        icon={<RightOutlined />}
+                        style={{
+                          backgroundColor: "#ff4d94", // Pink color
+                          borderColor: "#ff4d94",
+                          color: "#fff",
+                          fontWeight: "bold",
+                        }}
+                        onClick={() => handleSelectEvent(item)}
+                      >
+                        Reschedule
+                      </Button>)
+                    }
+                  </>
+                  ) : (item.clockIn && !item.clockOut ? <Button
+                    type="primary"
+                    icon={<RightOutlined />}
+                    style={{
+                      backgroundColor: "#ff4d94", // Pink color
+                      borderColor: "#ff4d94",
+                      color: "#fff",
+                      fontWeight: "bold",
+                    }}
+                    onClick={() => handleClockOut(item)}
+                  >
+                    Clock Out
+                  </Button>:
+                  <span>Clocked Out</span>)
+                ]}
+              >
+                <List.Item.Meta title={item?.title} description={new Date(item?.start).toLocaleString()} />
+              </List.Item>
+            )
+          }}
+        />
+
+      }
+      {/* <List
         itemLayout="horizontal"
         dataSource={data}
         renderItem={(item) => (
@@ -53,7 +214,7 @@ const UpcomingMeetings = () => {
             <List.Item.Meta title={item.title} description={item.time} />
           </List.Item>
         )}
-      />
+      /> */}
     </div>
   );
 };
