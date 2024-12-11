@@ -6,6 +6,8 @@ import { getBatchesByStudentId } from "../../../../../api/batchApi";
 import { Card, Button, Row, Col, Tag, Progress, Spin, Alert } from "antd";
 import { getStudentByAuthId } from "../../../../../api/studentApi";
 import { getscoreforstudent } from "../../../../../api/responseApi";
+import  Animation from "../../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import {
   BodyText,
@@ -152,11 +154,36 @@ const StudentTaskBoard = () => {
   // Loading and error states
   if (loading) {
     return (
-      <PageContainer>
-        <Spin tip="Loading..." size="large" />
-      </PageContainer>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
     );
   }
+  
 
   if (error) {
     return (
@@ -186,7 +213,16 @@ const StudentTaskBoard = () => {
                   extra={getQuizStatus(quiz)}
                 >
                   <Meta
-                    description={<Subheading>{quiz.description}</Subheading>}
+
+                    description={
+                      <>
+                        <Subheading>{quiz.description}</Subheading>
+                        <BodyText style={{ marginTop: "10px" }}>
+                          Number of Questions: {quiz.questions?.length}
+                        </BodyText>
+                      </>
+                    }
+                    
                   />
                   {studentHasAnswered ? (
                     <div style={{ marginTop: "10px" }}>

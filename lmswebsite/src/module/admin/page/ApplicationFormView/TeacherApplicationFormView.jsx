@@ -4,6 +4,9 @@ import { Table, Input, Button, Select, Modal } from "antd";
 import { TeacherApplicationFormViewWrap } from "./TeacherApplicationFormView.styles";
 import { getTeacherApplications } from "../../../../api/teachersApplicationApi";
 import TeacherApplicationFormReview from "../TeachersApplicationFormReview/TeacherApplicationFormReview";
+import Animation from "../../../admin/assets/Animation.json";
+import Lottie from "lottie-react";
+import { set } from "lodash";
 
 const { Option } = Select;
 
@@ -14,6 +17,7 @@ export default function TeacherApplicationFormView() {
   const [statusFilter, setStatusFilter] = useState("pending");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [teacherId, setTeacherId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -60,6 +64,7 @@ export default function TeacherApplicationFormView() {
   useEffect(() => {
     const apiCaller = async () => {
       try {
+        setLoading(true);
         const data = await getTeacherApplications(statusFilter);
         if (data) {
           const transformedData = data.applications.map((teacher) => ({
@@ -77,6 +82,7 @@ export default function TeacherApplicationFormView() {
       }
     };
     apiCaller();
+    setLoading(false);
   }, [statusFilter]);
 
   // Filter data based on search input
@@ -92,6 +98,38 @@ export default function TeacherApplicationFormView() {
       setFilterData(originalData);
     }
   }, [searchInput, originalData]);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <TeacherApplicationFormViewWrap className="content-area">

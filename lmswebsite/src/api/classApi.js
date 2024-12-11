@@ -1,4 +1,5 @@
 import api from '../config/axiosConfig';
+import { uploadFileToFirebase } from '../utils/uploadFileToFirebase';
 
 /**
  * Function to update a class by its ID
@@ -13,15 +14,28 @@ import api from '../config/axiosConfig';
 
 
 
-export const createClass = async (classData) => {
+export const createClass = async (responseData) => {
     try {
-        console.log(classData);
-        const response = await api.post('/classes/', classData);
+        if (!responseData.imageLink || !responseData.imageLink.name) {
+            throw new Error("No valid image file provided.");
+        }
+
+        // Upload file to Firebase and get the download URL
+        const downloadURL = await uploadFileToFirebase(responseData.imageLink, "classImages");
+
+        // Replace imageLink with the actual download URL
+        const submissionData = { ...responseData, imageLink: downloadURL };
+
+        console.log("Final submission data:", submissionData);
+
+        // API POST request
+        const response = await api.post('/classes/', submissionData);
         console.log('Class created successfully:', response.data);
-        return response.data; // Return the created class data
+
+        return response.data;
     } catch (error) {
         console.error('Error creating class:', error.response?.data || error.message);
-        throw error; // Throw error for further handling
+        throw error;
     }
 };
 

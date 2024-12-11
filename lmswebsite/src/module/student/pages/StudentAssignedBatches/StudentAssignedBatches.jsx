@@ -11,7 +11,9 @@ import {
 import { Table, Input, Button, Space, Row, Col } from "antd";
 import BatchCard from "../../components/BatchCard/BatchCard";
 import { getTeacherByAuthId } from "../../../../api/teacherApi";
-import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
+// import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
+import Animation from "../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 
 export default function StudentAssignedBatches() {
@@ -117,9 +119,36 @@ export default function StudentAssignedBatches() {
   };
 
   if (loading) {
-    return <LoadingPage />; // Show loading spinner while data is being fetched
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
   }
-
   return (
     <StudentAssignedBatchWrap>
       <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>

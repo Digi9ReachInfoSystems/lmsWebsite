@@ -4,7 +4,8 @@ import dayjs from "dayjs"; // Import dayjs for date handling
 import { getStudentByAuthId } from "../../../../../api/studentApi";
 import { StyledDatePicker, StyledInput } from "./StudentGeneralSetting.style";
 import { Heading, PageContainer, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
-
+import Animation from "../../../../student/assets/animation.json";
+import Lottie from "lottie-react";
 const { Title } = Typography;
 
 const GeneralSettings = () => {
@@ -14,6 +15,7 @@ const GeneralSettings = () => {
   const [email, setEmail] = useState();
   const [phone, setPhone] = useState();
   const [dob, setDob] = useState(); // Default date as string
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const apiCaller = async () => {
@@ -31,10 +33,47 @@ const GeneralSettings = () => {
       const dateObject = new Date(DataStudent.student.dateOfBirth);
       const formattedDate = dateObject.toISOString().split("T")[0];
       setDob(formattedDate);
+
+      setLoading(false);
+
     };
     apiCaller();
+
   }, []);
   console.log("ddd", fullName);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)", 
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie
+            animationData={Animation}
+            loop={true}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <PageContainer> 
 
