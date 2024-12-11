@@ -1,0 +1,97 @@
+.hero-container {
+  background-color: #101827;
+  color: #ffffff;
+  padding: 3rem 5rem;
+}
+
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap; /* Ensures content wraps on smaller screens */
+  padding-left: 18vw;
+}
+
+.hero-content {
+  flex: 1;
+  max-width: 500px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  color: #ffffff;
+}
+
+.hero-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 8px;
+  height: 40vh;
+  object-fit: contain; /* Prevent stretching */
+}
+
+.stats-section {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.stat-card {
+  text-align: center;
+  color: #ffffff;
+  flex: 1 1 150px; /* Responsive flex sizing */
+  max-width: 150px;
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  color: #10b981; /* Green */
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.stat-label {
+  font-size: 1rem;
+  color: #d1d5db; /* Gray */
+}
+
+.green-button {
+  background-color: #10b981 !important; /* Tailwind Green-500 */
+  color: #ffffff !important; /* White text */
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.green-button:hover {
+  background-color: #059669; /* A darker green on hover */
+}
