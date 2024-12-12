@@ -2,9 +2,10 @@ import styled from "styled-components";
 import { theme, media } from "../../../style/theme/theme";
 
 export const HeaderContainer = styled.header`
-  background-color: ${theme.colors.black};
+  // background-color: ${theme.colors.black};
+  position: sticky;
   padding: 10px 20px;
-  color: ${theme.colors.white};
+  color: ${theme.colors.black};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -53,7 +54,7 @@ export const NavLinks = styled.ul`
   }
 
   a {
-    color: ${theme.colors.white};
+    color: ${theme.colors.black};
     text-decoration: none;
     font-weight: 500;
     padding: 10px;
