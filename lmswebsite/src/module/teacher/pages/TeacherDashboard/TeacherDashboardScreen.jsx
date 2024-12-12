@@ -208,16 +208,17 @@ const TeacherDashBoardScreen = () => {
                 justifyContent="flex-start"
               >
                 {/* <Grid item>
-                      <div style={{ display: "inline-block", marginRight: "8px" }}>
-                      <ToolbarTeacher />
-                      </div>
-                    </Grid>
-                    <Grid item>
-                      <div style={{ display: "inline-block", marginRight: "8px" }}>
-                      <DashboardBatches />
-                      </div>
-                    </Grid> */}
+                  <div style={{ display: "inline-block", marginRight: "8px" }}>
+                    <ToolbarTeacher />
+                  </div>
+                </Grid>
+                <Grid item>
+                  <div style={{ display: "inline-block", marginRight: "8px" }}>
+                    <DashboardBatches />
+                  </div>
+                </Grid> */}
               </Grid>
+
             </div>
 
           </Grid>

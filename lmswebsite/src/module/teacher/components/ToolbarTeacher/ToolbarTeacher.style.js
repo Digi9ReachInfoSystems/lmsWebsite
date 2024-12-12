@@ -56,7 +56,7 @@ export const Box = styled.div`
  display : flex;
  align-items: center;
  
-  padding: 15px 40px;
+  padding: 15px 30px;
   margin: 5px;
   text-align: center;
   font-weight: bold;
