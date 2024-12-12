@@ -21,10 +21,17 @@ const SidebarWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  //  max-height:100vh; /* Default fixed height */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+    width: 0px;
+  }
   z-index: 2000;
   &:hover {
     width: 240px;
   }
+   
 `;
 
 const SidebarHeader = styled.div`

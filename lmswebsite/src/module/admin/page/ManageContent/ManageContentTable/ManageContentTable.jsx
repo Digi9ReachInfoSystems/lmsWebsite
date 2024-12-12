@@ -25,6 +25,7 @@ import { createChooseUsFeature, deleteChooseUsFeature, getChooseUsData } from '.
 import { createBenefit, getAllBenefits, deleteBenefit } from '../../../../../api/benefitsApi';
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
+import { render } from '@fullcalendar/core/preact.js';
 const ManageContentTable = ({ contentType }) => {
   const [data, setData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -315,11 +316,25 @@ const ManageContentTable = ({ contentType }) => {
           title: 'Class Level', // Changed from 'Class Name' to 'Class Level'
           dataIndex: 'classLevel', // Updated dataIndex to 'classLevel'
           key: 'classLevel',
+          render(_, record) {
+            return (
+              <span>
+                {record.class_id?.classLevel || 'N/A'}
+              </span>
+            );
+          }
         },
         {
           title: 'Board Name',
           dataIndex: 'boardName',
           key: 'boardName',
+          render(_, record) {
+            return (
+              <span>
+                {record.class_id?.curriculum?.name || 'N/A'}
+              </span>
+            );
+          }
         },
         {
           title: 'Action',

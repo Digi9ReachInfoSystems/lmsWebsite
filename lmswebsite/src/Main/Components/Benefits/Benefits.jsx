@@ -1,29 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Benefits.css";
+import { getAllBenefits } from "../../../api/benefitsApi";
 
 const Benefits = () => {
-  const benefitsData = [
-    {
-      title: "UI/UX Design",
-      description: "Learn the latest tools and trends in UI/UX Design.",
-      color: "#DEF7EC",
-    },
-    {
-      title: "Graphic Design",
-      description: "Create stunning graphics for the digital world.",
-      color: "#FEE2E2",
-    },
-    {
-      title: "Web Development",
-      description: "Build responsive and interactive websites.",
-      color: "#EDE9FE",
-    },
-    {
-      title: "Digital Marketing",
-      description: "Master strategies for online marketing success.",
-      color: "#DBEAFE",
-    },
-  ];
+  const [benefitsData, setBenefitsData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchBenefits = async () => {
+      try {
+        const response = await getAllBenefits();
+        console.log("Benefits fetched successfully:", response);
+
+        // Access the benefits array inside the response object
+        if (response && Array.isArray(response.benefits)) {
+          setBenefitsData(response.benefits.slice(0,10)); // Set the benefits array
+        } else {
+          throw new Error("Expected benefits array but got something else");
+        }
+        setLoading(false);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err);
+        setLoading(false);
+      }
+    };
+
+    fetchBenefits();
+  }, []);
+
+  if (loading) {
+    return <div>Loading benefits...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading benefits: {error.message}</div>;
+  }
 
   return (
     <section className="benefits-section">

@@ -20,7 +20,7 @@ export const getBenefitById = async (id) => {
     }
 };
 
-export const getAllBenefits = async () => {
+export const d = async () => {
     try {
         const response = await api.get("/benefits/");
         console.log("All benefits fetched successfully:", response.data);
@@ -44,6 +44,16 @@ export const deleteBenefit = async (id) => {
     try {
         const response = await api.delete(`/benefits/${id}`);
         console.log("Benefit deleted successfully:", response.data);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+export const getAllBenefits = async () => {
+    try {
+        const response = await api.get("/benefits/");
+        console.log("All benefits fetched successfully:", response.data);
         return response.data;
     } catch (error) {
         console.log(error);

@@ -15,6 +15,7 @@ export const SideBarwrap = styled.div`
   transition: all 300ms ease-in-out;
   left: 0;
   top: 0;
+ 
   // position: fixed;
 
   ${media.xl`
