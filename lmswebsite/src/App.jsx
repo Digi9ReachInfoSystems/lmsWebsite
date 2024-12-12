@@ -83,6 +83,9 @@ import ClassDetailPage from "./pages/ClassDetailPage/ClassDetailPage";
 import PackageDetailPage from "./pages/PackageDetailPage/PackageDetailPage";
 import PackageExpiryAlertPage from "./module/student/pages/PackageExpiryAlertPage/PackageExpiryAlertPage";
 import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
+import PrivacyAndCookiePolicy from "./pages/PrivacyAndCookiePolicy/PrivacyAndCookiePolicy";
+import BatchesLandingPage from "./pages/BatchesDetailPage/BatchesLandingPage";
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -110,7 +113,10 @@ function App() {
             }
           />
 
-          <Route path="/testing/:boardId" element={<BoardDetailPage />} />
+{/*           <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
+{/* <Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} /> */}
+<Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} />
+
           <Route path="/testingClass/:classId" element={<ClassDetailPage />} />
           <Route path="/testingPackage/:packageId" element={<PackageDetailPage />} />
           <Route path="/signup" element={<SignUpPage />} />
