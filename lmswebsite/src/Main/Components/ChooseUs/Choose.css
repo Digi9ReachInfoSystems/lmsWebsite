@@ -3,34 +3,116 @@
   justify-content: space-between;
   align-items: center;
   padding-left: 18vw;
-  height: 30vw;
+  /* height: 30vw; */
   padding-right: 18vw;
   background-color: #ffffff;
   font-family: Arial, sans-serif;
+  /* padding: 40px; */
+  padding-top: 40px;
+
+  @media(max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    height: auto;
+    align-items: center;
+    display: flex;
+  }
+
+  @media (max-width: 480px) {
+    height: auto;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  @media(max-width: 320px) {
+    height: auto;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 }
 
 .choose-us-content {
-  flex: 1;
+  /* flex: 1; */
   padding-right: 2rem;
+  /* padding-top: -400px; */
+
+  @media(max-width: 768px)
+  {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 2rem;
+
+  }
+  @media(max-width: 480px)
+  {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  @media(max-width: 320px)
+  {
+    padding-right: 0;
+    text-align: center;
+    margin-bottom: 2rem;
+  }
 }
 
 .choose-us-content h2 {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 2rem;
   color: #101828;
+  padding-top: 10px;
+
+  @media(max-width: 768px)
+  {
+    font-size: 1.5rem;
+    top: 10rem;
+  }
+  @media(max-width: 480px)
+  {
+    font-size: 1.2rem;
+  
+  }
+  @media(max-width: 320px)
+  {
+    font-size: 1rem;
+   
+  }
 }
 
 .features-list {
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  margin-top: 2rem;
+
+  @media(max-width: 768px)
+  {
+    gap: 1rem;
+  }
+  @media(max-width: 480px)
+  {
+    gap: 1rem;
+  }
+  @media(max-width: 320px)
+  {
+    gap: 1rem;
+  }
 }
 
 .feature-item {
   display: flex;
   align-items: center;
   gap: 1rem;
+  
 }
 
 .icon-wrapper {
@@ -53,6 +135,21 @@
   font-weight: bold;
   color: #101828;
   margin-bottom: 0.3rem;
+  padding-left: auto;
+
+  @media(max-width: 768px)
+  {
+    font-size: 1rem;
+  }
+  @media(max-width: 480px)
+  {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+  @media(max-width: 320px)
+  {
+    font-size: 0.8rem;
+  }
 }
 
 .feature-description {
@@ -115,4 +212,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+
+.feature-content{
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 20px;
+
 }
