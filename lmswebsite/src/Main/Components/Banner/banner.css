@@ -1,6 +1,6 @@
 .hero-container {
   background-color: #101827;
-  height: auto;
+  /* height: 70vh; */
   color: #ffffff;
   /* padding: 3rem 5rem; */
 }
@@ -12,6 +12,14 @@
   gap: 3rem;
   flex-wrap: wrap; /* Ensures content wraps on smaller screens */
   padding-left: 18vw;
+}
+
+.hero-curve-path {
+  height: 100%;
+}
+
+.curve-svg {
+  margin-bottom: -10px;
 }
 
 .hero-content {
@@ -63,23 +71,53 @@
 .stat-card {
   text-align: center;
   color: #ffffff;
-  flex: 1 1 150px; /* Responsive flex sizing */
-  max-width: 150px;
+  flex: 1 0 150px; /* Responsive flex sizing */
+  max-width: 120px;
+
+  /* New Styles for Hover Effect */
+  /* background-color: #1f2937; Initial background color */
+  padding: 1.5rem; /* Add some padding for better spacing */
+  border-radius: 12px; /* Rounded corners */
+  transition: transform 0.3s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.stat-card:hover {
+  background-color: #10b981; /* Change to green on hover */
+  transform: translateY(-10px) scale(1.05); /* Slightly lift and scale up */
+  box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); /* Green shadow */
+  color: #ffffff; /* Ensure text remains white */
 }
 
 .stat-icon {
   font-size: 2.5rem;
   color: #10b981; /* Green */
+  transition: color 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  color: #ffffff; /* Change icon color to white on hover */
 }
 
 .stat-value {
   font-size: 2rem;
   font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.stat-card:hover .stat-value {
+  color: #ffffff; /* Ensure value remains white */
 }
 
 .stat-label {
   font-size: 1rem;
   color: #d1d5db; /* Gray */
+  transition: color 0.3s ease;
+}
+
+.stat-card:hover .stat-label {
+  color: #ffffff; /* Change label color to white on hover */
 }
 
 .green-button {
