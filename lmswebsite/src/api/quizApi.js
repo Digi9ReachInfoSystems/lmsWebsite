@@ -105,3 +105,15 @@ export const getQuizzesByTeacher = async (filters = {}) => {
     }
     
 }
+
+export const getQuizByBatchId = async (batch_id) => {
+    try {
+        // Call the backend API using the Axios instance
+        const response = await api.get(`/quizzes/batch/${batch_id}`);
+        console.log("Quiz fetched successfully:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching quiz:", error.response?.data || error.message);
+    }
+    
+}

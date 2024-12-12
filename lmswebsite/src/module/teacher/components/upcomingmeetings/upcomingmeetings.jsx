@@ -3,6 +3,7 @@ import { List, Button } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, getStudentscheduleForSevenDaysById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
 import { set } from "lodash";
+import { getTeacherAttendance, getTeacherByAuthId, getTeacherscheduleForSevenDaysById } from "../../../../api/teacherApi";
 
 const UpcomingMeetings = () => {
   const [meetingData, setMeetingData] = React.useState([]);
@@ -12,11 +13,11 @@ const UpcomingMeetings = () => {
   useEffect(() => {
     const apiCaller = async () => {
       const autId = JSON.parse(localStorage.getItem("sessionData")).userId;
-      const studentData = await getStudentByAuthId(autId);
-      setStudentMode(studentData.student.mode);
-      console.log("studentData", studentData.student._id);
-      const response = await getStudentscheduleForSevenDaysById(studentData.student._id);
-      const studentAttendanceData = await getStudentAttendance(studentData.student._id);
+      const teacherdata = await getTeacherByAuthId(autId);
+      // setStudentMode(studentData.student.mode);
+      // console.log("studentData", studentData.student._id);
+      const response = await getTeacherscheduleForSevenDaysById(teacherdata.teacher._id);
+      const studentAttendanceData = await getTeacherAttendance(teacherdata.teacher._id);
       const schedule = response.data.schedule;
       console.log("schedule", schedule);
       // Map the schedule into events for react-big-calendar

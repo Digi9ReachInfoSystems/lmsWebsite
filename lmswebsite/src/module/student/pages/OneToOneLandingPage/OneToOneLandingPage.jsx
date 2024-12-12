@@ -154,7 +154,7 @@ export const OneToOneStudentlandingPage = () => {
         <>
 
         <OneHeader />
-          {studentDataForm.student.custom_package_status === "no_package" ?
+          {(studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" ) ?
             <ApplicationContainer>
               <ApplicationImage>
                 <TeacherFormImage
@@ -314,7 +314,7 @@ export const OneToOneStudentlandingPage = () => {
               <CustomPackageStatus> Your Custom Package is under review</CustomPackageStatus>
               : <CustomPackageStatus> Your Custom Package Request Rejected</CustomPackageStatus>
           }
-          {studentDataForm.student.custom_package_status == "no_package" &&
+          {(studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" ) &&
             <OneStudentExistingPackage data={packagesData} studentId={studentDataForm.student._id} />
 
           }
