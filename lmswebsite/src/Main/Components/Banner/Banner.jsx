@@ -26,11 +26,11 @@ const Banner = ({ data }) => {
           </p>
           <div className="hero-buttons">
             <Button className="green-button" size="lg" auto>
-              Get Started
+             <a href="/login" style={{color:"white"}}>Get Started</a>
             </Button>
-            <Button color="secondary" size="lg" variant="flat">
+            {/* <Button color="secondary" size="lg" variant="flat" style={{color:"white"}}>
               Learn More
-            </Button>
+            </Button> */}
           </div>
         </div>
         <div className="hero-image">
