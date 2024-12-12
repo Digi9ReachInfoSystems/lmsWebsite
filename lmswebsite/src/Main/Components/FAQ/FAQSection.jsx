@@ -1,36 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./FAQSection.css";
+import { getAllFAQ } from "../../../api/faq";
 
 const FAQSection = () => {
   const [expandedFAQ, setExpandedFAQ] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [faqs, setFaqs] = useState([]);
 
-  const faqs = [
-    {
-      question: "How do I get started?",
-      answer:
-        "When you sign up, you'll start with the Free plan. It's ideal for new teams and allows unlimited team members.",
-    },
-    {
-      question: "What is included in the Free Plan?",
-      answer:
-        "The Free plan includes core features such as unlimited tasks, teams, and integrations.",
-    },
-    {
-      question: "How do I cancel my membership?",
-      answer: "To cancel your membership, go to Account Settings > Billing.",
-    },
-    {
-      question: "How do I transfer my membership to a different account?",
-      answer:
-        "You can transfer your membership by navigating to the Account Transfer section.",
-    },
-    {
-      question: "What is the refund policy?",
-      answer:
-        "We offer a 30-day refund policy for any issues with your subscription.",
-    },
-  ];
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      try {
+        const response = await getAllFAQ();
+        setFaqs(response.slice(0, 5)); // Limit to 5 FAQs
+      } catch (error) {
+        console.error("Error fetching FAQs:", error);
+      }
+    };
+
+    fetchFaqs();
+  }, []); // Add empty dependency array to run only once
 
   const handleToggle = (index) => {
     setExpandedFAQ(expandedFAQ === index ? null : index);
