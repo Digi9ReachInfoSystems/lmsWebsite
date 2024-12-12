@@ -24,6 +24,8 @@ import { Grid } from "@mui/material";
 import welcomeImage from "../../../../assets/image.png";
 import Animation from "../../../teacher/assets/animation.json";
 import Lottie from "lottie-react";
+import ToolbarTeacher from "../../components/ToolbarTeacher/ToolbarTeacher";
+import DashboardBatches from "../../components/DashboardBatches/DashboardBatches";
 import UpcomingMeetings from "../../components/upcomingmeetings/upcomingmeetings";
 const iconMap = {
   "Total students": <ImUser />,
@@ -169,75 +171,84 @@ const TeacherDashBoardScreen = () => {
   return (
 
     <TeacherDashBoardCardswrap className="content-area">
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
-          <div className="welcome-Container">
-            <Grid
-              container
-              alignItems="center"
-              justifyContent="space-between"
-            >
-              <Grid item xs={12} md={6}>
-                <SpecialHeading>Welcome, Teacher!</SpecialHeading>
-                <SpecialSubheading>
-                  Let's get the good work started.
-                </SpecialSubheading>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <img
-                  className="Image"
-                  src={welcomeImage}
-                  alt="Welcome"
-                  style={{ width: "100%", maxWidth: "150px" }}
-                />
-              </Grid>
-            </Grid>
-
-          </div>
-
-
-          <div className="daily-schedule-container">
-            <Grid
-              container
-              spacing={1}
-              alignItems="center"
-              justifyContent="flex-start"
-            >
-              <Grid item>
-                <div style={{ display: "inline-block", marginRight: "8px" }}>
-                  Test
-                </div>
-              </Grid>
-            </Grid>
-          </div>
-        </Grid>
-        {/* Right side containing the Upcoming Meetings */}
-        <Grid item xs={12} md={4}>
-          <div className="upcoming-meetings-container">
-            <UpcomingMeetings />{/* Assuming this is the correct component */}
-          </div>
-        </Grid>
-
-
-      </Grid>
-
 
 
       <div>
         {/* Pass the cards data to TeacherdashBoardCards component */}
-        <TeacherdashBoardCards cardsData={dashboardCards} />
+        {/* <TeacherdashBoardCards cardsData={dashboardCards} /> */}
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={8}>
+            <div className="welcome-Container">
+              <Grid
+                container
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Grid item xs={12} md={6}>
+                  <SpecialHeading>Welcome, Teacher!</SpecialHeading>
+                  <SpecialSubheading>
+                    Let's get the good work started.
+                  </SpecialSubheading>
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <img
+                    className="Image"
+                    src={welcomeImage}
+                    alt="Welcome"
+                    style={{ width: "100%", maxWidth: "150px" }}
+                  />
+                </Grid>
+              </Grid>
+            </div>
+            <div className="daily-schedule-container">
+              <Grid
+                container
+                spacing={1}
+                alignItems="center"
+                justifyContent="flex-start"
+              >
+                {/* <Grid item>
+                  <div style={{ display: "inline-block", marginRight: "8px" }}>
+                    <ToolbarTeacher />
+                  </div>
+                </Grid>
+                <Grid item>
+                  <div style={{ display: "inline-block", marginRight: "8px" }}>
+                    <DashboardBatches />
+                  </div>
+                </Grid> */}
+              </Grid>
+
+            </div>
+
+          </Grid>
+          {/* Right side containing the Upcoming Meetings */}
+          <Grid item xs={12} md={4}>
+            <div className="upcoming-meetings-container">
+              <UpcomingMeetings />{/* Assuming this is the correct component */}
+            </div>
+          </Grid>
+
+        </Grid>
+      </div>
+      <div className="area-row ar-three">
+        <ToolbarTeacher />
+      </div>
+      <div>
+        <DashboardBatches />
       </div>
       <div className="area-row ar-two">
-        <DailySchedule />{" "}
-        <TeacherdashBoardQuizCard cardsdata={quizCardData} />
+        {/* <DailySchedule />{" "} */}
+        {/* <TeacherdashBoardQuizCard cardsdata={quizCardData} /> */}
       </div>
       <div className="area-row ar-three">
         {/* Additional UI components */}
       </div>
-
     </TeacherDashBoardCardswrap>
 
   );
 };
 
 export default TeacherDashBoardScreen;
+
+
