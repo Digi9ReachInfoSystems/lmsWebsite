@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "@nextui-org/react";
-import { getStatisticsData } from "../../../api/statsApi";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { FaBookReader } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
@@ -8,42 +7,11 @@ import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import "./Banner.css";
 
 const Banner = ({ data }) => {
-  const [stats, setStats] = useState({});
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const response = await getStatisticsData();
-        setStats(response);
-      } catch (error) {
-        console.error("Error fetching stats:", error);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
   const statsData = [
-    {
-      icon: <AiOutlineUsergroupAdd />,
-      value: stats.totalBatches || 0,
-      label: "Batches",
-    },
-    {
-      icon: <FaBookReader />,
-      value: stats.totalCourses || 0,
-      label: "Courses",
-    },
-    {
-      icon: <PiStudentBold />,
-      value: stats.totalStudents || 0,
-      label: "Students",
-    },
-    {
-      icon: <LiaChalkboardTeacherSolid />,
-      value: stats.totalTeachers || 0,
-      label: "Teachers",
-    },
+    { icon: <AiOutlineUsergroupAdd />, value: "51", label: "Batches" },
+    { icon: <FaBookReader />, value: "6", label: "Courses" },
+    { icon: <PiStudentBold />, value: "95", label: "Students" },
+    { icon: <LiaChalkboardTeacherSolid />, value: "33", label: "Teachers" },
   ];
 
   return (
@@ -81,16 +49,18 @@ const Banner = ({ data }) => {
           </div>
         ))}
       </div>
+
+      {/* Bottom Curve */}
       <div className="hero-curve">
         <svg
           viewBox="0 0 1440 320"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
+          className="curve-svg"
         >
           <path
-            className="curve"
-            fill="#f0f9ff" /* Match this with your next section's color */
-            d="M0,128L80,138.7C160,149,320,171,480,186.7C640,203,800,213,960,192C1120,171,1280,117,1360,90.7L1440,64V320H0Z"
+            fill="#ffff"
+            d="M0,192L80,192C160,192,320,192,480,202.7C640,213,800,235,960,224C1120,213,1280,171,1360,149.3L1440,128V320H0Z"
           ></path>
         </svg>
       </div>
