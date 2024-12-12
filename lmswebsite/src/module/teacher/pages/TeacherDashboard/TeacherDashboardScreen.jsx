@@ -24,6 +24,8 @@ import { Grid } from "@mui/material";
 import welcomeImage from "../../../../assets/image.png";
 import Animation from "../../../teacher/assets/animation.json";
 import Lottie from "lottie-react";
+import ToolbarTeacher from "../../components/ToolbarTeacher/ToolbarTeacher";
+import DashboardBatches from "../../components/DashboardBatches/DashboardBatches";
 const iconMap = {
   "Total students": <ImUser />,
   "Total Batches": <MdLiveTv />,
@@ -201,28 +203,33 @@ const TeacherDashBoardScreen = () => {
               >
                 <Grid item>
                   <div style={{ display: "inline-block", marginRight: "8px" }}>
-                    Test 
+                    {/* Test  */}
                   </div>
                 </Grid>
               </Grid>
             </div>
           </Grid>
         </Grid>
-
+        <div className="area-row ar-three">
+          <ToolbarTeacher />
+        </div>
+        <div>
+<DashboardBatches/>
+          </div>
         <div>
           {/* Pass the cards data to TeacherdashBoardCards component */}
-          <TeacherdashBoardCards cardsData={dashboardCards} />
+          {/* <TeacherdashBoardCards cardsData={dashboardCards} /> */}
         </div>
         <div className="area-row ar-two">
-          <DailySchedule />{" "}
-          <TeacherdashBoardQuizCard cardsdata={quizCardData} />
+          {/* <DailySchedule />{" "} */}
+          {/* <TeacherdashBoardQuizCard cardsdata={quizCardData} /> */}
         </div>
-        <div className="area-row ar-three">
-          {/* Additional UI components */}
-        </div>
+       
       </TeacherDashBoardCardswrap>
     </>
   );
 };
 
 export default TeacherDashBoardScreen;
+
+
