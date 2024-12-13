@@ -2,6 +2,7 @@ import React from "react";
 import { Card, Typography } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons"; // Optional: To use an icon
 import MyLogo from "../../../../assets/pdf.svg"; // Adjust the path to your SVG file
+import { Link } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -37,6 +38,7 @@ const MaterialFile = () => {
 
       {/* SVG Logo */}
       <div>
+      <Link to="/student/dashboard/assignedBatches">
         <img
           src={MyLogo}
           alt="Material Logo"
@@ -46,6 +48,7 @@ const MaterialFile = () => {
             marginTop: "8px",
           }}
         />
+        </Link>
       </div>
     </Card>
   );
