@@ -53,3 +53,18 @@ const TeacherdashBoardCards = ({ cardsData = [] }) => {
 };
 
 export default TeacherdashBoardCards;
+
+
+
+
+
+
+
+// width: 50px;
+// height: 50px;
+// display: flex
+// ;
+// align-items: center;
+// justify-content: center;
+// border-radius: 8px;
+// background-color: #fce4ec;

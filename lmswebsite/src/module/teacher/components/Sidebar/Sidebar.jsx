@@ -197,7 +197,7 @@ const Sidebar = () => {
         )}
         {isHovered && (
           <span style={{ color: "white", fontSize: "20px" }}>
-            Student Dashboard
+            Teacher Dashboard
           </span>
         )}
       </SidebarHeader>
