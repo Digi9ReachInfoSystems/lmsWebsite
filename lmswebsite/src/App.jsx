@@ -152,7 +152,7 @@ function App() {
           <Route
             path="/student/package/expiryAlert"
             element={<PackageExpiryAlertPage />}
-            element={<PackageExpiryAlertPage />}
+           
           />
 
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
@@ -179,7 +179,7 @@ function App() {
           >
             <Route index element={<TeacherDashboardScreen />} />
 
-            <Route
+          
             <Route
               path="/teacher/dashboard/batches"
               element={<AssignedTeacherBatch />}
@@ -212,10 +212,9 @@ function App() {
               path="/teacher/dashboard/teacherAttendance"
               element={<TeacherAttendance />}
             />
-            <Route
+           
             <Route
               path="/teacher/dashboard/meetingReschedule"
-              element={<RescheduleMeetingTeacher />}
               element={<RescheduleMeetingTeacher />}
             />
           </Route>
