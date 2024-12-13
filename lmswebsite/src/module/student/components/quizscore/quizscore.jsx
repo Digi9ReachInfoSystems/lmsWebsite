@@ -3,7 +3,7 @@ import { Card, Typography, Spin, Alert, Progress } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { getBatchesByStudentId } from "../../../../api/batchApi";
-import { getQuizBySubjectId } from "../../../../api/quizApi";
+import { getQuizByBatchId, getQuizBySubjectId } from "../../../../api/quizApi";
 // import  Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 
@@ -43,13 +43,21 @@ const QuizScore = () => {
         const fetchedBatches = await getBatchesByStudentId(currentStudentId);
 
         // Extract unique subject IDs from the batches
-        const subjectIds = fetchedBatches.map((batch) => batch.subject_id._id);
-        const uniqueSubjectIds = [...new Set(subjectIds)];
+        // const subjectIds = fetchedBatches.map((batch) => batch.subject_id._id);
+        // const uniqueSubjectIds = [...new Set(subjectIds)];
 
-        // Fetch quizzes for each unique subject ID
+        // Fetch unique batch IDs from the batches
+        const batchIds = fetchedBatches.map((batch) => batch._id);
+        const uniqueBatchIds = [...new Set(batchIds)];
+
+        // Fetch quizzes for each unique batch ID
         const quizzesData = await Promise.all(
-          uniqueSubjectIds.map((subjectId) => getQuizBySubjectId(subjectId))
+          uniqueBatchIds.map((batchId) => getQuizByBatchId(batchId))
         );
+        // Fetch quizzes for each unique subject ID
+        // const quizzesData = await Promise.all(
+        //   uniqueSubjectIds.map((subjectId) => getQuizBySubjectId(subjectId))
+        // );
 
         // For simplicity, this example assumes data from quizzesData[0], 
         // but ideally you would aggregate all quizzes from all subjects.
@@ -157,8 +165,8 @@ const QuizScore = () => {
       <Text strong style={{ fontSize: "24px" }}>
         {pendingQuizzes}
       </Text>
-    
-      <Text type="secondary" style={{paddingLeft: "10px"}}>Quizzes remaining</Text>
+
+      <Text type="secondary" style={{ paddingLeft: "10px" }}>Quizzes remaining</Text>
 
       <br />
       <Text>

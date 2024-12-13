@@ -11,7 +11,7 @@ import {
 
 const ActivePackage = () => {
   // Example data for the package
-  const packageName = "Premium Package";
+  const packageName = "Attendance";
   const [progressPercentage, setProgressPercentage] = useState(0); // Initialize to 0
 
   const [studentId, setStudentId] = useState(null);
