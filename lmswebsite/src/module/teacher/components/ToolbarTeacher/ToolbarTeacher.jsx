@@ -8,28 +8,28 @@ const ToolbarTeacher = () => {
     <ToolbarCardContainer>
       <Link to="/teacher/dashboard/quizz/assignedBatch">
         <Box>
-          <MdQuiz size={24} style={{ marginRight: "8px"}}/>
+          <MdQuiz className="quiz-icon"/>
           Quiz
         </Box>
       </Link>
       
       <Link to="/teacher/dashboard/meetings">
         <Box>
-          <MdEvent size={24} style={{ marginRight: "8px" }} />
+          <MdEvent className="quiz-icon"/>
           Meetings
         </Box>
       </Link>
       
       <Link to="/teacher/dashboard/quizz/assignedBatch">
         <Box>
-          <MdGroups size={24} style={{ marginRight: "8px" }} />
+          <MdGroups className="quiz-icon"/>
           Batches
         </Box>
       </Link>
       
       <Link to="/teacher/dashboard/circular">
         <Box>
-          <MdNotifications size={24} style={{ marginRight: "8px" }} />
+          <MdNotifications className="quiz-icon" />
           Circulars
         </Box>
       </Link>

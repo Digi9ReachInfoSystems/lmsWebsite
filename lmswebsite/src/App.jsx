@@ -151,7 +151,7 @@ function App() {
           <Route
             path="/student/package/expiryAlert"
             element={<PackageExpiryAlertPage />}
-            element={<PackageExpiryAlertPage />}
+           
           />
           <Route path="/privacy-policy" element={<PrivacyAndCookiePolicy />} />
           <Route path="/TermsOfUse" element={<TermsOfUse />} />
@@ -182,7 +182,7 @@ function App() {
           >
             <Route index element={<TeacherDashboardScreen />} />
 
-            <Route
+          
             <Route
               path="/teacher/dashboard/batches"
               element={<AssignedTeacherBatch />}
@@ -215,10 +215,9 @@ function App() {
               path="/teacher/dashboard/teacherAttendance"
               element={<TeacherAttendance />}
             />
-            <Route
+           
             <Route
               path="/teacher/dashboard/meetingReschedule"
-              element={<RescheduleMeetingTeacher />}
               element={<RescheduleMeetingTeacher />}
             />
           </Route>

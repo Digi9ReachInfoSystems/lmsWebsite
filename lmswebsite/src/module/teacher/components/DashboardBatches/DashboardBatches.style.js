@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {theme, media} from "../../../../style/theme/theme";
 export const StyledDashboard = styled.div`
-    width: 100%;
+    width: 200%;
     // padding: 20px;
     padding-top: 20px;
     box-sizing: border-box;
@@ -52,7 +52,7 @@ export const CardContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-    justify-content: space-between;
+    // justify-content: space-between;
     margin-bottom: 20px;
 `;
 

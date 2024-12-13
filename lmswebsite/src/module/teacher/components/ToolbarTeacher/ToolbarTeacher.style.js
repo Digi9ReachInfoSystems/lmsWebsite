@@ -7,7 +7,7 @@ export const ToolbarCardContainer = styled.div`
   justify-content: space-between;
   flex-direction: row;
   align-items: center;
-  width: 50%;
+  // width: 50%;
   padding: 10px;
   background-color: ${theme.colors.nyanza};
   border: 1px solid #ddd;
@@ -15,18 +15,18 @@ export const ToolbarCardContainer = styled.div`
   // box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
  ${media.lg`
-        width: 100%;
+        // width: auto;
         padding: 10px;
         border-radius: 8px;
         `}
         ${media.xl`
-        width: 100%;
+        width: auto;
         padding: 10px;
         border-radius: 8px;
     
         `}
         ${media.xxl`
-        width: 100%;
+        width: auto;
         padding: 10px;
         border-radius: 8px;
         `}
@@ -38,12 +38,14 @@ export const ToolbarCardContainer = styled.div`
         // flex-direction: column;
         `}
       ${media.sm`
-        width: 100%;
+        // width: 100%;
         padding: 10px;
         border-radius: 8px;
+        flex-direction: column;
+
         `}
         ${media.xs`
-        width: 100%;
+        // width: 100%;
         padding: 10px;
         border-radius: 8px;
         `}
@@ -55,7 +57,7 @@ export const Box = styled.div`
   flex: 1;
  display : flex;
  align-items: center;
- 
+ font-size: 16px;
   padding: 15px 30px;
   margin: 5px;
   text-align: center;
@@ -73,12 +75,55 @@ export const Box = styled.div`
     border-color: ${theme.colors.black};
   }
 
-  ${media.md`
-    padding: 15px 50px;
+  .quiz-icon {
+    margin-right: 8px;
+    font-size: 20px;
+     ${media.xxl`
+     margin-right: 8px;
+    font-size: 18px;
+    `}
+    ${media.xl`
+     margin-right: 8px;
+    font-size: 16px;
+    `}
+    ${media.lg`
+     margin-right: 8px;
+    font-size: 14px;
+    `}
+    ${media.md`
+     margin-right: 8px;
+    font-size: 12px;
     `}
     ${media.sm`
+     margin-right: 8px;
+    font-size: 12px;
+    `}
+    ${media.xs`
+     margin-right: 8px;
+    font-size: 12px;
+    `}
+  }
+ ${media.xxl`
+    padding: 15px 15px;
+    font-size: 16px;
+    `}
+        ${media.xl`
+    padding: 15px 3px;
+    font-size: 14px;
+    `}
+  ${media.lg`
+    padding: 15px 3px;
+    font-size: 10px;
+    `}
+
+   
+
+  ${media.md`
     padding: 15px 30px;
     `}
+    // ${media.sm`
+    // padding: 15px 30px;
+    // `}
     ${media.xs`
     padding: 15px 20px;
     `}
