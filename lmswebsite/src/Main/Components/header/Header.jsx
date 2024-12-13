@@ -12,14 +12,29 @@ import {
   HamburgerMenu,
   MobileMenu,
   SignUpButton,
+  SignUpButton1,
 } from "./Header.styles";
+import { Drawer } from "antd";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { getBoards } from "../../../api/boardApi";
 import { getClassesByBoardId } from "../../../api/classApi";
 import { getPackageByClassId } from "../../../api/packagesApi";
+import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 
-const Header = () => {
+const Header = ({ scrollToSection }) => {
+  const {
+    exploreMaterialRef,
+    chooseUsRef,
+    teachersRef,
+    testimonialsRef,
+    faqRef,
+  } = scrollToSection;
+
+  const scrollToComponent = (ref) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   const navigate = useNavigate();
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -31,6 +46,9 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const dropdownRef = useRef(null);
+  const toggleDrawer = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
 
   const handleCategoryMouseEnter = async (category) => {
     setSelectedCategory(category);
@@ -86,7 +104,7 @@ const Header = () => {
     setHoveredClassId(null);
   };
 
-    const toggleMobileMenu = () => {
+  const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prev) => !prev);
   };
 
@@ -104,7 +122,7 @@ const Header = () => {
             ref={dropdownRef}
             onMouseEnter={() => setIsCoursesOpen(true)}
             onMouseLeave={handleCategoryMouseLeave}
-            isCoursesOpen={isCoursesOpen} 
+            isCoursesOpen={isCoursesOpen}
           >
             <div className="dropdown-button">
               Courses{" "}
@@ -125,13 +143,17 @@ const Header = () => {
                   >
                     <span className="categorylink">
                       {category === "School" && (
-                        <img src={schoolIcon} alt="School" className="img"/>
+                        <img src={schoolIcon} alt="School" className="img" />
                       )}
                       {category === "College" && (
-                        <img src={collegeIcon} alt="College" className="img"/>
+                        <img src={collegeIcon} alt="College" className="img" />
                       )}
                       {category === "University" && (
-                        <img src={universityIcon} alt="University" className="img"/>
+                        <img
+                          src={universityIcon}
+                          alt="University"
+                          className="img"
+                        />
                       )}
                       {category}
                     </span>
@@ -197,49 +219,74 @@ const Header = () => {
             <a href="#!">Become a Teacher</a>
           </li>
           <li>
-            <a href="#!">Create Your Enrollment</a>
+            <a onClick={() => scrollToComponent(exploreMaterialRef)}>
+              Explore Packages
+            </a>
           </li>
           <li>
-            <a href="#!">About Us</a>
+            <a onClick={() => scrollToComponent(chooseUsRef)}>Why Choose Us</a>
+          </li>
+          <li>
+            <a onClick={() => scrollToComponent(teachersRef)}>Teachers</a>
+          </li>
+          <li>
+            <a onClick={() => scrollToComponent(testimonialsRef)}>
+              Testimonials
+            </a>
+          </li>
+          <li>
+            <a onClick={() => scrollToComponent(faqRef)}>FAQ's</a>
           </li>
         </NavLinks>
       </NavMenu>
 
-
-
       {/* Hamburger Menu for Mobile */}
-      <HamburgerMenu onClick={toggleMobileMenu}>
-        <span />
-        <span />
-        <span />
+      <HamburgerMenu onClick={toggleDrawer}>
+        <MenuOutlined style={{ fontSize: "24px", color: "black" }} />
       </HamburgerMenu>
 
-      {/* Mobile Navigation Menu */}
-      {isMobileMenuOpen && (
+      {/* Drawer for Mobile Menu */}
+      <Drawer
+        title="Menu"
+        placement="right"
+        closable
+        onClose={() => setIsMobileMenuOpen(false)}
+        visible={isMobileMenuOpen}
+        closeIcon={<CloseOutlined />}
+        width={250}
+      >
         <MobileMenu>
           <NavLinks>
-            {/* For mobile, you might want to implement similar dynamic fetching or simplify the menu */}
             <li>
-              <a href="#!">Courses</a>
+              <a onClick={() => scrollToComponent(exploreMaterialRef)}>
+                Explore Packages
+              </a>
             </li>
             <li>
-              <a href="#!">Study Material</a>
+              <a onClick={() => scrollToComponent(chooseUsRef)}>
+                Why Choose Us
+              </a>
             </li>
             <li>
-              <a href="#!">Become a Teacher</a>
+              <a onClick={() => scrollToComponent(teachersRef)}>Teachers</a>
             </li>
             <li>
-              <a href="#!">Create Your Enrollment</a>
+              <a onClick={() => scrollToComponent(testimonialsRef)}>
+                Testimonials
+              </a>
             </li>
             <li>
-              <a href="#!">About Us</a>
+              <a onClick={() => scrollToComponent(faqRef)}>FAQ's</a>
+            </li>
+            <li>
+              <a href="/login">Login</a>
             </li>
           </NavLinks>
         </MobileMenu>
-      )}
+      </Drawer>
 
-
-      <SignUpButton onClick={() => navigate("/")}>Logout</SignUpButton>
+      <SignUpButton onClick={() => navigate("/login")}>Login</SignUpButton>
+      <SignUpButton1 onClick={() => navigate("/signup")}>Sign-Up</SignUpButton1>
     </HeaderContainer>
   );
 };

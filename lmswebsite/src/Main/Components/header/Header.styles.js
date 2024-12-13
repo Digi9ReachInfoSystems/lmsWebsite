@@ -43,43 +43,22 @@ export const NavMenu = styled.nav`
   `}
 `;
 
-export const NavLinks = styled.ul`
-  list-style: none;
-  display: flex;
-  gap: 40px;
-  margin: 0;
-  padding: 0;
-
-  > li {
-    position: relative; /* Allows absolute positioning of dropdowns */
-  }
-
-  a {
-    color: ${theme.colors.black};
-    text-decoration: none;
-    font-weight: 500;
-    padding: 10px;
-    display: block;
-
-    &:hover {
-      color: ${theme.colors.pink4};
-    }
-  }
-`;
-
 export const DropdownWrapper = styled.li`
   position: relative; /* Establishes a positioning context */
 
   .dropdown-button {
     cursor: pointer;
-    padding: 8px 20px;
-    border: 2px solid ${theme.colors.pink4};
-    border-radius: 6px;
+    padding: 2px 5px;
+    border: 1px solid ${theme.colors.pink4};
+    border-radius: 8px;
     color: ${theme.colors.pink4};
     margin-bottom: 20px;
-    background-color: ${props => props.isCoursesOpen ? props.theme.colors.pink4 : "transparent"};
-    color: ${props => props.isCoursesOpen ? "white" : "pink4"}; /* Change font color here */
-    // color: ${props => props.isCoursesOpen ? props.theme.colors.white : "transparent"};
+    background-color: ${(props) =>
+      props.isCoursesOpen ? props.theme.colors.pink4 : "transparent"};
+    color: ${(props) =>
+      props.isCoursesOpen ? "white" : "pink4"}; /* Change font color here */
+    // color: ${(props) =>
+      props.isCoursesOpen ? props.theme.colors.white : "transparent"};
     &:hover {
       background-color: ${theme.colors.pink4};
       color: ${theme.colors.white};
@@ -89,7 +68,6 @@ export const DropdownWrapper = styled.li`
   .arrowicon {
     font-size: 14px;
     margin-left: 5px;
-    
 
     &:hover {
       color: ${theme.colors.white};
@@ -97,8 +75,8 @@ export const DropdownWrapper = styled.li`
   }
 
   .category-menu {
-  display: ${props => (props.isCoursesOpen ? "block" : "none")};
-  // overflow-y: auto;
+    display: ${(props) => (props.isCoursesOpen ? "block" : "none")};
+    // overflow-y: auto;
     height: 400px;
     min-width: 200px;
     position: absolute;
@@ -112,26 +90,18 @@ export const DropdownWrapper = styled.li`
     background: ${theme.colors.white};
     color: ${theme.colors.gray700};
 
+    .category-item {
+      height: 50px;
+      padding: 1px;
+      // margin-top: 20px;
 
-
-    .category-item{
-    height: 50px;
-    padding: 1px;
-    // margin-top: 20px;
-
-
-
-    &:hover {
-    // margin-top: -20px;
-      // background-color: ${theme.colors.pink4};
-      color: ${theme.colors.white};
-      background-color: ${props => props.theme.colors.pink4};
+      &:hover {
+        // margin-top: -20px;
+        // background-color: ${theme.colors.pink4};
+        color: ${theme.colors.white};
+        background-color: ${(props) => props.theme.colors.pink4};
+      }
     }
-
-
-  
-    }
-    
   }
 
   .categorylink {
@@ -189,12 +159,12 @@ export const DropdownWrapper = styled.li`
 
   /* Classes Menu */
   .classes-menu {
-  // overflow-y: auto;
+    // overflow-y: auto;
 
     height: 400px;
     min-width: 200px;
     position: absolute;
-      top: -1px;
+    top: -1px;
 
     left: 100%;
     // border-radius: 8px;
@@ -255,12 +225,11 @@ export const DropdownWrapper = styled.li`
     display: block;
 
     &:hover {
-         background-color: ${theme.colors.pink4};
+      background-color: ${theme.colors.pink4};
       color: ${theme.colors.white};
     }
   }
 
-  
   /* Styles for Packages Links */
   .packages-menu > li > a {
     color: ${theme.colors.gray700};
@@ -277,59 +246,90 @@ export const DropdownWrapper = styled.li`
 // Hamburger Icon for Mobile View
 export const HamburgerMenu = styled.div`
   display: none;
-  flex-direction: column;
-  gap: 4px;
-  cursor: pointer;
 
-  span {
-    display: block;
-    height: 2px;
-    width: 24px;
-    background-color: ${theme.colors.white};
-  }
-
-  ${media.sm`
+  @media (max-width: 768px) {
     display: flex;
-  `}
-`;
+    align-items: center;
+    cursor: pointer;
+    margin-right: 10px;
 
+    svg {
+      font-size: 24px;
+      color: ${(props) => props.theme.colors.black};
+    }
+  }
+`;
 // Mobile Navigation Menu
 export const MobileMenu = styled.div`
-  display: none;
+  display: flex;
+  flex-direction: column;
 
-  ${media.sm`
-    display: block;
-    position: absolute;
-    top: 60px; /* Adjust based on header height */
-    left: 0;
-    width: 100%;
-    background-color: ${theme.colors.backgroundDark};
-    padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    z-index: 999; /* Ensures mobile menu is above other content */
-  `}
+  a {
+    color: ${(props) => props.theme.colors.black};
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 0;
+    display: block; /* Ensures items take up full width */
+    border-bottom: 1px solid #f0f0f0; /* Adds a separator between menu items */
 
-  ${NavLinks} {
-    flex-direction: column;
-    gap: 10px;
-
-    li {
-      text-align: left;
+    &:hover {
+      color: ${(props) => props.theme.colors.primary};
     }
+  }
+`;
+export const NavLinks = styled.ul`
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  display: flex;
+  flex-direction: row; /* Default: Horizontal layout for larger screens */
+  gap: 60px; /* Adds spacing between items */
+
+  li {
+    text-align: left;
 
     a {
-      color: ${theme.colors.white};
-      padding: 10px 0;
+      color: ${(props) => props.theme.colors.black};
+      font-size: 16px;
+      text-decoration: none;
 
       &:hover {
-        color: ${theme.colors.primary};
+        color: ${(props) => props.theme.colors.primary};
       }
+    }
+  }
+
+  /* Media Query for Small Screens */
+  @media (max-width: 768px) {
+    flex-direction: column; /* Makes items vertical on small screens */
+    gap: 15px;
+
+    li {
+      padding: 10px 0;
     }
   }
 `;
 
 // Logout Button
 export const SignUpButton = styled.button`
+  background-color: #ff0080;
+  color: white;
+  padding: 10px 20px;
+  margin-right: 2em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #e60073;
+  }
+
+  ${media.sm`
+    display: none; /* Hide on small screens if needed */
+  `}
+`;
+export const SignUpButton1 = styled.button`
   background-color: #ff0080;
   color: white;
   padding: 10px 20px;
