@@ -165,7 +165,7 @@ export const StudentLandingPage = () => {
         <>
           <Header />
           {/* studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" */}
-          {studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" ? (
+          {(studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" )? (
             <ApplicationContainer>
               <ApplicationImage>
                 <TeacherFormImage
@@ -309,7 +309,8 @@ export const StudentLandingPage = () => {
           )
           }
 
-          {studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired" && (
+          {/* {studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired" && ( */}
+          {(studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired") &&(
             <>
               <GotoOneToOne />
               <StudentExistingPackages

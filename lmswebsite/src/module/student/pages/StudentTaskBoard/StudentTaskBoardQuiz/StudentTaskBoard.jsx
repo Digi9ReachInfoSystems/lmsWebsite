@@ -1,7 +1,7 @@
 // src/module/teacher/pages/BecomeTeacherApplicationForm/TaskBoard/QuizPage/AssignedTeacherBatch.jsx
 
 import React, { useEffect, useState } from "react";
-import { getQuizBySubjectId } from "../../../../../api/quizApi";
+import { getQuizByBatchId, getQuizBySubjectId } from "../../../../../api/quizApi";
 import { getBatchesByStudentId } from "../../../../../api/batchApi";
 import { Card, Button, Row, Col, Tag, Progress, Spin, Alert } from "antd";
 import { getStudentByAuthId } from "../../../../../api/studentApi";
@@ -78,13 +78,25 @@ const StudentTaskBoard = () => {
         }
 
         // Extract unique subject IDs from the batches
-        const subjectIds = fetchedBatches.map((batch) => batch.subject_id._id);
-        const uniqueSubjectIds = [...new Set(subjectIds)];
+        // const subjectIds = fetchedBatches.map((batch) => batch.subject_id._id);
+        // const uniqueSubjectIds = [...new Set(subjectIds)];
+
+        // Extract unique batch IDs from the batches
+        const batchIds = fetchedBatches.map((batch) => batch._id);
+        const uniqueBatchIds = [...new Set(batchIds)];
+
+        // const sampleData= await getQuizByBatchId("67598e66b01bb506b14cc91f")
+
+        // console.log("Unique Batch IDs:",sampleData );
+        // Fetch quizzes for each unique batch ID
+        const quizzesData = await Promise.all(
+          uniqueBatchIds.map((batchId) => getQuizByBatchId(batchId))
+        );
 
         // Fetch quizzes for each unique subject ID
-        const quizzesData = await Promise.all(
-          uniqueSubjectIds.map((subjectId) => getQuizBySubjectId(subjectId))
-        );
+        // const quizzesData = await Promise.all(
+        //   uniqueSubjectIds.map((subjectId) => getQuizBySubjectId(subjectId))
+        // );
 
         // Flatten the quizzes array
         const allQuizzes = quizzesData.flatMap((data) => data.quizzes);

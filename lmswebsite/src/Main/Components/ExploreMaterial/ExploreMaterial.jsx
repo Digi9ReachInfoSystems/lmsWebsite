@@ -86,22 +86,22 @@ const ExploreMaterial = () => {
         </div>
 
         {/* Packages Section */}
-        <div className="packages-container">
+        <div className="courses-grid">
           {loading ? (
             <p>Loading packages...</p>
           ) : packages.length > 0 ? (
             packages.map((pkg) => (
-              <div key={pkg._id} className="package-card">
+              <div key={pkg._id} className="course-card">
                 <img
                   src={pkg.image}
                   alt={pkg.package_name}
-                  className="package-image"
+                  className="course-image"
 
                 />
-                <div className="package-content">
-                  <h3 className="package-title">Package Name:{pkg.package_name}</h3>
-                  <p className="package-description">Description:{pkg.description}</p>
-                  <p className="package-price">Price: ₹{pkg.price}</p>
+                <div className="course-content">
+                  <h3 className="course-title">Package Name:{pkg.package_name}</h3>
+                  <p className="course-description">Description:{pkg.description}</p>
+                  <p className="course-price">Price: ₹{pkg.price}</p>
                 </div>
                 <button className="buy-now-button">
                   <a href='./login'>Buy Now</a>

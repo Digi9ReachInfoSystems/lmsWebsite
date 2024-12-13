@@ -15,7 +15,7 @@ const Benefits = () => {
 
         // Access the benefits array inside the response object
         if (response && Array.isArray(response.benefits)) {
-          setBenefitsData(response.benefits.slice(0,10)); // Set the benefits array
+          setBenefitsData(response.benefits.slice(0,5)); // Set the benefits array
         } else {
           throw new Error("Expected benefits array but got something else");
         }

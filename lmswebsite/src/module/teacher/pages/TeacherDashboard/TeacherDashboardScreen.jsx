@@ -24,6 +24,9 @@ import { Grid } from "@mui/material";
 import welcomeImage from "../../../../assets/image.png";
 import Animation from "../../../teacher/assets/animation.json";
 import Lottie from "lottie-react";
+import ToolbarTeacher from "../../components/ToolbarTeacher/ToolbarTeacher";
+import DashboardBatches from "../../components/DashboardBatches/DashboardBatches";
+import UpcomingMeetings from "../../components/upcomingmeetings/upcomingmeetings";
 const iconMap = {
   "Total students": <ImUser />,
   "Total Batches": <MdLiveTv />,
@@ -153,7 +156,7 @@ const TeacherDashBoardScreen = () => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -164,11 +167,16 @@ const TeacherDashBoardScreen = () => {
         </div>
       </div>
     );
-}
- return (
-    <>
-      <TeacherDashBoardCardswrap className="content-area">
-        <Grid Container spacing={3}>
+  }
+  return (
+
+    <TeacherDashBoardCardswrap className="content-area">
+
+
+      <div>
+        {/* Pass the cards data to TeacherdashBoardCards component */}
+        {/* <TeacherdashBoardCards cardsData={dashboardCards} /> */}
+        <Grid container spacing={3}>
           <Grid item xs={12} md={8}>
             <div className="welcome-Container">
               <Grid
@@ -199,30 +207,48 @@ const TeacherDashBoardScreen = () => {
                 alignItems="center"
                 justifyContent="flex-start"
               >
-                <Grid item>
-                  <div style={{ display: "inline-block", marginRight: "8px" }}>
-                    Test 
+                <Grid item xs={12} md={8}>
+                  <div className="area-row ar-three">
+                    <ToolbarTeacher />
+                  </div>
+                </Grid>
+                <Grid item xs={12} md={8}>
+                  <div>
+                    <DashboardBatches />
                   </div>
                 </Grid>
               </Grid>
+
+            </div>
+
+          </Grid>
+          {/* Right side containing the Upcoming Meetings */}
+          <Grid item xs={12} md={4}>
+            <div className="upcoming-meetings-container">
+              <UpcomingMeetings />{/* Assuming this is the correct component */}
             </div>
           </Grid>
-        </Grid>
 
-        <div>
-          {/* Pass the cards data to TeacherdashBoardCards component */}
-          <TeacherdashBoardCards cardsData={dashboardCards} />
-        </div>
-        <div className="area-row ar-two">
-          <DailySchedule />{" "}
-          <TeacherdashBoardQuizCard cardsdata={quizCardData} />
-        </div>
-        <div className="area-row ar-three">
-          {/* Additional UI components */}
-        </div>
-      </TeacherDashBoardCardswrap>
-    </>
+        </Grid>
+      </div>
+      {/* <div className="area-row ar-three">
+        <ToolbarTeacher />
+      </div> */}
+      {/* <div>
+        <DashboardBatches />
+      </div> */}
+      <div className="area-row ar-two">
+        {/* <DailySchedule />{" "} */}
+        {/* <TeacherdashBoardQuizCard cardsdata={quizCardData} /> */}
+      </div>
+      <div className="area-row ar-three">
+        {/* Additional UI components */}
+      </div>
+    </TeacherDashBoardCardswrap>
+
   );
 };
 
 export default TeacherDashBoardScreen;
+
+
