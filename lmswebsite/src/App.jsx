@@ -89,6 +89,7 @@ import RefundCancellationPolicy from "./pages/RefundCancellationPolicy/RefundCan
 import DisclaimerPolicy from "./pages/DisclaimerPolicy/DisclaimerPolicy";
 import BatchesLandingPage from "./pages/BatchesDetailPage/BatchesLandingPage";
 
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -101,6 +102,7 @@ function App() {
             path="/"
             element={
               <PublicRoute>
+                <LandingHome />
                 <LandingHome />
               </PublicRoute>
             }
@@ -120,13 +122,19 @@ function App() {
 <Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} />
 
           <Route path="/testingClass/:classId" element={<ClassDetailPage />} />
-          <Route path="/testingPackage/:packageId" element={<PackageDetailPage />} />
+          <Route
+            path="/testingPackage/:packageId"
+            element={<PackageDetailPage />}
+          />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/student" element={<StudentLandingPage />} />
 
           <Route path="/student/mode" element={<Mode />} />
-          <Route path="/student/personal" element={<OneToOneStudentlandingPage />} />
+          <Route
+            path="/student/personal"
+            element={<OneToOneStudentlandingPage />}
+          />
 
           <Route
             path="/student/course/details"
@@ -142,6 +150,7 @@ function App() {
           />
           <Route
             path="/student/package/expiryAlert"
+            element={<PackageExpiryAlertPage />}
             element={<PackageExpiryAlertPage />}
           />
           <Route path="/privacy-policy" element={<PrivacyAndCookiePolicy />} />
@@ -173,6 +182,7 @@ function App() {
           >
             <Route index element={<TeacherDashboardScreen />} />
 
+            <Route
             <Route
               path="/teacher/dashboard/batches"
               element={<AssignedTeacherBatch />}
@@ -206,7 +216,9 @@ function App() {
               element={<TeacherAttendance />}
             />
             <Route
+            <Route
               path="/teacher/dashboard/meetingReschedule"
+              element={<RescheduleMeetingTeacher />}
               element={<RescheduleMeetingTeacher />}
             />
           </Route>
@@ -272,7 +284,10 @@ function App() {
                 element={<ManageContentTable contentType="chooseUs" />}
               />
 
-              <Route path="benefits" element={<ManageContentTable contentType="benefits" />} />
+              <Route
+                path="benefits"
+                element={<ManageContentTable contentType="benefits" />}
+              />
             </Route>
 
             <Route path="/admin/customPackage" element={<CustomPackage />} />
@@ -282,9 +297,6 @@ function App() {
             />
             <Route path="/admin/manageAttendance" element={<ManageAttendance />} />
           </Route>
-
-
-
         </Routes>
       </Router>
       {/* <RouterProvider router={router} /> */}
