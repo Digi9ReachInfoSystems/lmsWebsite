@@ -207,16 +207,16 @@ const TeacherDashBoardScreen = () => {
                 alignItems="center"
                 justifyContent="flex-start"
               >
-                {/* <Grid item>
-                  <div style={{ display: "inline-block", marginRight: "8px" }}>
+                <Grid item xs={12} md={8}>
+                  <div className="area-row ar-three">
                     <ToolbarTeacher />
                   </div>
                 </Grid>
-                <Grid item>
-                  <div style={{ display: "inline-block", marginRight: "8px" }}>
+                <Grid item xs={12} md={8}>
+                  <div>
                     <DashboardBatches />
                   </div>
-                </Grid> */}
+                </Grid>
               </Grid>
 
             </div>
@@ -231,12 +231,12 @@ const TeacherDashBoardScreen = () => {
 
         </Grid>
       </div>
-      <div className="area-row ar-three">
+      {/* <div className="area-row ar-three">
         <ToolbarTeacher />
-      </div>
-      <div>
+      </div> */}
+      {/* <div>
         <DashboardBatches />
-      </div>
+      </div> */}
       <div className="area-row ar-two">
         {/* <DailySchedule />{" "} */}
         {/* <TeacherdashBoardQuizCard cardsdata={quizCardData} /> */}
