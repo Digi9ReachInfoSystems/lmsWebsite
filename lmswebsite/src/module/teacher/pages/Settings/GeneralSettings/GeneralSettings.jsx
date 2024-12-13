@@ -4,7 +4,7 @@ import dayjs from "dayjs"; // Import dayjs for date handling
 import { getTeacherByAuthId } from "../../../../../api/teacherApi";
 import { StyledDatePicker, StyledInput } from "./GeneralSettings.style";
 const { Title } = Typography;
-import Animation from "../../../../teacher/assets/Animation.json";
+import Animation from "../../../assets/Animation.json";
 import Lottie from "lottie-react";
 const GeneralSettings = () => {
   const [form] = Form.useForm();

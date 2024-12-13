@@ -120,3 +120,15 @@ export const getTeacherAttendance = async (teacherId) => {
     throw error;
   }
 };
+
+
+export const getTeacherscheduleForSevenDaysById = async (teacherId) => {
+  try {
+    const response = await api.get(`/teachers/teacher/${teacherId}/scheduleSevenDays`);
+    console.log('Teacher schedule fetched successfully:', response.data);
+    return response;
+  } catch (error) {
+    console.error('Error fetching Teacher schedule:', error);
+    throw error;
+  }
+}

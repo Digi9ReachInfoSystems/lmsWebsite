@@ -82,8 +82,12 @@ export const OneToOneStudentlandingPage = () => {
         const response = await getClassesByBoardId(data.student.board_id._id);
         setClassData(response);
 
-        if (data.student.custom_package_status == "approved" || data.student.subscribed_Package) {
-          navigate(`/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`);
+        if (
+          data.student.custom_package_status == "approved" ||
+          ( data.student.subscribed_Package!=""&&data.student.is_paid==true)
+        ) {
+          // navigate(`/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`);
+          navigate("/student/dashboard");
         }
 
       } catch (error) {
@@ -154,7 +158,7 @@ export const OneToOneStudentlandingPage = () => {
         <>
 
         <OneHeader />
-          {studentDataForm.student.custom_package_status === "no_package" ?
+          {(studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" ) ?
             <ApplicationContainer>
               <ApplicationImage>
                 <TeacherFormImage
@@ -314,7 +318,7 @@ export const OneToOneStudentlandingPage = () => {
               <CustomPackageStatus> Your Custom Package is under review</CustomPackageStatus>
               : <CustomPackageStatus> Your Custom Package Request Rejected</CustomPackageStatus>
           }
-          {studentDataForm.student.custom_package_status == "no_package" &&
+          {(studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" ) &&
             <OneStudentExistingPackage data={packagesData} studentId={studentDataForm.student._id} />
 
           }

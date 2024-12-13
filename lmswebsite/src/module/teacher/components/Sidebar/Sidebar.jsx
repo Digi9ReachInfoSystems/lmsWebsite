@@ -27,6 +27,12 @@ const SidebarWrapper = styled.div`
   top: 0;
   left: 0;
   z-index: 2000;
+   //  max-height:100vh; /* Default fixed height */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+    &::-webkit-scrollbar {
+    width: 0px;
+  }
   &:hover {
     width: 240px;
   }
@@ -191,7 +197,7 @@ const Sidebar = () => {
         )}
         {isHovered && (
           <span style={{ color: "white", fontSize: "20px" }}>
-            Student Dashboard
+            Teacher Dashboard
           </span>
         )}
       </SidebarHeader>
