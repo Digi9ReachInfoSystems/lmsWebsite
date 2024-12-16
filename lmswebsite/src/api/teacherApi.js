@@ -132,3 +132,13 @@ export const getTeacherscheduleForSevenDaysById = async (teacherId) => {
     throw error;
   }
 }
+
+export const createTeacher = async (teacherData) => {
+  try {
+    const response = await api.post("/teachers/", teacherData);
+    return response.data;
+  } catch (error) {
+    console.error("Error creating teacher:", error);
+    throw error;
+  }
+};

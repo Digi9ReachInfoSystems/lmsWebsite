@@ -55,6 +55,7 @@ const ClassForm = () => {
       message.error(errorMsg);
     } finally {
       setIsSubmitting(false);
+      window.location.reload();
     }
   };
 
@@ -117,7 +118,13 @@ const ClassForm = () => {
         <Form.Item
           label="Class Level"
           name="classLevel"
-          rules={[{ required: true, message: "Please enter the class level!" }]}
+          rules={[
+            { required: true, message: "Please enter the class level!" },
+            {
+              pattern: /^[1-9]\d*$/,
+              message: "Class level must be a positive number greater than 0",
+            },
+          ]}
         >
           <Input placeholder="Enter class level (e.g., 5th, 6th, etc.)" />
         </Form.Item>

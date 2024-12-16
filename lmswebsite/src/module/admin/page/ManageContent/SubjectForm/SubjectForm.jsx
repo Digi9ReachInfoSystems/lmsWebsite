@@ -37,6 +37,7 @@ const SubjectForm = () => {
     };
     fetchBoards();
     setLoading(false);
+    // window.location.reload();
   }, []);
  
   // Fetch classes whenever the board_id changes
