@@ -58,7 +58,7 @@ export const CustomerQueryWrap = styled.div`
     display: flex;
     align-items: center;
     border-radius: 4px;
-    padding: 5px;
+    padding: 6px;
     background-color: ${theme.colors.white};
     margin-top: 10px;
     margin-bottom: 0px;
@@ -77,6 +77,14 @@ export const CustomerQueryWrap = styled.div`
     color: ${theme.colors.gray700};
     margin-right: 8px;
   }
+    .CustomerQueries-dropdown
+    {
+    // padding: 5px;
+    // display: flex;
+    // align-items: center;
+    // // border-radius: 4px;
+    // background-color: ${theme.colors.white};
+    }
 
   .area-row {
     display: flex;

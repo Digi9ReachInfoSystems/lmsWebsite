@@ -39,8 +39,7 @@ const PackageForm = () => {
   const [loadingBoards, setLoadingBoards] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-  const[mode, setMode] = useState('');
-  const [subjectError, setSubjectError] = useState(null); // New state for subject selection error
+  const [subjectError, setSubjectError] = useState(null); 
   const [loading, setLoading] = useState(false);
 
   // Fetch boards on component mount
@@ -56,7 +55,6 @@ const PackageForm = () => {
         setLoading(false);
       }
     };
-
     fetchBoards();
   }, []);
 
@@ -107,7 +105,6 @@ const PackageForm = () => {
   // Handle input change
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
     setError(null);
     if (name === "image") {
       setFormData((prev) => ({
@@ -168,12 +165,21 @@ const PackageForm = () => {
       return;
     }
 
+    // Validate price > 0
+    if (Number(formData.price) <= 0) {
+      setError("Price must be greater than 0");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Check if image is uploaded
+    if (!formData.image) {
+      setError("Please upload an image.");
+      setIsSubmitting(false);
+      return;
+    }
+
     try {
-      if (!formData.image) {
-        setError("Please upload an image.");
-        setIsSubmitting(false);
-        return;
-      }
       await createPackage(formData);
       message.success("Package created successfully!");
 
@@ -187,7 +193,8 @@ const PackageForm = () => {
         subject_id: [],
         price: "",
         image: null,
-        duration:0
+        mode: "normal",
+        duration: 0,
       });
     } catch (error) {
       setError(
@@ -218,8 +225,7 @@ const PackageForm = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -261,18 +267,6 @@ const PackageForm = () => {
             />
           </FormItem>
 
-          <FormItem
-          name="mode"
-          label="Package Mode"
-          rules={[{ required: true, message: "Please select a Package Mode" }]}
-          >
-            <Radio.Group   name="mode" onChange={handleChange}>
-              <Radio value="normal">Normal</Radio>
-              <Radio value="personal">Personal</Radio>
-            </Radio.Group>
-            
-          </FormItem>
-
           <FormItem>
             <label htmlFor="description">Description</label>
             <TextArea
@@ -302,11 +296,10 @@ const PackageForm = () => {
                   -
                 </Button>
                 <Button type="button" onClick={addFeature}>
-            +
-            </Button>
+                  +
+                </Button>
               </FeatureInputContainer>
             ))}
-           
           </FormItem>
 
           <FormItem>
@@ -379,12 +372,22 @@ const PackageForm = () => {
                 </Option>
               ))}
             </Select>
-            {/* Display subject selection error if any */}
             {subjectError && (
               <div style={{ color: "red", marginTop: "0.5em" }}>
                 {subjectError}
               </div>
             )}
+          </FormItem>
+
+          <FormItem
+            name="mode"
+            label="Package Mode"
+            rules={[{ required: true, message: "Please select a Package Mode" }]}
+          >
+            <Radio.Group name="mode" onChange={handleChange} value={formData.mode}>
+              <Radio value="normal">Normal</Radio>
+              <Radio value="personal">Personal</Radio>
+            </Radio.Group>
           </FormItem>
 
           <FormItem>
@@ -396,8 +399,10 @@ const PackageForm = () => {
               value={formData.price}
               onChange={handleChange}
               required
+              min="1"
             />
           </FormItem>
+
           <FormItem>
             <label htmlFor="duration">Duration</label>
             <Input
@@ -421,7 +426,6 @@ const PackageForm = () => {
               required
             />
           </FormItem>
-          
 
           <FormItem>
             <Button

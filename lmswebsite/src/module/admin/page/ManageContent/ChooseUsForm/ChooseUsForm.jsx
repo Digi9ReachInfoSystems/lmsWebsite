@@ -83,6 +83,7 @@ const ChooseUsForm = () => {
     } finally {
       setIsSubmitting(false);
       setLoading(false);
+      window.location.reload();
     }
   };
 

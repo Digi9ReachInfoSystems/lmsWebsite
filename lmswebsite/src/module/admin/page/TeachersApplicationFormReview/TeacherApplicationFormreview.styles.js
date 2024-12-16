@@ -56,6 +56,23 @@ export const TeacherApplicationFormReviewWrap = styled.div`
     background-color: #45a049;
   }
 
+   .approve-btn {
+  
+
+    background-color:rgb(112, 159, 9);
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 20px;
+  }
+
+  .approve-btn:hover {
+    background-color: #45a049;
+  }
+
+
   .teacher-details-item {
     flex: 1;
     margin-right: 10px;
@@ -239,6 +256,7 @@ export const TeacherApplicationFormReviewWrap = styled.div`
       cursor: pointer;
       flex: 0 0 auto;
     }
+     
 
     #TeacherApplicationFormReview-TeacherReject {
       background-color: ${theme.colors.danger};

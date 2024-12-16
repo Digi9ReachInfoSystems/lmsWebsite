@@ -19,6 +19,8 @@ export const signupUser = async ( data) => {
       studentGender: data.studentGender || undefined, // Optional
       studentDOB: data.studentDOB || undefined, // Optional
       board_id: data.board_id || undefined,
+      subject_id: data.subject_id || undefined,
+      type_of_batch: data.type_of_batch || undefined,
     };
 
     // Filter out undefined values from the request body

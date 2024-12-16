@@ -52,6 +52,7 @@ const BenefitForm = () => {
     } finally {
       setIsSubmitting(false);
       setLoading(false);
+      window.location.reload();
     }
   };
  
