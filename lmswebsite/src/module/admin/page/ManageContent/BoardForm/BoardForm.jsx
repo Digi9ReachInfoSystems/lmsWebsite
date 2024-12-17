@@ -31,6 +31,7 @@ const BoardForm = () => {
     } finally {
       setIsSubmitting(false);
       setLoading(false);
+      window.location.reload();
     }
   };
  
@@ -106,6 +107,7 @@ const BoardForm = () => {
           >
             {isSubmitting ? <Spin size="small" /> : 'Submit'}
           </Button>
+          
         </Form.Item>
       </Form>
     </div>

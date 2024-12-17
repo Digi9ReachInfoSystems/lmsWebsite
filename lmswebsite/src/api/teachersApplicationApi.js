@@ -13,6 +13,8 @@ import { uploadFileToFirebase } from '../utils/uploadFileToFirebase'; // Utility
  * @returns {Object} - The response from the server
  */
 
+
+
 export const submitTeacherApplication = async (applicationData) => {
     try {
       console.log('Submitting application:', applicationData);
@@ -21,6 +23,8 @@ export const submitTeacherApplication = async (applicationData) => {
       const profileImageUrl = await uploadFileToFirebase(applicationData.profileImage, 'profileImage');
       // Prepare the request body
       const requestBody = {
+        name: applicationData.name,
+        email: applicationData.email,
         state: applicationData.state,
         city: applicationData.city,
         pincode: applicationData.pincode,
@@ -71,9 +75,9 @@ export const getTeacherApplications = async (approvalStatus) => {
 * @param {string} applicationId - The ID of the teacher application to approve
 * @returns {Object} - The response from the server after approval
 */
-export const approveTeacherApplication = async (applicationId) => {
+export const approveTeacherApplication = async (applicationId,data) => {
     try {
-        const response = await api.put(`/teacher-application/approve/${applicationId}`);
+        const response = await api.put(`/teacher-application/approve/${applicationId}`,data);
         console.log('Teacher application approved successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {

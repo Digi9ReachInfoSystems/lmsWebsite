@@ -15,6 +15,7 @@ import FaqForm from '../FaqForm/FaqForm';
 import BannerForm from '../BannerForm/BannerForm';
 import ChooseUsForm from '../ChooseUsForm/ChooseUsForm';
 import BenefitForm from '../BenifitsForm/BenifitsForm';
+import ModeBatch from '../ModeBatch/ModeBatch';
 import { getAllClasses, createClass, deleteClass } from '../../../../../api/classApi';
 import { getAllSubjects, createSubject, deleteSubjectById } from '../../../../../api/subjectApi';
 import { getBoards, createBoard, deleteBoard } from '../../../../../api/boadApi';
@@ -23,6 +24,7 @@ import { getAllFAQ, createFAQ, deleteFAQ } from '../../../../../api/faq';
 import { getBanners, createBanner, deleteBanner } from '../../../../../api/bannerApi';
 import { createChooseUsFeature, deleteChooseUsFeature, getChooseUsData } from '../../../../../api/chooseUsApi';
 import { createBenefit, getAllBenefits, deleteBenefit } from '../../../../../api/benefitsApi';
+import { createTypeOfBatch, getAllTypeOfBatches, deleteTypeOfBatch, updateTypeOfBatch } from '../../../../../api/typeOfBatchApi';
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 import { render } from '@fullcalendar/core/preact.js';
@@ -148,6 +150,11 @@ const ManageContentTable = ({ contentType }) => {
           setData(benefitData.benefits);
           break;
 
+          case 'typeOfBatch':
+          const typeOfBatchData = await getAllTypeOfBatches();
+          setData(typeOfBatchData);
+          break;
+
         default:
           setData([]);
           break;
@@ -166,6 +173,7 @@ const ManageContentTable = ({ contentType }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  
 
   // Handle Create
   const handleCreate = async (newItem) => {
@@ -203,6 +211,11 @@ const ManageContentTable = ({ contentType }) => {
         case 'benefits':
           await createBenefit(newItem);
           message.success('Benefit created successfully');
+          break;
+          
+          case 'typeOfBatch':
+          await createTypeOfBatch(newItem);
+          message.success('Type of Batch created successfully');
           break;
 
         default:
@@ -252,6 +265,12 @@ const ManageContentTable = ({ contentType }) => {
           await deleteBenefit(getId(record));
           message.success('Benefit deleted successfully');
           break;
+
+          case 'typeOfBatch':
+          await deleteTypeOfBatch(getId(record));
+          message.success('Type of Batch deleted successfully');
+          break;
+
 
         default:
           break;
@@ -617,6 +636,73 @@ const ManageContentTable = ({ contentType }) => {
 
       FormComponent = BenefitForm;
       break;
+
+      case 'typeOfBatch':
+      title = 'Type of Batch';
+      columns = [
+        {
+          title:'Mode',
+          dataIndex:'mode',
+          key:'mode',
+        },
+        {
+    title:'Discount price',
+    dataIndex:'discountedPrice',
+    key:'discountedPrice',
+        },
+        {
+          title:'Price',
+          dataIndex:'price',
+          key:'price',
+        },
+        {
+          title:'Duration',
+          dataIndex:'duration',
+          key:'duration',
+        },
+        {
+          title:'Discount Percentage',
+          dataIndex:'discountPercentage',
+          key:'discountPercentage',
+        },
+
+        {
+          title: 'Action',
+          key: 'action',
+          render: (_, record) => (
+            <Popconfirm
+              title="Are you sure you want to delete this batch type?"
+              onConfirm={() =>{ console.log("edit",record); handleDelete(record)}}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button type="button">Delete</button>
+            </Popconfirm>
+          ),
+        },
+        {
+        title: 'Edit',
+        key: 'action',
+        render: (_, record) => (
+          <button type="button" onClick={() => {
+            console.log("edit",record);
+             const id= getId(record);
+             console.log("id",id);  
+             const percentageStr = window.prompt(
+              "Enter discount percentage (0-100):",
+              record.discountPercentage !== undefined ? record.discountPercentage : ""
+            );
+             updateTypeOfBatch(id,{
+              discountPercentage: percentageStr
+            });
+            window.location.reload();
+          }}>Edit</button>
+        ),
+        }
+      ];
+      FormComponent = ModeBatch;
+      break;
+        
 
 
     default:

@@ -25,7 +25,7 @@ import CustomerQuery from "./module/admin/page/CustomerQuery/CustomerQuery";
 import CustomerQueryFormView from "./module/admin/page/CustomerQueryViewForm/CustomerQueryViewForm";
 import BecomeTeacherApplicationForm from "./module/teacher/pages/BecomeTeacherApplicationForm/BecomeTeacherApplicationForm";
 import LandingPage from "./components/common/LandingPage";
-import { Public } from "@mui/icons-material";
+import { Public, Subject } from "@mui/icons-material";
 import PublicRoute from "./module/admin/components/PublicRoute";
 import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
@@ -89,8 +89,9 @@ import LandingPageFinal from "./Main/Pages/LandingPage";
 import BoardScreen from "./Main/Pages/BoardScreen/BoardScreen";
 import ClassScreen from "./Main/Pages/ClassScreen/CLassScreen";
 import SubjectScreen from "./Main/Pages/SubjectScreen/SubjectScreen";
-import SelectTypeScreen from "./Main/Pages/SelectType/SelectType";
+// import SelectTypeScreen from "./Main/Pages/SelectType/SelectType";
 import SelectDuration from "./Main/Pages/SelectDuration/SelectDuration";
+import SelectType from "./Main/Pages/SelectType/SelectType";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -109,6 +110,37 @@ function App() {
             }
             key=""
           ></Route>
+
+          <Route
+            path="/classHomePage"
+            element={
+              <PublicRoute>
+                <ClassScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+
+<Route
+            path="/subjectHomePage"
+            element={
+              <PublicRoute>
+                <SubjectScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+
+          <Route
+            path="/selectType"
+            element={
+              <PublicRoute>
+                <SelectType />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+
 
           <Route
             path="/login"
@@ -313,7 +345,13 @@ function App() {
                 path="benefits"
                 element={<ManageContentTable contentType="benefits" />}
               />
+
+              <Route 
+              path="typeOfBatch" 
+              element={<ManageContentTable contentType="typeOfBatch" />} 
+              />
             </Route>
+
 
             <Route path="/admin/customPackage" element={<CustomPackage />} />
             <Route

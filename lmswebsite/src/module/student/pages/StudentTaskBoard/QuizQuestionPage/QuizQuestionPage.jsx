@@ -95,7 +95,7 @@ const QuizQuestionPage = () => {
   };
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       {" "}
       <button
         onClick={() => navigate(-1)}

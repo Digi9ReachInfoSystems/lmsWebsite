@@ -52,7 +52,7 @@
 
 .skill-card.selected {
   border-color: #8eb696;
-  background-color: #f5f9ff;
+  background-color: #5689d4;
 }
 
 .skill-card h4 {
@@ -115,3 +115,4 @@
   font-size: 12px;
   color: gray;
 }
+

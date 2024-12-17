@@ -162,6 +162,9 @@ const Sidebar = () => {
       icon: <PiListChecksThin />,
       link: "/admin/manageAttendance",
     },
+    {
+      name:"Payment", icon: <FaTools />, link: "/admin/customPayments"
+    },
     { name: "Settings", icon: <MdOutlineSettings />, link: "/admin/settings" },
   ];
 
