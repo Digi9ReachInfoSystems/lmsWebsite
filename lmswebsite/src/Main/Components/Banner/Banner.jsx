@@ -26,7 +26,9 @@ const Banner = ({ data }) => {
           </p>
           <div className="hero-buttons">
             <Button className="green-button" size="lg" auto>
-             <a href="/login" style={{color:"white"}}>Get Started</a>
+              <a href="/signup" style={{ color: "white" }}>
+                Get Started
+              </a>
             </Button>
             {/* <Button color="secondary" size="lg" variant="flat" style={{color:"white"}}>
               Learn More
