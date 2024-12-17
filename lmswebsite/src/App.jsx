@@ -29,7 +29,7 @@ import { Public } from "@mui/icons-material";
 import PublicRoute from "./module/admin/components/PublicRoute";
 import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
-// import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
+// import { Managecustom0BatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
 import ManagePayment from "./module/admin/page/managePayment/managePayment";
 import TeacherDashboardLayout from "./module/teacher/pages/TeacherDashboardLayout/TeacherDashboardLayout";
 // import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
@@ -104,7 +104,7 @@ function App() {
             path="/"
             element={
               <PublicRoute>
-                <BoardScreen />
+                <SelectTypeScreen />
               </PublicRoute>
             }
             key=""
