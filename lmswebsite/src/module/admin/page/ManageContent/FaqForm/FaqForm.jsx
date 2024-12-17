@@ -54,6 +54,7 @@ const FaqForm = () => {
     } finally {
       setIsSubmitting(false);
       setLoading(false);
+      window.location.reload();
     }
   };
   if (loading) {

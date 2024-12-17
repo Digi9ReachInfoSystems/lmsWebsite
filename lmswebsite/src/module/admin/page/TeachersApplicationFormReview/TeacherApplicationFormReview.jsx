@@ -174,6 +174,9 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         <button onClick={handleViewResume} className="view-resume-btn">
           View Resume
         </button>
+        <button onClick={handleApprove} className="approve-btn">
+          Approve
+        </button>
       </div>
     </TeacherApplicationFormReviewWrap>
   );

@@ -100,7 +100,7 @@ const HeaderComponent = () => {
         <Menu.Item key="logout" style={{ marginLeft: "16px" }}>
           <Button type="primary" onClick={handleLogout}>
             Logout
-          </Button>
+          </Button> 
         </Menu.Item>
       </Menu>
 
