@@ -27,7 +27,7 @@ import {
   PageContainer,
   PrimaryButton,
 } from "../../style/PrimaryStyles/PrimaryStyles";
-import Header from "../../Main/Components/header/Header";
+import Header from "../../module/student/components/Header/Header";
 import Footer from "../../Main/Components/Footer/Footer";
 import HaveQuestions from "../BatchesDetailPage/BatchesLandingPageComponents/HaveQuestions";
 
@@ -137,7 +137,6 @@ const ClassDetailPage = () => {
                       ))}
                     </SubjectList>
                     <StyledButton onClick={handleButtonClick}>
-                    
                       Enroll Now
                     </StyledButton>
                   </div>

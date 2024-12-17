@@ -1,0 +1,117 @@
+/* General Styles */
+.board-container {
+  width: 80%;
+  margin-top: 30vh;
+  margin-left: 20vh;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.header h3 {
+  font-size: 42px;
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #00c897;
+}
+/* Specific Header Styling */
+.black-text {
+  color: black;
+  font-style: normal;
+}
+
+.green-text {
+  color: #00c897; /* Green color */
+  font-style: italic;
+}
+
+.header p {
+  color: gray;
+  font-size: 14px;
+}
+
+/* Skill Cards */
+.options-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.skill-card {
+  width: 200px;
+  height: 150px;
+  margin: 0 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.skill-card.selected {
+  border-color: #8eb696;
+  background-color: #f5f9ff;
+}
+
+.skill-card h4 {
+  margin-top: 10px;
+  color: #333;
+}
+
+.skill-icon {
+  width: 60px;
+  height: 60px;
+  background-color: #d1e4ff;
+  border-radius: 50%;
+}
+
+/* Navigation Buttons */
+.navigation {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.back-btn,
+.next-btn {
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  /* padding */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 20vw;
+}
+
+.back-btn {
+  background-color: #e0e0e0;
+}
+
+.next-btn {
+  background-color: #00c897;
+  color: white;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 60%;
+  background-color: #e0e0e0;
+  height: 8px;
+  margin: 10px auto;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: #00c897;
+}
+
+/* Step Info */
+.step-info {
+  font-size: 12px;
+  color: gray;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import axios from "axios";
-import "react-big-calendar/lib/css/react-big-calendar.css"; 
+import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./ManageMeeting.css"; // Optional custom styles
 import {
   getTeacherByAuthId,
@@ -11,7 +11,10 @@ import {
   clockOut,
   getTeacherAttendance,
 } from "../../../../api/teacherApi"; // Adjust this import path as necessary
-import { Heading, PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import {
+  Heading,
+  PageContainer,
+} from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { ManageMeetingwrap } from "./manageMeetings.Styles";
 import Animation from "../../../teacher/assets/animation.json";
 import Lottie from "lottie-react";
@@ -31,7 +34,9 @@ function ManageMeeting() {
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const teacherdata = await getTeacherByAuthId(authId);
         const response = await getTeacherscheduleById(teacherdata.teacher._id);
-        const attendanceData = await getTeacherAttendance(teacherdata.teacher._id);
+        const attendanceData = await getTeacherAttendance(
+          teacherdata.teacher._id
+        );
         const schedule = response.data.schedule;
 
         let formattedEvents = schedule.map((item, index) => ({
@@ -51,7 +56,7 @@ function ManageMeeting() {
               return {
                 ...event,
                 clockIn: item.clock_in_time ? true : false,
-                clockOut: item.clock_out_time ? true : false
+                clockOut: item.clock_out_time ? true : false,
               };
             } else {
               return event;
@@ -91,7 +96,6 @@ function ManageMeeting() {
       setAttendanceStatus((prevStatus) => ({
         ...prevStatus,
         [meetingId]: "clocked-in", // Update the status to clocked-in
-
       }));
       if (response) {
         setLoadData(!loadData);
@@ -122,7 +126,6 @@ function ManageMeeting() {
 
   // Render events for the calendar
   const renderEvent = ({ event }) => {
-
     return (
       <div>
         <strong style={{ color: "#111111" }}>{event.title}</strong>
@@ -132,57 +135,64 @@ function ManageMeeting() {
           {moment(event.end).format("hh:mm A")}
         </span>
         <br />
-        {!event.meeting_reschedule ? (<>
-          {event.meeting_url ? (
-            !event.clockIn ? (
-              <button
-                onClick={() => handleSelectEvent(event)}
-                style={{
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  padding: "5px 10px",
-                  marginTop: "5px",
-                }}
-              >
-                Join Meeting
-              </button>
-            ) :
-              null
+        {!event.meeting_reschedule ? (
+          <>
+            {event.meeting_url ? (
+              !event.clockIn ? (
+                <button
+                  onClick={() => {
+                    handleSelectEvent(event);
+                    handleClockIn(event.meetingId);
+                  }}
+                  style={{
+                    backgroundColor: "#4CAF50",
+                    color: "white",
+                    padding: "5px 10px",
+                    marginTop: "5px",
+                  }}
+                >
+                  Join Meeting
+                </button>
+              ) : null
+            ) : null}
+            <br />
 
-          ) : null}
-          <br />
-
-          {!event.clockIn && !event.clockOut ? (
-            <button
-              onClick={() => handleClockIn(event.meetingId)}
-              style={{
-                backgroundColor: "#4CAF50",
-                color: "white",
-                padding: "5px 10px",
-                marginTop: "5px",
-              }}
-            >
-              Clock In
-            </button>
-          ) : event.clockIn && !event.clockOut ? (
-            <button
-              onClick={() => handleClockOut(event.meetingId)}
-              style={{
-                backgroundColor: "#FF6347",
-                color: "white",
-                padding: "5px 10px",
-                marginTop: "5px",
-              }}
-            >
-              Clock Out
-            </button>
-          ) : (
-            <span style={{ color: "green" }}>Clocked Out</span>
-          )}
-        </>) :
-          (<span style={{ fontSize: "12px", color: "#111111" }}>Meeting Rescheduled</span>)
-        }
-
+            {
+              // !event.clockIn && !event.clockOut ? (
+              //   <button
+              //     onClick={() => handleClockIn(event.meetingId)}
+              //     style={{
+              //       backgroundColor: "#4CAF50",
+              //       color: "white",
+              //       padding: "5px 10px",
+              //       marginTop: "5px",
+              //     }}
+              //   >
+              //     Clock In
+              //   </button>
+              // ) :
+              event.clockIn && !event.clockOut ? (
+                <button
+                  onClick={() => handleClockOut(event.meetingId)}
+                  style={{
+                    backgroundColor: "#FF6347",
+                    color: "white",
+                    padding: "5px 10px",
+                    marginTop: "5px",
+                  }}
+                >
+                  Clock Out
+                </button>
+              ) : event.clockIn && event.clockOut ? (
+                <span style={{ color: "green" }}>Clocked Out</span>
+              ) : null
+            }
+          </>
+        ) : (
+          <span style={{ fontSize: "12px", color: "#111111" }}>
+            Meeting Rescheduled
+          </span>
+        )}
       </div>
     );
   };
@@ -205,24 +215,21 @@ function ManageMeeting() {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
-}
+  }
 
   return (
     <PageContainer>
       <ManageMeetingwrap>
         <div className="meetingSchedule-heading">
-           <Heading>Meeting Schedule</Heading>
+          <Heading>Meeting Schedule</Heading>
         </div>
         {loading ? (
           <Lottie animationData={Animation} loop={true} />

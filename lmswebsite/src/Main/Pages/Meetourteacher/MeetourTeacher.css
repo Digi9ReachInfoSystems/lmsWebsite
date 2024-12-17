@@ -1,0 +1,62 @@
+.meet-our-teacher-section {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #f5f9f8;
+}
+
+.meet-our-teacher-section h2 {
+  font-size: 2rem;
+  color: #1a1a1a;
+  margin-bottom: 30px;
+}
+
+.meet-our-teacher-section h2 span {
+  color: #007d67;
+  font-style: italic;
+}
+
+.mentors-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.mentor-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  width: 250px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mentor-card img.mentor-image {
+  width: 100%;
+  max-width: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.mentor-card h3 {
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  margin-bottom: 5px;
+}
+
+.mentor-title {
+  font-size: 0.9rem;
+  color: #6b6b6b;
+  margin-bottom: 10px;
+}
+
+.mentor-rating {
+  font-size: 0.9rem;
+  color: #6b6b6b;
+}
+
+.star {
+  color: #f4b400;
+  font-size: 1rem;
+}
