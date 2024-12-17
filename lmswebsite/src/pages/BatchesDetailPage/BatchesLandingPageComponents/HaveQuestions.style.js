@@ -1,4 +1,4 @@
-import styled from "styled-components";  // Ensure this import is at the top of your file
+import styled from "styled-components"; // Ensure this import is at the top of your file
 import { theme, media } from "../../../style/theme/theme"; // If you are using a theme or media query system
 
 export const FAQQueryContainer = styled.div`
@@ -6,6 +6,7 @@ export const FAQQueryContainer = styled.div`
   display: flex;
   justify-content: center;
   width: 80%;
+  color: #fff;
   margin-left: 10%;
   margin-bottom: 40px;
   @media (max-width: 768px) {
@@ -22,6 +23,8 @@ export const FAQQuerySection = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  color: #fff;
+
   width: 90%;
   border-radius: 20px;
   background-color: ${theme.colors.pink4};

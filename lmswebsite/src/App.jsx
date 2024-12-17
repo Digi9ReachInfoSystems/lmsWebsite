@@ -88,7 +88,11 @@ import TermsOfUse from "./pages/Terms Of Use/TermsOfUse";
 import RefundCancellationPolicy from "./pages/RefundCancellationPolicy/RefundCancellationPolicy";
 import DisclaimerPolicy from "./pages/DisclaimerPolicy/DisclaimerPolicy";
 import BatchesLandingPage from "./pages/BatchesDetailPage/BatchesLandingPage";
-
+import LandingPageFinal from "./Main/Pages/LandingPage";
+import BoardScreen from "./Main/Pages/BoardScreen/BoardScreen";
+import ClassScreen from "./Main/Pages/ClassScreen/CLassScreen";
+import SubjectScreen from "./Main/Pages/SubjectScreen/SubjectScreen";
+import SelectTypeScreen from "./Main/Pages/SelectType/SelectType";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -102,8 +106,7 @@ function App() {
             path="/"
             element={
               <PublicRoute>
-                <LandingHome />
-                <LandingHome />
+                <LandingPageFinal />
               </PublicRoute>
             }
             key=""
@@ -151,7 +154,6 @@ function App() {
           <Route
             path="/student/package/expiryAlert"
             element={<PackageExpiryAlertPage />}
-           
           />
           <Route path="/privacy-policy" element={<PrivacyAndCookiePolicy />} />
           <Route path="/TermsOfUse" element={<TermsOfUse />} />
@@ -160,15 +162,42 @@ function App() {
 
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
             <Route index element={<StudentDashboardScreen />} />
-            <Route path="/student/dashboard/circular" element={<StudentCircular />} />
-            <Route path="/student/dashboard/setting" element={<StudentSetting />} />
-            <Route path="/student/dashboard/assignedBatches" element={<StudentAssignedBatches />} />
-            <Route path="/student/dashboard/taskBoard" element={<StudentTaskBoard />} />
-            <Route path="/student/dashboard/taskBoard/quiz/:quizId" element={<QuizQuestionPage />} />
-            <Route path="/student/dashboard/meetings" element={<ManageMeetingStudent />} />
-            <Route path="/student/dashboard/assignedBatches/:batchId" element={<StudentMaterial />} />
-            <Route path="/student/dashboard/attendance" element={<StudentAttendance />} />
-            <Route path="/student/dashboard/meetings/reschedule" element={<RescheduleMeeting />} />
+            <Route
+              path="/student/dashboard/circular"
+              element={<StudentCircular />}
+            />
+            <Route
+              path="/student/dashboard/setting"
+              element={<StudentSetting />}
+            />
+            <Route
+              path="/student/dashboard/assignedBatches"
+              element={<StudentAssignedBatches />}
+            />
+            <Route
+              path="/student/dashboard/taskBoard"
+              element={<StudentTaskBoard />}
+            />
+            <Route
+              path="/student/dashboard/taskBoard/quiz/:quizId"
+              element={<QuizQuestionPage />}
+            />
+            <Route
+              path="/student/dashboard/meetings"
+              element={<ManageMeetingStudent />}
+            />
+            <Route
+              path="/student/dashboard/assignedBatches/:batchId"
+              element={<StudentMaterial />}
+            />
+            <Route
+              path="/student/dashboard/attendance"
+              element={<StudentAttendance />}
+            />
+            <Route
+              path="/student/dashboard/meetings/reschedule"
+              element={<RescheduleMeeting />}
+            />
           </Route>
 
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
@@ -182,7 +211,6 @@ function App() {
           >
             <Route index element={<TeacherDashboardScreen />} />
 
-          
             <Route
               path="/teacher/dashboard/batches"
               element={<AssignedTeacherBatch />}
@@ -215,7 +243,7 @@ function App() {
               path="/teacher/dashboard/teacherAttendance"
               element={<TeacherAttendance />}
             />
-           
+
             <Route
               path="/teacher/dashboard/meetingReschedule"
               element={<RescheduleMeetingTeacher />}
@@ -300,7 +328,10 @@ function App() {
               path="/admin/customerQueries/:queryId"
               element={<CustomerQueryFormView />}
             />
-            <Route path="/admin/manageAttendance" element={<ManageAttendance />} />
+            <Route
+              path="/admin/manageAttendance"
+              element={<ManageAttendance />}
+            />
           </Route>
         </Routes>
       </Router>
