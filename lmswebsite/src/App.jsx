@@ -90,6 +90,7 @@ import BoardScreen from "./Main/Pages/BoardScreen/BoardScreen";
 import ClassScreen from "./Main/Pages/ClassScreen/CLassScreen";
 import SubjectScreen from "./Main/Pages/SubjectScreen/SubjectScreen";
 import SelectTypeScreen from "./Main/Pages/SelectType/SelectType";
+import SelectDuration from "./Main/Pages/SelectDuration/SelectDuration";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -103,7 +104,7 @@ function App() {
             path="/"
             element={
               <PublicRoute>
-                <LandingPageFinal />
+                <BoardScreen />
               </PublicRoute>
             }
             key=""

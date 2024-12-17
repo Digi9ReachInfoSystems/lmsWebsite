@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import "./SelectType.css";
+import "./SelectDuration.css";
 import HeaderSection from "../NavBar/navbar";
 
-function SelectType() {
+function SelectDuration() {
   const [selectedSkill, setSelectedSkill] = useState("");
 
   const batchSizes = [
     {
       id: 1,
-      title: "1:1",
-      price: "150",
+      title: "1 months",
+      price: "150 X 1",
       description: "Personal Batch, 1 Teacher 1 Student",
       features: [
         "1 user per account",
@@ -22,22 +22,22 @@ function SelectType() {
     },
     {
       id: 2,
-      title: "1:3",
-      price: "200",
+      title: "3 months",
+      price: "200 X 3",
       description: "1 Teacher 3 Students",
       features: ["Same features as 1:1", "Plus group learning benefits"],
     },
     {
       id: 3,
-      title: "1:5",
-      price: "250",
+      title: "5 months",
+      price: "250 X 5 ",
       description: "1 Teacher 5 Students",
       features: ["More collaborative features", "Custom learning resources"],
     },
     {
       id: 4,
-      title: "1:7",
-      price: "300",
+      title: "10 months",
+      price: "300 X 10",
       description: "1 Teacher 7 Students",
       features: ["Ideal for larger groups", "Best value for money"],
     },
@@ -50,9 +50,9 @@ function SelectType() {
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
-            <span className="green-text">Batch Size</span>
+            <span className="green-text">Learning Duration</span>
           </h3>
-          <p>Select your batch size, we offer personalized batches.</p>
+          <p>Select your Duration, How Long You want to learn ?</p>
         </div>
 
         <div className="options-container">
@@ -90,4 +90,4 @@ function SelectType() {
   );
 }
 
-export default SelectType;
+export default SelectDuration;

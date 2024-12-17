@@ -1,10 +1,19 @@
 /* General Styles */
 .board-container {
-  width: 80%;
-  margin-top: 30vh;
-  margin-left: 20vh;
-  text-align: center;
+  display: flex;
+  padding-left: 20vw;
+  /* margin-left: 40vh; */
+  flex-direction: column;
+  justify-content: center; /* Vertically center */
+  align-items: center; /* Horizontally center */
+  height: 100vh; /* Take full viewport height */
+  margin-left: 0;
+  margin: 0;
   font-family: Arial, sans-serif;
+}
+
+.header {
+  text-align: center;
 }
 
 .header h3 {
@@ -13,6 +22,7 @@
   font-weight: bold;
   color: #00c897;
 }
+
 /* Specific Header Styling */
 .black-text {
   color: black;
@@ -27,19 +37,21 @@
 .header p {
   color: gray;
   font-size: 14px;
+  margin-bottom: 20px;
 }
 
 /* Skill Cards */
 .options-container {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap; /* Wrap cards if they overflow */
+  gap: 20px; /* Add space between cards */
   margin: 20px 0;
 }
 
 .skill-card {
   width: 200px;
   height: 150px;
-  margin: 0 10px;
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   cursor: pointer;
@@ -48,6 +60,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .skill-card.selected {
@@ -71,6 +84,7 @@
 .navigation {
   display: flex;
   justify-content: center;
+  gap: 20px; /* Add space between buttons */
   margin: 20px 0;
 }
 
@@ -78,12 +92,9 @@
 .next-btn {
   border: none;
   padding: 10px 20px;
-  margin: 0 10px;
-  /* padding */
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  width: 20vw;
 }
 
 .back-btn {
@@ -100,9 +111,9 @@
   width: 60%;
   background-color: #e0e0e0;
   height: 8px;
-  margin: 10px auto;
   border-radius: 5px;
   overflow: hidden;
+  margin: 20px 0;
 }
 
 .progress {
@@ -114,4 +125,10 @@
 .step-info {
   font-size: 12px;
   color: gray;
+  text-align: center;
+}
+
+.price {
+  color: #00c897;
+  font-size: 24px;
 }
