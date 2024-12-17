@@ -1,0 +1,102 @@
+.about-platform-section {
+  display: flex;
+  justify-content: center;
+  padding: 50px 20px;
+  background-color: #f9fafa;
+}
+
+.about-platform-container {
+  display: flex;
+  max-width: 1200px;
+  align-items: center;
+  gap: 40px;
+}
+
+.about-platform-video {
+  flex: 1;
+  position: relative;
+  border-radius: 12px;
+  background-color: #ffe6cf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.video-content {
+  text-align: center;
+}
+
+.video-content h3 {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.video-play-icon button {
+  background-color: #00C897;
+  color: white;
+  font-size: 24px;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.video-play-icon button:hover {
+  background-color: #00C897;
+}
+
+.about-platform-text {
+  flex: 1;
+}
+
+.about-platform-text h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.about-platform-text p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.about-platform-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.demo-button,
+.start-button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
+
+.demo-button {
+  background-color: #00C897;
+  color: white;
+}
+
+.start-button {
+  background-color: white;
+  border: 2px solid #00C897;
+  color: #00C897;
+}
+
+.demo-button:hover {
+  background-color: #00C897;
+}
+
+.start-button:hover {
+  background-color: #00C897;
+  color: white;
+}
