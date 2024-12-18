@@ -1,138 +1,192 @@
 import React from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, keyframes } from "@mui/material";
+import GroupIcon from "@mui/icons-material/Groups";
+
+// Keyframes for animations
+const floatAnimation = keyframes`
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+`;
+
+const textFadeUp = keyframes`
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+`;
+
+function StatsCard({ title, value, icon, bgColor, position }) {
+  return (
+    <Box
+      sx={{
+        position: "absolute",
+        backgroundColor: "#fff",
+        borderRadius: "12px",
+        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
+        padding: "1rem 1.5rem",
+        width: "180px",
+        height: "100px",
+        display: "flex",
+        alignItems: "center",
+        gap: "1rem",
+        animation: `${floatAnimation} 4s ease-in-out infinite`,
+        zIndex: 10,
+        ...position, // Dynamically apply position styles
+      }}
+    >
+      <Box
+        sx={{
+          backgroundColor: bgColor,
+          borderRadius: "50%",
+          width: "40px",
+          height: "40px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        {icon}
+      </Box>
+      <Box>
+        <Typography variant="body2" sx={{ color: "#6c757d" }}>
+          {title}
+        </Typography>
+        <Typography variant="h6" sx={{ fontWeight: "bold", color: "#333" }}>
+          {value}
+        </Typography>
+      </Box>
+    </Box>
+  );
+}
 
 function HeroContent() {
   return (
     <Box sx={{ position: "relative", overflow: "hidden" }}>
-      {/* Background Gradient */}
+      {/* Background Section */}
       <Box
         sx={{
-          background: "linear-gradient(to bottom, #E8F8F5, #6A11CB)",
-          position: "relative",
+          background: "linear-gradient(135deg, #6A11CB 0%, #2575FC 100%)",
           color: "#fff",
           textAlign: "center",
           padding: "6rem 2rem 4rem",
-          zIndex: 1,
+          position: "relative",
+          boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
         }}
       >
-        {/* Floating Icons */}
-        <Box
-          component="div"
-          sx={{
-            position: "absolute",
-            top: "7%",
-            left: "5%",
-            width: "30px",
-            height: "30px",
-            backgroundColor: "#fff",
-            borderRadius: "50%",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-          }}
-        />
-        <Box
-          component="div"
-          sx={{
-            position: "absolute",
-            top: "20%",
-            right: "10%",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            backgroundColor: "#00C897",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-          }}
-        />
-        <Box
-          component="div"
-          sx={{
-            position: "absolute",
-            top: "38%",
-            right: "25%",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            backgroundColor: "#00C897",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-          }}
-        />{" "}
-        <Box
-          component="div"
-          sx={{
-            position: "absolute",
-            top: "58%",
-            right: "6%",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            backgroundColor: "#00C897",
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-          }}
-        />
-        {/* Title */}
+        {[1, 2, 3, 4].map((_, index) => (
+          <Box
+            key={index}
+            sx={{
+              position: "absolute",
+              width: `${40 + index * 10}px`, // Use template literals correctly
+              height: `${40 + index * 10}px`, // Use template literals correctly
+              borderRadius: "50%",
+              backgroundColor: ["#26D07C", "#FFB677", "#9EA8FF", "#00C897"][
+                index
+              ],
+              top: `${10 + index * 15}%`, // Use template literals correctly
+              left: index % 2 === 0 ? `${10 + index * 5}%` : "auto",
+              right: index % 2 !== 0 ? `${5 + index * 5}%` : "auto",
+              animation: `${floatAnimation} ${4 + index}s infinite ease-in-out`,
+              boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+              zIndex: 0,
+            }}
+          />
+        ))}
+
+        {/* Hero Title */}
         <Typography
           variant="h3"
           sx={{
             fontWeight: "bold",
             marginBottom: "1rem",
-            fontSize: "2.5rem",
+            fontSize: { xs: "2.5rem", md: "3rem" },
+            animation: `${textFadeUp} 1.5s ease-in-out`,
           }}
         >
-          Everything you need to manage your educational institution
+          Your Personalized Learning Journey
         </Typography>
-        {/* Subtitle */}
+
         <Typography
           variant="body1"
-          sx={{ marginBottom: "2rem", fontSize: "1.1rem" }}
+          sx={{
+            marginBottom: "2rem",
+            fontSize: { xs: "1.1rem", md: "1.3rem" },
+            maxWidth: "600px",
+            margin: "0 auto",
+            animation: `${textFadeUp} 1.8s ease-in-out`,
+          }}
         >
-          Classe365 is the modern student management software for running any
-          type of educational institution.
+          Choose your subjects and preferred class sizes – from 1:1 mentorship
+          to collaborative group sessions. Learn at your pace, your way.
         </Typography>
+
         {/* Buttons */}
-        <Box sx={{ display: "flex", justifyContent: "center", gap: "1rem" }}>
-          <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#26D07C",
-              color: "#fff",
-              padding: "0.75rem 2rem",
-              fontWeight: "bold",
-              borderRadius: "8px",
-              "&:hover": { backgroundColor: "#21b96e" },
-            }}
-          >
-            Try Free
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "1rem",
+            marginTop: "2rem",
+          }}
+        >
+          <Button variant="contained" sx={{ backgroundColor: "#26D07C" }}>
+            Explore
           </Button>
           <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#9EA8FF",
-              color: "#fff",
-              padding: "0.75rem 2rem",
-              fontWeight: "bold",
-              borderRadius: "8px",
-              "&:hover": { backgroundColor: "#8498E8" },
-            }}
+            variant="outlined"
+            sx={{ borderColor: "#fff", color: "#fff" }}
           >
-            Request a Demo
+            Purchase
           </Button>
         </Box>
-        {/* Dashboard Mockup Image */}
+
+        {/* Dashboard Image */}
         <Box
           component="img"
-          src="https://static.vecteezy.com/system/resources/previews/000/457/141/original/landing-page-template-of-website-design-illustration-concept-isometric-flat-design-concept-of-web-page-design-for-website-and-mobile-website-vector-illustration.jpg" // Replace with your dashboard mockup image
+          src="https://static.vecteezy.com/system/resources/previews/000/457/141/original/landing-page-template-of-website-design-illustration-concept-isometric-flat-design-concept-of-web-page-design-for-website-and-mobile-website-vector-illustration.jpg"
           alt="Dashboard Mockup"
           sx={{
-            width: "80%",
-            height: "550px",
-            maxWidth: "800px",
-            margin: "3rem auto 0",
-            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
-            borderRadius: "8px",
+            width: "85%",
+            maxWidth: "700px",
+            margin: "4rem auto 0",
+            display: "block",
+            borderRadius: "12px",
+            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
+            animation: `${textFadeUp} 2.5s ease-in-out`,
           }}
         />
-      </Box>
 
-      {/* Bottom Curve */}
+        {/* Floating Cards Around Image */}
+        <StatsCard
+          title="Total Students"
+          value="15K"
+          icon={<GroupIcon sx={{ color: "#fff" }} />}
+          bgColor="#6A11CB"
+          position={{ top: "40%", left: "5%" }}
+        />
+        <StatsCard
+          title="Active Mentors"
+          value="500+"
+          icon={<GroupIcon sx={{ color: "#fff" }} />}
+          bgColor="#00C897"
+          position={{ top: "40%", right: "5%" }}
+        />
+        <StatsCard
+          title="Total Classes"
+          value="8K+"
+          icon={<GroupIcon sx={{ color: "#fff" }} />}
+          bgColor="#FFB677"
+          position={{ bottom: "5%", left: "15%" }}
+        />
+        <StatsCard
+          title="Subjects Offered"
+          value="100+"
+          icon={<GroupIcon sx={{ color: "#fff" }} />}
+          bgColor="#FF4081"
+          position={{ bottom: "20%", right: "15%" }}
+        />
+      </Box>
       <Box
         component="div"
         sx={{
@@ -141,6 +195,7 @@ function HeroContent() {
           left: 0,
           width: "100%",
           lineHeight: 0,
+          zIndex: 0,
         }}
       >
         <svg
@@ -150,8 +205,7 @@ function HeroContent() {
         >
           <path
             fill="#FFFFFF"
-            fillOpacity="1"
-            d="M0,256L80,234.7C160,213,320,171,480,149.3C640,128,800,128,960,149.3C1120,171,1280,213,1360,234.7L1440,256L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"
+            d="M0,224L80,208C160,192,320,160,480,144C640,128,800,128,960,144C1120,160,1280,192,1360,208L1440,224L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
           ></path>
         </svg>
       </Box>

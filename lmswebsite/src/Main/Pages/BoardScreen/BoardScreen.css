@@ -115,3 +115,21 @@
   font-size: 12px;
   color: gray;
 }
+
+
+.skill-card {
+  cursor: pointer;
+  border: 1px solid #ccc;
+  padding: 15px;
+  margin: 10px;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.skill-card.selected {
+  border: 2px solid #28a745;
+  background-color: #e6ffe6;
+  font-weight: bold;
+}
+

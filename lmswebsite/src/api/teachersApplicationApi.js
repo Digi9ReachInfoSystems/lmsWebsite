@@ -23,6 +23,8 @@ export const submitTeacherApplication = async (applicationData) => {
       const profileImageUrl = await uploadFileToFirebase(applicationData.profileImage, 'profileImage');
       // Prepare the request body
       const requestBody = {
+        name: applicationData.name,
+        email: applicationData.email,
         state: applicationData.state,
         city: applicationData.city,
         pincode: applicationData.pincode,

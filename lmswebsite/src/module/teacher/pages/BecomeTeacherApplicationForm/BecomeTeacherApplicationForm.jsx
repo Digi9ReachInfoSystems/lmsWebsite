@@ -143,6 +143,8 @@ const BecomeTeacherApplicationForm = () => {
       });
 
       const submissionData = {
+        name : values.name,
+        email: values.email,
         phone_number: values.phone_number,
         class_id: values.class_id,
         subject_id: values.subject_id,
@@ -261,6 +263,18 @@ const BecomeTeacherApplicationForm = () => {
                       >
                         <Input placeholder="Name" />
                       </Form.Item>
+
+                      <Form.Item
+                        name="email"
+                        label="Email"
+                        rules={[
+                          { required: true, message: "Please enter your email" },
+                          { type: "email", message: "Please enter a valid email" },
+                        ]}
+                      >
+                        <Input placeholder="Email" />
+                      </Form.Item>
+                    
 
                       <Form.Item
                         name="phone_number"
@@ -509,6 +523,7 @@ const BecomeTeacherApplicationForm = () => {
                         // style={{ background: "#EE1B7A", borderColor: "#EE1B7A" }}
                       >
                         {isSubmitting ? "Submitting..." : "Submit"}
+                        
                       </PrimaryButton>
                     </Form.Item>
                   </Form>
