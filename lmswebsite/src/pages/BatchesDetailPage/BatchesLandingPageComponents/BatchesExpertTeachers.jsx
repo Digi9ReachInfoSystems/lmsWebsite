@@ -15,9 +15,9 @@ import {
   Subject,
 } from "./BatchesExpertTeachers.style";
 import ExpertsImage from "../assets/Experts.png"; // Adjust the path based on your project structure
-import fourcube from "../assets/fourcube.png";
-import twocube from "../assets/twocube.png";
-import threepeople from "../assets/threepeople.png";
+import { IoLogoMicrosoft } from "react-icons/io5";
+import { HiMiniUserGroup } from "react-icons/hi2";
+import { RiCheckboxMultipleBlankFill } from "react-icons/ri";
 import { Margin } from "@mui/icons-material";
 
 const ExpertTeachers = ({ data }) => {
@@ -32,7 +32,7 @@ const ExpertTeachers = ({ data }) => {
         <TeacherTextContent>
           <p
             style={{
-              color: "hotpink",
+              color: "#00c897",
               fontSize: "1.2em",
               backgroundColor: "#D64DC714",
               width: "90px",
@@ -44,7 +44,7 @@ const ExpertTeachers = ({ data }) => {
           <TeacherTitle>Meet Our Expert Teachers</TeacherTitle>
           <TeacherSubtitle>
             <Image>
-              <img src={fourcube} style={{ width: "20px" }} alt="" />
+            <IoLogoMicrosoft style={{ width: "20px", height: "20px" , color: "#00c897" }} />
             </Image>
             <div>
             <p>Provided with good study material and references </p>
@@ -55,7 +55,7 @@ const ExpertTeachers = ({ data }) => {
           </TeacherSubtitle>
           <TeacherSubtitle>
             <Image>
-              <img src={twocube} style={{ width: "20px" }} alt="" />
+            <RiCheckboxMultipleBlankFill style={{ width: "20px", height: "20px" , color: "#00c897" }} />
             </Image>
             <div>
                 <p>One to one live classes focusing on the single</p>
@@ -65,7 +65,7 @@ const ExpertTeachers = ({ data }) => {
           </TeacherSubtitle>
           <TeacherSubtitle>
             <Image>
-              <img src={threepeople} style={{ width: "20px" }} alt="" />
+            <HiMiniUserGroup style={{ width: "20px", height: "20px" , color: "#00c897"}} />
             </Image>
             <div>
                 <p>Over 50,000 students have achieved a 100% success rate</p>

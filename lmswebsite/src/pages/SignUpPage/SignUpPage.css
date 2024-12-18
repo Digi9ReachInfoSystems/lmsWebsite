@@ -53,7 +53,7 @@
 }
 
 .signup-form .form-group {
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.2rem;
 }
 
 .signup-form label {
@@ -83,6 +83,8 @@
 
 .confirm-btn {
   background-color: #00c897;
+  display: flex;
+  justify-content: center;
   color: #fff;
   margin-right: 1rem;
   width: 20vw;

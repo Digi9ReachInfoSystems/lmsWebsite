@@ -1,8 +1,5 @@
-// src/pages/SubjectDetailsPage/SubjectDetailsPage.jsx
-
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { getPackageByClassId } from "../../api/packagesApi";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Heading,
@@ -11,62 +8,85 @@ import {
   NoPackagesMessage,
   PackageGrid,
   PackageCard,
-  PackageTitle,
-  PackageImage,
-  PackageDescription,
   PackageFeatures,
   PackagePrice,
   PackageMode,
   SubjectList,
   SubjectItem,
-  BackButton,
   StyledButton,
   PackageItem,
 } from "./ClassDetailPage.style";
-import {
-  PageContainer,
-  PrimaryButton,
-} from "../../style/PrimaryStyles/PrimaryStyles";
-import Header from "../../module/student/components/Header/Header";
-import Footer from "../../Main/Components/Footer/Footer";
+import { PageContainer } from "../../style/PrimaryStyles/PrimaryStyles";
+import HeaderSection from "../../Main/Pages/NavBar/navbar";
+import Footer from "../../Main/Pages/Footer/Footer";
 import HaveQuestions from "../BatchesDetailPage/BatchesLandingPageComponents/HaveQuestions";
+import { getAllTypeOfBatches } from "../../api/typeOfBatchApi";
 
 const ClassDetailPage = () => {
-  const { classId } = useParams(); // Get the class ID from the URL parameters
-  const navigate = useNavigate(); // Initialize useNavigate for navigation
-  const [packages, setPackages] = useState([]);
-  const [loadingPackages, setLoadingPackages] = useState(true);
-  const [packagesError, setPackagesError] = useState(null);
-  const mode = "normal";
+  const [batchTypes, setBatchTypes] = useState([]); // List of batches
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+  const navigate = useNavigate();
+
+  const selectedSubjects = JSON.parse(localStorage.getItem("selectedSubjects"));
+
+  // Static data for features and subjects
+  const staticData = [
+    {
+      id: 1,
+      features: [
+        "1 user per account",
+        "Unlimited events",
+        "Registration Form",
+        "Email announcements",
+        "Integrate webinars",
+        "Sales using mobile app",
+      ],
+      subjects: ["English"],
+    },
+    {
+      id: 2,
+      features: ["Same features as Individual", "Plus group learning benefits"],
+      subjects: ["Math", "Science"],
+    },
+    {
+      id: 3,
+      features: ["More collaborative features", "Custom learning resources"],
+      subjects: ["Physics", "Chemistry"],
+    },
+    {
+      id: 4,
+      features: ["Ideal for larger groups", "Best value for money"],
+      subjects: ["Biology", "History"],
+    },
+  ];
+
   useEffect(() => {
-    if (!classId) {
-      setPackagesError(new Error("No class ID provided"));
-      setLoadingPackages(false);
+    if (!selectedSubjects || selectedSubjects.length === 0) {
+      navigate("/"); // Redirect to home if no subjects are selected
       return;
     }
 
-    const fetchPackages = async () => {
-      console.log("classId", classId);
+    // Fetch dynamic batch data from API
+    const fetchBatchTypes = async () => {
       try {
-        const packagesData = await getPackageByClassId(classId, "normal");
-        const packagesData2 = await getPackageByClassId(classId, "personal");
-        console.log("packagesData", packagesData);
-        setPackages(packagesData.concat(packagesData2));
-        setLoadingPackages(false);
+        const response = await getAllTypeOfBatches(); // Fetch mode and price from API
+        setBatchTypes(response); // Response should return mode and price for each batch
       } catch (error) {
-        setPackagesError(error);
-        setLoadingPackages(false);
+        setError("Failed to fetch batch types. Please try again.");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchPackages();
-  }, [classId, mode]);
+    fetchBatchTypes();
+  }, [navigate, selectedSubjects]);
 
-  const handleBackClick = () => {
-    navigate(-1); // Navigate back to the previous page
+  const handleEnrollNow = () => {
+    navigate("/selectBoard");
   };
 
-  if (loadingPackages) {
+  if (loading) {
     return (
       <Container>
         <LoadingMessage>Loading Packages...</LoadingMessage>
@@ -74,75 +94,67 @@ const ClassDetailPage = () => {
     );
   }
 
-  if (packagesError) {
+  if (error) {
     return (
       <Container>
-        <ErrorMessage>
-          Error loading Packages: {packagesError?.message}
-        </ErrorMessage>
+        <ErrorMessage>Error loading packages: {error}</ErrorMessage>
       </Container>
     );
   }
 
-  const handleButtonClick = () => {
-    navigate("/signup");
-  };
-
   return (
     <>
-      <Header />
+      <HeaderSection />
       <PageContainer>
-        {/* <BackButton onClick={handleBackClick}>← Back to Classes</BackButton> */}
         <PackageItem>Pricing plans</PackageItem>
         <Heading>Packages Details for Class</Heading>
         <PackageItem>
           Simple, transparent pricing that grows with you.
         </PackageItem>
 
-        {packages.length === 0 ? (
+        {batchTypes.length === 0 ? (
           <NoPackagesMessage>
             No Packages found for this class.
           </NoPackagesMessage>
         ) : (
           <PackageGrid>
-            {packages.map((pkg) => (
-              <PackageCard key={pkg._id}>
-                <PackageMode>Basic Plan</PackageMode>
-                <PackagePrice>
-                  {" "}
-                  {pkg.price}/ <strong className="month">Month</strong>
-                </PackagePrice>
-                <PackageTitle>{pkg.package_name}</PackageTitle>
-                {/* {pkg.image && <PackageImage src={pkg.image} alt={pkg.package_name} />} */}
-                {/* <PackageDescription>{pkg.description}</PackageDescription> */}
-                {pkg.features && pkg.features.length > 0 && (
-                  <div>
-                    <strong>Features:</strong>
-                    <PackageFeatures>
-                      {pkg.features.map((feature, index) => (
-                        <li key={index}>{feature}</li>
-                      ))}
-                    </PackageFeatures>
-                  </div>
-                )}
-
-                {pkg.subject_id && pkg.subject_id.length > 0 && (
-                  <div>
-                    <strong>Subjects:</strong>
-                    <SubjectList>
-                      {pkg.subject_id.map((subject) => (
-                        <SubjectItem key={subject._id}>
-                          {subject.subject_name}
-                        </SubjectItem>
-                      ))}
-                    </SubjectList>
-                    <StyledButton onClick={handleButtonClick}>
-                      Enroll Now
-                    </StyledButton>
-                  </div>
-                )}
-              </PackageCard>
-            ))}
+            {batchTypes.map((batch, index) => {
+              // Map batchTypes fetched from the API with static features/subjects
+              const staticItem = staticData[index % staticData.length]; // Cycle through static data if API has more items
+              return (
+                <PackageCard key={batch._id}>
+                  <PackageMode>{batch.mode}</PackageMode>
+                  <PackagePrice>
+                    {batch.price}/- <strong className="month">Month</strong>
+                  </PackagePrice>
+                  {staticItem.features && staticItem.features.length > 0 && (
+                    <div className="Feature">
+                      <strong>Features:</strong>
+                      <PackageFeatures>
+                        {staticItem.features.map((feature, featureIndex) => (
+                          <li key={featureIndex}>{feature}</li>
+                        ))}
+                      </PackageFeatures>
+                    </div>
+                  )}
+                  {staticItem.subjects && staticItem.subjects.length > 0 && (
+                    <div className="subject">
+                      <strong>Subjects:</strong>
+                      <SubjectList>
+                        {staticItem.subjects.map((subject, subjectIndex) => (
+                          <SubjectItem key={subjectIndex}>
+                            {subject}
+                          </SubjectItem>
+                        ))}
+                      </SubjectList>
+                    </div>
+                  )}
+                  <StyledButton onClick={handleEnrollNow}>
+                    Enroll Now
+                  </StyledButton>
+                </PackageCard>
+              );
+            })}
           </PackageGrid>
         )}
       </PageContainer>

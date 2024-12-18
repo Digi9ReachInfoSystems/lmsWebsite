@@ -74,7 +74,7 @@ function SelectDuration() {
   return (
     <div>
       <HeaderSection />
-      <div className="board-container">
+      <div className="duration-container">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
@@ -129,10 +129,10 @@ function SelectDuration() {
         </div>
 
         {/* Progress */}
-        <div className="progress-bar">
-          <div className="progress" style={{ width: "80%" }}></div>
+        <div className="progressBar">
+          <div className="progress" style={{ width: "100%" }}></div>
         </div>
-        <p className="step-info">Step 4 out of 5</p>
+        <p className="step-info">Step 5 out of 5</p>
 
         {/* Drawer Component */}
         {showDrawer && <SummaryDrawer onClose={() => setShowDrawer(false)} />}

@@ -69,7 +69,7 @@ export const TeacherTextContent = styled.div`
 export const TeacherTitle = styled.h2`
   font-size: 36px;
   font-weight: 700;
-  color: #ff69b4;
+  color: #00c897;
   margin-bottom: 20px;
 `;
 

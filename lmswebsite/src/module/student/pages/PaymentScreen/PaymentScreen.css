@@ -1,0 +1,202 @@
+/* General Container */
+.board-container-payment {
+    width: 80%;
+    text-align: center;
+    font-family: Poppins;
+
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+    @media (max-width: 480px) {
+        width: 100%;
+    }
+    @media (max-width: 320px) {
+        width: 100%;
+    }
+    
+}
+
+.hellololo-payment {
+    /* position: relative; */
+    width: 100%;
+    background-color: rgb(29, 22, 106);
+    height: 400px;
+
+}
+
+.header-payment h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+    font-weight: bold;
+
+    @media (max-width: 768px) {
+        font-size: 24px;
+    }
+    @media (max-width: 480px) {
+        font-size: 20px;
+    }
+    @media (max-width: 320px) {
+        font-size: 18px;
+    }
+}
+
+
+.skill-card-payment {
+    width: 60%;
+    height: auto;
+    margin-left: 25vw;
+    margin-top: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #e0e0e0;
+  
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* position: relative;
+    overflow: hidden; */
+
+    @media (max-width: 768px) {
+        width: 80%;
+        margin-left: 10vw;
+        margin-top: 10vw;
+    }
+    @media (max-width: 480px) {
+        width: 80%;
+        margin-left: 10vw;
+        margin-top: 10vw;
+    }
+    @media (max-width: 320px) {
+        width: 80%;
+        margin-left: 10vw;
+        margin-top: 10vw;
+    }
+
+}
+
+
+
+
+
+/* General container styling */
+.info-group-payment {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Label styling */
+.info-label-payment {
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #d2cdcd;
+
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
+    @media (max-width: 480px) {
+        font-size: 10px;
+    }
+    @media (max-width: 320px) {
+        font-size: 8px;
+    }
+}
+
+.info-box-payment p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+    @media (max-width: 480px) {
+        font-size: 12px;
+    }
+    @media (max-width: 320px) {
+        font-size: 10px;
+    }
+}
+
+/* Tick mark styling */
+.tick-mark {
+    color: green;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* General container styling */
+.info-group2-payment {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    align-items: center;
+    margin: 10px 0;
+    font-family: Arial, sans-serif;
+
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
+    @media (max-width: 480px) {
+        font-size: 10px;
+    }
+    @media (max-width: 320px) {
+        font-size: 8px;
+    }
+}
+
+
+.info-box-payment {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #515050;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background-color: #f9f9f9;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    position: relative;
+    max-width: 300px;
+    /* Adjust width as needed */
+}
+
+/* Text inside the box */
+.info-box-payment p {
+    margin: 0;
+    font-size: 16px;
+    color: #333;
+
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
+    @media (max-width: 480px) {
+        font-size: 12px;
+    }
+    @media (max-width: 320px) {
+        font-size: 10px;
+    }
+}
+
+/* Tick mark styling */
+.tick-mark {
+    color: green;
+    font-size: 18px;
+    padding: 5px;
+    font-weight: bold;
+}
+
+
+.payment-name-payment {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 20px;
+}

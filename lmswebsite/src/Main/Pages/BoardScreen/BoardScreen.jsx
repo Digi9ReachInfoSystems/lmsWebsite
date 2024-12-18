@@ -51,7 +51,7 @@ const handleContinue = () => {
   return (
     <div>
       <HeaderSection />
-      <div className="board-container">
+      <div className="board-containers">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
@@ -96,8 +96,8 @@ const handleContinue = () => {
         </div>
 
         {/* Progress Bar */}
-        <div className="progress-bar">
-          <div className="progress" style={{ width: "66%" }}></div>
+        <div className="progressBar">
+          <div className="progress" style={{ width: "20%" }}></div>
         </div>
         <p className="step-info">Step 1 out of 5</p>
       </div>

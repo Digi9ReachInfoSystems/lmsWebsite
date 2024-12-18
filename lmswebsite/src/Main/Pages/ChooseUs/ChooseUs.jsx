@@ -56,11 +56,20 @@ function ChooseUs() {
         <div className="features-container">
           {features.map((feature, index) => (
             <div key={index} className="feature-card">
+              <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                
+              }}
+            >
               <img
                 src={feature.icon}
                 alt={feature.title}
                 className="feature-icon"
               />
+             </div>
               <h3>{feature.title}</h3>
               <p>{feature.description}</p>
               <a href="#readmore" className="read-more">

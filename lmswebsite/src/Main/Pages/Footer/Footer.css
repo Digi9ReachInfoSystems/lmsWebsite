@@ -90,3 +90,29 @@
 .footer-bottom p:last-child {
   margin-top: 10px;
 }
+
+
+.footer-link {
+  text-decoration: none;
+  color: inherit; /* Match parent color */
+}
+
+.footer-link:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+.footer-social-icons-new {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-social-icons-new a {
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+
+.footer-social-icons-new a:hover {
+  color: #00c897;
+}

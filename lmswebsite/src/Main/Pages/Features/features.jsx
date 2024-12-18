@@ -37,11 +37,20 @@ function Features() {
       <div className="features-container">
         {features.map((feature, index) => (
           <div key={index} className="feature-card">
-            <img
-              src={feature.image}
-              alt={feature.title}
-              className="feature-image"
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                
+              }}
+            >
+              <img
+                src={feature.image}
+                alt={feature.title}
+                className="feature-image"
+              />
+            </div>
             <h3>{feature.title}</h3>
             <p>{feature.description}</p>
             <button className="feature-button">{feature.buttonText}</button>

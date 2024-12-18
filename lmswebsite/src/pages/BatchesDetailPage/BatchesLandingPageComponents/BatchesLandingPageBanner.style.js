@@ -42,7 +42,7 @@ export const LandingBranchesWarp = styled.div`
     width: 30%;
     margin-left: 10em;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     padding: 10px 20px;
     border-radius: 20px;
     margin-bottom: 1em;
@@ -52,7 +52,7 @@ export const LandingBranchesWarp = styled.div`
   .btnratings {
     margin-top: 1em;
     position: relative;
-    z-index: 2;
+    z-index: 1;
     display: flex;
   }
 
@@ -156,7 +156,7 @@ export const LandingBranchesImage = styled.img`
 export const BranchHeading = styled.h2`
   font-size: 40px;
   position: absolute;
-  z-index: 2;
+  z-index: 1;
   width: 40%;
   margin-left: 5em;
 

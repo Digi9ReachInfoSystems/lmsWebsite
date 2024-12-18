@@ -1,21 +1,13 @@
 import React from "react";
 import { fetchLandingPageData } from "../../api/landingPageApi";
-// import Header from "../../Main/Components/header/Header"; // Import Header component
-// import Banner from "../../Components/Banner/Banner";
-// import Benefits from "../Components/Benefits/Benefits";
-// import ExploreMaterial from "../Components/ExploreMaterial/ExploreMaterial";
-// import ChooseUs from "../Components/ChooseUs/ChooseUs";
 import ExpertTeachers1 from "../BatchesDetailPage/BatchesLandingPageComponents/BatchesExpertTeachers";
 import StudentTestimonial1 from "../BatchesDetailPage/BatchesLandingPageComponents/BatchesStudentTestimonial";
-// import FAQSection from "../../Components/FAQ/FAQSection"; // Import FAQSection
-// import HaveQuestion from "./HaveQuestion.style";
 import HaveQuestion from "../BatchesDetailPage/BatchesLandingPageComponents/HaveQuestions.jsx";
-// import Footer from "../../Components/Footer/Footer"; // Import Footer component
 import BoardDetailPagee from "../BatchesDetailPage/BatchesLandingPageComponents/BatchesBoardDetailPage";
 import LandingBranches from "../BatchesDetailPage/BatchesLandingPageComponents/BatchesLandingPageBanner.jsx";
-import Footerbatch from "../BatchesDetailPage/BatchesLandingPageComponents/BatchFooter";
+import Footer from "../../Main/Pages/Footer/Footer.jsx";
 import { PageWrapper } from "./BatchesLandingPage.style.js";
-import Header from "../../module/student/components/Header/Header.jsx";
+import HeaderSection from "../../Main/Pages/NavBar/navbar.jsx";
 export default function LandingHome() {
   const [apiData, setApiData] = React.useState();
 
@@ -29,18 +21,8 @@ export default function LandingHome() {
 
   return (
     <PageWrapper>
-      {/* <Header />  */}
-      {/* <Header
-        scrollToSection={{
-          benefits,
-          exploreMaterialRef,
-          chooseUsRef,
-          teachersRef,
-          testimonialsRef,
-          faqRef,
-        }}
-      /> */}
-      <Header />
+            <HeaderSection />
+
       {apiData && (
         <>
           <LandingBranches
@@ -53,21 +35,15 @@ export default function LandingHome() {
         </>
       )}
 
-      {/* <LandingBranches/> */}
       <BoardDetailPagee />
       {apiData && (
         <>
-          {/* <Benefits data={apiData.benefits} /> */}
-          {/* <ExploreMaterial data={apiData.courses} /> */}
-          {/* <ChooseUs data={apiData.chooseUs} /> */}
           <ExpertTeachers1 data={apiData.experienceTeachers} />
           <StudentTestimonial1 data={apiData.testimonials} />
-          {/* <FAQSection data={apiData.faqs} /> Passing FAQ data */}
           <HaveQuestion data={apiData.faqs} />
         </>
       )}
-      {/* <Footer />  */}
-      <Footerbatch />
+      <Footer />
     </PageWrapper>
   );
 }

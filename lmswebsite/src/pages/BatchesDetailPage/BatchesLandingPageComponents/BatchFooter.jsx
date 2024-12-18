@@ -14,13 +14,10 @@ const Footer = () => {
     <footer className="footer">
       {/* Legal Links */}
       <div className="footer-legal-links">
-        <Link to="/privacy-policy">Privacy And Cookie Policy</Link>
-        <Link to="/disclaimer-policy">Disclaimer Policy</Link>
-        <a href="#">Legal link</a>
-        <a href="#">Legal link</a>
-        <a href="#">Legal link</a>
-        <a href="#">Legal link</a>
-        <a href="#">Legal link</a>
+      <Link to="/privacy-policy">Privacy And Cookie Policy</Link>
+      <Link to="/TermsOfUse">Terms Of Use</Link>
+      <Link to="/RefundCancellationPolicy">Refund Cancellation Policy</Link>
+      <Link to="/DisclaimerPolicy">Disclaimer Policy</Link>
       </div>
 
       {/* Social Media Icons */}

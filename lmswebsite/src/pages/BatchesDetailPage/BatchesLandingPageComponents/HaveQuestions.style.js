@@ -9,6 +9,7 @@ export const FAQQueryContainer = styled.div`
   color: #fff;
   margin-left: 10%;
   margin-bottom: 40px;
+  // background-color: white;
   @media (max-width: 768px) {
     margin-top: 30px;
   }
@@ -27,7 +28,7 @@ export const FAQQuerySection = styled.div`
 
   width: 90%;
   border-radius: 20px;
-  background-color: ${theme.colors.pink4};
+  background-color: #00c897;
 
   flex-direction: row;
 
