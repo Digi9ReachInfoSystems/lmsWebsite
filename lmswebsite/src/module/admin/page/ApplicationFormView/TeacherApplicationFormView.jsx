@@ -28,6 +28,13 @@ import Lottie from "lottie-react";
 import { PlusOutlined } from "@ant-design/icons";
 import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
 import { updateUserByAuthId } from "../../../../api/userApi"; // Import updateUserByAuthId
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../../../../config/firebaseConfig";
+import { signupUser } from "../../../../api/authApi";
+import { createTeacher } from "../../../../api/teacherApi";
 
 const { Option } = Select;
 
@@ -253,15 +260,38 @@ export default function TeacherApplicationFormView() {
   const onFinish = async (values) => {
     try {
       setUploading(true);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = userCredential.user;
+      const oldSessionData = JSON.parse(localStorage.getItem("sessionData"));
+
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({
+          accessToken: user.accessToken,
+          refreshToken: userCredential._tokenResponse.refreshToken,
+        })
+      );
+      console.log("user", user);
+      const userData = await signupUser({
+        role: "teacher",
+        student_name: values.name,
+        email: values.email,
+        access_token: user.accessToken,
+        refresh_token: userCredential._tokenResponse.refreshToken,
+      });
+
+
       // Extract and prepare the data
       const applicationData = {
-        name: values.name,
-        email: values.email,
-        state: values.state,
-        city: values.city,
-        pincode: values.pincode,
-        current_position: values.current_position,
-        language: values.language,
+        auth_id: user.uid,
+        user_id: userData.user._id,
+        teacher_id:"",
+        role: "teacher",
+        bio: values.city + " " + values.state + " " + values.pincode + " " + values.current_position,
         phone_number: values.phone_number,
         experience: values.experience,
         class_id: values.class_id, // Array of class IDs
@@ -269,6 +299,10 @@ export default function TeacherApplicationFormView() {
         board_id: values.board_id, // Single board ID
         qualifications: values.qualifications, // Ensure backend expects 'qualifications'
         dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),
+        microsoft_id: values.microsoft_id,
+        microsoft_password: values.password,
+        microsoft_principle_name: values.email,
+
         // Files will be handled separately
       };
 
@@ -297,30 +331,34 @@ export default function TeacherApplicationFormView() {
       applicationData.profileImage = profileImageUrl;
 
       // Update user details before submitting the application
-      const sessionData = JSON.parse(localStorage.getItem("sessionData"));
-      if (!sessionData || !sessionData.userId) {
-        message.error("User not authenticated.");
-        setUploading(false);
-        return;
-      }
-      const authId = sessionData.userId;
-      await updateUserByAuthId(authId, {
-        name: values.name,
-        phone_number: values.phone_number,
-      });
+      // const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+      // if (!sessionData || !sessionData.userId) {
+      //   message.error("User not authenticated.");
+      //   setUploading(false);
+      //   return;
+      // }
+      // const authId = sessionData.userId;
+      // await updateUserByAuthId(authId, {
+      //   name: values.name,
+      //   phone_number: values.phone_number,
+      // });
 
       // Submit the application
       console.log("Submitting application:56dbchdb", applicationData);
-      const response = await submitTeacherApplication(applicationData);
-
-      console.log("Application submitted successfully:", response);
+      // const response = await submitTeacherApplication(applicationData);
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify(oldSessionData)
+      );
+       const response = await createTeacher(applicationData);
+      // console.log("Application submitted successfully:", response);
 
       message.success("Teacher application submitted successfully!");
 
       // Refresh the table data
       setStatusFilter("pending"); // Assuming new applications are pending
       // Alternatively, you can fetch the data again if needed
-
+      
       // Close the modal and reset the form
       closeCreateModal();
     } catch (error) {
@@ -348,7 +386,7 @@ export default function TeacherApplicationFormView() {
         file.type === "application/pdf" ||
         file.type === "application/msword" ||
         file.type ===
-          "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
       if (!isAllowed) {
         message.error("You can only upload PDF or Word files!");
       }
@@ -505,6 +543,16 @@ export default function TeacherApplicationFormView() {
             <Input placeholder="Enter name" />
           </Form.Item>
 
+          <Form.Item
+            label="Microsoft ID"
+            name="microsoft_id"
+            rules={[
+              { required: true, message: "Please enter the Microsoft ID" },
+            ]}
+          >
+            <Input placeholder="Enter email" />
+          </Form.Item>
+
           {/* Email */}
           <Form.Item
             label="Email"
@@ -516,6 +564,17 @@ export default function TeacherApplicationFormView() {
           >
             <Input placeholder="Enter email" />
           </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: "Please enter the password" },
+              { type: "password", message: "Please enter a valid password" },
+            ]}
+          >
+            <Input placeholder="Enter email" />
+          </Form.Item>
+
 
           {/* State */}
           <Form.Item

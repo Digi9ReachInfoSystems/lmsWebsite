@@ -54,10 +54,12 @@ const Login = () => {
       if (profileData.user.role === "admin") navigate("/admin");
       else if (profileData.user.role === "student") {
         const studentData= await getStudentByAuthId(user.uid);
-        if(studentData.student.custom_package_status == "expired"&&studentData.student.is_paid==false){
-          navigate("/student/package/expiryAlert")
+       console.log(" login studentData",studentData);
+       
+        if(studentData.student.custom_package_status == "no_package"&&studentData.student.is_paid==false){
+          navigate("/paymentScreen")
         }else{
-          navigate("/student");
+          navigate("/student/dashboard");
         }
         // navigate("/student");
 

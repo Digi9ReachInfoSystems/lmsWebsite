@@ -3,6 +3,15 @@ import "./SignUpPage.css";
 import { message, Radio, DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
 import SignUpImage from "../../assets/SignUpImage.png"; // Replace with your image path
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithEmailAndPassword
+} from "firebase/auth";
+import { auth } from "../../config/firebaseConfig";
+import { uploadFileToFirebase } from "../../utils/uploadFileToFirebase";
+import { signupUser } from "../../api/authApi";
+import { getUserByAuthId } from "../../api/userApi";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -16,21 +25,31 @@ const SignUpPage = () => {
     password: "",
     gender: "",
     profileImage: null,
+    duration: "",
+    amount: "",
+    type_of_batch: "",
+
   });
 
   const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch saved data from previous pages
-    const board = JSON.parse(localStorage.getItem("selectedBoard")) || {};
-    const classData = JSON.parse(localStorage.getItem("selectedClass")) || {};
-    const subject = JSON.parse(localStorage.getItem("selectedSubject")) || "";
+    const board = JSON.parse(localStorage.getItem("selectedBoard"))._id || {};
+    const classData = JSON.parse(localStorage.getItem("selectedClass"))._id || {};
+    const subject = JSON.parse(localStorage.getItem("selectedSubjects")) || "";
+    const duration = JSON.parse(localStorage.getItem("selectedDuration")).title || {};
+    const amount = JSON.parse(localStorage.getItem("totalAmount")) || 0;
+    const type_of_batch = JSON.parse(localStorage.getItem("selectedBatch"))._id || "";
 
     setFormData((prev) => ({
       ...prev,
-      board: board.name || "Not Selected",
-      className: classData.className || "Not Selected",
+      board: board || "Not Selected",
+      className: classData || "Not Selected",
       subject: subject || "Not Selected",
+      duration: duration || "0 Months",
+      amount: amount || 0,
+      type_of_batch: type_of_batch || "",
     }));
   }, []);
 
@@ -43,12 +62,82 @@ const SignUpPage = () => {
     setFormData({ ...formData, profileImage: e.target.files[0] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Submitted:", formData);
     // Add API integration logic here
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const user = userCredential.user;
+      await sendEmailVerification(user);
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({
+          accessToken: user.accessToken,
+          refreshToken: userCredential._tokenResponse.refreshToken,
+        })
+      );
+      const profileImageUrl = await uploadFileToFirebase(
+        formData.profileImage,
+        "studentProfile"
+      );
+      console.log("Profile Image URL:", profileImageUrl);
+      // Prepare data to send to API
+      const data = {
+        role: "student",
+        access_token: user.accessToken,
+        refresh_token: userCredential._tokenResponse.refreshToken,
+        class_id: formData.className,
+        profile_image: profileImageUrl,
+        phone_number: formData.phoneNumber,
+        student_name: formData.name,
+        studentGender: formData.gender,
+        studentDOB: formData.dob,
+        board_id: formData.board,
+        amount: formData.amount,
+        duration: formData.duration,
+        type_of_batch: formData.type_of_batch,
+      };
+      console.log(data);
+      await signupUser(data);
+
+    } catch (error) {
+      console.error("Registration error:", error);
+      const errorMessage =
+        error.message || "Registration failed. Please try again.";
+      message.error(`Registration failed: ${errorMessage}`);
+    }
     message.success("Registration Successful!");
-    navigate("/login");
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const { user } = userCredential;
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({ accessToken: user.accessToken })
+      );
+      const profileData = await getUserByAuthId(user.uid);
+      const sessionData = {
+        userId: user.uid,
+        accessToken: user.accessToken,
+        refreshToken: profileData.user.refresh_token,
+        name: profileData.user.name,
+        loggedIn: "true",
+      };
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
+      navigate("/paymentScreen");
+
+    } catch (error) {
+      console.error(error.message);
+    }
+    // navigate("/login");
   };
 
   return (
