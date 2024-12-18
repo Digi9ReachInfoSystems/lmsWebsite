@@ -6,14 +6,13 @@ import { EnrollButton  }from "./PaymentComponet.style";
 import { getStudentById } from '../../../../api/studentApi';
 import { useNavigate } from 'react-router-dom';
 import { razorPayKeys } from '../../../../config/razorpayConfig';
-const PaymentComponent = ({ studentId, packageId, amount }) => {
+const PaymentComponent = ({ studentId, amount }) => {
   const navigate = useNavigate();
   const handlePayment = async () => {
     try {
       // Step 1: Create Order on Backend
       const orderResponse = await axiosInstance.post('/api/payments/create-order', {
         studentId,
-        packageId,
         amount,
         description: 'Purchase of Premium Package', // Optional
       });

@@ -23,7 +23,8 @@ const SummaryDrawer = ({ onClose }) => {
     const baseTotal = duration.totalAmount || 0;
     const taxes = baseTotal * 0.18; // 18% GST
     const grandTotal = baseTotal + taxes;
-
+    console.log("grandTotal", grandTotal);
+    localStorage.setItem("totalAmount", JSON.stringify(grandTotal));
     setSummary({
       selectedBoard: board,
       selectedClass,
