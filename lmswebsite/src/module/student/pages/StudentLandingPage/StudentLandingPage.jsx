@@ -22,7 +22,7 @@ import TeachersSection from "../../components/TeacherSection/TeachersSection";
 import StudentExistingPackages from "../../components/StudentExistingPackages/StudentExistingPackages";
 import Footer2 from "../../components/Footer2/Footer2";
 import { getUserByAuthId } from "../../../../api/userApi";
-import { getStudentByAuthId, getStudentById } from "../../../../api/studentApi";
+import { getStudentByAuthId, getStudentById, updateStudent } from "../../../../api/studentApi";
 import PaymentComponent from "../../components/PaymentComponent/PaymentComponet";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { getClassesByBoardId } from "../../../../api/classApi";
@@ -32,6 +32,8 @@ import { createCustomPackage } from "../../../../api/customPackageApi";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
 import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
+import { getAllTypeOfBatches } from "../../../../api/typeOfBatchApi";
+import { set } from "lodash";
 
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
@@ -42,8 +44,10 @@ export const StudentLandingPage = () => {
   const [studentClass, setStudentClass] = useState();
   const [packagesData, setPackagesData] = useState([]);
   const [subjects, setSubjects] = useState([]);
+  const [batchType, setBatchType] = useState([]);
   const [slot, setSlot] = useState([]);
   const [slectedSubject, setSelectedSubject] = useState([]);
+  const [selectedBatch, setSelectedBatch] = useState();
   const navigate = useNavigate();
   // const loaderData= useLoaderData();
   // console.log("loaderData", loaderData);
@@ -64,6 +68,9 @@ export const StudentLandingPage = () => {
         const data = await getStudentByAuthId(sessionData.userId);
         console.log("studentData", data);
 
+        const batchData = await getAllTypeOfBatches();
+        console.log("batchData", batchData);
+        setBatchType(batchData);
         if (!data || !data.student) {
           console.error("Student data not found.");
           return;
@@ -89,16 +96,16 @@ export const StudentLandingPage = () => {
 
         if (
           data.student.custom_package_status == "approved" ||
-         ( data.student.subscribed_Package!=""&&data.student.is_paid==true)
+          (data.student.subscribed_Package != "" && data.student.is_paid == true)
         ) {
           // navigate(
           //   `/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`
           // );
           navigate("/student/dashboard");
-        }else if(
+        } else if (
           data.student.custom_package_status == "expired" ||
-          ( data.student.subscribed_Package!=""&&data.student.is_paid==false)
-        ){
+          (data.student.subscribed_Package != "" && data.student.is_paid == false)
+        ) {
           // navigate("/student/package/expiryAlert")
           // alert("Your Package has expired. ")
         }
@@ -143,6 +150,9 @@ export const StudentLandingPage = () => {
 
     const apiCaller = async () => {
       try {
+
+        const updateStudentData = await updateStudent(studentDataForm.student._id, { updateData: { type_of_batch: selectedBatch } });
+        console.log("updateStudentData", updateStudentData);
         const response = await createCustomPackage({
           subject_id: slectedSubject,
           student_id: studentDataForm.student._id,
@@ -160,12 +170,12 @@ export const StudentLandingPage = () => {
 
   return (
     <>
-   
+
       {studentDataForm ? (
         <>
           <Header />
           {/* studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" */}
-          {(studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" )? (
+          {(studentDataForm.student.custom_package_status === "no_package" || studentDataForm.student.custom_package_status === "expired") ? (
             <ApplicationContainer>
               <ApplicationImage>
                 <TeacherFormImage
@@ -273,6 +283,35 @@ export const StudentLandingPage = () => {
                         />
                       </Form.Item>
                     </StyledCol>
+                    <StyledCol>
+                      <Form.Item
+                        label="Select Batch "
+                        name="type_of_batch"
+                        rules={[
+                          {
+                            required: true,
+                            message: "Please select more 3 subjects",
+                          },
+
+                        ]}
+                      >
+                        <Select
+
+                          placeholder="Select Batch Type..."
+                          options={batchType.map((batch) => ({
+                            value: batch._id,
+                            label: batch.mode,
+                          }))}
+                          onChange={(options) => {
+                            // setSelectedSubject(options);
+                            // setSelectedSubject(options);
+                            setSelectedBatch(options);
+                            console.log("Selected subjects:", options);
+                          }}
+                        />
+
+                      </Form.Item>
+                    </StyledCol>
                   </StyledRow>
 
                   {/* Submit Button */}
@@ -301,7 +340,7 @@ export const StudentLandingPage = () => {
               {" "}
               Your Custom Package is under review
             </CustomPackageStatus>
-          ) : studentDataForm.student.custom_package_status == "rejected"&&(
+          ) : studentDataForm.student.custom_package_status == "rejected" && (
             <CustomPackageStatus>
               {" "}
               Your Custom Package Request Rejected
@@ -310,7 +349,7 @@ export const StudentLandingPage = () => {
           }
 
           {/* {studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired" && ( */}
-          {(studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired") &&(
+          {/* {(studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired") &&(
             <>
               <GotoOneToOne />
               <StudentExistingPackages
@@ -318,7 +357,7 @@ export const StudentLandingPage = () => {
                 studentId={studentDataForm.student._id}
               />
             </>
-          )}
+          )} */}
 
           <StudentEnrollmentVideoView />
           <TeachersSection />

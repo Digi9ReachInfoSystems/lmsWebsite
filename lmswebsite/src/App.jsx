@@ -93,6 +93,7 @@ import SubjectScreen from "./Main/Pages/SubjectScreen/SubjectScreen";
 import SelectDuration from "./Main/Pages/SelectDuration/SelectDuration";
 import SelectType from "./Main/Pages/SelectType/SelectType";
 import PaymentScreen from "./module/student/pages/PaymentScreen/PaymentScreen";
+import StudentForm from "./pages/SignUpPage/signUpPageStudentForm";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -176,6 +177,7 @@ function App() {
             element={<PackageDetailPage />}
           />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signupStudent" element={<StudentForm/>} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/paymentScreen" element={<PaymentScreen />} />
           <Route path="/student" element={<StudentLandingPage />} />
