@@ -7,7 +7,7 @@ import {
   BodyText,
   Heading,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../student/assets/animation.json";
+import Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 
 const StudentCircular = () => {
@@ -44,7 +44,7 @@ const StudentCircular = () => {
 
     fetchCirculars();
   }, []);
-  
+
   if (loading) {
     return (
       <div
@@ -64,14 +64,11 @@ const StudentCircular = () => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
@@ -130,36 +127,34 @@ const StudentCircular = () => {
 
   return (
     <StudentCircularWrap>
-      
-        <>
-          <div className="header">
-            <Heading> Circulars </Heading>
-            <Input
-              placeholder="Search by Circular Name"
-              value={searchInput}
-              onChange={handleSearch}
-              allowClear
-              prefix={<SearchOutlined />}
-              style={{ width: 300 }}
-            />
-          </div>
-          <Table
-            dataSource={filteredCirculars}
-            columns={columns}
-            pagination={{ pageSize: 5 }}
-            bordered
+      <>
+        <div className="header">
+          <Heading> Circulars </Heading>
+          <Input
+            placeholder="Search by Circular Name"
+            value={searchInput}
+            onChange={handleSearch}
+            allowClear
+            prefix={<SearchOutlined />}
+            style={{ width: 300 }}
           />
-          <Modal
-            // title="View Image"
-            visible={isModalVisible}
-            onCancel={closeModal}
-            footer={null}
-            centered
-          >
-            <Image src={selectedImage} alt="Circular" width="100%" />
-          </Modal>
-        </>
-      
+        </div>
+        <Table
+          dataSource={filteredCirculars}
+          columns={columns}
+          pagination={{ pageSize: 5 }}
+          bordered
+        />
+        <Modal
+          // title="View Image"
+          visible={isModalVisible}
+          onCancel={closeModal}
+          footer={null}
+          centered
+        >
+          <Image src={selectedImage} alt="Circular" width="100%" />
+        </Modal>
+      </>
     </StudentCircularWrap>
   );
 };
