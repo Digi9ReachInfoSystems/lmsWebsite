@@ -16,7 +16,7 @@ import {
 } from "./TeacherAddQuestionModel.style";
 import { Form, Input, Select, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import Animation from "../../../../teacher/assets/animation.json";
+import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const { Option } = Select;
 

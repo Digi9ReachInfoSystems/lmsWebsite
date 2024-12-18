@@ -15,7 +15,7 @@ import{getUserByAuthId}from "../../../../../api/userApi"
 import{getStudentByAuthId}from "../../../../../api/studentApi"
 import { updateUserByAuthId } from "../../../../../api/userApi";
 import { BodyText, PageContainer, PrimaryButton, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../../student/assets/animation.json";
+import Animation from "../../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 import { set } from "lodash";
 const StudentAccountSettings = () => {

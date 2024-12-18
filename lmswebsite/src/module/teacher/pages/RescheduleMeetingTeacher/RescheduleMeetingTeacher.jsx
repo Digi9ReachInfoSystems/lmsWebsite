@@ -14,7 +14,7 @@ import { set } from 'lodash';
 import { createMeeting } from '../../../../api/batchApi';
 import { BodyText, Heading, PageContainer, PrimaryButton } from '../../../../style/PrimaryStyles/PrimaryStyles';
 import { RescheduleMeetingTeacherWrap } from './RescheduleMeetingTeacher.styles';
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 function RescheduleMeetingTeacher() {
     const [rescheduleData, setRescheduleData] = useState([]);

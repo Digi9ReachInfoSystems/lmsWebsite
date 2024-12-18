@@ -18,7 +18,7 @@ import {
 } from "../../../../../style/PrimaryStyles/PrimaryStyles";
 import { Table, Button, Input, Modal, Image, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import Animation from "../../../../teacher/assets/animation.json";
+import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 export default function QuizBatches() {
   const [searchInput, setSearchInput] = useState("");

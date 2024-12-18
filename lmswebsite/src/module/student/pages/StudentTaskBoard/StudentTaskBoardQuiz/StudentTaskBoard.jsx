@@ -6,7 +6,7 @@ import { getBatchesByStudentId } from "../../../../../api/batchApi";
 import { Card, Button, Row, Col, Tag, Progress, Spin, Alert } from "antd";
 import { getStudentByAuthId } from "../../../../../api/studentApi";
 import { getscoreforstudent } from "../../../../../api/responseApi";
-import  Animation from "../../../../student/assets/animation.json";
+import  Animation from "../../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import {

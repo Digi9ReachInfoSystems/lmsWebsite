@@ -16,7 +16,7 @@ import {
   PageContainer,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { ManageMeetingwrap } from "./manageMeetings.Styles";
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const localizer = momentLocalizer(moment);
 

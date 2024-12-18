@@ -26,7 +26,7 @@ import ActivePackage from "../../components/MaterialComponent/material";
 import ExploreContent from "../../components/DownloadContent/BatchDetails";
 import MaterialFile from "../../components/MaterialUploaded/materialFile";
 import BatchDetailsContent from "../../components/DownloadContent/BatchDetails";
-import  Animation from "../../../student/assets/animation.json";
+import  Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 
 const StudentDashboardScreen = () => {

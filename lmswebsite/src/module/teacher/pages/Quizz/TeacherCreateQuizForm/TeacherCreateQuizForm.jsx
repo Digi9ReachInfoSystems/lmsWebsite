@@ -30,7 +30,7 @@ import {
 } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalBody } from '../../../../../style/PrimaryStyles/PrimaryStyles';
-import Animation from "../../../../teacher/assets/animation.json";
+import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 import { set } from 'lodash';
 const { Title, Text } = Typography;
