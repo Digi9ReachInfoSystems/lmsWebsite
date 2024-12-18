@@ -22,7 +22,7 @@ import { Ri24HoursFill } from "react-icons/ri";
 import { PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { Grid } from "@mui/material";
 import welcomeImage from "../../../../assets/image.png";
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 import ToolbarTeacher from "../../components/ToolbarTeacher/ToolbarTeacher";
 import DashboardBatches from "../../components/DashboardBatches/DashboardBatches";
@@ -160,19 +160,13 @@ const TeacherDashBoardScreen = () => {
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
   }
   return (
-
     <TeacherDashBoardCardswrap className="content-area">
-
-
       <div>
         {/* Pass the cards data to TeacherdashBoardCards component */}
         {/* <TeacherdashBoardCards cardsData={dashboardCards} /> */}
@@ -218,17 +212,15 @@ const TeacherDashBoardScreen = () => {
                   </div>
                 </Grid>
               </Grid>
-
             </div>
-
           </Grid>
           {/* Right side containing the Upcoming Meetings */}
           <Grid item xs={12} md={4}>
             <div className="upcoming-meetings-container">
-              <UpcomingMeetings />{/* Assuming this is the correct component */}
+              <UpcomingMeetings />
+              {/* Assuming this is the correct component */}
             </div>
           </Grid>
-
         </Grid>
       </div>
       {/* <div className="area-row ar-three">
@@ -241,14 +233,9 @@ const TeacherDashBoardScreen = () => {
         {/* <DailySchedule />{" "} */}
         {/* <TeacherdashBoardQuizCard cardsdata={quizCardData} /> */}
       </div>
-      <div className="area-row ar-three">
-        {/* Additional UI components */}
-      </div>
+      <div className="area-row ar-three">{/* Additional UI components */}</div>
     </TeacherDashBoardCardswrap>
-
   );
 };
 
 export default TeacherDashBoardScreen;
-
-
