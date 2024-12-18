@@ -112,11 +112,12 @@ export const PackageCard = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 500px;
+  height: 450px;
 
-  .Features {
+  .Feature {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 30px;
   }
 
   .subject {
@@ -217,9 +218,9 @@ export const PackagePrice = styled.p`
 
 // Package mode
 export const PackageMode = styled.p`
-  color: ${theme.colors.pink4};
+  color: #00c897;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 24px;
   text-align: center;
   margin-bottom: 10px;
 
@@ -255,12 +256,16 @@ export const SubjectItem = styled.li`
 // Styled button for the package
 export const StyledButton = styled.button`
   width: 100%;
-  background: ${theme.colors.pink4};
+  background: #00c897;
   color: ${theme.colors.white};
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
   cursor: pointer;
   margin-top: auto;
+
+  &:hover {
+    background-color: #00c888;
+  }
 
   @media (max-width: 768px) {
     padding: 15px;
