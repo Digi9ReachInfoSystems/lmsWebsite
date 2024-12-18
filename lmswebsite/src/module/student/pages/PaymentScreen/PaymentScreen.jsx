@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { useNavigate } from "react-router-dom";
+import "./PaymentScreen.css";
 // import "./PaymentScreen.css";
 import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import PaymentComponent from "../../components/PaymentComponent/PaymentComponet";
@@ -17,7 +18,7 @@ const PaymentScreen = () => {
             try {
                 const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
                 const response = await getStudentByAuthId(authId);
-            //    console.log("response", response);
+                //    console.log("response", response);
                 setStudent(response.student); // Populate student details
                 setLoading(false);
             } catch (err) {
@@ -32,37 +33,56 @@ const PaymentScreen = () => {
     if (error) return <div>Error: {error.message}</div>;
 
     const handleProceedPayment = () => {
-        console.log("Payment Details:", { studentName: student.user_id.name, totalPrice:student.amount });
+        console.log("Payment Details:", { studentName: student.user_id.name, totalPrice: student.amount });
         // Add payment logic here
         navigate("/dashboard"); // Navigate to the dashboard after proceeding
     };
 
     return (
-        <div>
-        <HeaderSection />
-        <div className="board-container">
-           <div className="header">
-                <h2>Payment</h2>
-            </div>
+        <div className="hellololo-payment">
+            <HeaderSection />
+            <div className="board-container-payment">
+                <div className="skill-card-payment">
+                    <div className="header-payment">
+                        <h2>Verify The Details!</h2>
+                    </div>
 
-            {/* Student Name Display */}
-            <div className="info-group">
-                <label>Student Name:</label>
-                <p>{student.user_id?.name}</p> {/* Display the student's name */}
-            </div>
+                    <div className="payment-name-payment">
 
-            {/* Total Price Display */}
-            <div className="info-group">
-                <label>Total Price:</label>
-                <p>{student.amount} Rs </p> {/* Display the total price */}
-            </div>
+                        <div className="info-group-payment">
+                            <label className="info-label-payment">Student Name</label>
+                            <div className="info-box-payment">
+                                <p>{student.user_id?.name}</p>
 
-            {/* Proceed Button */}
-            <PaymentComponent studentId={student._id} amount={student.amount}  />
-            {/* <button onClick={handleProceedPayment} className="proceed-btn">
-                Proceed to Payment
-            </button> */}
-        </div>
+                                <span className="tick-mark">✔</span>
+                            </div>
+                        </div>
+
+                        <div className="info-group-payment">
+                            <label className="info-label-payment">Student Email</label>
+                            <div className="info-box-payment">
+                                <p>{student.user_id?.email}</p>
+
+                                <span className="tick-mark"> ✔</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div className="info-group2-payment">
+                        <label className="info-label-payment">Total Price</label>
+                        <div className="info-box-payment">
+                            <p>Rs.{student.amount}.00 /-</p>
+                            <span className="tick-mark"></span>
+                        </div>
+                    </div>
+
+
+                    <PaymentComponent studentId={student._id} amount={student.amount} />
+
+
+                </div>
+            </div>
         </div>
     );
 };
