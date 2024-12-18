@@ -1,65 +1,134 @@
 .features-section {
   text-align: center;
   padding: 50px 20px;
-  background-color: #f5f9f8;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  position: relative; /* Enable relative positioning for pseudo-elements */
+  overflow: visible; /* Ensure pseudo-elements are not clipped */
 }
 
-.features-section h2 {
-  font-size: 2rem;
-  color: #1a1a1a;
-  margin-bottom: 30px;
+.features-section::before,
+.features-section::after {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle at center, #00c897 40%, transparent 80%);
+  opacity: 0.2; /* Adjust visibility */
+  z-index: -1; /* Place behind content */
 }
 
-.features-section h2 span {
-  color: #00C897;
-  font-style: italic;
+.features-section::before {
+  top: -150px; /* Adjust position */
+  left: -150px;
+  border-radius: 50%;
 }
 
-.features-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+.features-section::after {
+  bottom: -150px;
+  right: -150px;
+  border-radius: 50%;
 }
 
-.feature-card {
-  background: #ffffff;
-  border: 1px solid #e0e0e0;
-  border-radius: 12px;
-  width: 300px;
-  text-align: center;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.feature-card img.feature-image {
-  width: 100%;
-  max-width: 80px;
-  margin-bottom: 20px;
-}
-
-.feature-card h3 {
-  font-size: 1.2rem;
-  color: #1a1a1a;
+.section-title {
+  font-size: 32px;
+  color: #333;
   margin-bottom: 10px;
 }
 
-.feature-card p {
-  font-size: 0.9rem;
-  color: #6b6b6b;
+.section-description {
+  font-size: 16px;
+  color: #777;
+  margin-bottom: 50px;
+}
+
+/* Vertical stacking for feature boxes */
+.features-container {
+  flex-direction: column;
+  width: 100%;
+}
+
+.feature-box {
+  background-color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 30px 20px;
+  width: 300px;
+  position: relative;
+  margin: 30px auto;
+  animation: slide-up 1s ease-in-out;
+}
+
+/* Align odd elements to the left */
+.feature-box:nth-child(odd) {
+  margin-left: 10%;
+  margin-right: auto;
+}
+
+.feature-box:nth-child(even) {
+  margin-right: 10%;
+  margin-left: auto;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature-number::before {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -40px;
+  width: 120px;
+  height: 120px;
+  background-color: rgba(0, 200, 151, 0.1); /* Light green background */
+  border-radius: 50%;
+  z-index: -1; /* Push behind the number */
+}
+
+.feature-number {
+  position: absolute;
+  top: 10px;
+  left: -50px;
+  font-size: 72px;
+  font-weight: bold;
+  color: rgba(0, 200, 151, 0.5); /* Light green for the number */
+}
+
+.feature-content {
+  text-align: left;
+}
+
+.feature-title {
+  font-size: 20px;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.feature-description {
+  font-size: 14px;
+  color: #555;
   margin-bottom: 20px;
 }
 
 .feature-button {
-  background-color: #00C897;
+  background-color: #28a745;
   color: #fff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 8px 20px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 14px;
 }
 
 .feature-button:hover {
-  background-color: #005a4b;
+  background-color: #218838;
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography, Button, keyframes } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Groups";
+import { useNavigate } from "react-router-dom";
 
 // Keyframes for animations
 const floatAnimation = keyframes`
@@ -60,6 +61,7 @@ function StatsCard({ title, value, icon, bgColor, position }) {
 }
 
 function HeroContent() {
+  const navigate = useNavigate();
   return (
     <Box sx={{ position: "relative", overflow: "hidden" }}>
       {/* Background Section */}
@@ -130,14 +132,19 @@ function HeroContent() {
             marginTop: "2rem",
           }}
         >
-          <Button variant="contained" sx={{ backgroundColor: "#26D07C" }}>
-            Explore
+          <Button
+            onClick={() => navigate("/selectBoard")}
+            s
+            variant="contained"
+            sx={{ backgroundColor: "#26D07C" }}
+          >
+            Join as Student
           </Button>
           <Button
             variant="outlined"
             sx={{ borderColor: "#fff", color: "#fff" }}
           >
-            Purchase
+            Join As Teacher
           </Button>
         </Box>
 

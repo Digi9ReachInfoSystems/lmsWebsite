@@ -4,26 +4,26 @@ import "./MeetOurTeacher.css";
 function MeetOurTeacher() {
   const mentors = [
     {
-      name: "Darrell Steward",
-      title: "UX/UI designer",
+      name: "Roshan Thakur",
+      title: "English Teacher",
       image:
-        "https://i.pinimg.com/originals/83/10/ab/8310ab709f70727b92fa1a6917897c82.jpg", // Replace with the correct image path
+        "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
       rating: 4.8,
       reviews: "44k",
     },
     {
-      name: "Kathryn Murphy",
-      title: "Data Scientist",
+      name: "Sunil Pal",
+      title: "Science Teacher",
       image:
-        "https://i.pinimg.com/originals/83/10/ab/8310ab709f70727b92fa1a6917897c82.jpg", // Replace with the correct image path
+        "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
       rating: 4.8,
       reviews: "44k",
     },
     {
-      name: "Brooklyn Simmons",
-      title: "Data Analyst",
+      name: "Deepak Yadav",
+      title: "Maths Teacher",
       image:
-        "https://i.pinimg.com/originals/83/10/ab/8310ab709f70727b92fa1a6917897c82.jpg", // Replace with the correct image path
+        "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
       rating: 4.8,
       reviews: "44k",
     },

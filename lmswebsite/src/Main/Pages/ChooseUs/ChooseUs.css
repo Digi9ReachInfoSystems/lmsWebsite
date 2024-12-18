@@ -3,7 +3,7 @@
   padding: 50px 20px;
   font-family: Arial, sans-serif;
   color: #333;
-  background-color: #f9f9f9;
+  background-color: #fff;
 }
 
 .heading h2 {
@@ -12,17 +12,20 @@
    */
   text-align: center;
   color: #00c897;
-  /* background-color: #FFDE59; */
-  margin-bottom: 10px;
+  background-color: #fff;
+  /* margin-bottom: 10px; */
   text-transform: uppercase;
 }
 
 .heading p {
   font-size: 1rem;
-  color: #555;
-  margin-bottom: 40px;
+  /* color: #555; */
+  /* margin-bottom: 40px; */
   line-height: 1.5;
-  max-width: 600px;
+  max-width: 100%;
+  height: 100%;
+  background-color: #fff;
+  /* width: 100vw; */
   margin-left: auto;
   margin-right: auto;
   text-align: center;
