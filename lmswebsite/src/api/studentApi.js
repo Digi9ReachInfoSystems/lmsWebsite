@@ -186,3 +186,14 @@ export const getStudentscheduleForSevenDaysById = async (studentId) => {
     throw error;
   }
 }
+
+export  const updateStudent = async (studentId, studentData) => {
+  try {
+    const response = await api.put(`/students/update/${studentId}`, studentData);
+    console.log('Student updated successfully:', response.data);
+    return response.data; // Return the updated student data
+  } catch (error) {
+    console.error('Error updating student:', error.response?.data || error.message);
+    throw error; // Throw error for further handling
+  }
+};

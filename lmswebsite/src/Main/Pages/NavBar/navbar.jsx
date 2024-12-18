@@ -56,6 +56,14 @@ function HeaderSection({ scrollToSection }) {
     }
   };
 
+
+  const navigate = useNavigate();
+
+  const handleSelectBoard = () => {
+    navigate("/selectBoard"); // Navigate to the /class route
+  };
+
+
   const handleClassMouseEnter = async (classId) => {
     setHoveredClassId(classId);
     if (!packages[classId]) {
@@ -175,7 +183,7 @@ function HeaderSection({ scrollToSection }) {
                             >
                               {board.name}
                             </a>
-                            {hoveredBoardId === board._id &&
+                            {/* {hoveredBoardId === board._id &&
                               classes[board._id] && (
                                 <ul className="classes-menu">
                                   {classes[board._id].map((cls) => (
@@ -205,7 +213,7 @@ function HeaderSection({ scrollToSection }) {
                                     </li>
                                   ))}
                                 </ul>
-                              )}
+                              )} */}
                           </li>
                         ))}
                       </ul>
@@ -324,6 +332,7 @@ function HeaderSection({ scrollToSection }) {
                 marginBottom: "10px",
               },
             }}
+            onClick={handleSelectBoard}
           >
             Log in
           </Button>

@@ -42,21 +42,13 @@ function BoardScreen() {
     <div>
       <HeaderSection />
       <div className="board-container">
-        {loading ? (
-          // Show loader while loading
-          <div className="loader-container">
-            <div className="spinner"></div>
-            <p>Loading boards...</p>
-          </div>
-        ) : (
-          <>
-            <div className="header">
-              <h3>
-                <span className="black-text">Select Your</span>{" "}
-                <span className="green-text">Board</span>
-              </h3>
-              <p>Choose Your Board</p>
-            </div>
+        <div className="header">
+          <h3>
+            <span className="black-text">Select Your</span>{" "}
+            <span className="green-text">Board</span>
+          </h3>
+          <p>Choose Your Board</p>
+        </div>
 
             {error && <p className="error-message">{error}</p>}
 
@@ -76,13 +68,22 @@ function BoardScreen() {
               ))}
             </div>
 
-            <div className="navigation">
-              <button className="next-btn" onClick={handleContinue}>
-                Continue
-              </button>
-            </div>
-          </>
-        )}
+        {/* Navigation */}
+        <div className="navigation">
+          <button
+            className="next-btn"
+            // disabled={!selectedBoardId}
+            onClick={handleContinue}
+          >
+            Continue
+          </button>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="progressBar">
+          <div className="progress" style={{ width: "20%" }}></div>
+        </div>
+        <p className="step-info">Step 1 out of 5</p>
       </div>
     </div>
   );
