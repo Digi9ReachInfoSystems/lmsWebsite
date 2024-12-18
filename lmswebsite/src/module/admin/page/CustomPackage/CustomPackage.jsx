@@ -5,6 +5,7 @@ import { Container, SearchContainer } from "./CustomPackage.style";
 import {createPaymentForCustomPackage} from "../../../../api/paymentsApi";
 import Animation from "../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
+import { updateStudent } from "../../../../api/studentApi";
 
 const CustomPackage = () => {
   const [packages, setPackages] = useState([]);
@@ -80,10 +81,14 @@ const CustomPackage = () => {
       return;
     }
     try {
+      console.log("selectedPackage", selectedPackage);
+      const updateStudentData= await updateStudent(selectedPackage.student_id._id,{updateData:{
+        duration: duration.toString()
+      }})
       const paymentData = await createPaymentForCustomPackage({
         package_id: selectedPackage._id,
         amount: editedPrice,
-        student_id: selectedPackage.student_id,
+        student_id: selectedPackage.student_id._id,
         duration: duration
       })
       console.log("Payment data:", paymentData);

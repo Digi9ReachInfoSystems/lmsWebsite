@@ -57,7 +57,7 @@ const Login = () => {
        console.log(" login studentData",studentData);
        
         if(studentData.student.custom_package_status == "no_package"&&studentData.student.is_paid==false){
-          navigate("/paymentScreen")
+          navigate("/student")
         }else{
           navigate("/student/dashboard");
         }
