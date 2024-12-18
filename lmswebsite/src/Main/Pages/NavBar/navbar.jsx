@@ -38,8 +38,6 @@ function HeaderSection({ scrollToSection }) {
     }
   };
 
-  const navigate = useNavigate();
-
   const handleClick = () => {
     navigate("/selectBoard"); // Navigate to the Select Board page
   };
@@ -56,13 +54,11 @@ function HeaderSection({ scrollToSection }) {
     }
   };
 
-
   const navigate = useNavigate();
 
   const handleSelectBoard = () => {
     navigate("/selectBoard"); // Navigate to the /class route
   };
-
 
   const handleClassMouseEnter = async (classId) => {
     setHoveredClassId(classId);
@@ -332,7 +328,6 @@ function HeaderSection({ scrollToSection }) {
                 marginBottom: "10px",
               },
             }}
-            onClick={handleSelectBoard}
           >
             Log in
           </Button>
