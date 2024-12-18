@@ -7,14 +7,33 @@ import {
 } from "../../../../api/teachersApplicationApi";
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast from react-toastify
 import "react-toastify/dist/ReactToastify.css";
-import Animation from "../../../admin/assets/Animation.json"; 
+import Animation from "../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
+import {
+  Table,
+  Input,
+  Button,
+  Select,
+  Modal,
+  Form,
+  Upload,
+  message,
+  DatePicker,
+} from "antd";
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from "firebase/auth";
+import { auth } from "../../../../config/firebaseConfig";
+import { signupUser } from "../../../../api/authApi";
+
 const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const navigate = useNavigate();
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  
+  const [form] = Form.useForm(); // Ant Design form instance
+
 
   useEffect(() => {
     const fetchTeacherDetails = async () => {
@@ -38,6 +57,49 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const handleApprove = async () => {
     try {
       await approveTeacherApplication(teacher_Id);
+      toast.success("Application approved successfully!");
+      closeModal();
+    } catch (error) {
+      console.error("Error approving application:", error);
+      toast.error("Failed to approve the application.");
+    }
+  };
+
+  const handleonFinish = async (values) => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const user = userCredential.user;
+      const oldSessionData = JSON.parse(localStorage.getItem("sessionData"));
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({
+          accessToken: user.accessToken,
+          refreshToken: userCredential._tokenResponse.refreshToken,
+        })
+      );
+      const userData = await signupUser({
+        role: "teacher",
+        student_name: values.name,
+        email: values.email,
+        access_token: user.accessToken,
+        refresh_token: userCredential._tokenResponse.refreshToken,
+      });
+      await approveTeacherApplication(teacher_Id, {
+        microsoft_id: values.microsoft_id,
+        microsoft_password: values.password,
+        microsoft_principle_name:values.email,
+        auth_id:user.uid,
+        user_id:userData.user._id,
+      });
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify(oldSessionData)
+      );
+      console.log("Form Values:", values);
       toast.success("Application approved successfully!");
       closeModal();
     } catch (error) {
@@ -88,7 +150,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -114,13 +176,13 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
             <div className="teacher-details-item">
               <p>Name</p>
               <p className="Values">
-                {teacher?.application.teacher_id.name || "N/A"}
+                {teacher?.application?.teacher_name || "N/A"}
               </p>
             </div>
             <div className="teacher-details-item">
               <p>Email</p>
               <p className="Values">
-                {teacher?.application.teacher_id.email || "Na"}
+                {teacher?.application?.email || "Na"}
               </p>
             </div>
           </div>
@@ -174,9 +236,50 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         <button onClick={handleViewResume} className="view-resume-btn">
           View Resume
         </button>
-        <button onClick={handleApprove} className="approve-btn">
+
+        <Form form={form} layout="vertical" onFinish={handleonFinish}>
+          {/* Name */}
+          <Form.Item
+            label="Microsoft ID"
+            name="microsoft_id"
+            rules={[
+              { required: true, message: "Please enter the Microsoft ID" },
+            ]}
+          >
+            <Input placeholder="Enter email" />
+          </Form.Item>
+
+          {/* Email */}
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Please enter the email" },
+              { type: "email", message: "Please enter a valid email" },
+            ]}
+          >
+            <Input placeholder="Enter email" />
+          </Form.Item>
+          <Form.Item
+            label="Password"
+            name="password"
+            rules={[
+              { required: true, message: "Please enter the password" },
+              { type: "password", message: "Please enter a valid password" },
+            ]}
+          >
+            <Input placeholder="Enter email" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={false}>
+              Approve
+            </Button>
+          </Form.Item>
+        </Form>
+
+        {/* <button onClick={handleApprove} className="approve-btn">
           Approve
-        </button>
+        </button> */}
       </div>
     </TeacherApplicationFormReviewWrap>
   );
