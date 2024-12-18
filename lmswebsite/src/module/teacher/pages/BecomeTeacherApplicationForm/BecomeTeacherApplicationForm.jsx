@@ -5,7 +5,7 @@ import { Form, Input, Select, Upload, Button, message, DatePicker } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Header from "../../components/Header/Header";
 import LMS from "../../components/LMS/LMS";
-import BecomeTeacherLogo from "../../assets/BecomeTeacherLogo.png";
+import BecomeTeacherLogo from "../../assets/becomeTeacherLogo.png";
 import {
   getTeacherApplicationsByUserId,
   submitTeacherApplication,
