@@ -11,19 +11,22 @@ function SelectType() {
   const [error, setError] = useState(null); // Error state
   const navigate = useNavigate();
 
-  const selectedSubjects = JSON.parse(localStorage.getItem("selectedSubjects"));
+  // Use lazy initialization to fetch selected subjects only once
+  const [selectedSubjects] = useState(() => {
+    return JSON.parse(localStorage.getItem("selectedSubjects"));
+  });
 
   useEffect(() => {
     if (!selectedSubjects || selectedSubjects.length === 0) {
-      navigate("/");
+      navigate("/"); // Navigate only if no subjects are present
       return;
     }
 
-    // Fetch batch types from API
     const fetchBatchTypes = async () => {
       try {
         const response = await getAllTypeOfBatches();
-        setBatchTypes(response); // API should return an array of batch objects
+        console.log("Batch types fetched successfully:", response);
+        setBatchTypes(response); // Set fetched batch types
       } catch (error) {
         setError("Failed to fetch batch types. Please try again.");
       } finally {
@@ -32,7 +35,7 @@ function SelectType() {
     };
 
     fetchBatchTypes();
-  }, [navigate, selectedSubjects]);
+  }, []); // Empty dependency array ensures this runs only once
 
   // Handle batch selection
   const handleBatchSelect = (batchId) => {
