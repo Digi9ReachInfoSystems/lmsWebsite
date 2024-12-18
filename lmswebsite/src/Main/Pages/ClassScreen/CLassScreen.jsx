@@ -13,6 +13,7 @@ function ClassScreen() {
   ); // Retain selection on refresh
   const navigate = useNavigate();
 
+  // Retrieve selected board outside, as it's needed for conditional checks
   const selectedBoard = JSON.parse(localStorage.getItem("selectedBoard"));
 
   useEffect(() => {
@@ -34,7 +35,7 @@ function ClassScreen() {
     };
 
     fetchClasses();
-  }, [selectedBoard]);
+  }, [selectedBoard._id]); // Use only the id to ensure stable dependency
 
   const handleGoBack = () => {
     navigate("/"); // Navigate back to board selection
@@ -81,7 +82,7 @@ function ClassScreen() {
                 <div
                   key={classItem.id}
                   className={`skill-card ${
-                    selectedClass?.id === classItem.id ? "selected" : ""
+                    selectedClass?._id === classItem._id ? "selected" : ""
                   }`}
                   onClick={() => handleClassSelection(classItem)}
                 >
@@ -103,7 +104,6 @@ function ClassScreen() {
             <div className="navigation">
               <button
                 className="next-btn"
-                disabled={!selectedClass}
                 onClick={handleContinue}
               >
                 Continue
