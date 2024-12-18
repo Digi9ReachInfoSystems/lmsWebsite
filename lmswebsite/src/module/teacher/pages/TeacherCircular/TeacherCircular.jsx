@@ -3,9 +3,12 @@ import { Table, Button, Input, Modal, Image, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
 import { TeacherCircularWrap } from "./TeacherCircular.styles";
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
-import { Heading, PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import {
+  Heading,
+  PageContainer,
+} from "../../../../style/PrimaryStyles/PrimaryStyles";
 
 const TeacherCircular = () => {
   const [circulars, setCirculars] = useState([]);
@@ -13,13 +16,13 @@ const TeacherCircular = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   // Fetch circular data
   useEffect(() => {
     const fetchCirculars = async () => {
       try {
         setLoading(true);
-        const data = await getAllCircularNotificationsApi('teacher');
+        const data = await getAllCircularNotificationsApi("teacher");
         if (data?.circularNotifications) {
           const formattedData = data.circularNotifications.map((circular) => ({
             key: circular._id, // Unique key for Ant Design Table
@@ -112,57 +115,50 @@ const [loading, setLoading] = useState(true);
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
-}
+  }
   return (
     <PageContainer>
-
-
-      <TeacherCircularWrap>{circulars ?
-        <>
-          <div className="header">
-            <Heading>Created Circulars</Heading>
-            <Input
-              placeholder="Search by Circular Name"
-              value={searchInput}
-              onChange={handleSearch}
-              allowClear
-              prefix={<SearchOutlined />}
-              style={{ width: 300 }}
+      <TeacherCircularWrap>
+        {circulars ? (
+          <>
+            <div className="header">
+              <Heading>Created Circulars</Heading>
+              <Input
+                placeholder="Search by Circular Name"
+                value={searchInput}
+                onChange={handleSearch}
+                allowClear
+                prefix={<SearchOutlined />}
+                style={{ width: 300 }}
+              />
+            </div>
+            <Table
+              dataSource={filteredCirculars}
+              columns={columns}
+              pagination={{ pageSize: 5 }}
+              bordered
             />
-          </div>
-          <Table
-            dataSource={filteredCirculars}
-            columns={columns}
-            pagination={{ pageSize: 5 }}
-            bordered
-          />
-          <Modal
-            // title="View Image"
-            open={isModalVisible}
-            onCancel={closeModal}
-            footer={null}
-            centered
-          >
-            <Image src={selectedImage} alt="Circular" width="100%" />
-          </Modal>
-        </>
-        :
-        <Lottie
-          animationData={Animation}
-          loop={true}
-        />
-      }
+            <Modal
+              // title="View Image"
+              open={isModalVisible}
+              onCancel={closeModal}
+              footer={null}
+              centered
+            >
+              <Image src={selectedImage} alt="Circular" width="100%" />
+            </Modal>
+          </>
+        ) : (
+          <Lottie animationData={Animation} loop={true} />
+        )}
       </TeacherCircularWrap>
     </PageContainer>
   );
