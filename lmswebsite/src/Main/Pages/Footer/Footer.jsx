@@ -1,5 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
+import {
+  FaFacebook,
+  FaLinkedin,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+} from "react-icons/fa";
 
 function Footer() {
   return (
@@ -39,8 +47,31 @@ function Footer() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>Privacy Policy · Terms and conditions</p>
-        <p>Dribbble · Behance · Instagram</p>
+        <p>
+        <Link to="/privacy-policy" className="footer-link">Privacy Policy</Link> ·{" "}
+        <Link to="/TermsOfUse" className="footer-link">Terms and Conditions</Link>·{" "}
+        <Link to="/RefundCancellationPolicy" className="footer-link">Refund Cancellation Policy</Link> ·{" "}
+        <Link to="/DisclaimerPolicy" className="footer-link">Disclaimer Policy</Link> ·{" "}
+        </p>
+        <p>
+   <div className="footer-social-icons-new">
+           <a href="#" aria-label="Facebook">
+             <FaFacebook />
+           </a>
+           <a href="#" aria-label="Instagram">
+             <FaInstagram />
+           </a>
+           <a href="#" aria-label="LinkedIn">
+             <FaLinkedin />
+           </a>
+           {/* <a href="#" aria-label="Twitter">
+             <FaTwitter />
+           </a>
+           <a href="#" aria-label="YouTube">
+             <FaYoutube />
+           </a> */}
+         </div>
+        </p>
       </div>
     </footer>
   );

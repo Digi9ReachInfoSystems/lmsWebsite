@@ -68,6 +68,7 @@ function ChooseUs() {
                 alt={feature.title}
                 className="feature-icon"
               />
+             </div>
               <h3>{feature.title}</h3>
               <p>{feature.description}</p>
               <a href="#readmore" className="read-more">
