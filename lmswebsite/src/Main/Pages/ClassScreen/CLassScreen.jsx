@@ -8,22 +8,20 @@ function ClassScreen() {
   const [classes, setClasses] = useState([]); // State to store fetched classes
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
-  const [selectedClass, setSelectedClass] = useState(null); // Selected class state
+  const [selectedClass, setSelectedClass] = useState(
+    JSON.parse(localStorage.getItem("selectedClass")) || null
+  ); // Retain selection on refresh
   const navigate = useNavigate();
 
-  // Retrieve the selected board from localStorage
   const selectedBoard = JSON.parse(localStorage.getItem("selectedBoard"));
 
   useEffect(() => {
-    // Validate selected board
-    console.log("Selected Board:hey ", selectedBoard);
     if (!selectedBoard || !selectedBoard._id) {
       setError("No board selected. Please go back and select a board.");
       setLoading(false);
       return;
     }
 
-    // Fetch classes for the selected board
     const fetchClasses = async () => {
       try {
         const response = await getClassesByBoardId(selectedBoard._id); // API Call
@@ -38,15 +36,17 @@ function ClassScreen() {
     fetchClasses();
   }, [selectedBoard]);
 
-  // Navigate back to BoardScreen if no board is selected
   const handleGoBack = () => {
     navigate("/"); // Navigate back to board selection
   };
 
-  // Handle Continue to Subjects page
+  const handleClassSelection = (classItem) => {
+    setSelectedClass(classItem);
+    localStorage.setItem("selectedClass", JSON.stringify(classItem));
+  };
+
   const handleContinue = () => {
     if (selectedClass) {
-      localStorage.setItem("selectedClass", JSON.stringify(selectedClass));
       navigate("/subjectHomePage"); // Navigate to the subjects page
     }
   };
@@ -63,7 +63,6 @@ function ClassScreen() {
           <p>Choose Your Class</p>
         </div>
 
-        {/* Error State */}
         {error && (
           <div className="error-container">
             <p className="error-message">{error}</p>
@@ -73,37 +72,43 @@ function ClassScreen() {
           </div>
         )}
 
-        {/* Loading State */}
         {loading && <p>Loading classes...</p>}
 
-        {/* Display Classes */}
         {!loading && !error && (
-          <div className="options-container">
-            {classes.map((classItem) => (
-              <div
-                key={classItem.id}
-                className={`skill-card ${
-                  selectedClass?.id === classItem.id ? "selected" : ""
-                }`}
-                onClick={() => setSelectedClass(classItem)}
-              >
-                <div className="skill-icon"></div>
-                <h4>{classItem.className}</h4>
-              </div>
-            ))}
-          </div>
-        )}
+          <div>
+            <div className="options-container">
+              {classes.map((classItem) => (
+                <div
+                  key={classItem.id}
+                  className={`skill-card ${
+                    selectedClass?.id === classItem.id ? "selected" : ""
+                  }`}
+                  onClick={() => handleClassSelection(classItem)}
+                >
+                  <div className="skill-icon"></div>
+                  <h4>{classItem.className}</h4>
+                </div>
+              ))}
+            </div>
 
-        {/* Navigation Buttons */}
-        {!loading && !error && (
-          <div className="navigation">
-            <button
-              className="next-btn"
-              disabled={!selectedClass} // Disable button if no class selected
-              onClick={handleContinue}
-            >
-              Continue
-            </button>
+            {/* Display Selected Class */}
+            {selectedClass && (
+              <div className="selected-class-info">
+                <p>
+                  Selected Class: <strong>{selectedClass.className}</strong>
+                </p>
+              </div>
+            )}
+
+            <div className="navigation">
+              <button
+                className="next-btn"
+                disabled={!selectedClass}
+                onClick={handleContinue}
+              >
+                Continue
+              </button>
+            </div>
           </div>
         )}
       </div>

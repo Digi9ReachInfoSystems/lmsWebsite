@@ -16,7 +16,7 @@ function SubjectScreen() {
   console.log("Selected Class:", selectedClass);
   useEffect(() => {
     // Check if selectedClass exists and has a valid _id
-   
+
     if (!selectedClass || !selectedClass._id) {
       setError("No class selected. Please go back and select a class.");
       setLoading(false);
@@ -40,10 +40,11 @@ function SubjectScreen() {
 
   // Toggle subject selection
   const toggleSelection = (subjectId) => {
-    setSelectedSubjects((prevSelected) =>
-      prevSelected.includes(subjectId)
-        ? prevSelected.filter((id) => id !== subjectId) // Deselect
-        : [...prevSelected, subjectId] // Select
+    setSelectedSubjects(
+      (prevSelected) =>
+        prevSelected.includes(subjectId)
+          ? prevSelected.filter((id) => id !== subjectId) // Deselect
+          : [...prevSelected, subjectId] // Select
     );
   };
 
@@ -69,7 +70,10 @@ function SubjectScreen() {
         {error && (
           <div className="error-container">
             <p className="error-message">{error}</p>
-            <button className="go-back-btn" onClick={() => navigate("/classHomePage")}>
+            <button
+              className="go-back-btn"
+              onClick={() => navigate("/classHomePage")}
+            >
               Go Back
             </button>
           </div>

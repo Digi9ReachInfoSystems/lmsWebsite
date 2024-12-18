@@ -29,7 +29,7 @@ import { Public, Subject } from "@mui/icons-material";
 import PublicRoute from "./module/admin/components/PublicRoute";
 import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
-// import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
+// import { Managecustom0BatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
 import ManagePayment from "./module/admin/page/managePayment/managePayment";
 import TeacherDashboardLayout from "./module/teacher/pages/TeacherDashboardLayout/TeacherDashboardLayout";
 // import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
@@ -105,12 +105,11 @@ function App() {
             path="/"
             element={
               <PublicRoute>
-                <BoardScreen />
+                <LandingPageFinal />
               </PublicRoute>
             }
             key=""
           ></Route>
-
           <Route
             path="/classHomePage"
             element={
@@ -120,8 +119,7 @@ function App() {
             }
             key=""
           ></Route>
-
-<Route
+          <Route
             path="/subjectHomePage"
             element={
               <PublicRoute>
@@ -130,7 +128,15 @@ function App() {
             }
             key=""
           ></Route>
-
+          <Route
+            path="/selectBoard"
+            element={
+              <PublicRoute>
+                <BoardScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
           <Route
             path="/selectType"
             element={
@@ -139,9 +145,16 @@ function App() {
               </PublicRoute>
             }
             key=""
+          ></Route>{" "}
+          <Route
+            path="/selectDuration"
+            element={
+              <PublicRoute>
+                <SelectDuration />
+              </PublicRoute>
+            }
+            key=""
           ></Route>
-
-
           <Route
             path="/login"
             element={
@@ -150,14 +163,12 @@ function App() {
               </PublicRoute>
             }
           />
-
           {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
           {/* <Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} /> */}
           <Route
             path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"
             element={<BatchesLandingPage />}
           />
-
           <Route path="/testingClass/:classId" element={<ClassDetailPage />} />
           <Route
             path="/testingPackage/:packageId"
@@ -166,13 +177,11 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/student" element={<StudentLandingPage />} />
-
           <Route path="/student/mode" element={<Mode />} />
           <Route
             path="/student/personal"
             element={<OneToOneStudentlandingPage />}
           />
-
           <Route
             path="/student/course/details"
             element={<StudentCourseDetailsPage />}
@@ -189,7 +198,6 @@ function App() {
             path="/student/package/expiryAlert"
             element={<PackageExpiryAlertPage />}
           />
-
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
             <Route index element={<StudentDashboardScreen />} />
             <Route
@@ -229,7 +237,6 @@ function App() {
               element={<RescheduleMeeting />}
             />
           </Route>
-
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route
             path="/teacher/dashboard"
@@ -346,12 +353,11 @@ function App() {
                 element={<ManageContentTable contentType="benefits" />}
               />
 
-              <Route 
-              path="typeOfBatch" 
-              element={<ManageContentTable contentType="typeOfBatch" />} 
+              <Route
+                path="typeOfBatch"
+                element={<ManageContentTable contentType="typeOfBatch" />}
               />
             </Route>
-
 
             <Route path="/admin/customPackage" element={<CustomPackage />} />
             <Route
