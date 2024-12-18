@@ -34,13 +34,13 @@ export const BoardDescription = styled.p`
   margin-right: auto;
 `;
 export const BoardDescription1 = styled.p`
-  text-align: center;
+  // text-align: center;
   color: #457b9d;
   // margin-bottom: 40px;
   font-size: 1.2em;
   // line-height: 1.5;
   // max-width: 800px;
-  margin-left: -220px;
+  // margin-left: -220px;
   // margin-right: auto;
 
 

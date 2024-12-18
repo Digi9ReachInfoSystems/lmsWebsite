@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Header1,  Subtitle  , Para} from './PrivacyAndCookiePolicy.style';
-import Header from "../../Main/Components/header/Header";
-import Footer from "../../Main/Components/Footer/Footer";
+import Header from "../../Main/Pages/NavBar/navbar";
+import Footer from "../../Main/Pages/Footer/Footer";
 const PrivacyAndCookiePolicy = () => {
   return (
     <>

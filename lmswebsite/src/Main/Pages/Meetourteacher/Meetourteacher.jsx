@@ -37,11 +37,19 @@ function MeetOurTeacher() {
       <div className="mentors-container">
         {mentors.map((mentor, index) => (
           <div key={index} className="mentor-card">
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
             <img
               src={mentor.image}
               alt={mentor.name}
               className="mentor-image"
             />
+           </div>
             <h3>{mentor.name}</h3>
             <p className="mentor-title">{mentor.title}</p>
             <p className="mentor-rating">
