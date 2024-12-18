@@ -14,7 +14,6 @@ function SelectType() {
   const selectedSubjects = JSON.parse(localStorage.getItem("selectedSubjects"));
 
   useEffect(() => {
-    // If no subjects selected, redirect back to subjects page
     if (!selectedSubjects || selectedSubjects.length === 0) {
       navigate("/");
       return;
@@ -37,14 +36,16 @@ function SelectType() {
 
   // Handle batch selection
   const handleBatchSelect = (batchId) => {
-    setSelectedBatch(batchId);
+    setSelectedBatch(batchId); // Only set the ID of the selected batch
   };
 
   // Handle Continue navigation
   const handleContinue = () => {
-    const selectedBatchData = batchTypes.find((batch) => batch._id.$oid === selectedBatch);
+    const selectedBatchData = batchTypes.find(
+      (batch) => batch._id === selectedBatch
+    );
     localStorage.setItem("selectedBatch", JSON.stringify(selectedBatchData));
-    navigate("/summary"); // Navigate to the next page
+    navigate("/selectDuration"); // Navigate to the next page
   };
 
   return (
@@ -68,22 +69,16 @@ function SelectType() {
           <div className="options-container">
             {batchTypes.map((batch) => (
               <div
-                key={batch._id.$oid}
+                key={batch._id} // Use batch._id directly
                 className={`batch-card ${
-                  selectedBatch === batch._id.$oid ? "selected" : ""
+                  selectedBatch === batch._id ? "selected" : ""
                 }`}
-                onClick={() => handleBatchSelect(batch._id.$oid)}
+                onClick={() => handleBatchSelect(batch._id)} // Pass unique batch._id
               >
-              <div className="batch-header">
-
-                <h4>{batch.mode}</h4>
-                <p className="price">{batch.price}/month</p>
-              </div>
-              {/* <ul className="features-list">
-                {batch.features.map((feature, index) => (
-                  <li key={index}>&#10003; {feature}</li>
-                ))}
-              </ul> */}
+                <div className="batch-header">
+                  <h4>{batch.mode}</h4>
+                  <p className="price">{batch.price}/month</p>
+                </div>
               </div>
             ))}
           </div>
