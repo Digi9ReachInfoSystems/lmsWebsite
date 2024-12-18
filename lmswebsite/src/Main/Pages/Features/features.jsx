@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import "./Features.css"; // Import the CSS file
-
+import "./features.css"; // Import the CSS file
 
 function Features() {
   const features = [
