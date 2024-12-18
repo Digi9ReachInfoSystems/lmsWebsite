@@ -84,6 +84,9 @@ import PackageDetailPage from "./pages/PackageDetailPage/PackageDetailPage";
 import PackageExpiryAlertPage from "./module/student/pages/PackageExpiryAlertPage/PackageExpiryAlertPage";
 import ForgotPasswordPage from "./pages/ForgotPassword/ForgotPasswordPage";
 import PrivacyAndCookiePolicy from "./pages/PrivacyAndCookiePolicy/PrivacyAndCookiePolicy";
+import TermsOfUse from "./pages/Terms Of Use/TermsOfUse";
+import RefundCancellationPolicy from "./pages/RefundCancellationPolicy/RefundCancellationPolicy";
+import DisclaimerPolicy from "./pages/DisclaimerPolicy/DisclaimerPolicy";
 import BatchesLandingPage from "./pages/BatchesDetailPage/BatchesLandingPage";
 import LandingPageFinal from "./Main/Pages/LandingPage";
 import BoardScreen from "./Main/Pages/BoardScreen/BoardScreen";
@@ -164,12 +167,10 @@ function App() {
               </PublicRoute>
             }
           />
-          {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
-          {/* <Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} /> */}
-          <Route
-            path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"
-            element={<BatchesLandingPage />}
-          />
+
+{/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
+<Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} />
+
           <Route path="/testingClass/:classId" element={<ClassDetailPage />} />
           <Route
             path="/testingPackage/:packageId"
@@ -200,6 +201,11 @@ function App() {
             path="/student/package/expiryAlert"
             element={<PackageExpiryAlertPage />}
           />
+          <Route path="/privacy-policy" element={<PrivacyAndCookiePolicy />} />
+          <Route path="/TermsOfUse" element={<TermsOfUse />} />
+          <Route path="/RefundCancellationPolicy" element={<RefundCancellationPolicy />} />
+          <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />      
+
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
             <Route index element={<StudentDashboardScreen />} />
             <Route

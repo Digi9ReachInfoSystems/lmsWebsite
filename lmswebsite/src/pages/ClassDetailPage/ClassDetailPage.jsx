@@ -1,5 +1,3 @@
-// src/pages/SubjectDetailsPage/SubjectDetailsPage.jsx
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPackageByClassId } from "../../api/packagesApi";
@@ -19,15 +17,15 @@ import {
   PackageMode,
   SubjectList,
   SubjectItem,
-  BackButton,
-  StyledButton,
   PackageItem,
+  StyledButton,
 } from "./ClassDetailPage.style";
 import {
   PageContainer,
   PrimaryButton,
 } from "../../style/PrimaryStyles/PrimaryStyles";
-import Header from "../../module/student/components/Header/Header";
+import Navbar from "../../Main/Pages/NavBar/navbar"
+// import Header from "../../Main/Components/header/Header";
 import Footer from "../../Main/Components/Footer/Footer";
 import HaveQuestions from "../BatchesDetailPage/BatchesLandingPageComponents/HaveQuestions";
 
@@ -37,7 +35,8 @@ const ClassDetailPage = () => {
   const [packages, setPackages] = useState([]);
   const [loadingPackages, setLoadingPackages] = useState(true);
   const [packagesError, setPackagesError] = useState(null);
-  const mode = "normal";
+  const mode = "normal"; // Default mode for fetching packages
+
   useEffect(() => {
     if (!classId) {
       setPackagesError(new Error("No class ID provided"));
@@ -46,11 +45,9 @@ const ClassDetailPage = () => {
     }
 
     const fetchPackages = async () => {
-      console.log("classId", classId);
       try {
         const packagesData = await getPackageByClassId(classId, "normal");
         const packagesData2 = await getPackageByClassId(classId, "personal");
-        console.log("packagesData", packagesData);
         setPackages(packagesData.concat(packagesData2));
         setLoadingPackages(false);
       } catch (error) {
@@ -90,9 +87,8 @@ const ClassDetailPage = () => {
 
   return (
     <>
-      <Header />
+    <Navbar/>
       <PageContainer>
-        {/* <BackButton onClick={handleBackClick}>← Back to Classes</BackButton> */}
         <PackageItem>Pricing plans</PackageItem>
         <Heading>Packages Details for Class</Heading>
         <PackageItem>
@@ -105,44 +101,48 @@ const ClassDetailPage = () => {
           </NoPackagesMessage>
         ) : (
           <PackageGrid>
-            {packages.map((pkg) => (
-              <PackageCard key={pkg._id}>
-                <PackageMode>Basic Plan</PackageMode>
-                <PackagePrice>
-                  {" "}
-                  {pkg.price}/ <strong className="month">Month</strong>
-                </PackagePrice>
-                <PackageTitle>{pkg.package_name}</PackageTitle>
-                {/* {pkg.image && <PackageImage src={pkg.image} alt={pkg.package_name} />} */}
-                {/* <PackageDescription>{pkg.description}</PackageDescription> */}
-                {pkg.features && pkg.features.length > 0 && (
-                  <div>
-                    <strong>Features:</strong>
-                    <PackageFeatures>
-                      {pkg.features.map((feature, index) => (
-                        <li key={index}>{feature}</li>
-                      ))}
-                    </PackageFeatures>
-                  </div>
-                )}
+            {packages.map((pkg) => {
+              // Determine package type based on mode
+              const packageType =
+                pkg.mode === "normal" ? "Basic Plan" : "Premium Plan";
 
-                {pkg.subject_id && pkg.subject_id.length > 0 && (
-                  <div>
-                    <strong>Subjects:</strong>
-                    <SubjectList>
-                      {pkg.subject_id.map((subject) => (
-                        <SubjectItem key={subject._id}>
-                          {subject.subject_name}
-                        </SubjectItem>
-                      ))}
-                    </SubjectList>
-                    <StyledButton onClick={handleButtonClick}>
-                      Enroll Now
-                    </StyledButton>
-                  </div>
-                )}
-              </PackageCard>
-            ))}
+              return (
+                <PackageCard key={pkg._id}>
+                  <PackageMode>{packageType}</PackageMode>
+                  <PackagePrice>
+                    {pkg.price}/- <strong className="month">Month</strong>
+                  </PackagePrice>
+                  <PackageTitle>{pkg.package_name}</PackageTitle>
+                  {pkg.features && pkg.features.length > 0 && (
+                    <div className="Features">
+                      <strong>Features:</strong>
+                      <PackageFeatures>
+                        {pkg.features.map((feature, index) => (
+                          <li key={index}>{feature}</li>
+                        ))}
+                      </PackageFeatures>
+                    </div>
+                  )}
+
+                  {pkg.subject_id && pkg.subject_id.length > 0 && (
+                    <div className="subject">
+                      <strong>Subjects:</strong>
+                      <SubjectList>
+                        {pkg.subject_id.map((subject) => (
+                          <SubjectItem key={subject._id}>
+                            {subject.subject_name}
+                          </SubjectItem>
+                        ))}
+                      </SubjectList>
+                    </div>
+                  )}
+
+                  <StyledButton onClick={handleButtonClick}>
+                    Enroll Now
+                  </StyledButton>
+                </PackageCard>
+              );
+            })}
           </PackageGrid>
         )}
       </PageContainer>

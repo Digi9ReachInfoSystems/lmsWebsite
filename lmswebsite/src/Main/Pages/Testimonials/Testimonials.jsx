@@ -40,7 +40,12 @@ function Testimonials() {
           >
             <div
               className="testimonial-header"
-              style={{ backgroundColor: testimonial.color }}
+              style={{
+                backgroundColor: testimonial.color,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
             >
               <img
                 src={testimonial.image}
