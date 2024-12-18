@@ -1,0 +1,121 @@
+/* Drawer Overlay */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  background-color: #f9fafb;
+  box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  animation: slide-in 0.3s ease-in-out;
+  overflow-y: auto;
+  font-family: "Poppins", sans-serif;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Drawer Content */
+.drawer-content {
+  padding: 2rem;
+  color: #333;
+}
+
+.drawer-title {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #2c3e50;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  cursor: pointer;
+  color: #888;
+}
+
+.close-btn:hover {
+  color: #333;
+}
+
+/* Summary Card */
+.summary-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  font-size: 1rem;
+}
+
+.summary-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.summary-value {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.total-amount {
+  border-top: 2px solid #e0e0e0;
+  padding-top: 1rem;
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #00c897;
+}
+
+/* Responsive Design */
+@media (max-width: 500px) {
+  .drawer-overlay {
+    max-width: 100%;
+  }
+}
+
+/* Sign In Button */
+.signin-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.signin-btn {
+  background-color: #00c897;
+  color: #fff;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.signin-btn:hover {
+  background-color: #00c897;
+}

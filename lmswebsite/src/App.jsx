@@ -25,11 +25,11 @@ import CustomerQuery from "./module/admin/page/CustomerQuery/CustomerQuery";
 import CustomerQueryFormView from "./module/admin/page/CustomerQueryViewForm/CustomerQueryViewForm";
 import BecomeTeacherApplicationForm from "./module/teacher/pages/BecomeTeacherApplicationForm/BecomeTeacherApplicationForm";
 import LandingPage from "./components/common/LandingPage";
-import { Public } from "@mui/icons-material";
+import { Public, Subject } from "@mui/icons-material";
 import PublicRoute from "./module/admin/components/PublicRoute";
 import UserManagement from "./module/admin/page/UserManagement/UserManagement";
 import manageCustomBatch from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch";
-// import { ManagecustomBatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
+// import { Managecustom0BatchWrap } from "./module/admin/page/manageCustomBatchApproval/manageCustomBatch.styles";
 import ManagePayment from "./module/admin/page/managePayment/managePayment";
 import TeacherDashboardLayout from "./module/teacher/pages/TeacherDashboardLayout/TeacherDashboardLayout";
 // import { TeacherDashboardScreenWrap } from "./module/teacher/pages/TeacherDashboard/TeacherDashboardScreen.styles";
@@ -89,7 +89,9 @@ import LandingPageFinal from "./Main/Pages/LandingPage";
 import BoardScreen from "./Main/Pages/BoardScreen/BoardScreen";
 import ClassScreen from "./Main/Pages/ClassScreen/CLassScreen";
 import SubjectScreen from "./Main/Pages/SubjectScreen/SubjectScreen";
-import SelectTypeScreen from "./Main/Pages/SelectType/SelectType";
+// import SelectTypeScreen from "./Main/Pages/SelectType/SelectType";
+import SelectDuration from "./Main/Pages/SelectDuration/SelectDuration";
+import SelectType from "./Main/Pages/SelectType/SelectType";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -108,7 +110,51 @@ function App() {
             }
             key=""
           ></Route>
-
+          <Route
+            path="/classHomePage"
+            element={
+              <PublicRoute>
+                <ClassScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+          <Route
+            path="/subjectHomePage"
+            element={
+              <PublicRoute>
+                <SubjectScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+          <Route
+            path="/selectBoard"
+            element={
+              <PublicRoute>
+                <BoardScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+          <Route
+            path="/selectType"
+            element={
+              <PublicRoute>
+                <SelectType />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>{" "}
+          <Route
+            path="/selectDuration"
+            element={
+              <PublicRoute>
+                <SelectDuration />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
           <Route
             path="/login"
             element={
@@ -117,14 +163,12 @@ function App() {
               </PublicRoute>
             }
           />
-
           {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
           {/* <Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} /> */}
           <Route
             path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"
             element={<BatchesLandingPage />}
           />
-
           <Route path="/testingClass/:classId" element={<ClassDetailPage />} />
           <Route
             path="/testingPackage/:packageId"
@@ -133,13 +177,11 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/student" element={<StudentLandingPage />} />
-
           <Route path="/student/mode" element={<Mode />} />
           <Route
             path="/student/personal"
             element={<OneToOneStudentlandingPage />}
           />
-
           <Route
             path="/student/course/details"
             element={<StudentCourseDetailsPage />}
@@ -156,7 +198,6 @@ function App() {
             path="/student/package/expiryAlert"
             element={<PackageExpiryAlertPage />}
           />
-
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
             <Route index element={<StudentDashboardScreen />} />
             <Route
@@ -196,7 +237,6 @@ function App() {
               element={<RescheduleMeeting />}
             />
           </Route>
-
           <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route
             path="/teacher/dashboard"
@@ -313,12 +353,11 @@ function App() {
                 element={<ManageContentTable contentType="benefits" />}
               />
 
-              <Route 
-              path="typeOfBatch" 
-              element={<ManageContentTable contentType="typeOfBatch" />} 
+              <Route
+                path="typeOfBatch"
+                element={<ManageContentTable contentType="typeOfBatch" />}
               />
             </Route>
-
 
             <Route path="/admin/customPackage" element={<CustomPackage />} />
             <Route

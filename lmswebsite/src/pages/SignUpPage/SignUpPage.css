@@ -1,0 +1,102 @@
+.signup-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Poppins", sans-serif;
+}
+
+.image-section {
+  flex: 0.6;
+  width: 20vw;
+  background-color: #00c897;
+  color: #fff;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-section img {
+  width: 80%;
+  /* max-width: 400px; */
+}
+
+.image-section h2 {
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
+.image-section p {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.form-section {
+  flex: 1;
+  padding-top: 5rem;
+  height: 100vh;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  background-color: #fff;
+  margin-bottom: auto;
+}
+
+.form-heading {
+  font-size: 2rem;
+  color: #0c4b4b;
+  text-align: left;
+}
+
+.form-subheading {
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.signup-form .form-group {
+  margin-bottom: 1.2rem;
+}
+
+.signup-form label {
+  font-weight: 600;
+  color: #333;
+}
+
+.signup-form input,
+.signup-form .ant-picker,
+.signup-form .ant-radio-group {
+  width: 100%;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.signup-form input[readonly] {
+  background-color: #f1f1f1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+}
+
+.confirm-btn {
+  background-color: #00c897;
+  color: #fff;
+  margin-right: 1rem;
+  width: 20vw;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

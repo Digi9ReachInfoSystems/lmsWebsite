@@ -1,158 +1,148 @@
-import React, { useEffect, useState } from "react";
-import {
-  Container,
-  ImageSection,
-  FormSection,
-  ScrollableForm,
-  Heading,
-} from "./SignUpPage.style";
-import SignUpImage from "../../assets/SignUpImage.png"; // Import image
-import { Tabs, message } from "antd";
+import React, { useState, useEffect } from "react";
+import "./SignUpPage.css";
+import { message, Radio, DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
-import { getBoards } from "../../api/boardApi";
-import StudentForm from "../SignUpPage/signUpPageStudentForm";
-import TeacherForm from "../SignUpPage/signUpPageTeacherForm";
-
-const { TabPane } = Tabs;
+import SignUpImage from "../../assets/SignUpImage.png"; // Replace with your image path
 
 const SignUpPage = () => {
-  const [role, setRole] = useState("teacher");
-  const [classes, setClasses] = useState([]);
-  const [board, setBoard] = useState([]);
-  const [selectedBoard, setSelectedBoard] = useState("");
-  const [studentProfileImage, setStudentProfileImage] = useState("");
+  const [formData, setFormData] = useState({
+    board: "",
+    className: "",
+    subject: "",
+    phoneNumber: "",
+    email: "",
+    name: "",
+    dob: "",
+    password: "",
+    gender: "",
+    profileImage: null,
+  });
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchBoards = async () => {
-      try {
-        const boardData = await getBoards();
-        console.log("Fetched Boards:", boardData);
-        setBoard(boardData);
-      } catch (error) {
-        console.error("Error fetching boards:", error);
-        message.error("Failed to load boards. Please try again later.");
-      }
-    };
+    // Fetch saved data from previous pages
+    const board = JSON.parse(localStorage.getItem("selectedBoard")) || {};
+    const classData = JSON.parse(localStorage.getItem("selectedClass")) || {};
+    const subject = JSON.parse(localStorage.getItem("selectedSubject")) || "";
 
-    fetchBoards();
-  }, [role]);
+    setFormData((prev) => ({
+      ...prev,
+      board: board.name || "Not Selected",
+      className: classData.className || "Not Selected",
+      subject: subject || "Not Selected",
+    }));
+  }, []);
 
-  useEffect(() => {
-    const fetchClasses = async () => {
-      if (selectedBoard) {
-        try {
-          const classData = await getClassesByBoardId(selectedBoard);
-          console.log("classData", classData);
-          setClasses(classData || []);
-        } catch (error) {
-          console.error("Error fetching classes:", error);
-        }
-      } else {
-        setClasses([]);
-      }
-    };
-    fetchClasses();
-  }, [selectedBoard]);
-
-  const handleSignUp = () => {
-    form.submit();
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
-
-  const onFinish = async (values) => {
-    console.log("Form Values:", values);
-    createFireBaseUserWithEmailAndPassword(role, values.email, values.password, values);
+  const handleFileUpload = (e) => {
+    setFormData({ ...formData, profileImage: e.target.files[0] });
   };
 
-  const createFireBaseUserWithEmailAndPassword = async (role, email, password, values) => {
-    setIsSubmitting(true);
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      sendEmailVerification(userCredential.user)
-      .then(() => {
-        // Verification email sent
-        console.log("Verification email sent!");
-        alert("Verification email sent! Please check your inbox.");
-      })
-      .catch((error) => {
-        // Handle any errors related to sending the verification email
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.error("Error sending verification email:", errorCode, errorMessage);
-        alert("Error sending verification email. Please try again.");
-      });
-      console.log("User created:", userCredential);
-      const user = userCredential.user;
-      
-      localStorage.setItem("sessionData", JSON.stringify({ accessToken: user.accessToken ,refreshToken: userCredential._tokenResponse.refreshToken}));
-      console.log("role", role);
-
-      if (role === "teacher") {
-        const data = {
-          role: role,
-          access_token: user.accessToken,
-          refresh_token: userCredential._tokenResponse.refreshToken,
-        };
-        await signupUser(data);
-        localStorage.clear();
-        navigate("/login");
-      } else if (role === "student") {
-        const downloadUrl = await uploadFileToFirebase(
-          values.profile_image[0].originFileObj,
-          "studentProfile"
-        );
-        const data = {
-          role: role,
-          access_token: user.accessToken,
-          refresh_token: userCredential._tokenResponse.refreshToken,
-          class_id: values.class_id,
-          profile_image: downloadUrl,
-          phone_number: values.phone_number,
-          student_name: values.student_name,
-          studentGender: values.studentGender,
-          studentDOB: values.studentDOB,
-          board_id: values.board_id,
-        };
-        console.log("Student Data:", data);
-        await signupUser(data);
-        localStorage.clear();
-        navigate("/login");
-      }
-    } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.error("Registration error:", errorCode, errorMessage);
-      message.error(`Registration failed: ${errorMessage}`);
-    } finally {
-      setIsSubmitting(false);
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form Submitted:", formData);
+    // Add API integration logic here
+    message.success("Registration Successful!");
+    navigate("/login");
   };
 
   return (
-    <Container>
-      <div className="MainContainer"></div>
-      <FormSection>
-        <Heading>Welcome</Heading>
-        <p className="subHeading">Register Your Account To Continue</p>
+    <div className="signup-container">
+      {/* Left Section - Image */}
+      <div className="image-section">
+        <img src={SignUpImage} alt="Registration" />
+        <h2>Register To The Platform</h2>
+        <p>Your Journey Begins Here</p>
+      </div>
 
-        <Tabs defaultActiveKey="student" centered size="large">
-          <TabPane tab="Student" key="student">
-            <ScrollableForm>
-              <StudentForm boards={board} navigate={navigate} />
-            </ScrollableForm>
-          </TabPane>
-          <TabPane tab="Teacher" key="teacher">
-            <ScrollableForm>
-              <TeacherForm boards={board} navigate={navigate} />
-            </ScrollableForm>
-          </TabPane>
-        </Tabs>
-      </FormSection>
-      <ImageSection>
-        <img src={SignUpImage} alt="Sign Up" />
-      </ImageSection>
-    </Container>
+      {/* Right Section - Form */}
+      <div className="form-section">
+        {/* <h2 className="form-heading">Registration</h2> */}
+        <p className="form-subheading">Enter Your Details</p>
+
+        <form onSubmit={handleSubmit} className="signup-form">
+          {/* Static Fields */}
+
+          {/* Editable Fields */}
+          <div className="form-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone Number</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              placeholder="Enter phone number"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Date of Birth</label>
+            <DatePicker
+              onChange={(date, dateString) =>
+                setFormData({ ...formData, dob: dateString })
+              }
+              style={{ width: "100%" }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Gender</label>
+            <Radio.Group
+              onChange={(e) =>
+                setFormData({ ...formData, gender: e.target.value })
+              }
+            >
+              <Radio value="Male">Male</Radio>
+              <Radio value="Female">Female</Radio>
+            </Radio.Group>
+          </div>
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Profile Image</label>
+            <input type="file" onChange={handleFileUpload} required />
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="confirm-btn">
+              Confirm
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
