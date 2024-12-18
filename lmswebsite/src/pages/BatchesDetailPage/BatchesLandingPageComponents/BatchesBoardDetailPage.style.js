@@ -89,13 +89,15 @@ export const ClassCard = styled.div`
   // box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
   cursor: pointer;
-    background: linear-gradient(to bottom, #EE1B7A33, #FFFFFF33);
-
+    // background: linear-gradient(to bottom, #EE1B7A33, #FFFFFF33);
+      background-color: #f9f9f9;
 
   &:hover {
     transform: translateY(-8px);
+    border: 1px solid #005f47;
     // box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    background: linear-gradient(to bottom, #ffffff, #f1f3f4);
+    // background: linear-gradient(to bottom, #ffffff,#00c897);
+    background-color:#e6ffe6;
   }
 `;
 

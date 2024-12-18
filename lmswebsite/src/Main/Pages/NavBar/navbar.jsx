@@ -8,6 +8,7 @@ import { StyledLink, HamburgerMenu, StyledBox } from "./navbar.style";
 import schoolIcon from "../../assets/school.png";
 import collegeIcon from "../../assets/college.png";
 import universityIcon from "../../assets/university.png";
+import { useNavigate } from "react-router-dom";
 
 function HeaderSection({ scrollToSection }) {
   const scrollToComponent = (ref) => {
@@ -48,6 +49,14 @@ function HeaderSection({ scrollToSection }) {
       }
     }
   };
+
+
+  const navigate = useNavigate();
+
+  const handleSelectBoard = () => {
+    navigate("/selectBoard"); // Navigate to the /class route
+  };
+
 
   const handleClassMouseEnter = async (classId) => {
     setHoveredClassId(classId);
@@ -171,7 +180,7 @@ function HeaderSection({ scrollToSection }) {
                             >
                               {board.name}
                             </a>
-                            {hoveredBoardId === board._id &&
+                            {/* {hoveredBoardId === board._id &&
                               classes[board._id] && (
                                 <ul className="classes-menu">
                                   {classes[board._id].map((cls) => (
@@ -201,7 +210,7 @@ function HeaderSection({ scrollToSection }) {
                                     </li>
                                   ))}
                                 </ul>
-                              )}
+                              )} */}
                           </li>
                         ))}
                       </ul>
@@ -319,6 +328,7 @@ function HeaderSection({ scrollToSection }) {
                 marginBottom: "10px",
               },
             }}
+            onClick={handleSelectBoard}
           >
             Sign in
           </Button>

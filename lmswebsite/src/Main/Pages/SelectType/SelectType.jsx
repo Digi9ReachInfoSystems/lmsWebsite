@@ -99,7 +99,7 @@ function SelectType() {
         </div>
 
         {/* Progress */}
-        <div className="progress-bar">
+        <div className="progressBar">
           <div className="progress" style={{ width: "80%" }}></div>
         </div>
         <p className="step-info">Step 4 out of 5</p>

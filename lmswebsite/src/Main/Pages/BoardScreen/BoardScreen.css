@@ -1,8 +1,7 @@
 /* General Styles */
-.board-container {
+.board-containers {
   width: 80%;
-  margin-top: 30vh;
-  margin-left: 20vh;
+margin:auto;
   text-align: center;
   font-family: Arial, sans-serif;
 }
@@ -96,11 +95,11 @@
 }
 
 /* Progress Bar */
-.progress-bar {
+.progressBar {
   width: 60%;
   background-color: #e0e0e0;
   height: 8px;
-  margin: 10px auto;
+  margin: auto;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -128,7 +127,7 @@
 }
 
 .skill-card.selected {
-  border: 2px solid #28a745;
+  border: 2px solid #47ff60;
   background-color: #e6ffe6;
   font-weight: bold;
 }

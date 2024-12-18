@@ -43,7 +43,7 @@ export const StyledLink = styled.div`
     height: 400px;
     min-width: 150px;
     position: absolute;
-    margin-top: 3px;
+    // margin-top: 1px;
     cursor: pointer;
     border: 1px solid ${theme.colors.frenchGray};
     background: ${theme.colors.white};

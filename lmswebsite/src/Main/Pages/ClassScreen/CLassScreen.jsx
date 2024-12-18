@@ -55,7 +55,7 @@ function ClassScreen() {
   return (
     <div>
       <HeaderSection />
-      <div className="board-container">
+      <div className="boardContainer">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
@@ -111,6 +111,11 @@ function ClassScreen() {
             </div>
           </div>
         )}
+          {/* Progress Bar */}
+          <div className="progressBar">
+          <div className="progress" style={{ width: "40%" }}></div>
+        </div>
+        <p className="step-info">Step 2 out of 5</p>
       </div>
     </div>
   );

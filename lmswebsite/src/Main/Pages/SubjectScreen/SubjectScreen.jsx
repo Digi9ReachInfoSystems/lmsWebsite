@@ -125,8 +125,8 @@ function SubjectScreen() {
         </div>
 
         {/* Progress Bar */}
-        <div className="progress-bar">
-          <div className="progress" style={{ width: "66%" }}></div>
+        <div className="progressBar">
+          <div className="progress" style={{ width: "60%" }}></div>
         </div>
         <p className="step-info">Step 3 out of 5</p>
       </div>
