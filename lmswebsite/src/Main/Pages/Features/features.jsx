@@ -1,18 +1,8 @@
 import React, { useEffect } from "react";
 import "./Features.css"; // Import the CSS file
-import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS styles
+
 
 function Features() {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000, // Animation duration in milliseconds
-      easing: "ease-in-out", // Easing function
-      once: true, // Whether animation should happen only once - while scrolling down
-      mirror: false, // Whether elements should animate out while scrolling past them
-    });
-  }, []);
-
   const features = [
     {
       number: "01",
@@ -45,12 +35,7 @@ function Features() {
 
       <div className="features-container" style={{ display: "block" }}>
         {features.map((feature, index) => (
-          <div
-            key={index}
-            className={`feature-box feature-${index + 1}`}
-            data-aos="fade-up" // AOS animation type
-            data-aos-delay={index * 200} // Optional: stagger animations
-          >
+          <div key={index} className={`feature-box feature-${index + 1}`}>
             <div className="feature-number">{feature.number}</div>
             <div className="feature-content">
               <h3 className="feature-title">{feature.title}</h3>
