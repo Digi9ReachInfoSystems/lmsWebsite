@@ -41,7 +41,7 @@ import {
   BodyText,
   PrimaryButton,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const { Option } = Select;
 
