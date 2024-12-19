@@ -56,6 +56,10 @@ const ManageContent = () => {
         <Tab to="typeOfBatch"  as={NavLink}>
           Type Of Batch
         </Tab>
+
+        <Tab to="blog" as={NavLink}>
+          Blog
+        </Tab>
       </TabsContainer>
       <Outlet />
     </Container>
