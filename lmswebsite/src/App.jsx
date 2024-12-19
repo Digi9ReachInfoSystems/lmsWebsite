@@ -98,6 +98,11 @@ import SelectType from "./Main/Pages/SelectType/SelectType";
 import PaymentScreen from "./module/student/pages/PaymentScreen/PaymentScreen";
 import StudentForm from "./pages/SignUpPage/signUpPageStudentForm";
 
+import ContactUs from "./Main/Pages/ContactUs/ContactUs";
+
+import Blog from "./Main/Pages/Blogs/Blog";
+
+
 function App() {
   const [count, setCount] = useState(0);
 
@@ -168,21 +173,27 @@ function App() {
               </PublicRoute>
             }
           />
-
-{/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
-<Route path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId" element={<BatchesLandingPage />} />
-
+          {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
+          <Route
+            path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"
+            element={<BatchesLandingPage />}
+          />
           <Route path="/testingClass/:classId" element={<ClassDetailPage />} />
           <Route
             path="/testingPackage/:packageId"
             element={<PackageDetailPage />}
           />
           <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/signupStudent" element={<StudentForm/>} />
+          <Route path="/signupStudent" element={<StudentForm />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/paymentScreen" element={<PaymentScreen />} />
           <Route path="/student" element={<StudentLandingPage />} />
           <Route path="/student/mode" element={<Mode />} />
+
+          <Route path="/ContactUs" element={<ContactUs />} />
+
+          <Route path="/blogs" element={<Blog />} />
+
           <Route
             path="/student/personal"
             element={<OneToOneStudentlandingPage />}
@@ -205,9 +216,11 @@ function App() {
           />
           <Route path="/privacy-policy" element={<PrivacyAndCookiePolicy />} />
           <Route path="/TermsOfUse" element={<TermsOfUse />} />
-          <Route path="/RefundCancellationPolicy" element={<RefundCancellationPolicy />} />
-          <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />      
-
+          <Route
+            path="/RefundCancellationPolicy"
+            element={<RefundCancellationPolicy />}
+          />
+          <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />
           <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
             <Route index element={<StudentDashboardScreen />} />
             <Route
@@ -367,6 +380,11 @@ function App() {
               <Route
                 path="typeOfBatch"
                 element={<ManageContentTable contentType="typeOfBatch" />}
+              />
+
+              <Route 
+              path="blog"
+              element={<ManageContentTable contentType="blog" />}
               />
             </Route>
 
