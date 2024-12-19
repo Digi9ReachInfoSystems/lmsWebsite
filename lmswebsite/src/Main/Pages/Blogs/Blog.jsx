@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+// src/components/admin/Blog/Blog.jsx
+
+import React, { useState, useEffect } from "react";
 import {
   BlogContainer,
   Header,
@@ -10,100 +12,152 @@ import {
   IconContainer,
   Icon,
 } from "./Blog.style";
-import image1 from "../../assets/blog1.jpg";
-import image2 from "../../assets/blog2.jpg";
-import image3 from "../../assets/blog3.jpg";
-import image4 from "../../assets/blog4.jpg";
-import image5 from "../../assets/blog5.jpg";
 import { CiHeart } from "react-icons/ci";
 import { IoMdShare } from "react-icons/io";
 import NavBar from "../NavBar/navbar";
 import Footer from "../Footer/Footer";
+import { getAllBlogs } from "../../../api/blogApi"; // Adjust the path accordingly
+import { Spin, Alert, Tag } from "antd"; // Ant Design components for loading, error handling, and tags
+import moment from "moment"; // For date formatting
 
 const Blog = () => {
+  const [blogs, setBlogs] = useState([]); // State to store fetched blogs
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
+
+  // Fetch blogs from the API when the component mounts
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      try {
+        const blogData = await getAllBlogs();
+        if (blogData.success && Array.isArray(blogData.data)) {
+          setBlogs(blogData.data);
+        } else {
+          setError("Invalid blog data format received.");
+        }
+      } catch (err) {
+        console.error("Error fetching blogs:", err);
+        setError(
+          "Failed to fetch blogs: " +
+            (err.error || "An unexpected error occurred.")
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBlogs();
+  }, []);
+
+  // Handle section (blog) click to expand/collapse (optional feature)
   const [expandedSection, setExpandedSection] = useState(null);
 
-  const handleCardClick = (index) => {
-    setExpandedSection(expandedSection === index ? null : index); // Toggle between expand and collapse
+  const handleCardClick = (id) => {
+    setExpandedSection(expandedSection === id ? null : id); // Toggle between expand and collapse
   };
 
   return (
     <div>
-        <NavBar/>
-    <BlogContainer>
-      <Header>
-        <h1><b>BLOG</b></h1>
-        <nav>
-          <a href="/">Home Page</a>
-        </nav>
-      </Header>
+      <NavBar />
+      <BlogContainer>
+        <Header>
+          <h1>
+            <b>BLOG</b>
+          </h1>
+          <nav>
+            <a href="/">Home Page</a>
+          </nav>
+        </Header>
 
-      {[image1, image2, image3, image4, image5].map((image, index) => (
-        <Section
-          key={index}
-          onClick={() => handleCardClick(index)} 
-          isExpanded={expandedSection === index}
-        >
-          <Image src={image} alt={`Blog ${index + 1}`} />
-          
-          {/* Icons below the image */}
-          <IconContainer>
-            <Icon ><CiHeart /></Icon>
-            <Icon><IoMdShare /></Icon>
-          </IconContainer>
+        {/* Loading State */}
+        {loading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "60vh",
+            }}
+          >
+            <Spin size="large" tip="Loading Blogs..." />
+          </div>
+        ) : error ? (
+          /* Error State */
+          <Alert
+            message="Error"
+            description={error}
+            type="error"
+            showIcon
+            style={{ margin: "20px" }}
+          />
+        ) : blogs.length === 0 ? (
+          /* No Blogs Available */
+          <Alert
+            message="No Blogs Available"
+            type="info"
+            showIcon
+            style={{ margin: "20px" }}
+          />
+        ) : (
+          /* Render Blogs Dynamically */
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              // justifyContent: "space-between",
+            }}
+          >
+            {blogs.map((blog, index) => {
+              const blogId = blog._id?.$oid || blog._id || index;
+              const isExpanded = expandedSection === blogId;
 
-          {index === 0 && (
-            <>
-              <Quote>“In every walk with nature, one receives far more than he seeks.”</Quote>
-              <Paragraph>
-                Nature has a way of calming the soul and refreshing the mind. Whether it's a walk in the park or hiking in the mountains, there's always something beautiful to discover.
-              </Paragraph>
-            </>
-          )}
-          {index === 1 && (
-            <>
-            <SubHeading>Lifestyle : A Path to Clarity</SubHeading>
-             <Quote>“In every walk with nature, one receives far more than he seeks.”</Quote>
-              
-              <Paragraph>
-                Living with less is not about having nothing;
-              </Paragraph>
-            </>
-          )}
-          {index === 2 && (
-            <>
-              <Paragraph>
-                From the latest in tech to ancient wisdom, balancing the new and the old creates a harmony in life. Learn to adapt while preserving tradition.
-              </Paragraph>
-            </>
-          )}
-          {index === 3 && (
-            <>
-              <SubHeading>Creative Pursuits: Finding Joy in Art</SubHeading>
-              <Quote>“Creativity takes courage.” – Henri Matisse</Quote>
-              <Paragraph>
-                Art, music, and writing are not just hobbies but expressions of our innermost selves. Embrace creativity and watch your world expand.
-              </Paragraph>
-            </>
-          )}
-          {index === 4 && (
-            <>
-              <SubHeading>Health and Wellness: A Holistic Approach</SubHeading>
-              <Paragraph>
-                Staying healthy is not just about eating right; it's a blend of physical activity, mental health, and maintaining strong social connections.
-              </Paragraph>
-              <Paragraph>
-                Explore the benefits of mindfulness, the importance of regular exercise, and how relationships shape our wellbeing.
-              </Paragraph>
-            </>
-          )}
-        </Section>
-      ))}
-    </BlogContainer>
-    <Footer/>
+              return (
+                <Section
+                  key={blogId}
+                  onClick={() => handleCardClick(blogId)}
+                  isExpanded={isExpanded}
+                >
+                  <Image src={blog.image} alt={blog.title} />
+                  
+                  {/* Icons below the image */}
+                  <IconContainer>
+                    <Icon>
+                      {/* <CiHeart /> */}
+                    </Icon>
+                    <Icon>
+                      {/* <IoMdShare /> */}
+                    </Icon>
+                  </IconContainer>
+
+                  {/* Blog Title */}
+                  <SubHeading>{blog.title}</SubHeading>
+
+                  {/* Author and Date */}
+                  <Paragraph>
+                    <strong>By:</strong> {blog.author} |{" "}
+                   
+                  </Paragraph>
+<Paragraph> {moment(blog.createdAt.$date).format("MMMM Do, YYYY")}</Paragraph>
+                  {/* Tags */}
+                  <Paragraph>
+                    {blog.tags.map((tag, idx) => (
+                      <Tag color="blue" key={idx}>
+                        {tag}
+                      </Tag>
+                    ))}
+                  </Paragraph>
+
+                  {/* Description */}
+                  <Paragraph>{blog.description}</Paragraph>
+                </Section>
+              );
+            })}
+          </div>
+        )}
+      </BlogContainer>
+      <Footer />
     </div>
   );
 };
 
 export default Blog;
-

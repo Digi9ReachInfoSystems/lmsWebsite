@@ -11,8 +11,15 @@ import {
   ErrorMessage,
   SuccessMessage,
   DiscountInfo,
+  FeatureContainer,
+  FeatureInput,
+  AddFeatureButton,
+  FeatureList,
+  FeatureItem,
+  RemoveFeatureButton,
 } from './ModeBatch.style';
 import { createTypeOfBatch } from '../../../../../api/typeOfBatchApi';
+import { FaPlus, FaTrash } from 'react-icons/fa'; // For icons (optional)
 
 const ModeBatch = () => {
   const [mode, setMode] = useState('');
@@ -20,8 +27,13 @@ const ModeBatch = () => {
   const [duration, setDuration] = useState('');
   const [discountPercentage, setDiscountPercentage] = useState('');
   const [discountedPrice, setDiscountedPrice] = useState('');
+  const [features, setFeatures] = useState([]); // New state for features
+  const [featureInput, setFeatureInput] = useState(''); // State for current feature input
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+
+  // Maximum number of features allowed
+  const MAX_FEATURES = 10;
 
   // Calculate discounted price whenever price or discountPercentage changes
   useEffect(() => {
@@ -33,6 +45,35 @@ const ModeBatch = () => {
       setDiscountedPrice('');
     }
   }, [price, discountPercentage]);
+
+  const handleAddFeature = () => {
+    const trimmedFeature = featureInput.trim();
+    if (trimmedFeature) {
+      if (features.includes(trimmedFeature)) {
+        setError('This feature has already been added.');
+        return;
+      }
+      if (features.length >= MAX_FEATURES) {
+        setError(`You can only add up to ${MAX_FEATURES} features.`);
+        return;
+      }
+      setFeatures([...features, trimmedFeature]);
+      setFeatureInput('');
+      setError('');
+    }
+  };
+
+  const handleRemoveFeature = (featureToRemove) => {
+    setFeatures(features.filter((feature) => feature !== featureToRemove));
+    setError('');
+  };
+
+  const handleFeatureKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      handleAddFeature();
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,12 +95,19 @@ const ModeBatch = () => {
       }
     }
 
+    // Optional: Validate features if needed (e.g., minimum number of features)
+    // if (features.length === 0) {
+    //   setError('Please add at least one feature.');
+    //   return;
+    // }
+
     const data = {
       mode,
       price: parseFloat(price),
       duration: duration ? parseInt(duration, 10) : undefined,
       discountPercentage: discountPercentage !== '' ? parseFloat(discountPercentage) : undefined,
       discountedPrice: discountedPrice ? parseFloat(discountedPrice) : undefined,
+      features, // Include features array
     };
 
     // Debugging: Log the data being sent to the API
@@ -76,7 +124,9 @@ const ModeBatch = () => {
         setDuration('');
         setDiscountPercentage('');
         setDiscountedPrice('');
-        window.location.reload();
+        setFeatures([]);
+        setFeatureInput('');
+        // Optionally, you can remove window.location.reload(); to avoid full page reload
       }
     } catch (err) {
       console.error('API Error:', err);
@@ -140,6 +190,43 @@ const ModeBatch = () => {
           min="0"
           step="1"
         />
+
+        {/* New Feature Input Section */}
+        <Label htmlFor="features">Features</Label>
+        <FeatureContainer>
+          <FeatureInput
+            type="text"
+            id="features"
+            value={featureInput}
+            onChange={(e) => setFeatureInput(e.target.value)}
+            onKeyDown={handleFeatureKeyDown}
+            placeholder="Enter a feature"
+          />
+          <AddFeatureButton
+            type="button"
+            onClick={handleAddFeature}
+            disabled={!featureInput.trim() || features.length >= MAX_FEATURES}
+          >
+            <FaPlus /> Add
+          </AddFeatureButton>
+        </FeatureContainer>
+
+        {features.length >= MAX_FEATURES && (
+          <ErrorMessage>You can only add up to {MAX_FEATURES} features.</ErrorMessage>
+        )}
+
+        {features.length > 0 && (
+          <FeatureList>
+            {features.map((feature, index) => (
+              <FeatureItem key={index}>
+                {feature}
+                <RemoveFeatureButton type="button" onClick={() => handleRemoveFeature(feature)}>
+                  <FaTrash />
+                </RemoveFeatureButton>
+              </FeatureItem>
+            ))}
+          </FeatureList>
+        )}
 
         {error && <ErrorMessage>{error}</ErrorMessage>}
         {success && <SuccessMessage>{success}</SuccessMessage>}

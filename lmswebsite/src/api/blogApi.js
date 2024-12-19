@@ -4,7 +4,7 @@ export const createBlog = async (data) => {
     try {
         const response = await api.post('/blogs/create', data);
         console.log("Blog created succesfully", response.data);
-        return response;
+        return response.data;
     }
     catch (error) {
         console.log(error);
