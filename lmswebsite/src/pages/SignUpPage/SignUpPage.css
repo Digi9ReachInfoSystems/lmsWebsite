@@ -44,7 +44,7 @@
 
 
   width: 400px; /* Set width of the form */
-  max-height: 800px; 
+  /* max-height: 800px;  */
   border: 1px solid #ccc;
   border-radius: 10px;
   background-color: white;
