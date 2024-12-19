@@ -38,7 +38,7 @@ const SignUpPage = () => {
     const board = JSON.parse(localStorage.getItem("selectedBoard"))._id || {};
     const classData = JSON.parse(localStorage.getItem("selectedClass"))._id || {};
     const subject = JSON.parse(localStorage.getItem("selectedSubjects")) || "";
-    const duration = JSON.parse(localStorage.getItem("selectedDuration")).title || {};
+    const duration = JSON.parse(localStorage.getItem("selectedDuration")).duration || {};
     const amount = JSON.parse(localStorage.getItem("totalAmount")) || 0;
     const type_of_batch = JSON.parse(localStorage.getItem("selectedBatch"))._id || "";
 
@@ -101,6 +101,7 @@ const SignUpPage = () => {
         amount: formData.amount,
         duration: formData.duration,
         type_of_batch: formData.type_of_batch,
+        subject_id: formData.subject,
       };
       console.log(data);
       await signupUser(data);

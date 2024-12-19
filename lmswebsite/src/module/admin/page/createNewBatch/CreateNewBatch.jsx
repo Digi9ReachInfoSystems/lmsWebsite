@@ -3,9 +3,12 @@ import { Modal, Form, Input, Select, Button, DatePicker, Upload, message, Radio 
 import { UploadOutlined } from "@ant-design/icons";
 import { createBatch } from "../../../../api/batchApi";
 import { getClasses, getSubjects, getTeachersBySubjectAndClass } from "../../../../services/createBatch";
-import { getStudentsByClassId, getStudentsForBatchBySubjectId } from "../../../../api/studentApi";
+import { getEligibleStudentsForBatch, getStudentsByClassId, getStudentsForBatchBySubjectId } from "../../../../api/studentApi";
 import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
 import { CreateNewBatchWrap } from "./CreateNewBatch.Styles"; // Import styles
+import { getAllTypeOfBatches, getTypeOfBatchById } from "../../../../api/typeOfBatchApi";
+import { set } from "lodash";
+import dayjs from "dayjs";
 
 const { Option } = Select;
 
@@ -15,16 +18,48 @@ const CreateNewBatch = ({ open, closeModal }) => {
   const [subjects, setSubjects] = useState([]);
   const [teachers, setTeachers] = useState([]);
   const [students, setStudents] = useState([]);
-  const[mode, setMode] = useState("normal");
+  const [typeOfBatch, setTypeOfBatch] = useState([]);
+  const [selectedTypeOfBatch, setSelectedTypeOfBatch] = useState('');
+  const [mode, setMode] = useState("normal");
   const [loading, setLoading] = useState(false);
+  const [selectionLength, setSelectionLength] = useState(0);
 
   useEffect(() => {
     const fetchClasses = async () => {
       const classData = await getClasses();
       setClasses(classData || []);
+      const typeOfBatchData = await getAllTypeOfBatches();
+      setTypeOfBatch(typeOfBatchData || []);
     };
     fetchClasses();
   }, []);
+  useEffect(() => {
+    const apicaller = async () => {
+      const typeOfBatchData = await getTypeOfBatchById(selectedTypeOfBatch);
+      switch (typeOfBatchData.mode) {
+        case "1:1":
+          setSelectionLength(1);
+          console.log("selectionLength", 1);
+          break;
+        case "1:3":
+          setSelectionLength(3);
+          console.log("selectionLength", 3);
+          break;
+        case "1:5":
+          setSelectionLength(5);
+          console.log("selectionLength", 5);
+          break;
+        case "1:7":
+          setSelectionLength(7);
+          console.log("selectionLength", 7);
+          break;
+        default:
+          setSelectionLength(0);
+          break;
+      }
+    }
+    apicaller();
+  }, [selectedTypeOfBatch])
 
   const handleClassChange = async (value) => {
     const subjectData = await getSubjects(value);
@@ -40,10 +75,19 @@ const CreateNewBatch = ({ open, closeModal }) => {
 
   const handleSubjectChange = async (value) => {
     const teacherData = await getTeachersBySubjectAndClass(value, form.getFieldValue("class"));
-    const studentData = await getStudentsForBatchBySubjectId(value, mode);
-   
-   console.log("studentData", studentData);
-    setStudents(studentData.students || []);
+    // const studentData = await getStudentsForBatchBySubjectId(value, mode);
+    console.log("hehehe", { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") })
+    const filterData = { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") };
+    const studentData = await getEligibleStudentsForBatch(filterData);
+    console.log("studentData", studentData);
+    if (studentData.customPackageCriteria.length > 0 || studentData.normalCriteria.length > 0) {
+      const totalStudents = studentData.customPackageCriteria.concat(studentData.normalCriteria);
+      console.log("totalStudents", totalStudents);
+      setStudents(totalStudents);
+    } else {
+      setStudents([]);
+    }
+    // setStudents(studentData.students || []);
     setTeachers(teacherData || []);
     form.setFieldsValue({ teachers: undefined });
   };
@@ -67,6 +111,8 @@ const CreateNewBatch = ({ open, closeModal }) => {
         teachers: values.teachers?.map((teacher) => teacher) || [],
         students: values.students?.map((student) => student) || [],
       };
+      let currentDate = dayjs(); // Get the current date
+       const newDate = currentDate.add(batchData.duration, "month").format("YYYY-MM-DD");
       const submissionData = {
         batch_name: batchData.batchName,
         batch_image: batchData.batchImage,
@@ -74,7 +120,8 @@ const CreateNewBatch = ({ open, closeModal }) => {
         class_id: batchData.class,
         students: batchData.students,
         subject_id: batchData.subject,
-        date: batchData.date,
+        date: newDate,
+        type_of_batch: batchData.type_of_batch,
 
       }
 
@@ -110,17 +157,17 @@ const CreateNewBatch = ({ open, closeModal }) => {
             <Input placeholder="Enter batch name" />
           </Form.Item>
 
-          <Form.Item
-          name="batchMode"
-          label="Batch Mode"
-          rules={[{ required: true, message: "Please select a batch mode" }]}
+          {/* <Form.Item
+            name="batchMode"
+            label="Batch Mode"
+            rules={[{ required: true, message: "Please select a batch mode" }]}
           >
             <Radio.Group onChange={(e) => setMode(e.target.value)}>
               <Radio value="normal">Normal</Radio>
               <Radio value="personal">Personal</Radio>
             </Radio.Group>
-            
-          </Form.Item>
+
+          </Form.Item> */}
 
           <Form.Item
             name="class"
@@ -136,6 +183,31 @@ const CreateNewBatch = ({ open, closeModal }) => {
             </Select>
           </Form.Item>
 
+
+          <Form.Item
+            name="duration"
+            label="Duration"
+            rules={[{ required: true, message: "Please enter the batch duration" }]}
+          >
+            <Input placeholder="Enter batch duration" type="Number" min={0} />
+          </Form.Item>
+          <Form.Item
+            name="type_of_batch"
+            label="Type Of Batch"
+            rules={[{ required: true, message: "Please select a Type Of Batch" }]}
+          >
+            <Select
+              placeholder="Select Batch Type"
+              onChange={() => { setSelectedTypeOfBatch(form.getFieldValue("type_of_batch")) }}
+            // disabled={!subjects.length}
+            >
+              {typeOfBatch.map((batch) => (
+                <Option key={batch._id} value={batch._id}>
+                  {batch.mode}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
           <Form.Item
             name="subject"
             label="Subject"
@@ -175,21 +247,28 @@ const CreateNewBatch = ({ open, closeModal }) => {
                 mode="multiple"
                 placeholder="Select students"
                 options={students?.map((student) => ({
-                  label: student?.user?.name,
+                  label: student?.user_id?.name,
                   value: student?._id,
                 }))}
                 disabled={!students.length}
+                onChange={(value) => {
+                  if (value.length > selectionLength) { // Restrict selection to 5 students
+                    message.warning("You can select up to 5 students only!");
+                    return;
+                  }
+                  form.setFieldsValue({ students: value }); // Update selected values
+                }}
               />
             </Form.Item>
           }
 
-          <Form.Item
+          {/* <Form.Item
             name="date"
             label="Date"
             rules={[{ required: true, message: "Please select a date" }]}
           >
             <DatePicker style={{ width: "100%" }} />
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item name="batchImage" label="Upload Batch Image" valuePropName="file">
             <Upload
