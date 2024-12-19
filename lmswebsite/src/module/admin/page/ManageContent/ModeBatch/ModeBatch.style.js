@@ -87,3 +87,73 @@ export const DiscountInfo = styled.div`
   font-weight: 500;
   color: #555;
 `;
+
+
+export const FeatureContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+export const FeatureInput = styled.input`
+  flex: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+export const AddFeatureButton = styled.button`
+  display: flex;
+  align-items: center;
+  background-color: #28a745; /* Green */
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: ${(props) => (props.disabled ? '0.6' : '1')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+
+  &:hover {
+    background-color: ${(props) => (props.disabled ? '#28a745' : '#218838')};
+  }
+
+  svg {
+    margin-right: 5px;
+  }
+`;
+
+export const FeatureList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 15px;
+`;
+
+export const FeatureItem = styled.li`
+  display: flex;
+  align-items: center;
+  background-color: #f8f9fa; /* Light gray */
+  padding: 8px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+`;
+
+export const RemoveFeatureButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #dc3545; /* Red */
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    color: #c82333;
+  }
+
+  svg {
+    margin-left: 5px;
+  }
+`;

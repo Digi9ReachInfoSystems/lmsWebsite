@@ -16,6 +16,7 @@ import {
 } from "./Login.styles";
 import bgImg from "../../assets/image 32.png"; // The background image
 import { getStudentByAuthId } from "../../api/studentApi";
+import { getTeacherByAuthId } from "../../api/teacherApi";
 
 const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -48,6 +49,7 @@ const Login = () => {
         name: profileData.user.name,
         loggedIn: "true",
       };
+      console.log("profileData", profileData);
 
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
 
@@ -64,7 +66,16 @@ const Login = () => {
         // navigate("/student");
 
       }
-      else if (profileData.user.role === "teacher") navigate("/teacher");
+      else if (profileData.user.role === "teacher"){
+        const teacherData= await getTeacherByAuthId(profileData.user.auth_id);
+        console.log(" login teacherData",teacherData);
+        if(teacherData.teacher){
+          navigate("/teacher/dashboard");
+        }else{
+          navigate("/teacher");
+        }
+        // navigate("/teacher");
+      } 
     } catch (error) {
       setErrorMessage(error.message);
     }
