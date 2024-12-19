@@ -145,6 +145,7 @@ const StudentForm = () => {
       {/* Right Section - Form */}
       <div className="form-section">
         {/* <h2 className="form-heading">Registration</h2> */}
+        <h2 className="form-heading">Create Your Acount First !</h2>
         <p className="form-subheading">Enter Your Details</p>
         <Form
           form={form}
@@ -306,8 +307,8 @@ const StudentForm = () => {
                 htmlType="submit"
                 loading={isSubmitting}
                 style={{
-                  backgroundColor: "#ff4d88", // Pink color for button
-                  borderColor: "#ff4d88",
+                  backgroundColor: "#00c897", // Pink color for button
+                  borderColor: "#00c897",
                   color: "white",
                   width: "27vw",
                 }}
