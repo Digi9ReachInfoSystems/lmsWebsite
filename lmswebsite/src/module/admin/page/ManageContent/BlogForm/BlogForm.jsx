@@ -100,11 +100,11 @@ const BlogForm = () => {
     setIsSubmitting(true);
     setError(null);
     setSuccessMessage("");
-
+  
     try {
       setLoading(true);
       const { title, imageUrl, description, author, tags, status } = formData;
-
+  
       // Validate required fields
       if (!title || !imageUrl || !description || !author) {
         setError("Please fill out all required fields and upload an image.");
@@ -112,10 +112,10 @@ const BlogForm = () => {
         setLoading(false);
         return;
       }
-
-      // Filter out empty tags
-      const filteredTags = tags.map(tag => tag.trim()).filter(tag => tag !== "");
-
+  
+      // Filter out empty tags and trim whitespace
+      const filteredTags = tags.map((tag) => tag.trim()).filter((tag) => tag !== "");
+  
       // Optional: Validate tags (e.g., no duplicates)
       const uniqueTags = [...new Set(filteredTags)];
       if (uniqueTags.length !== filteredTags.length) {
@@ -124,42 +124,64 @@ const BlogForm = () => {
         setLoading(false);
         return;
       }
-
+  
       // Upload the image to Firebase and get the URL
       const uploadedImageUrl = await uploadFileToFirebase(imageUrl);
-
-      // Create the blog post via API
-      const response = await createBlog({
+  
+      // Prepare the payload
+      const payload = {
         title,
-        image: uploadedImageUrl, // Use the uploaded image URL from Firebase
+        image: uploadedImageUrl, // Ensure 'image' is the correct field name
         description,
         author,
         tags: uniqueTags,
         status,
-      });
-
-      setSuccessMessage("Blog post created successfully!");
-      // Clear form data
-      setFormData({
-        title: "",
-        imageUrl: null,
-        imagePreview: "",
-        description: "",
-        author: "",
-        tags: [""],
-        status: "draft",
-      });
+      };
+  
+      // Log the payload for debugging
+      console.log("Submitting Blog Post:", payload);
+  
+      // Create the blog post via API
+      const response = await createBlog(payload);
+  
+      // Log the response for debugging
+      console.log("API Response:", response);
+  
+      // Adjust the condition based on actual response
+      // Example: Check different possible success indicators
+      const isSuccess =
+        (response && (response._id || response.id)) ||
+        (response && response.success) ||
+        (response && response.message && response.message.toLowerCase().includes("success"));
+  
+      if (isSuccess) {
+        setSuccessMessage("Blog post created successfully!");
+        // Clear form data
+        setFormData({
+          title: "",
+          imageUrl: null,
+          imagePreview: "",
+          description: "",
+          author: "",
+          tags: [""],
+          status: "draft",
+        });
+        message.success("Blog post created successfully!");
+      } else {
+        const errorMsg = response?.message || "Failed to create blog post.";
+        setError(errorMsg);
+        message.error(errorMsg);
+      }
     } catch (err) {
       console.error("Error creating blog post:", err);
-      setError(
-        "Error creating blog post: " +
-          (err.response?.data?.error || err.message)
-      );
+      setError("An unexpected error occurred. Please try again.");
+      message.error("An unexpected error occurred. Please try again.");
     } finally {
       setIsSubmitting(false);
       setLoading(false);
     }
   };
+  
 
   // Loading Animation
   if (loading) {
@@ -231,7 +253,14 @@ const BlogForm = () => {
         {/* Tags Field */}
         <Form.Item label="Tags">
           {formData.tags.map((tag, index) => (
-            <div key={index} style={{ display: "flex", alignItems: "center", marginBottom: "8px" }}>
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "8px",
+              }}
+            >
               <Input
                 type="text"
                 value={tag}
@@ -257,7 +286,6 @@ const BlogForm = () => {
               )}
             </div>
           ))}
-          {/* Optionally, you can provide a submit button here or handle it globally */}
         </Form.Item>
 
         {/* Status Field */}

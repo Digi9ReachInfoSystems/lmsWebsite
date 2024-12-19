@@ -1,7 +1,8 @@
 // PaymentSuccess.jsx
 
 import React from "react";
-import { Container, Message, ButtonContainer } from "./PaymentSuccess.style";
+import { CheckCircleOutlined } from "@ant-design/icons";
+import { Container, Message, ButtonContainer, Div } from "./PaymentSuccess.style";
 import { Button } from "antd"; // Using Ant Design's Button component
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../../../style/theme/theme";
@@ -14,12 +15,24 @@ const PaymentSuccess = () => {
 
   return (
     <Container>
-      <Message>Your payment was successful!</Message>
+     <Div className="success-icon">
+     <CheckCircleOutlined
+        style={{
+          // fontSize: "64px",
+          // color: theme.colors.newGreen,
+          // backgroundColor: theme.colors.white,
+         
+          // marginBottom: "20px",
+        }}
+      />
+      </Div>
+      <Message>Your payment was successful</Message>
+      <p>Thank you for your payment! We are pleased to confirm that your transaction has been successfully processed.</p>
       <ButtonContainer>
         <Button
           type="primary"
           size="large"
-          style={{ backgroundColor: theme.colors.pink6 }}
+          style={{ backgroundColor: theme.colors.newGreen }}
           onClick={handleGoToDashboard}
         >
           Go to My Dashboard

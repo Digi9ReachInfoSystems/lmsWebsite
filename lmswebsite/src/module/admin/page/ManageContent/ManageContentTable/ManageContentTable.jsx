@@ -744,20 +744,28 @@ const ManageContentTable = ({ contentType }) => {
           dataIndex: 'description',
           key: 'description',
         },
+        // Inside ManageContentTable.jsx
         {
-          title: 'Tags',
-          dataIndex: 'tags',
-          key: 'tags',
-          render(_, record) {
-            return (
-              <div>
-                {record.tags.map((tag) => (
-                  <li key={tag}>{tag}</li>
-                ))}
-              </div>
-            );
-          }
+          title: "Tags",
+          dataIndex: "tags",
+          key: "tags",
+          render: (_, record) => {
+            if (Array.isArray(record.tags) && record.tags.length > 0) {
+              return (
+                <div>
+                  {record.tags.map((tag, idx) => (
+                    <li color="blue" key={`${tag}-${idx}`}>
+                      {tag}
+                    </li>
+                  ))}
+                </div>
+              );
+            } else {
+              return <span>No tags</span>;
+            }
+          },
         },
+
         {
           title: 'Action',
           key: 'action',

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Select, Radio, Button, Spin, Alert, message } from "antd";
+import { Form, Input, Select, Radio, Button, Spin, Alert, message, Upload } from "antd";
 import { createSubject } from "../../../../../api/subjectApi";
 import { getBoards } from "../../../../../api/boadApi";
 import { getClassesByBoardId } from "../../../../../api/classApi";
 import { FormContainer } from "./SubjectForm.style";
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
- 
+import { UploadOutlined } from "@ant-design/icons";
+import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase";
+
 const { Option } = Select;
- 
+
 const SubjectForm = () => {
   const [form] = Form.useForm();
   const [boards, setBoards] = useState([]);
@@ -19,7 +21,8 @@ const SubjectForm = () => {
   const [boardsError, setBoardsError] = useState(null);
   const [classesError, setClassesError] = useState(null);
   const [loading, setLoading] = useState(false);
- 
+  const [imageFile, setImageFile] = useState(null); // To hold uploaded image file
+
   // Fetch all boards on component mount
   useEffect(() => {
     const fetchBoards = async () => {
@@ -39,13 +42,13 @@ const SubjectForm = () => {
     setLoading(false);
     // window.location.reload();
   }, []);
- 
+
   // Fetch classes whenever the board_id changes
   const handleBoardChange = async (boardId) => {
     form.setFieldsValue({ class_id: undefined });
     setClasses([]);
     if (!boardId) return;
- 
+
     setLoadingClasses(true);
     setClassesError(null);
     try {
@@ -57,11 +60,18 @@ const SubjectForm = () => {
       setLoadingClasses(false);
     }
   };
- 
+  // Handle image upload
+  const handleImageChange = ({ file }) => {
+    setImageFile(file); // Save the file in state
+  };
+
   const handleSubmit = async (values) => {
     setIsSubmitting(true);
+    const downloadUrl = await uploadFileToFirebase(imageFile, "subjectImage");
+    console.log('Form Values:', values); // Log form values
+    const submissionData = { ...values, icon: downloadUrl };
     try {
-      await createSubject(values);
+      await createSubject(submissionData);
       message.success("Subject created successfully!");
       form.resetFields();
       setClasses([]);
@@ -92,7 +102,7 @@ const SubjectForm = () => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -108,7 +118,7 @@ const SubjectForm = () => {
   return (
     <FormContainer>
       <h2>Create Subject</h2>
- 
+
       {/* Display error messages or loading spinners */}
       {(loadingBoards || loadingClasses) && <Spin tip="Loading..." />}
       {(boardsError || classesError) && (
@@ -119,7 +129,7 @@ const SubjectForm = () => {
           style={{ marginBottom: "1em" }}
         />
       )}
- 
+
       {/* Form */}
       <Form
         form={form}
@@ -139,7 +149,7 @@ const SubjectForm = () => {
         >
           <Input placeholder="Enter Subject Name" />
         </Form.Item>
- 
+
         {/* Board ID */}
         <Form.Item
           label="Board"
@@ -158,7 +168,7 @@ const SubjectForm = () => {
             ))}
           </Select>
         </Form.Item>
- 
+
         {/* Class ID */}
         <Form.Item
           label="Class"
@@ -177,7 +187,7 @@ const SubjectForm = () => {
             ))}
           </Select>
         </Form.Item>
- 
+
         {/* Language */}
         <Form.Item
           label="Language"
@@ -189,7 +199,7 @@ const SubjectForm = () => {
             <Option value="hindi">Hindi</Option>
           </Select>
         </Form.Item>
- 
+
         {/* Is Grammar Subject */}
         <Form.Item
           label="Is Grammar Subject?"
@@ -201,7 +211,23 @@ const SubjectForm = () => {
             <Radio value="false">False</Radio>
           </Radio.Group>
         </Form.Item>
- 
+        {/* Image Upload */}
+        <Form.Item
+          label="Subject Image"
+          name="imageLink"
+          rules={[{ required: true, message: "Please upload an image!" }]}
+        >
+          <Upload
+            beforeUpload={() => false} // Prevent auto-upload
+            maxCount={1}
+            onChange={handleImageChange}
+            accept="image/*"
+            listType="picture"
+          >
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+        </Form.Item>
+
         {/* Submit Button */}
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={isSubmitting}>
@@ -212,5 +238,5 @@ const SubjectForm = () => {
     </FormContainer>
   );
 };
- 
+
 export default SubjectForm;
