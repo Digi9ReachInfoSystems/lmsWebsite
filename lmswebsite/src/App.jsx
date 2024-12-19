@@ -97,7 +97,11 @@ import SelectDuration from "./Main/Pages/SelectDuration/SelectDuration";
 import SelectType from "./Main/Pages/SelectType/SelectType";
 import PaymentScreen from "./module/student/pages/PaymentScreen/PaymentScreen";
 import StudentForm from "./pages/SignUpPage/signUpPageStudentForm";
+
 import ContactUs from "./Main/Pages/ContactUs/ContactUs";
+
+import Blog from "./Main/Pages/Blogs/Blog";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -185,7 +189,11 @@ function App() {
           <Route path="/paymentScreen" element={<PaymentScreen />} />
           <Route path="/student" element={<StudentLandingPage />} />
           <Route path="/student/mode" element={<Mode />} />
+
           <Route path="/ContactUs" element={<ContactUs />} />
+
+          <Route path="/blogs" element={<Blog />} />
+
           <Route
             path="/student/personal"
             element={<OneToOneStudentlandingPage />}
@@ -371,6 +379,11 @@ function App() {
               <Route
                 path="typeOfBatch"
                 element={<ManageContentTable contentType="typeOfBatch" />}
+              />
+
+              <Route 
+              path="blog"
+              element={<ManageContentTable contentType="blog" />}
               />
             </Route>
 
