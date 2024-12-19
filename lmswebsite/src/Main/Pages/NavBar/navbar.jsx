@@ -77,16 +77,22 @@ function HeaderSection({ scrollToSection }) {
       position="static"
       sx={{ backgroundColor: "#E8F8F5", color: "#333" }}
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Toolbar
+        sx={{
+          // display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         {/* Logo */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box>
           <img
             src={Logo}
             alt="Logo"
             style={{
               width: "40px",
               height: "40px",
-              marginRight: "8px",
+              // marginRight: "8px",
               "@media (max-width: 768px)": { width: "20px", height: "20px" },
             }}
           />
@@ -111,13 +117,6 @@ function HeaderSection({ scrollToSection }) {
         </Box>
 
         {/* Navigation Links */}
-        <Box
-          sx={{
-            display: "flex",
-            gap: 8,
-            "@media (max-width: 768px)": { gap: 1 },
-          }}
-        ></Box>
 
         <StyledBox
           isMenuOpen={isMenuOpen} // Pass the state to StyledBox
