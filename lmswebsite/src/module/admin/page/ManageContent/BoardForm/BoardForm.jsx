@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Spin, message, Alert } from 'antd';
+import { Form, Input, Button, Spin, message, Alert,Upload } from 'antd';
 import { createBoard } from '../../../../../api/boardApi';
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 import { set } from 'lodash';
+import { UploadOutlined } from "@ant-design/icons";
+import { uploadFileToFirebase } from '../../../../../utils/uploadFileToFirebase';
  
 const BoardForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
  
   const handleSubmit = async (values) => {
+    const downloadUrl = await uploadFileToFirebase(imageFile, "boardImage");
     console.log('Form Values:', values); // Log form values
     setIsSubmitting(true);
     setError(null);
- 
+     const submissionData={...values,icon:downloadUrl};
     try {
     setLoading(true);
-      const response = await createBoard(values);
+      const response = await createBoard(submissionData);
       console.log('API Response:', response); // Log API response
       message.success('Board created successfully!');
     } catch (err) {
@@ -35,6 +39,9 @@ const BoardForm = () => {
     }
   };
  
+  const handleImageChange = ({ file }) => {
+    setImageFile(file); // Save the file in state
+  };
   if (loading) {
     return (
       <div
@@ -97,6 +104,22 @@ const BoardForm = () => {
             style={{ marginBottom: '1rem' }}
           />
         )}
+        {/* Image Upload */}
+        <Form.Item
+          label="Board Image"
+          name="imageLink"
+          rules={[{ required: true, message: "Please upload an image!" }]}
+        >
+          <Upload
+            beforeUpload={() => false} // Prevent auto-upload
+            maxCount={1}
+            onChange={handleImageChange}
+            accept="image/*"
+            listType="picture"
+          >
+            <Button icon={<UploadOutlined />}>Click to Upload</Button>
+          </Upload>
+        </Form.Item>
         <Form.Item>
           <Button
             type="primary"
