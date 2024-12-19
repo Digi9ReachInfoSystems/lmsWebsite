@@ -266,7 +266,7 @@ function HeaderSection({ scrollToSection }) {
             Testimonials
           </Link>
           <Link
-            href="#"
+            href="/ContactUs"
             underline="none"
             sx={{
               color: "#000",
