@@ -235,7 +235,7 @@ function HeaderSection({ scrollToSection }) {
             Features
           </Link>
           <Link
-            href="#"
+            href="/blogs"
             underline="none"
             sx={{
               color: "#333",
@@ -265,7 +265,7 @@ function HeaderSection({ scrollToSection }) {
             Testimonials
           </Link>
           <Link
-            href="#"
+            href="/ContactUs"
             underline="none"
             sx={{
               color: "#000",

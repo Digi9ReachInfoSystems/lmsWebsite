@@ -6,7 +6,7 @@ export const LoginPageWrap = styled.div`
   display: flex;
   height: 100vh;
 
-  background: ${(props) => props.theme.colors.pink3};
+  background: ${(props) => props.theme.colors.white};
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -116,7 +116,7 @@ export const SubTitle = styled.h2`
 `;
 
 export const ForgotPassword = styled.a`
-  color: ${(props) => props.theme.colors.pink};
+  color: ${(props) => props.theme.colors.newGreen};
   // text-align: left;
   font-size: 0.7rem;
   cursor: pointer;
@@ -137,7 +137,7 @@ export const SubTitle1 = styled.p`
   // margin-top: 1rem;
 
   a {
-    color: ${(props) => props.theme.colors.pink};
+    color: ${(props) => props.theme.colors.newGreen};
     text-decoration: none;
 
     &:hover {
@@ -149,7 +149,7 @@ export const SubTitle1 = styled.p`
 export const LoginButton = styled.button`
   width: 100%;
   padding: 0.8rem;
-  background-color: ${(props) => props.theme.colors.pink};
+  background-color: ${(props) => props.theme.colors.newGreen};
   color: white;
   border: none;
   border-radius: 5px;
