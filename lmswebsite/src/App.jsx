@@ -367,6 +367,11 @@ function App() {
                 path="typeOfBatch"
                 element={<ManageContentTable contentType="typeOfBatch" />}
               />
+
+              <Route 
+              path="blog"
+              element={<ManageContentTable contentType="blog" />}
+              />
             </Route>
 
             <Route path="/admin/customPackage" element={<CustomPackage />} />

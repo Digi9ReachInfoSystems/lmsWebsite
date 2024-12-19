@@ -1,6 +1,6 @@
 // ManageContentTable.jsx
 import React, { useState, useEffect } from 'react';
-import { Table, Modal, message, Popconfirm } from 'antd';
+import { Table, Modal, message, Popconfirm, Spin, Alert } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Container,
@@ -16,6 +16,7 @@ import BannerForm from '../BannerForm/BannerForm';
 import ChooseUsForm from '../ChooseUsForm/ChooseUsForm';
 import BenefitForm from '../BenifitsForm/BenifitsForm';
 import ModeBatch from '../ModeBatch/ModeBatch';
+import BlogForm from '../BlogForm/BlogForm';
 import { getAllClasses, createClass, deleteClass } from '../../../../../api/classApi';
 import { getAllSubjects, createSubject, deleteSubjectById } from '../../../../../api/subjectApi';
 import { getBoards, createBoard, deleteBoard } from '../../../../../api/boadApi';
@@ -25,9 +26,11 @@ import { getBanners, createBanner, deleteBanner } from '../../../../../api/banne
 import { createChooseUsFeature, deleteChooseUsFeature, getChooseUsData } from '../../../../../api/chooseUsApi';
 import { createBenefit, getAllBenefits, deleteBenefit } from '../../../../../api/benefitsApi';
 import { createTypeOfBatch, getAllTypeOfBatches, deleteTypeOfBatch, updateTypeOfBatch } from '../../../../../api/typeOfBatchApi';
+import { createBlog, getAllBlogs, deleteBlog } from '../../../../../api/blogApi';
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 import { render } from '@fullcalendar/core/preact.js';
+
 const ManageContentTable = ({ contentType }) => {
   const [data, setData] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -42,7 +45,6 @@ const ManageContentTable = ({ contentType }) => {
   useEffect(() => {
     setLoading(true);
     fetchData();
-    setLoading(false);
   }, [contentType]);
 
   const fetchData = async () => {
@@ -83,14 +85,12 @@ const ManageContentTable = ({ contentType }) => {
             getBoards(),
           ]);
 
-
           // Create mappings
           const classMap = {};
           classesDataForSubjects.forEach((cls) => {
             const classId = getId(cls);
             classMap[classId] = cls;
           });
-
 
           const boardMapForSubjects = {};
           boardsDataForSubjects.forEach((board) => {
@@ -107,7 +107,6 @@ const ManageContentTable = ({ contentType }) => {
             // Get boardId from classData
             const boardId = classData?.curriculum?.$oid || classData?.curriculum?._id;
             const boardName = boardId ? boardMapForSubjects[boardId] || 'N/A' : 'N/A';
-
 
             return {
               ...subject,
@@ -150,9 +149,19 @@ const ManageContentTable = ({ contentType }) => {
           setData(benefitData.benefits);
           break;
 
-          case 'typeOfBatch':
+        case 'typeOfBatch':
           const typeOfBatchData = await getAllTypeOfBatches();
           setData(typeOfBatchData);
+          break;
+
+        case 'blog':
+          const blogData = await getAllBlogs();
+          console.log("Blogs fetched successfully", blogData);
+          if (blogData.success && Array.isArray(blogData.data)) {
+            setData(blogData.data); // Correctly set to the data array
+          } else {
+            message.error("Invalid blog data format received.");
+          }
           break;
 
         default:
@@ -161,6 +170,8 @@ const ManageContentTable = ({ contentType }) => {
       }
     } catch (error) {
       message.error('Failed to fetch data');
+    } finally {
+      setLoading(false); // Moved here to ensure it's always executed
     }
   };
 
@@ -173,7 +184,6 @@ const ManageContentTable = ({ contentType }) => {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
-  
 
   // Handle Create
   const handleCreate = async (newItem) => {
@@ -207,17 +217,18 @@ const ManageContentTable = ({ contentType }) => {
           await createChooseUsFeature(newItem);
           message.success('Choose Us Feature created successfully');
           break;
-
         case 'benefits':
           await createBenefit(newItem);
           message.success('Benefit created successfully');
           break;
-          
-          case 'typeOfBatch':
+        case 'typeOfBatch':
           await createTypeOfBatch(newItem);
           message.success('Type of Batch created successfully');
           break;
-
+        case 'blog':
+          await createBlog(newItem);
+          message.success('Blog created successfully');
+          break;
         default:
           break;
       }
@@ -260,18 +271,18 @@ const ManageContentTable = ({ contentType }) => {
           await deleteChooseUsFeature(getId(record));
           message.success('Choose Us Feature deleted successfully');
           break;
-
         case 'benefits':
           await deleteBenefit(getId(record));
           message.success('Benefit deleted successfully');
           break;
-
-          case 'typeOfBatch':
+        case 'typeOfBatch':
           await deleteTypeOfBatch(getId(record));
           message.success('Type of Batch deleted successfully');
           break;
-
-
+        case 'blog':
+          await deleteBlog(getId(record));
+          message.success('Blog deleted successfully');
+          break;
         default:
           break;
       }
@@ -338,7 +349,7 @@ const ManageContentTable = ({ contentType }) => {
           render(_, record) {
             return (
               <span>
-                {record.class_id?.classLevel || 'N/A'}
+                {record.classLevel || 'N/A'}
               </span>
             );
           }
@@ -347,13 +358,6 @@ const ManageContentTable = ({ contentType }) => {
           title: 'Board Name',
           dataIndex: 'boardName',
           key: 'boardName',
-          render(_, record) {
-            return (
-              <span>
-                {record.class_id?.curriculum?.name || 'N/A'}
-              </span>
-            );
-          }
         },
         {
           title: 'Action',
@@ -526,18 +530,16 @@ const ManageContentTable = ({ contentType }) => {
         {
           title: 'Action',
           key: 'action',
-          render: (_, record) => {
-            return (
-              <Popconfirm
-                title="Are you sure you want to delete this banner?"
-                onConfirm={() => handleDelete(record)}
-                okText="Yes"
-                cancelText="No"
-              >
-                <button type="button">Delete</button>
-              </Popconfirm>
-            )
-          },
+          render: (_, record) => (
+            <Popconfirm
+              title="Are you sure you want to delete this banner?"
+              onConfirm={() => handleDelete(record)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button type="button">Delete</button>
+            </Popconfirm>
+          ),
         },
       ];
       FormComponent = BannerForm;
@@ -546,7 +548,6 @@ const ManageContentTable = ({ contentType }) => {
     case 'chooseUs':
       title = 'Choose Us';
       columns = [
-
         {
           title: 'Name',
           dataIndex: 'name',
@@ -561,23 +562,17 @@ const ManageContentTable = ({ contentType }) => {
           title: 'Image',
           dataIndex: 'imageUrl',
           key: 'imageUrl',
-          render: (text, record) => {
-            return (
-
-              <img
-                src={record.imageUrl}
-                alt="Item"
-                style={{ width: '50px', height: '50px', objectFit: 'cover', cursor: 'pointer' }}
-                onClick={() => {
-                  setSelectedImage(record.imageUrl);
-                  setImageModalVisible(true);
-                }
-
-
-                }
-              />
-            )
-          },
+          render: (text, record) => (
+            <img
+              src={record.imageUrl}
+              alt="Item"
+              style={{ width: '50px', height: '50px', objectFit: 'cover', cursor: 'pointer' }}
+              onClick={() => {
+                setSelectedImage(record.imageUrl);
+                setImageModalVisible(true);
+              }}
+            />
+          ),
         },
         {
           title: 'Action',
@@ -637,42 +632,41 @@ const ManageContentTable = ({ contentType }) => {
       FormComponent = BenefitForm;
       break;
 
-      case 'typeOfBatch':
+    case 'typeOfBatch':
       title = 'Type of Batch';
       columns = [
         {
-          title:'Mode',
-          dataIndex:'mode',
-          key:'mode',
+          title: 'Mode',
+          dataIndex: 'mode',
+          key: 'mode',
         },
         {
-    title:'Discount price',
-    dataIndex:'discountedPrice',
-    key:'discountedPrice',
+          title: 'Discount Price',
+          dataIndex: 'discountedPrice',
+          key: 'discountedPrice',
         },
         {
-          title:'Price',
-          dataIndex:'price',
-          key:'price',
+          title: 'Price',
+          dataIndex: 'price',
+          key: 'price',
         },
         {
-          title:'Duration',
-          dataIndex:'duration',
-          key:'duration',
+          title: 'Duration',
+          dataIndex: 'duration',
+          key: 'duration',
         },
         {
-          title:'Discount Percentage',
-          dataIndex:'discountPercentage',
-          key:'discountPercentage',
+          title: 'Discount Percentage',
+          dataIndex: 'discountPercentage',
+          key: 'discountPercentage',
         },
-
         {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
             <Popconfirm
               title="Are you sure you want to delete this batch type?"
-              onConfirm={() =>{ console.log("edit",record); handleDelete(record)}}
+              onConfirm={() => { console.log("delete", record); handleDelete(record) }}
               okText="Yes"
               cancelText="No"
             >
@@ -681,29 +675,106 @@ const ManageContentTable = ({ contentType }) => {
           ),
         },
         {
-        title: 'Edit',
-        key: 'action',
-        render: (_, record) => (
-          <button type="button" onClick={() => {
-            console.log("edit",record);
-             const id= getId(record);
-             console.log("id",id);  
-             const percentageStr = window.prompt(
-              "Enter discount percentage (0-100):",
-              record.discountPercentage !== undefined ? record.discountPercentage : ""
-            );
-             updateTypeOfBatch(id,{
-              discountPercentage: percentageStr
-            });
-            window.location.reload();
-          }}>Edit</button>
-        ),
+          title: 'Edit',
+          key: 'edit',
+          render: (_, record) => (
+            <button type="button" onClick={() => {
+              console.log("edit", record);
+              const id = getId(record);
+              console.log("id", id);
+              const percentageStr = window.prompt(
+                "Enter discount percentage (0-100):",
+                record.discountPercentage !== undefined ? record.discountPercentage : ""
+              );
+              if (percentageStr !== null) { // Check if user didn't cancel
+                const discountPercentage = parseFloat(percentageStr);
+                if (!isNaN(discountPercentage) && discountPercentage >= 0 && discountPercentage <= 100) {
+                  updateTypeOfBatch(id, {
+                    discountPercentage: discountPercentage
+                  })
+                    .then(() => {
+                      message.success('Discount Percentage updated successfully');
+                      fetchData(); // Refresh data after update
+                    })
+                    .catch(() => {
+                      message.error('Failed to update Discount Percentage');
+                    });
+                } else {
+                  message.error('Please enter a valid percentage between 0 and 100.');
+                }
+              }
+            }}>Edit</button>
+          ),
         }
       ];
       FormComponent = ModeBatch;
       break;
-        
 
+    case 'blog':
+      title = 'Blog';
+      columns = [
+        {
+          title: 'Title',
+          dataIndex: 'title',
+          key: 'title',
+        },
+        {
+          title: 'Author',
+          dataIndex: 'author',
+          key: 'author',
+        },
+        {
+          title: 'Image',
+          dataIndex: 'image',
+          key: 'image',
+          render: (text, record) => (
+            <img
+              src={record.image}
+              alt="Item"
+              style={{ width: '50px', height: '50px', objectFit: 'cover', cursor: 'pointer' }}
+              onClick={() => {
+                setSelectedImage(record.image);
+                setImageModalVisible(true);
+              }}
+            />
+          ),
+        },
+        {
+          title: 'Description',
+          dataIndex: 'description',
+          key: 'description',
+        },
+        {
+          title: 'Tags',
+          dataIndex: 'tags',
+          key: 'tags',
+          render(_, record) {
+            return (
+              <div>
+                {record.tags.map((tag) => (
+                  <li key={tag}>{tag}</li>
+                ))}
+              </div>
+            );
+          }
+        },
+        {
+          title: 'Action',
+          key: 'action',
+          render: (_, record) => (
+            <Popconfirm
+              title="Are you sure you want to delete this blog?"
+              onConfirm={() => handleDelete(record)}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button type="button">Delete</button>
+            </Popconfirm>
+          ),
+        },
+      ];
+      FormComponent = BlogForm;
+      break;
 
     default:
       break;
@@ -728,7 +799,7 @@ const ManageContentTable = ({ contentType }) => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -750,12 +821,18 @@ const ManageContentTable = ({ contentType }) => {
         </StyledButton>
       </div>
       {/* Table */}
-      <Table
-        className='anttable'
-        columns={columns}
-        dataSource={data}
-        rowKey={(record) => { getId(record) }}
-      />
+      {data.length > 0 ? (
+        <Table
+          className='anttable'
+          columns={columns}
+          dataSource={data}
+          rowKey={record => getId(record)} // Correctly returns the ID
+          pagination={{ pageSize: 10 }} // Optional: Add pagination
+          bordered // Optional: Add borders for better visibility
+        />
+      ) : (
+        <Alert message="No data available" type="info" showIcon />
+      )}
       {/* Create Modal */}
       <Modal
         visible={isModalVisible}
