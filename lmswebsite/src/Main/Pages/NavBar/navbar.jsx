@@ -236,7 +236,7 @@ function HeaderSection({ scrollToSection }) {
             Features
           </Link>
           <Link
-            href="#"
+            href="/blogs"
             underline="none"
             sx={{
               color: "#333",
