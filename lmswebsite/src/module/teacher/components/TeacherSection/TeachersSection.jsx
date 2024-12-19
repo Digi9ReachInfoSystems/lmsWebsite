@@ -19,7 +19,7 @@ const TeachersSection = () => {
       try {
         const response = await getTeachersByExperience();
         console.log("Teachers fetched successfully:", response);
-        setTeachers(response.slice(0, 4)); // Get the top 3 experienced teachers
+        setTeachers(response.slice(0, 3)); // Get the top 3 experienced teachers
         setLoading(false);
       } catch (err) {
         console.error("Error fetching teachers:", err);

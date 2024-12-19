@@ -197,3 +197,14 @@ export  const updateStudent = async (studentId, studentData) => {
     throw error; // Throw error for further handling
   }
 };
+
+export const getEligibleStudentsForBatch = async (filterData) => {
+  console.log("filterData", filterData);
+  try {
+    const response = await api.post(`/students/student/eligible-student`,filterData);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching eligible students for batch:', error);
+    throw error;
+  }
+};

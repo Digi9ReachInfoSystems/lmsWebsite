@@ -65,7 +65,7 @@ function SubjectScreen() {
   return (
     <div>
       <HeaderSection />
-      <div className="board-container">
+      <div className="board-containers">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
