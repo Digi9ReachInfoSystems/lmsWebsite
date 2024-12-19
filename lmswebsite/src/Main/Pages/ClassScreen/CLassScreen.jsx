@@ -86,7 +86,13 @@ function ClassScreen() {
                   }`}
                   onClick={() => handleClassSelection(classItem)}
                 >
-                  <div className="skill-icon"></div>
+                  <div className="skill-icon">
+                    <img
+                      src={classItem.image} // Render the image from board.icon
+                      alt={classItem.className}
+                      className="board-icon"
+                    />
+                  </div>
                   <h4>{classItem.className}</h4>
                 </div>
               ))}

@@ -156,6 +156,7 @@ function HeroContent() {
           </Button>
           <Button
             variant="outlined"
+            onClick={() => navigate("/teacher")}
             sx={{
               borderColor: "#fff",
               color: "#fff",
