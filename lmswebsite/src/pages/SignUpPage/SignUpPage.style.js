@@ -119,11 +119,12 @@ export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #ee1b7a;
+  // color: #ee1b7a;
 `;
 
 export const LinkText = styled.a`
-  color: ${(props) => props.theme.colors.pink4};
+  // color: ${(props) => props.theme.colors.green};
+  color:#00c897;
   text-decoration: none;
   font-size: 14px;
 

@@ -8,8 +8,8 @@ import { StyledLink, HamburgerMenu, StyledBox } from "./navbar.style";
 import schoolIcon from "../../assets/school.png";
 import collegeIcon from "../../assets/college.png";
 import universityIcon from "../../assets/university.png";
+import Logo from "../../../assets/LOGO.png";
 import { useNavigate } from "react-router-dom";
-
 function HeaderSection({ scrollToSection }) {
   const scrollToComponent = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -38,6 +38,10 @@ function HeaderSection({ scrollToSection }) {
     }
   };
 
+  const handleClick = () => {
+    navigate("/selectBoard"); // Navigate to the Select Board page
+  };
+
   const handleBoardMouseEnter = async (boardId) => {
     setHoveredBoardId(boardId);
     if (!classes[boardId]) {
@@ -50,13 +54,11 @@ function HeaderSection({ scrollToSection }) {
     }
   };
 
-
   const navigate = useNavigate();
 
   const handleSelectBoard = () => {
     navigate("/selectBoard"); // Navigate to the /class route
   };
-
 
   const handleClassMouseEnter = async (classId) => {
     setHoveredClassId(classId);
@@ -79,7 +81,7 @@ function HeaderSection({ scrollToSection }) {
         {/* Logo */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <img
-            src="https://clipground.com/images/png-logos-1.png"
+            src={Logo}
             alt="Logo"
             style={{
               width: "40px",
@@ -96,7 +98,6 @@ function HeaderSection({ scrollToSection }) {
               "@media (max-width: 768px)": { lineHeight: "1" },
             }}
           >
-            Classroom{" "}
             <span
               style={{
                 fontSize: "12px",
@@ -105,9 +106,7 @@ function HeaderSection({ scrollToSection }) {
               sx={{
                 fontSize: { xs: "10px!important", md: "10px" }, // Use the sx prop for media queries
               }}
-            >
-              Technologies
-            </span>
+            ></span>
           </Typography>
         </Box>
 
@@ -115,7 +114,7 @@ function HeaderSection({ scrollToSection }) {
         <Box
           sx={{
             display: "flex",
-            gap: 3,
+            gap: 8,
             "@media (max-width: 768px)": { gap: 1 },
           }}
         ></Box>
@@ -249,7 +248,7 @@ function HeaderSection({ scrollToSection }) {
               "@media (max-width: 768px)": { fontSize: "10px" },
             }}
           >
-            Pricing
+            Blogs
           </Link>
           <Link
             href="#"
@@ -285,7 +284,7 @@ function HeaderSection({ scrollToSection }) {
               },
             }}
           >
-            Help
+            Contact Us
           </Link>
         </StyledBox>
 
@@ -307,6 +306,7 @@ function HeaderSection({ scrollToSection }) {
         >
           <Button
             variant="outlined"
+            onClick={() => navigate("/login")}
             sx={{
               borderColor: "#ccc",
               color: "#333",
@@ -328,11 +328,10 @@ function HeaderSection({ scrollToSection }) {
                 marginBottom: "10px",
               },
             }}
-            onClick={handleSelectBoard}
           >
-            Sign in
+            Log in
           </Button>
-          <Button
+          {/* <Button
             variant="contained"
             sx={{
               backgroundColor: "#00C897", // Green button
@@ -345,8 +344,8 @@ function HeaderSection({ scrollToSection }) {
               "@media (max-width: 768px)": { paddingX: 2 },
             }}
           >
-            Free Trial
-          </Button>
+            Explore
+          </Button> */}
         </Box>
       </Toolbar>
     </AppBar>

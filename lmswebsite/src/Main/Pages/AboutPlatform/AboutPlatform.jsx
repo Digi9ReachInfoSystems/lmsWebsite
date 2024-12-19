@@ -29,8 +29,8 @@ function AboutPlatform() {
             our full suite of free tools and upgrade as you grow.
           </p>
           <div className="about-platform-buttons">
-            <button className="demo-button">Get a demo</button>
-            <button className="start-button">Get started free</button>
+            <button className="demo-button">Join </button>
+            <button className="start-button">Have Questions?</button>
           </div>
         </div>
       </div>

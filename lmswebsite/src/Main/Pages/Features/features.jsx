@@ -1,59 +1,62 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Features.css"; // Import the CSS file
+import AOS from "aos";
+import "aos/dist/aos.css"; // Import AOS styles
 
 function Features() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000, // Animation duration in milliseconds
+      easing: "ease-in-out", // Easing function
+      once: true, // Whether animation should happen only once - while scrolling down
+      mirror: false, // Whether elements should animate out while scrolling past them
+    });
+  }, []);
+
   const features = [
     {
-      title: "Create your profile",
+      number: "01",
+      title: "Select Your Package",
       description:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      buttonText: "Get Started",
-      image:
-        "https://i.pinimg.com/originals/83/10/ab/8310ab709f70727b92fa1a6917897c82.jpg", // Add image paths
+        "Create your package by selecting your board, class and subject ",
+      buttonText: "Next",
     },
     {
-      title: "Search Courses",
-      description:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      buttonText: "Get Started",
-      image:
-        "https://i.pinimg.com/originals/83/10/ab/8310ab709f70727b92fa1a6917897c82.jpg", // Add image paths
+      number: "02",
+      title: "Sign Up ",
+      description: "Create Your Account and Start Your Learning Journey",
+      buttonText: "Next",
     },
     {
-      title: "Make a Connection",
-      description:
-        "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-      buttonText: "Get Started",
-      image:
-        "https://i.pinimg.com/originals/83/10/ab/8310ab709f70727b92fa1a6917897c82.jpg", // Add image paths
+      number: "03",
+      title: "Complete Payment",
+      description: "Complete Payment and Get Instant Access to Your Dashboard",
+      buttonText: "Completed",
     },
   ];
 
   return (
     <div className="features-section">
-      <h2>
-        How KnowledgePulse <span>works</span>
-      </h2>
-      <div className="features-container">
+      <h2 className="section-title">How it works</h2>
+      <p className="section-description">
+        It’s about you and your family, having a comfortable payment,
+        exceptional service, and a lender.
+      </p>
+
+      <div className="features-container" style={{ display: "block" }}>
         {features.map((feature, index) => (
-          <div key={index} className="feature-card">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                
-              }}
-            >
-              <img
-                src={feature.image}
-                alt={feature.title}
-                className="feature-image"
-              />
+          <div
+            key={index}
+            className={`feature-box feature-${index + 1}`}
+            data-aos="fade-up" // AOS animation type
+            data-aos-delay={index * 200} // Optional: stagger animations
+          >
+            <div className="feature-number">{feature.number}</div>
+            <div className="feature-content">
+              <h3 className="feature-title">{feature.title}</h3>
+              <p className="feature-description">{feature.description}</p>
+              <button className="feature-button">{feature.buttonText}</button>
             </div>
-            <h3>{feature.title}</h3>
-            <p>{feature.description}</p>
-            <button className="feature-button">{feature.buttonText}</button>
           </div>
         ))}
       </div>

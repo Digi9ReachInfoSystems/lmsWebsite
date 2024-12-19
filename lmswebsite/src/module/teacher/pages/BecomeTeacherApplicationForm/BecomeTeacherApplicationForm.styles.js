@@ -4,19 +4,20 @@ import styled from "styled-components";
 import { theme, media } from "../../../../style/theme/theme";
 
 export const ApplicationContainer = styled.div`
+
   display: flex;
   flex-direction: row;
   gap: 24px;
-  padding: 40px;
-  background-color: ${theme.colors.backgroundLight};
+  // padding: 40px;
+  background-color: ${theme.colors.white};    
   width: 100%;  
-
+margin:auto;
   ${media.md`
     padding: 20px;
     flex-direction: column;
     align-items: center;
     gap: 24px;
-    background-color: ${theme.colors.backgroundLight};
+    background-color: ${theme.colors.white};
   `}
 
   .applicationImage {
@@ -37,11 +38,12 @@ export const ApplicationContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin:auto;
     background-color: ${theme.colors.white};
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    // border-radius: 8px;
+    // box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 60%;
 
     ${media.md`
       padding: 15px;
@@ -88,6 +90,7 @@ export const ApplicationContainer = styled.div`
 // Rename the styled Form to avoid conflict with antd's Form
 export const StyledForm = styled.div`
   width: 100%;
+  color: ${theme.colors.textSecondary};
 
   .ant-form-item {
     margin-bottom: 16px;
@@ -103,10 +106,15 @@ export const StyledForm = styled.div`
     gap: 20px;
     margin-bottom: 15px;
     
+    ${media.md`
+      flex-direction: column;
+      gap: 12px;
+    `}
 
     ${media.sm`
       flex-direction: column;
       gap: 12px;
+
     `}
   }
     //  .applicationRowThree  div{
@@ -123,7 +131,7 @@ export const StyledForm = styled.div`
   }
 
   button {
-    width: 100%;
+   width:100%;
   }
    
 `;
@@ -152,3 +160,5 @@ export const Processing = styled.div`
     font-size: 1.6rem;
   `}
 `;
+
+

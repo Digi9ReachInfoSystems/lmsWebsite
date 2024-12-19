@@ -16,7 +16,7 @@ export const StyledLink = styled.div`
     color: ${(props) => (props.isCoursesOpen ? theme.colors.white : "#00a87d")};
     display: flex;
     align-items: center;
-    gap: 5px;
+    // gap: 5px;
 
     &:hover {
       background-color: #00a87d;
@@ -40,7 +40,7 @@ export const StyledLink = styled.div`
   /* Dropdown menu */
   .category-menu {
     display: ${(props) => (props.isCoursesOpen ? "block" : "none")};
-    height: 400px;
+    height: 300px;
     min-width: 150px;
     position: absolute;
     // margin-top: 1px;
