@@ -74,7 +74,7 @@ function SelectDuration() {
   return (
     <div>
       <HeaderSection />
-      <div className="duration-container">
+      <div className="duration-containers">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}

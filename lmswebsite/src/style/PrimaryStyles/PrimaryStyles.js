@@ -234,6 +234,7 @@ export const PrimaryButton = styled(BaseButton)`
   color: #fff;
   border-color: ${colors.primary};
   font-size: 16px;
+  
 
   &:hover {
     background-color: ${colors.buttonHoverBackground};
