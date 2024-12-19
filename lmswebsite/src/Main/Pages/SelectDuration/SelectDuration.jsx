@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./SelectDuration.css";
 import HeaderSection from "../NavBar/navbar";
 import SummaryDrawer from "./SummaryDrawer";
+import { set } from "lodash";
 
 function SelectDuration() {
   const [selectedSkill, setSelectedSkill] = useState(""); // Track selected duration
   const [batchPrice, setBatchPrice] = useState(0); // Price from the previous page
   const [totalAmount, setTotalAmount] = useState(0); // Total calculated amount
   const [showDrawer, setShowDrawer] = useState(false); // Drawer state
+  const[duration, setDuration] = useState(0);
 
   // Fetch the selected batch from localStorage
   useEffect(() => {
@@ -58,6 +60,7 @@ function SelectDuration() {
   // Handle duration selection and total price calculation
   const handleSelection = (batch) => {
     setSelectedSkill(batch.title);
+    setDuration(batch.duration);
     const calculatedAmount = batch.duration * batchPrice;
     setTotalAmount(calculatedAmount);
   };
@@ -66,7 +69,7 @@ function SelectDuration() {
   const handleContinue = () => {
     localStorage.setItem(
       "selectedDuration",
-      JSON.stringify({ title: selectedSkill, totalAmount })
+      JSON.stringify({ title: selectedSkill, totalAmount,duration })
     );
     setShowDrawer(true);
   };
