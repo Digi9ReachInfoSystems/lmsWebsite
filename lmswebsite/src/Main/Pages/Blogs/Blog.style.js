@@ -34,7 +34,7 @@ export const Header = styled.header`
 
 export const Section = styled.section`
   margin: 20px 0;
-  width: ${(props) => (props.isExpanded ? "100%" : "30%")};
+  width: ${(props) => (props.isExpanded ? "70%" : "30%")};
   padding: 20px;
   transition: width 0.3s ease;
   cursor: pointer;
