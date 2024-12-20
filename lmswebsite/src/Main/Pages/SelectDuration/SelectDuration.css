@@ -135,3 +135,13 @@
   color: #00c897;
   font-size: 24px;
 }
+
+.price-2{
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  margin: auto;
+  color: #00c897;
+}

@@ -128,7 +128,16 @@
   text-align: center;
 }
 
-.price {
-  color: #00c897;
-  font-size: 24px;
+
+.batch-price{
+  margin-top: auto;              /* Push to the bottom */
+  font-size: 1.2em;              /* Increase font size */
+  font-weight: bold;             /* Make the price bold */
+  color: #28a745;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: auto;
+  padding: auto;
 }
+
