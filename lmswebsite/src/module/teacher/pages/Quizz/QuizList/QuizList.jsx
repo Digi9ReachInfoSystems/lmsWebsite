@@ -230,11 +230,11 @@ export default function QuizList() {
             <Link to={`/teacher/dashboard/quizz/assignedBatch`}>
               <IoMdArrowRoundBack size={24} />
             </Link>
-            <Heading>Created Quizes</Heading>
+            <Heading>Created Assessment</Heading>
           </div>
           <div className="created-quizes-batches-action-section">
             <Input
-              placeholder="Search by Circular Name"
+              placeholder="Search by Assessment Name"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               allowClear
@@ -245,7 +245,7 @@ export default function QuizList() {
               onClick={handleAddQuiz} // Open modal on click
             >
               <AiOutlineFileAdd size={24} />
-              Create Quizes
+              Create Assessment
             </PrimaryButton>
           </div>
         </div>
@@ -302,7 +302,7 @@ export default function QuizList() {
           </QuizzesContainer>
           {
             <Modal
-              title={`Create New Quiz`}
+              title={`Create New Assessment`}
               open={showDialog}
               onCancel={() => {
                 setShowDialog(false);
