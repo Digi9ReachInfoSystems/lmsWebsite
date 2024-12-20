@@ -56,6 +56,10 @@ function SubjectScreen() {
     navigate("/selectType");
   };
 
+  const handleCreateCustomSubject = () => {
+    navigate("/signupStudent"); // Navigate to custom subject creation page
+  };
+
   return (
     <div>
       <HeaderSection />
@@ -105,6 +109,21 @@ function SubjectScreen() {
                 <h4>{subject.subject_name}</h4>
               </div>
             ))}
+            <div
+              className="skill-card custom-subject-card"
+              onClick={handleCreateCustomSubject}
+            >
+              <div className="skill-icon">
+                <img
+                  src="/assets/custom-subject-icon.png"
+                  alt="Custom Subject"
+                  className="board-icon"
+                />
+              </div>
+              <h4>Make Your Own Combo
+                
+              </h4>
+            </div>
           </div>
         )}
 
