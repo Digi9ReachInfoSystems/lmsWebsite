@@ -50,6 +50,7 @@
   flex-wrap: wrap; /* Wrap cards if they overflow */
   gap: 20px; /* Add space between cards */
   margin: 20px 0;
+  /* position: absolute; */
 }
 
 .skill-card {
@@ -134,6 +135,8 @@
 .price {
   color: #00c897;
   font-size: 24px;
+  /* position: absolute; */
+  bottom: 20px;
 }
 
 .price-2{
