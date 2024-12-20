@@ -70,7 +70,7 @@ const PaymentScreen = () => {
 
 
                     <div className="info-group2-payment">
-                        <label className="info-label-payment">Total Price</label>
+                        <label className="info-label-payment">Total  Price</label>
                         <div className="info-box-payment">
                             <p>Rs.{student.amount}.00 /-</p>
                             <span className="tick-mark"></span>
