@@ -95,7 +95,7 @@
 .footer-link {
   text-decoration: none;
   color: inherit; /* Match parent color */
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .footer-link:hover {
