@@ -358,7 +358,7 @@ const AssignedBatchStudentsList = () => {
               value={description}
 
             >
-              <input type="text" onChange={(e) => setDescription(e.target.value)} />
+              <Input.TextArea type="text" onChange={(e) => setDescription(e.target.value)} />
             </Form.Item>
 
 

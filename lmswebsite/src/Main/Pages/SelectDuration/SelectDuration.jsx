@@ -100,7 +100,7 @@ function SelectDuration() {
               >
                 <div className="batch-header">
                   <h4>{batch.title}</h4>
-                  <p className="price">Total = ₹{totalPrice} </p>{" "}
+                 
                   {/* Display total amount */}
                 </div>
                 <ul className="features-list">
@@ -108,6 +108,10 @@ function SelectDuration() {
                     <li key={index}>&#10003; {feature}</li>
                   ))}
                 </ul>
+                <div>
+                <p className="price">Total = ₹{totalPrice} </p>{" "}
+                  <p className="price-2">({batch.duration}X{batchPrice})</p>
+                  </div>
               </div>
             );
           })}
