@@ -31,6 +31,7 @@ const ModeBatch = () => {
   const [featureInput, setFeatureInput] = useState(''); // State for current feature input
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const[title, setTitle] = useState('');
 
   // Maximum number of features allowed
   const MAX_FEATURES = 10;
@@ -108,6 +109,7 @@ const ModeBatch = () => {
       discountPercentage: discountPercentage !== '' ? parseFloat(discountPercentage) : undefined,
       discountedPrice: discountedPrice ? parseFloat(discountedPrice) : undefined,
       features, // Include features array
+      title
     };
 
     // Debugging: Log the data being sent to the API
@@ -138,6 +140,14 @@ const ModeBatch = () => {
     <Container>
       <h2>Create Type of Batch</h2>
       <Form onSubmit={handleSubmit}>
+      <Label htmlFor="title">Batch Title</Label>
+        <Input
+          type="text"
+          id="title"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+        />
         <Label htmlFor="mode">Type of Batch</Label>
         <Select
           id="mode"
@@ -163,7 +173,7 @@ const ModeBatch = () => {
           required
         />
 
-        <Label htmlFor="discountPercentage">Discount Percentage (%)</Label>
+        {/* <Label htmlFor="discountPercentage">Discount Percentage (%)</Label>
         <Input
           type="number"
           id="discountPercentage"
@@ -173,7 +183,7 @@ const ModeBatch = () => {
           max="100"
           step="0.01"
           placeholder="Optional"
-        />
+        /> */}
 
         {discountedPrice && (
           <DiscountInfo>
@@ -181,7 +191,7 @@ const ModeBatch = () => {
           </DiscountInfo>
         )}
 
-        <Label htmlFor="duration">Duration (days)</Label>
+        {/* <Label htmlFor="duration">Duration (days)</Label>
         <Input
           type="number"
           id="duration"
@@ -189,7 +199,7 @@ const ModeBatch = () => {
           onChange={(e) => setDuration(e.target.value)}
           min="0"
           step="1"
-        />
+        /> */}
 
         {/* New Feature Input Section */}
         <Label htmlFor="features">Features</Label>
