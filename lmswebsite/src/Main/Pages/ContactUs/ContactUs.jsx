@@ -102,7 +102,6 @@ const ContactUs = () => {
               {/* Submit Button */}
               <Form.Item>
                 <Button
-                  type="primary"
                   htmlType="submit"
                   className="ContactButton"
                 >

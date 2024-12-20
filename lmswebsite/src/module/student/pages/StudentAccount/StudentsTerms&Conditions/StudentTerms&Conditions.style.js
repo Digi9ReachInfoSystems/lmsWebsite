@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  width: 80%;
+  /* width: 80%; */
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
@@ -47,4 +47,41 @@ export const Text = styled.p`
   @media (max-width: 480px) {
     font-size: 0.85rem; /* Smaller font size for very small screens */
   }
+`;
+
+export const Terms = styled.div`
+  overflow-y: scroll; /* Enable vertical scrolling */
+  height: 100vh;
+  scrollbar-width: none;
+`
+
+export const TermContainer = styled.div`
+  color: #333;
+
+`;
+
+export const Header1 = styled.header`
+  background: #00a0dc;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  font-size: 30px;
+`;
+
+export const Subtitle = styled.div`
+  /* margin-left: 10%; */
+  width: 90%;
+  font-size: 16px;
+  text-align: center;
+
+  font-weight: bold;
+  margin: 0 auto 20px auto;
+`;
+
+export const Para = styled.div`
+  /* margin-left: 10%; */
+  width: 90%;
+  font-size: 12px;
+  margin: 0 auto 20px auto;
+  text-align: justify;
 `;
