@@ -3,7 +3,7 @@ import { List, Button } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, getStudentscheduleForSevenDaysById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
 import { set } from "lodash";
-import { getTeacherAttendance, getTeacherByAuthId, getTeacherscheduleForSevenDaysById } from "../../../../api/teacherApi";
+import { clockIn, getTeacherAttendance, getTeacherByAuthId, getTeacherscheduleForSevenDaysById } from "../../../../api/teacherApi";
 
 const UpcomingMeetings = () => {
   const [meetingData, setMeetingData] = React.useState([]);
@@ -78,10 +78,10 @@ const UpcomingMeetings = () => {
   const handleClockIn = async (meetingId) => {
     try {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
-      const studentData = await getStudentByAuthId(authId);
+      const teacherdata= await getTeacherByAuthId(authId);
 
       // Clock-in API requires teacherId and meetingId
-      const response = await studentClockIn(studentData.student._id, meetingId); // Make sure you pass teacher._id
+      const response = await clockIn(teacherdata.teacher._id, meetingId); // Make sure you pass teacher._id
 
       setAttendanceStatus((prevStatus) => ({
         ...prevStatus,
