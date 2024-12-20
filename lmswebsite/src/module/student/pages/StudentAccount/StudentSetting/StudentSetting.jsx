@@ -84,7 +84,7 @@ const StudentSetting = () => {
         onCollapse={(value) => setCollapsed(value)}
         theme="light"
       >
-        <Subheading className="settings-sider "
+ <div className="settings-sider "
           style={{
             height: 32,
             margin: 16,
@@ -93,7 +93,7 @@ const StudentSetting = () => {
           }}
         >
           Settings
-        </Subheading>
+        </div>
 
         <Menu
           mode="inline"
@@ -118,7 +118,7 @@ const StudentSetting = () => {
       <Layout>
         <Content
           style={{
-            margin: "24px 16px",
+            // margin: "24px 16px",
             padding: 24,
             background: "#fff",
           }}
