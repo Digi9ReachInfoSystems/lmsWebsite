@@ -3,7 +3,7 @@ import { List, Button } from "antd";
 import { RightOutlined } from "@ant-design/icons";
 import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, getStudentscheduleForSevenDaysById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
 import { set } from "lodash";
-import { clockIn, getTeacherAttendance, getTeacherByAuthId, getTeacherscheduleForSevenDaysById } from "../../../../api/teacherApi";
+import { clockIn, clockOut, getTeacherAttendance, getTeacherByAuthId, getTeacherscheduleForSevenDaysById } from "../../../../api/teacherApi";
 
 const UpcomingMeetings = () => {
   const [meetingData, setMeetingData] = React.useState([]);
@@ -100,9 +100,9 @@ const UpcomingMeetings = () => {
     console.log("meetingId", item);
     try {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
-      const studentData = await getStudentByAuthId(authId);
-      const response = await studentClockOut(
-        studentData.student._id,
+      const teacherdata = await getTeacherByAuthId(authId);
+      const response = await clockOut(
+        teacherdata.teacher._id,
         item.meetingId
       ); // Pass teacherId and meetingId
 
