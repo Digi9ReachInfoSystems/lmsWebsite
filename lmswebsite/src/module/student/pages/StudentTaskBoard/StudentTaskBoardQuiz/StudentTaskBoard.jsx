@@ -273,8 +273,8 @@ const StudentTaskBoard = () => {
       ) : (
         <div style={{ textAlign: "center", marginTop: "50px" }}>
           <Alert
-            message="No Quizzes Available"
-            description="You have no quizzes assigned at the moment."
+            message="No Assessment Available"
+            description="You have no Assessment assigned at the moment."
             type="info"
             showIcon
           />

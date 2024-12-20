@@ -23,6 +23,7 @@ const CustomPackage = () => {
     const fetchPackages = async () => {
       try {
         const data = await getPackages();
+        console.log("data", data);
         if (data && data.packages) {
           setPackages(data.packages);
           setFilteredPackages(data.packages);
@@ -50,6 +51,7 @@ const CustomPackage = () => {
     setSelectedPackage(record);
     setEditedPrice(record.package_price); // Initialize edited price
     setIsModalVisible(true);
+    console.log("record", record.student_id.type_of_batch.mode);
     form.setFieldsValue({
       studentName: record.student_id?.user_id?.name || "N/A",
       email: record.student_id?.user_id?.email || "N/A",
@@ -63,6 +65,7 @@ const CustomPackage = () => {
       isApproved: record.is_approved ? "Yes" : "No",
       isActive: record.is_active ? "Yes" : "No",
       duration: record?.duration || 0,
+      type_of_batch: record?.student_id?.type_of_batch?.mode || "N/A",
     });
   };
 
@@ -237,9 +240,12 @@ const CustomPackage = () => {
             <Form.Item label="Subjects" name="subjects">
               <Input disabled />
             </Form.Item>
-            <Form.Item label="Slots" name="slots">
+            <Form.Item label="Batch Type" name="type_of_batch">
               <Input disabled />
             </Form.Item>
+            {/* <Form.Item label="Slots" name="slots">
+              <Input disabled />
+            </Form.Item> */}
             <Form.Item label="duration" name="duration">
             {selectedPackage.is_approved ? (
                 <Input disabled />

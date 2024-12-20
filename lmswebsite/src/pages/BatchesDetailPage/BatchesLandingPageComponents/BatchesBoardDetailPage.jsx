@@ -59,7 +59,8 @@ const BoardDetailPage = () => {
 
   const handleClassClick = (classId) => {
     // Navigate to SubjectDetailsPage with the classId
-    navigate(`/testingClass/${classId}`);
+    // navigate(`/testingClass/${classId}`);
+    navigate("/subjectHomePage");
   };
 
   if (loadingClasses) {

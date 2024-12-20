@@ -8,7 +8,7 @@ import {
   getBatchesByStudentId,
   getBatchesByTeacherId,
 } from "../../../../api/batchApi";
-import { Table, Input, Button, Space, Row, Col } from "antd";
+import { Table, Input, Button, Space, Row, Col, Card } from "antd"; // Import Card from antd
 import BatchCard from "../../components/BatchCard/BatchCard";
 import { getTeacherByAuthId } from "../../../../api/teacherApi";
 // import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
@@ -38,7 +38,7 @@ export default function StudentAssignedBatches() {
         console.log("Student Data:", studentData);
 
         if (!studentData.student || !studentData.student._id) {
-          throw new Error("Teacher data is incomplete.");
+          throw new Error("Student data is incomplete.");
         }
 
         const fetchedBatches = await getBatchesByStudentId(
@@ -137,25 +137,25 @@ export default function StudentAssignedBatches() {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
   }
+
   return (
     <StudentAssignedBatchWrap>
       <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>
         <Col
           span={24}
           style={{ display: "flex", justifyContent: "center" }}
-        ></Col>
+        >
+          {/* You can add a search bar or other controls here if needed */}
+        </Col>
       </Row>
       <Row gutter={[16, 24]}>
         {filterData.length > 0 ? (
@@ -174,9 +174,9 @@ export default function StudentAssignedBatches() {
             </Col>
           ))
         ) : (
-          <Col span={24}>
-            <Card>
-              <h3>No Batches Found</h3>
+          <Col span={24} style={{ textAlign: "center" }}>
+            <Card style={{ width: "100%", backgroundColor: "#a0f2e3" }}>
+              <h3>No Batches has been assigned to your Profile yet!</h3>
             </Card>
           </Col>
         )}

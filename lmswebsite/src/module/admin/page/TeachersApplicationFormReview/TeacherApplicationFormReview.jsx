@@ -32,6 +32,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const[teacher_name,setTeacherName] = useState('');
   const [form] = Form.useForm(); // Ant Design form instance
 
 
@@ -43,6 +44,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           throw new Error("Teacher not found");
         }
         setTeacher(data);
+        setTeacherName(data.application?.teacher_name);
       } catch (err) {
         console.error("Error fetching teacher:", err);
         setError("Failed to fetch teacher details. Please try again later.");
@@ -81,9 +83,10 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
+      console.log("user", values);
       const userData = await signupUser({
         role: "teacher",
-        student_name: values.name,
+        student_name: teacher_name,
         email: values.email,
         access_token: user.accessToken,
         refresh_token: userCredential._tokenResponse.refreshToken,

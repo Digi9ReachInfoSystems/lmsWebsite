@@ -71,22 +71,25 @@ function SelectType() {
         {!loading && !error && (
           <div className="options-container">
             {batchTypes.map((batch) => (
+
               <div
                 key={batch._id} // Use batch._id directly
-                className={`batch-card ${
-                  selectedBatch === batch._id ? "selected" : ""
-                }`}
+                className={`batch-card ${selectedBatch === batch._id ? "selected" : ""
+                  }`}
                 onClick={() => handleBatchSelect(batch._id)} // Pass unique batch._id
               >
                 <div className="batch-header">
-                  <h4>{batch.mode}</h4>
-                  <p className="price">{batch.price}/month</p>
+                  <h4>{batch.title}</h4>
+
                 </div>
                 <ul className="features-list">
                   {batch?.feature.map((feature, index) => (
                     <li key={index}>&#10003; {feature}</li>
                   ))}
                 </ul>
+                <div className="batch-price">
+                  <p >{batch.price}/- month</p>
+                </div>
               </div>
             ))}
           </div>
