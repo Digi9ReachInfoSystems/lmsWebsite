@@ -152,7 +152,7 @@ function HeroContent() {
               fontFamily: "Nunito, sans-serif",
             }}
           >
-            Join as Student
+            Enroll as Student
           </Button>
           <Button
             variant="outlined"
@@ -163,7 +163,7 @@ function HeroContent() {
               fontFamily: "Nunito, sans-serif",
             }}
           >
-            Join As Teacher
+            Enroll as Teacher
           </Button>
         </Box>
 

@@ -199,7 +199,7 @@ const StudentForm = () => {
                 <Input placeholder="Phone Number" maxLength={10} />
               </Form.Item>
             </Col>
-            <Col span={12}>
+            {/* <Col span={12}>
               <Form.Item
                 name="studentDOB"
                 label="Date of Birth"
@@ -209,7 +209,7 @@ const StudentForm = () => {
               >
                 <Input type="date" placeholder="Date of Birth" />
               </Form.Item>
-            </Col>
+            </Col> */}
           </Row>
 
           <Form.Item
@@ -225,7 +225,7 @@ const StudentForm = () => {
           </Form.Item>
 
           {/* Student Specific Fields */}
-          <Form.Item
+          {/* <Form.Item
             name="profile_image"
             label="Upload Profile Image"
             valuePropName="fileList"
@@ -250,7 +250,7 @@ const StudentForm = () => {
                 Click to Upload Profile Image
               </Button>
             </Upload>
-          </Form.Item>
+          </Form.Item> */}
 
           {/* Student Email (Read-Only and Same as Main Email) */}
 
