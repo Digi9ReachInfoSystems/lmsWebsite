@@ -260,8 +260,7 @@ function App() {
               element={<RescheduleMeeting />}
             />
           </Route>
-          <Route path="/
-          " element={<BecomeTeacherApplicationForm />} />
+          <Route path="/teacher" element={<BecomeTeacherApplicationForm />} />
           <Route
             path="/teacher/dashboard"
             element={
