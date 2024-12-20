@@ -123,7 +123,7 @@ const TeacherAddQuestionModel = ({ onSave }) => {
           ],
         }}
       >
-        <h4>Quiz Questions</h4>
+        <h4>Assessment Questions</h4>
 
         <Form.List name="questions">
           {(fields, { add, remove }) => (

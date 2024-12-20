@@ -168,7 +168,7 @@ export default function QuizBatches() {
                     }}
                   >
                     {" "}
-                    View Quizes
+                    View Assessment
                   </button>
                 ),
               };

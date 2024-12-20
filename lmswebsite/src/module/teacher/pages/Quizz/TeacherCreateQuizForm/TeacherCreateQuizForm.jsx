@@ -256,7 +256,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
         {/* Form Title */}
         <Form.Item>
           <Title level={2} style={{ textAlign: 'center', color: '#ff0080' }}>
-            Create a New Quiz
+            Create a New Assessment
           </Title>
         </Form.Item>
 
@@ -264,10 +264,10 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
         <Form.Item
           label="Title"
           name="title"
-          rules={[{ required: true, message: 'Please enter the quiz title' }]}
+          rules={[{ required: true, message: 'Please enter the assessment title' }]}
         >
           <Input
-            placeholder="Enter quiz title"
+            placeholder="Enter assessment title"
             name="title"
             value={formData.title}
             onChange={handleChange}
@@ -391,7 +391,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
             block
             style={{ backgroundColor: '#ff0080', borderColor: '#ff0080' }}
           >
-            Create Quiz
+            Create Assessment
           </Button>
         </Form.Item>
       </Form>
