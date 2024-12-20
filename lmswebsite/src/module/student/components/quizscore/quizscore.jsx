@@ -151,7 +151,7 @@ const QuizScore = () => {
           style={{ fontSize: 24, color: "#52c4dd", marginRight: 8 }}
         />
         <Title level={5} style={{ margin: 0 }}>
-          Pending Quizzes
+          Pending Assessment
         </Title>
       </div>
 
@@ -166,7 +166,7 @@ const QuizScore = () => {
         {pendingQuizzes}
       </Text>
 
-      <Text type="secondary" style={{ paddingLeft: "10px" }}>Quizzes remaining</Text>
+      <Text type="secondary" style={{ paddingLeft: "10px" }}>Assessment remaining</Text>
 
       <br />
       <Text>

@@ -26,39 +26,64 @@ import ActivePackage from "../../components/MaterialComponent/material";
 import ExploreContent from "../../components/DownloadContent/BatchDetails";
 import MaterialFile from "../../components/MaterialUploaded/materialFile";
 import BatchDetailsContent from "../../components/DownloadContent/BatchDetails";
-import  Animation from "../../../student/assets/Animation.json";
+import Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
+import { getStudentByAuthId } from "../../../../api/studentApi";
 
 const StudentDashboardScreen = () => {
   const [dashboardCards, setDashboardCards] = useState([]);
-const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [studentName, setStudentName] = useState(""); // New state for student's name
+
   useEffect(() => {
     const apiCaller = async () => {
-      const response = await getStatisticsData();
-      setDashboardCards([
-        {
-          title: "Total students",
-          count: response.totalStudents,
-          iconPath: student_icon,
-          background: "#F8E7D8",
-        },
-        {
-          title: "Total teachers",
-          count: response.totalTeachers,
-          iconPath: teacher_icon,
-          background: "#D7FDEB",
-        },
-        {
-          title: "Total Batches",
-          count: response.totalBatches,
-          iconPath: batch_icon,
-          background: "#C9E2FF",
-        },
-      ]);
-      setLoading(false);
+      try {
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        if (!sessionData || !sessionData.userId) {
+          throw new Error("User is not authenticated.");
+        }
+
+        const authId = sessionData.userId;
+        const studentData = await getStudentByAuthId(authId);
+        console.log("Student Data:", studentData);
+
+        if (!studentData.student || !studentData.student._id) {
+          throw new Error("Student data is incomplete.");
+        }
+
+        // Set the student's name from the fetched data
+        setStudentName(studentData?.student?.user_id?.name); // Adjust the path if necessary
+
+        const response = await getStatisticsData();
+        setDashboardCards([
+          {
+            title: "Total students",
+            count: response.totalStudents,
+            iconPath: student_icon,
+            background: "#F8E7D8",
+          },
+          {
+            title: "Total teachers",
+            count: response.totalTeachers,
+            iconPath: teacher_icon,
+            background: "#D7FDEB",
+          },
+          {
+            title: "Total Batches",
+            count: response.totalBatches,
+            iconPath: batch_icon,
+            background: "#C9E2FF",
+          },
+        ]);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        // Handle error appropriately, e.g., set an error state
+      }
     };
     apiCaller();
   }, []);
+
   if (loading) {
     return (
       <div
@@ -78,14 +103,11 @@ const [loading, setLoading] = useState(true);
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
@@ -97,9 +119,14 @@ const [loading, setLoading] = useState(true);
         {/* Left side containing the Welcome Container and Daily Schedule */}
         <Grid item xs={12} md={8}>
           <div className="welcome-Container">
-            <Grid container alignItems="center" justifyContent="space-between">
+            <Grid
+              container
+              alignItems="center"
+              justifyContent="space-between"
+            >
               <Grid item xs={12} md={6}>
-                <SpecialHeading>Welcome, Topper!</SpecialHeading>
+                {/* Updated welcome message with student's name */}
+                <SpecialHeading>Welcome, {studentName}!</SpecialHeading>
                 <SpecialSubheading>
                   Keep up the great work and let's achieve even more together.
                 </SpecialSubheading>
