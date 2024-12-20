@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SignUpPage.css";
-import { DatePicker, Radio, message } from "antd";
+import { message, Radio, DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
 import SignUpImage from "../../assets/student.avif"; // Replace with your image path
 import {
@@ -33,6 +33,7 @@ const SignUpPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Fetch saved data from previous pages
     const board = JSON.parse(localStorage.getItem("selectedBoard"))._id || {};
     const classData =
       JSON.parse(localStorage.getItem("selectedClass"))._id || {};
@@ -65,6 +66,8 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Form Submitted:", formData);
+    // Add API integration logic here
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -84,7 +87,8 @@ const SignUpPage = () => {
         formData.profileImage,
         "studentProfile"
       );
-
+      console.log("Profile Image URL:", profileImageUrl);
+      // Prepare data to send to API
       const data = {
         role: "student",
         access_token: user.accessToken,
@@ -101,57 +105,102 @@ const SignUpPage = () => {
         type_of_batch: formData.type_of_batch,
         subject_id: formData.subject,
       };
-
+      console.log(data);
       await signupUser(data);
-      message.success("Registration Successful!");
+    } catch (error) {
+      console.error("Registration error:", error);
+      const errorMessage =
+        error.message || "Registration failed. Please try again.";
+      message.error(`Registration failed: ${errorMessage}`);
+    }
+    message.success("Registration Successful!");
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
+      const { user } = userCredential;
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({ accessToken: user.accessToken })
+      );
+      const profileData = await getUserByAuthId(user.uid);
+      const sessionData = {
+        userId: user.uid,
+        accessToken: user.accessToken,
+        refreshToken: profileData.user.refresh_token,
+        name: profileData.user.name,
+        loggedIn: "true",
+      };
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
       navigate("/paymentScreen");
     } catch (error) {
-      message.error("Registration failed. Please try again.");
+      console.error(error.message);
     }
+    // navigate("/login");
   };
 
   return (
-    <div className="signup-page">
-      {/* Left Section */}
-      <div className="signup-left">
-        {/* <img src={SignUpImage} alt="Sign Up" /> */}
+    <div className="signup-container">
+      {/* Left Section - Image */}
+      <div className="image-section">
+        <img src={SignUpImage} alt="Registration" />
         <h2>Register To The Platform</h2>
         <p>Your Journey Begins Here</p>
       </div>
 
-      {/* Right Section */}
-      <div className="signup-right">
-        <h2>Create Account</h2>
+      {/* Right Section - Form */}
+      <div className="form-section">
+        {/* <h2 className="form-heading">Registration</h2> */}
+        <p className="form-subheading">Enter Your Details</p>
+
         <form onSubmit={handleSubmit} className="signup-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Full Name"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email Address"
-            onChange={handleInputChange}
-            required
-          />
-          <input
-            type="text"
-            name="phoneNumber"
-            placeholder="Phone Number"
-            onChange={handleInputChange}
-            required
-          />
-          <DatePicker
-            placeholder="Date of Birth"
-            onChange={(date, dateString) =>
-              setFormData({ ...formData, dob: dateString })
-            }
-            style={{ width: "100%" }}
-          />
-          <div className="gender-group">
+          {/* Static Fields */}
+
+          {/* Editable Fields */}
+          <div className="form-group">
+            <label>Full Name</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Enter your name"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Phone Number</label>
+            <input
+              type="text"
+              name="phoneNumber"
+              placeholder="Enter phone number"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Date of Birth</label>
+            <DatePicker
+              onChange={(date, dateString) =>
+                setFormData({ ...formData, dob: dateString })
+              }
+              style={{ width: "100%" }}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Gender</label>
             <Radio.Group
               onChange={(e) =>
                 setFormData({ ...formData, gender: e.target.value })
@@ -161,20 +210,26 @@ const SignUpPage = () => {
               <Radio value="Female">Female</Radio>
             </Radio.Group>
           </div>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleInputChange}
-            required
-          />
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              onChange={handleInputChange}
+              required
+            />
+          </div>
           <div className="form-group">
             <label>Profile Image</label>
             <input type="file" onChange={handleFileUpload} required />
           </div>
-          <button type="submit" className="signup-button">
-            Confirm
-          </button>
+
+          <div className="form-actions">
+            <button type="submit" className="confirm-btn">
+              Confirm
+            </button>
+          </div>
         </form>
       </div>
     </div>
