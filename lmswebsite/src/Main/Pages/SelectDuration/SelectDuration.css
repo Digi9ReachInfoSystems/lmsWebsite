@@ -17,6 +17,7 @@
 
 .total-amount {
   text-align: center;
+  margin-top: 10vh;
 }
 
 .header h3 {
@@ -134,9 +135,10 @@
 
 .price {
   color: #00c897;
-  font-size: 24px;
+  font-size: 21px;
   /* position: absolute; */
   bottom: 20px;
+  margin-top: 10px;
 }
 
 .price-2{
