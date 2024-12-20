@@ -2,17 +2,47 @@
   text-align: center;
   padding: 50px 20px;
   background-color: #f5f9f8;
+
+  @media (max-width: 768px) {
+    padding: 30px 10px;
+  }
+  @media (max-width: 480px) {
+    padding: 20px 5px;
+  }
+  @media (max-width: 320px) {
+    padding: 20px 5px;
+  }
 }
 
 .meet-our-teacher-section h2 {
   font-size: 2rem;
   color: #1a1a1a;
   margin-bottom: 30px;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 1rem;
+  }
 }
 
 .meet-our-teacher-section h2 span {
   color: #007d67;
   font-style: italic;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.9rem;
+  }
 }
 
 .mentors-container {
@@ -20,6 +50,16 @@
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+  }
+  @media (max-width: 480px) {
+    gap: 5px;
+  }
+  @media (max-width: 320px) {
+    gap: 2px;
+  }
 }
 
 .mentor-card {
@@ -30,6 +70,19 @@
   text-align: center;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    width: 200px;
+    padding: 15px;
+  }
+  @media (max-width: 480px) {
+    width: 150px;
+    padding: 10px;
+  }
+  @media (max-width: 320px) {
+    width: 100px;
+    padding: 5px;
+  }
 }
 
 .mentor-card img.mentor-image {
@@ -37,26 +90,76 @@
   max-width: 100px;
   border-radius: 50%;
   margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    max-width: 80px;
+  }
+  @media (max-width: 480px) {
+    max-width: 60px;
+  }
+  @media (max-width: 320px) {
+    max-width: 40px;
+  }
 }
 
 .mentor-card h3 {
   font-size: 1.2rem;
   color: #1a1a1a;
   margin-bottom: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.8rem;
+  }
 }
 
 .mentor-title {
   font-size: 0.9rem;
   color: #6b6b6b;
   margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.6rem;
+  }
 }
 
 .mentor-rating {
   font-size: 0.9rem;
   color: #6b6b6b;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.6rem;
+  }
 }
 
 .star {
   color: #f4b400;
   font-size: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+  }
+  @media (max-width: 320px) {
+    font-size: 0.6rem;
+  }
 }

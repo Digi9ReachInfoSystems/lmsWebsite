@@ -43,6 +43,7 @@ const TeacherDashBoardScreen = () => {
   const [recentQuiz, setRecentQuiz] = useState(null); // State to store recent quiz data
   const [quizCardData, setQuizCardData] = useState(null); // State to store quiz card data
   const [loading, setLoading] = useState(false); // State for loading
+  const [teacherName, setTeacherName] = useState("");
   // Fetch teacher data and set teacherId
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -56,6 +57,7 @@ const TeacherDashBoardScreen = () => {
         const teacherData = await getTeacherByAuthId(sessionData.userId);
         setTeacherData(teacherData);
         setTeacherId(teacherData.teacher?._id); // Set teacherId
+        setTeacherName(teacherData?.teacher?.user_id?.name);
         console.log("Teacher Data:", teacherData);
       } catch (error) {
         console.error("Error fetching teacher data:", error);
@@ -179,7 +181,7 @@ const TeacherDashBoardScreen = () => {
                 justifyContent="space-between"
               >
                 <Grid item xs={12} md={6}>
-                  <SpecialHeading>Welcome, Teacher!</SpecialHeading>
+                  <SpecialHeading>Welcome, {teacherName}!</SpecialHeading>
                   <SpecialSubheading>
                     Let's get the good work started.
                   </SpecialSubheading>
