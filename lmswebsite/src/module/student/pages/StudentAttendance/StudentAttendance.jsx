@@ -9,7 +9,7 @@ import {
   Heading,
   PageContainer,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../student/assets/animation.json";
+import Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 
 export const StudentAttendance = () => {

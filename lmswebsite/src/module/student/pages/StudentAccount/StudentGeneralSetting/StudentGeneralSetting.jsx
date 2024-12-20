@@ -4,7 +4,7 @@ import dayjs from "dayjs"; // Import dayjs for date handling
 import { getStudentByAuthId } from "../../../../../api/studentApi";
 import { StyledDatePicker, StyledInput } from "./StudentGeneralSetting.style";
 import { Heading, PageContainer, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../../student/assets/animation.json";
+import Animation from "../../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 const { Title } = Typography;
 

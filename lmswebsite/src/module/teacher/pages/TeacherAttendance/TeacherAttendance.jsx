@@ -11,7 +11,7 @@ import { getTeacherAttendance } from '../../../../api/teacherApi';
 import { getTeacherByAuthId } from '../../../../api/teacherApi';
 import { BodyText, Heading, PageContainer } from '../../../../style/PrimaryStyles/PrimaryStyles';
 import { TeacherAttendanceWrap } from './TeacherAttendance.styles';
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 export const TeacherAttendance = () => {
     const [attendance, setAttendance] = useState([]);

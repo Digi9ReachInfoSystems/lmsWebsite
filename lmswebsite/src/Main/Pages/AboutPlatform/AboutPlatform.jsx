@@ -1,7 +1,10 @@
 import React from "react";
 import "./AboutPlatform.css";
+import { useNavigate } from "react-router-dom";
 
 function AboutPlatform() {
+  const navigate = useNavigate();
+
   return (
     <div className="about-platform-section">
       <div className="about-platform-container">
@@ -30,7 +33,12 @@ function AboutPlatform() {
           </p>
           <div className="about-platform-buttons">
             <button className="demo-button">Join </button>
-            <button className="start-button">Have Questions?</button>
+            <button
+              className="start-button"
+              onClick={() => navigate("/signupStudent")}
+            >
+              Create Custom  
+            </button>
           </div>
         </div>
       </div>

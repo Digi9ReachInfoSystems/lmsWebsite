@@ -105,25 +105,28 @@ const CreateNewBatch = ({ open, closeModal }) => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const batchData = {
-        ...values,
-        date: values.date.format("YYYY-MM-DD"),
-        teachers: values.teachers?.map((teacher) => teacher) || [],
-        students: values.students?.map((student) => student) || [],
-      };
+      console.log("Form Values:", values);
+      // const batchData = {
+      //   ...values,
+      //   date: values.date.format("YYYY-MM-DD"),
+      //   teachers: values.teachers || [],
+      //   students: values.students || [],
+      // };
+      // console.log("batchData", batchData);
       let currentDate = dayjs(); // Get the current date
-       const newDate = currentDate.add(batchData.duration, "month").format("YYYY-MM-DD");
+       const newDate = currentDate.add(values.duration, "month").format("YYYY-MM-DD");
       const submissionData = {
-        batch_name: batchData.batchName,
-        batch_image: batchData.batchImage,
-        teacher_id: batchData.teachers,
-        class_id: batchData.class,
-        students: batchData.students,
-        subject_id: batchData.subject,
+        batch_name: values.batchName,
+        batch_image: values.batchImage,
+        teacher_id: values.teachers,
+        class_id: values.class,
+        students: values.students,
+        subject_id: values.subject,
         date: newDate,
-        type_of_batch: batchData.type_of_batch,
+        type_of_batch: values.type_of_batch,
 
       }
+      console.log("submissionData", submissionData);
 
       const response = await createBatch(submissionData);
       if (response?.message) {

@@ -9,7 +9,7 @@ function SelectDuration() {
   const [batchPrice, setBatchPrice] = useState(0); // Price from the previous page
   const [totalAmount, setTotalAmount] = useState(0); // Total calculated amount
   const [showDrawer, setShowDrawer] = useState(false); // Drawer state
-  const[duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(0);
 
   // Fetch the selected batch from localStorage
   useEffect(() => {
@@ -69,7 +69,7 @@ function SelectDuration() {
   const handleContinue = () => {
     localStorage.setItem(
       "selectedDuration",
-      JSON.stringify({ title: selectedSkill, totalAmount,duration })
+      JSON.stringify({ title: selectedSkill, totalAmount, duration })
     );
     setShowDrawer(true);
   };
@@ -88,27 +88,29 @@ function SelectDuration() {
 
         {/* Batch Duration Options */}
         <div className="options-container">
-          {batchSizes.map((batch) => (
-            <div
-              key={batch.id}
-              className={`batch-card ${
-                selectedSkill === batch.title ? "selected" : ""
-              }`}
-              onClick={() => handleSelection(batch)}
-            >
-              <div className="batch-header">
-                <h4>{batch.title}</h4>
-                <p className="price">
-                  {batchPrice} X {batch.duration} months
-                </p>
+          {batchSizes.map((batch) => {
+            const totalPrice = batch.duration * batchPrice; // Calculate total price dynamically
+            return (
+              <div
+                key={batch.id}
+                className={`batch-card ${
+                  selectedSkill === batch.title ? "selected" : ""
+                }`}
+                onClick={() => handleSelection(batch)}
+              >
+                <div className="batch-header">
+                  <h4>{batch.title}</h4>
+                  <p className="price">₹{totalPrice} Total</p>{" "}
+                  {/* Display total amount */}
+                </div>
+                <ul className="features-list">
+                  {batch.features.map((feature, index) => (
+                    <li key={index}>&#10003; {feature}</li>
+                  ))}
+                </ul>
               </div>
-              <ul className="features-list">
-                {batch.features.map((feature, index) => (
-                  <li key={index}>&#10003; {feature}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Display Total Amount */}

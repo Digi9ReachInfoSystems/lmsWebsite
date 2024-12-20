@@ -1,19 +1,8 @@
 // ManagePayment.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
-import {
-  Table,
-  Button,
-  Modal,
-  Tag,
-  Space,
-  Input,
-  Tooltip,
-} from "antd";
-import {
-  SearchOutlined,
-  EyeOutlined,
-} from "@ant-design/icons";
+import { Table, Button, Modal, Tag, Space, Input, Tooltip } from "antd";
+import { SearchOutlined, EyeOutlined } from "@ant-design/icons";
 import Highlighter from "react-highlight-words";
 import { getAllPaymentsApi } from "../../../../api/paymentsApi"; // Adjust the path as needed
 import {
@@ -23,7 +12,7 @@ import {
   ErrorMessage,
   LoadingContainer,
   ModalContent,
-} from "./ManagePayment.styles";
+} from "./managePayment.styles";
 import Animation from "../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 const ManagePayment = () => {
@@ -57,7 +46,7 @@ const ManagePayment = () => {
   };
 
   // Filter payments dynamically based on search input
-  const filteredPayments = payments.filter((payment) => 
+  const filteredPayments = payments.filter((payment) =>
     payment.student_id.user_id.email.toLowerCase().includes(searchInput)
   );
 
@@ -70,26 +59,20 @@ const ManagePayment = () => {
       title: "Student Name",
       dataIndex: ["student_id", "user_id", "name"],
       key: "student_name",
-      render: (text, record) => (
-        <span>{record.student_id.user_id.name}</span>
-      ),
+      render: (text, record) => <span>{record.student_id.user_id.name}</span>,
     },
     {
       title: "Email",
       dataIndex: ["student_id", "user_id", "email"],
       key: "email",
-      render: (text, record) => (
-        <span>{record.student_id.user_id.email}</span>
-      ),
+      render: (text, record) => <span>{record.student_id.user_id.email}</span>,
     },
     {
       title: "Package Name",
       dataIndex: ["package_id", "package_name"],
       key: "package_name",
       render: (text, record) =>
-        record.package_id
-          ? record.package_id.package_name
-          : "N/A",
+        record.package_id ? record.package_id.package_name : "N/A",
     },
     {
       title: "Amount",
@@ -102,8 +85,7 @@ const ManagePayment = () => {
       dataIndex: "status",
       key: "status",
       render: (status) => {
-        let color =
-          status === "paid" ? "green" : "volcano";
+        let color = status === "paid" ? "green" : "volcano";
         return <Tag color={color}>{status.toUpperCase()}</Tag>;
       },
     },
@@ -161,14 +143,11 @@ const ManagePayment = () => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
@@ -237,9 +216,7 @@ const ManagePayment = () => {
                 <strong>Status:</strong>{" "}
                 <Tag
                   color={
-                    selectedPayment.status === "paid"
-                      ? "green"
-                      : "volcano"
+                    selectedPayment.status === "paid" ? "green" : "volcano"
                   }
                 >
                   {selectedPayment.status.toUpperCase()}
@@ -252,8 +229,7 @@ const ManagePayment = () => {
                 <strong>Receipt:</strong> {selectedPayment.receipt}
               </p>
               <p>
-                <strong>Description:</strong>{" "}
-                {selectedPayment.description}
+                <strong>Description:</strong> {selectedPayment.description}
               </p>
               <p>
                 <strong>Created At:</strong>{" "}
@@ -271,10 +247,7 @@ const ManagePayment = () => {
                   alt="Student Profile"
                 />
                 {selectedPayment.package_id && (
-                  <img
-                    src={selectedPayment.package_id.image}
-                    alt="Package"
-                  />
+                  <img src={selectedPayment.package_id.image} alt="Package" />
                 )}
               </div>
             </div>

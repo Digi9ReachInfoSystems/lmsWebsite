@@ -49,10 +49,20 @@ function StatsCard({ title, value, icon, bgColor, position }) {
         {icon}
       </Box>
       <Box>
-        <Typography variant="body2" sx={{ color: "#6c757d" }}>
+        <Typography
+          variant="body2"
+          sx={{ color: "#6c757d", fontFamily: "Nunito, sans-serif" }}
+        >
           {title}
         </Typography>
-        <Typography variant="h6" sx={{ fontWeight: "bold", color: "#333" }}>
+        <Typography
+          variant="h6"
+          sx={{
+            fontWeight: "bold",
+            color: "#333",
+            fontFamily: "Nunito, sans-serif",
+          }}
+        >
           {value}
         </Typography>
       </Box>
@@ -80,13 +90,13 @@ function HeroContent() {
             key={index}
             sx={{
               position: "absolute",
-              width: `${40 + index * 10}px`, // Use template literals correctly
-              height: `${40 + index * 10}px`, // Use template literals correctly
+              width: `${40 + index * 10}px`,
+              height: `${40 + index * 10}px`,
               borderRadius: "50%",
               backgroundColor: ["#26D07C", "#FFB677", "#9EA8FF", "#00C897"][
                 index
               ],
-              top: `${10 + index * 15}%`, // Use template literals correctly
+              top: `${10 + index * 15}%`,
               left: index % 2 === 0 ? `${10 + index * 5}%` : "auto",
               right: index % 2 !== 0 ? `${5 + index * 5}%` : "auto",
               animation: `${floatAnimation} ${4 + index}s infinite ease-in-out`,
@@ -104,6 +114,7 @@ function HeroContent() {
             marginBottom: "1rem",
             fontSize: { xs: "2.5rem", md: "3rem" },
             animation: `${textFadeUp} 1.5s ease-in-out`,
+            fontFamily: "Nunito, sans-serif",
           }}
         >
           Your Personalized Learning Journey
@@ -117,6 +128,7 @@ function HeroContent() {
             maxWidth: "600px",
             margin: "0 auto",
             animation: `${textFadeUp} 1.8s ease-in-out`,
+            fontFamily: "Nunito, sans-serif",
           }}
         >
           Choose your subjects and preferred class sizes – from 1:1 mentorship
@@ -134,15 +146,22 @@ function HeroContent() {
         >
           <Button
             onClick={() => navigate("/selectBoard")}
-            s
             variant="contained"
-            sx={{ backgroundColor: "#26D07C" }}
+            sx={{
+              backgroundColor: "#26D07C",
+              fontFamily: "Nunito, sans-serif",
+            }}
           >
             Join as Student
           </Button>
           <Button
             variant="outlined"
-            sx={{ borderColor: "#fff", color: "#fff" }}
+            onClick={() => navigate("/teacher")}
+            sx={{
+              borderColor: "#fff",
+              color: "#fff",
+              fontFamily: "Nunito, sans-serif",
+            }}
           >
             Join As Teacher
           </Button>

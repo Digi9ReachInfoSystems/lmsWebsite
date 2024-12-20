@@ -1,8 +1,10 @@
 /* General Styles */
 .board-containers {
   width: 80%;
-margin:auto;
+  margin: auto;
+  margin-top: 15vh;
   text-align: center;
+
   font-family: Arial, sans-serif;
 }
 
@@ -33,12 +35,13 @@ margin:auto;
   display: flex;
   justify-content: center;
   margin: 20px 0;
+  padding: 20px;
 }
 
 .skill-card {
   width: 200px;
-  height: 150px;
-  margin: 0 10px;
+  height: 250px;
+  /* margin: 0 10px; */
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   cursor: pointer;
@@ -51,11 +54,12 @@ margin:auto;
 
 .skill-card.selected {
   border-color: #8eb696;
+  height: 200px;
   background-color: #f5f9ff;
 }
 
 .skill-card h4 {
-  margin-top: 10px;
+  /* margin-top: 10px; */
   color: #333;
 }
 

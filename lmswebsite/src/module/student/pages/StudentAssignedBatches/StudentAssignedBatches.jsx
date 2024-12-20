@@ -12,7 +12,7 @@ import { Table, Input, Button, Space, Row, Col } from "antd";
 import BatchCard from "../../components/BatchCard/BatchCard";
 import { getTeacherByAuthId } from "../../../../api/teacherApi";
 // import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
-import Animation from "../../../student/assets/animation.json";
+import Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 

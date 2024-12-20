@@ -13,7 +13,7 @@ import StudentPaymentSettings from "../StudentPaymentSetting/StudentPaymentSetti
 import StudentTermsConditionSettings from "../StudentsTerms&Conditions/StudentTerms&Condition";
 import { StyledMenuItem } from "../StudentSetting/StudentSetting.style";
 import { BodyText, Heading, PageContainer, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../../student/assets/animation.json";
+import Animation from "../../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 import { set } from "lodash";
 const { Sider, Content } = Layout;

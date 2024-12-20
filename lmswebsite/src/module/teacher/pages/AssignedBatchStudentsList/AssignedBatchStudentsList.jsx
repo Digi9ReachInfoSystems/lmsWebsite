@@ -23,7 +23,7 @@ import moment from "moment";
 import { set } from "lodash";
 import { BodyText, Heading, PageContainer, PrimaryButton } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { AssignedBatchStudentsListContainer } from "./AssignedBatchStudentsList.style"
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const { RangePicker } = DatePicker;
 

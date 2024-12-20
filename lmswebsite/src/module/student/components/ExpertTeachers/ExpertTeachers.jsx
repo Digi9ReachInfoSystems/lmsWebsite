@@ -4,7 +4,7 @@ import Teacher2 from "../../assets/Teacher2.png";
 import Teacher3 from "../../assets/Teacher4.png";
 import Teacher4 from "../../assets/Teacher4.png";
 import HatImage from "../../assets/HatImage.png";
-import BookImage from "../../assets/BooksImage.png";
+import BookImage from "../../assets/booksImage.png";
 import TimeImage from "../../assets/TimeImage.jpeg";
 import {
   TeacherContainer,

@@ -82,6 +82,11 @@ function SelectType() {
                   <h4>{batch.mode}</h4>
                   <p className="price">{batch.price}/month</p>
                 </div>
+                <ul className="features-list">
+                  {batch?.feature.map((feature, index) => (
+                    <li key={index}>&#10003; {feature}</li>
+                  ))}
+                </ul>
               </div>
             ))}
           </div>
@@ -91,7 +96,7 @@ function SelectType() {
         <div className="navigation">
           <button
             className="next-btn"
-            disabled={!selectedBatch} // Disable until batch is selected
+            disabled={!selectedBatch}
             onClick={handleContinue}
           >
             Continue

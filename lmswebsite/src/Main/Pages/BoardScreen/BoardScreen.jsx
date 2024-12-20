@@ -50,31 +50,33 @@ function BoardScreen() {
           <p>Choose Your Board</p>
         </div>
 
-            {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message">{error}</p>}
 
-            <div className="options-container">
-              {boards.map((board) => (
-                <div
-                  key={board._id}
-                  className={`skill-card ${
-                    selectedBoardId === board._id ? "selected" : ""
-                  }`}
-                  onClick={() => handleBoardSelect(board._id)}
-                >
-                  <div className="skill-icon"></div>
-                  <h4>{board.name}</h4>
-                  <p>{board.description}</p>
-                </div>
-              ))}
+        <div className="options-container">
+          {boards.map((board) => (
+            <div
+              key={board._id}
+              className={`skill-card ${
+                selectedBoardId === board._id ? "selected" : ""
+              }`}
+              onClick={() => handleBoardSelect(board._id)}
+            >
+              <div className="skill-icon">
+                <img
+                  src={board.icon} // Render the image from board.icon
+                  alt={board.name}
+                  className="board-icon"
+                />
+              </div>
+              <h4>{board.name}</h4>
+              <p>{board.description}</p>
             </div>
+          ))}
+        </div>
 
         {/* Navigation */}
         <div className="navigation">
-          <button
-            className="next-btn"
-            // disabled={!selectedBoardId}
-            onClick={handleContinue}
-          >
+          <button className="next-btn" onClick={handleContinue}>
             Continue
           </button>
         </div>

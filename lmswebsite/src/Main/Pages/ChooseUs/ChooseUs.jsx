@@ -1,18 +1,7 @@
 import React, { useEffect } from "react";
 import "./ChooseUs.css";
-import AOS from "aos";
-import "aos/dist/aos.css"; // Import AOS styles
 
 function ChooseUs() {
-  useEffect(() => {
-    AOS.init({
-      duration: 1000, // Animation duration in milliseconds
-      easing: "ease-in-out", // Easing function
-      once: true, // Whether animation should happen only once
-      mirror: false, // Whether elements should animate out while scrolling past them
-    });
-  }, []);
-
   const features = [
     {
       icon: "https://isolveglobal.eu/wp-content/uploads/2021/03/iSolve-Europe-Digital-Banking-Onboarding-Solution.png", // Replace with actual icon path
@@ -57,12 +46,7 @@ function ChooseUs() {
       <div className="choose-us-section">
         <div className="features-container">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="feature-card"
-              data-aos={feature.animation} // AOS animation type
-              data-aos-delay={index * 200} // Optional: stagger animations
-            >
+            <div key={index} className="feature-card">
               <img
                 src={feature.icon}
                 alt={feature.title}

@@ -55,7 +55,7 @@ function ClassScreen() {
   return (
     <div>
       <HeaderSection />
-      <div className="boardContainer">
+      <div className="board-container">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
@@ -86,7 +86,13 @@ function ClassScreen() {
                   }`}
                   onClick={() => handleClassSelection(classItem)}
                 >
-                  <div className="skill-icon"></div>
+                  <div className="skill-icon">
+                    <img
+                      src={classItem.image} // Render the image from board.icon
+                      alt={classItem.className}
+                      className="board-icon"
+                    />
+                  </div>
                   <h4>{classItem.className}</h4>
                 </div>
               ))}
@@ -102,17 +108,14 @@ function ClassScreen() {
             )}
 
             <div className="navigation">
-              <button
-                className="next-btn"
-                onClick={handleContinue}
-              >
+              <button className="next-btn" onClick={handleContinue}>
                 Continue
               </button>
             </div>
           </div>
         )}
-          {/* Progress Bar */}
-          <div className="progressBar">
+        {/* Progress Bar */}
+        <div className="progressBar">
           <div className="progress" style={{ width: "40%" }}></div>
         </div>
         <p className="step-info">Step 2 out of 5</p>

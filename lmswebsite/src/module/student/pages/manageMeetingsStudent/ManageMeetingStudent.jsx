@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import axios from "axios";
 import "react-big-calendar/lib/css/react-big-calendar.css"; // Default styles for react-big-calendar
-import "./ManageMeeting.css"; // Optional custom styles
+import "./manageMeeting.css"; // Optional custom styles
 import {
   getStudentAttendance,
   getStudentByAuthId,
@@ -18,7 +18,7 @@ import {
   PageContainer,
   PrimaryButton,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../student/assets/animation.json";
+import Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 
 const localizer = momentLocalizer(moment);
@@ -249,14 +249,11 @@ function ManageMeetingStudent() {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
@@ -267,7 +264,7 @@ function ManageMeetingStudent() {
       <Heading>Manage Meetings</Heading>
       {/* <h1>Manage Meetings</h1> */}
       {loading ? (
-       <Lottie animationData={Animation} loop={true} />
+        <Lottie animationData={Animation} loop={true} />
       ) : error ? (
         <p style={{ color: "red" }}>{error}</p>
       ) : (

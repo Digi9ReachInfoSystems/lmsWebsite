@@ -38,7 +38,7 @@ import {
 } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { SubHeading } from "../../../../../components/common/landingPageComponents/SingleCoursePerClass.styles";
-import Animation from "../../../../teacher/assets/animation.json";
+import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const { Panel } = Collapse;
 const { Title, Text } = Typography;

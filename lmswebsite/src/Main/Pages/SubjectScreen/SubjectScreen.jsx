@@ -27,32 +27,26 @@ function SubjectScreen() {
 
     const fetchSubjects = async () => {
       try {
-        const response = await getSubjectsByClassId(selectedClass._id); // Pass the class ID
+        const response = await getSubjectsByClassId(selectedClass._id);
         setSubjects(response); // Set fetched subjects
-        localStorage.setItem("subjects", JSON.stringify(response)); // Cache subjects
+        console.log("Fetched subjects:", response);
+        localStorage.setItem("subjects", JSON.stringify(response));
       } catch (error) {
         setError("Failed to fetch subjects. Please try again later.");
       } finally {
         setLoading(false);
       }
     };
-
-    // Check if subjects are already cached in localStorage
-    const cachedSubjects = JSON.parse(localStorage.getItem("subjects"));
-    if (cachedSubjects) {
-      setSubjects(cachedSubjects);
-      setLoading(false);
-    } else {
-      fetchSubjects(); // Fetch subjects if not cached
-    }
-  }, []); // Empty dependency array ensures this runs only once
+    fetchSubjects();
+  }, []);
 
   // Toggle subject selection
   const toggleSelection = (subjectId) => {
-    setSelectedSubjects((prevSelected) =>
-      prevSelected.includes(subjectId)
-        ? prevSelected.filter((id) => id !== subjectId) // Deselect
-        : [...prevSelected, subjectId] // Select
+    setSelectedSubjects(
+      (prevSelected) =>
+        prevSelected.includes(subjectId)
+          ? prevSelected.filter((id) => id !== subjectId) // Deselect
+          : [...prevSelected, subjectId] // Select
     );
   };
 
@@ -101,7 +95,13 @@ function SubjectScreen() {
                 }`}
                 onClick={() => toggleSelection(subject._id)} // Toggle subject selection
               >
-                <div className="skill-icon"></div>
+                <div className="skill-icon">
+                  <img
+                    src={subject.icon}
+                    alt={subject.subject_name}
+                    className="board-icon"
+                  />
+                </div>
                 <h4>{subject.subject_name}</h4>
               </div>
             ))}

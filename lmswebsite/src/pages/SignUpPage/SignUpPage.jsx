@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./SignUpPage.css";
 import { message, Radio, DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
-import SignUpImage from "../../assets/SignUpImage.png"; // Replace with your image path
+import SignUpImage from "../../assets/student.avif"; // Replace with your image path
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import { uploadFileToFirebase } from "../../utils/uploadFileToFirebase";
@@ -28,7 +28,6 @@ const SignUpPage = () => {
     duration: "",
     amount: "",
     type_of_batch: "",
-
   });
 
   const navigate = useNavigate();
@@ -36,11 +35,14 @@ const SignUpPage = () => {
   useEffect(() => {
     // Fetch saved data from previous pages
     const board = JSON.parse(localStorage.getItem("selectedBoard"))._id || {};
-    const classData = JSON.parse(localStorage.getItem("selectedClass"))._id || {};
+    const classData =
+      JSON.parse(localStorage.getItem("selectedClass"))._id || {};
     const subject = JSON.parse(localStorage.getItem("selectedSubjects")) || "";
-    const duration = JSON.parse(localStorage.getItem("selectedDuration")).duration || {};
+    const duration =
+      JSON.parse(localStorage.getItem("selectedDuration")).duration || {};
     const amount = JSON.parse(localStorage.getItem("totalAmount")) || 0;
-    const type_of_batch = JSON.parse(localStorage.getItem("selectedBatch"))._id || "";
+    const type_of_batch =
+      JSON.parse(localStorage.getItem("selectedBatch"))._id || "";
 
     setFormData((prev) => ({
       ...prev,
@@ -105,7 +107,6 @@ const SignUpPage = () => {
       };
       console.log(data);
       await signupUser(data);
-
     } catch (error) {
       console.error("Registration error:", error);
       const errorMessage =
@@ -134,7 +135,6 @@ const SignUpPage = () => {
       };
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
       navigate("/paymentScreen");
-
     } catch (error) {
       console.error(error.message);
     }

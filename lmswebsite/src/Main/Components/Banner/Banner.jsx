@@ -4,7 +4,7 @@ import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import { FaBookReader } from "react-icons/fa";
 import { PiStudentBold } from "react-icons/pi";
 import { LiaChalkboardTeacherSolid } from "react-icons/lia";
-import "./Banner.css";
+import "./banner.css";
 
 const Banner = ({ data }) => {
   const statsData = [

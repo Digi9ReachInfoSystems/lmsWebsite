@@ -14,7 +14,7 @@ import { FaPhone } from "react-icons/fa6";
 import { getUserByAuthId } from "../../../../../api/userApi"
 import { getTeacherByAuthId } from "../../../../../api/teacherApi"
 import { updateUserByAuthId } from "../../../../../api/userApi";
-import Animation from "../../../../teacher/assets/animation.json";
+import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const AccountSettings = () => {
 

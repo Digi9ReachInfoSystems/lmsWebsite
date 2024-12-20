@@ -6,7 +6,7 @@ import { UploadOutlined } from "@ant-design/icons";
 // import Header from "../../components/Header/Header";
 // import Header from "../../components/Navbar/Navbar";
 import LMS from "../../components/LMS/LMS";
-import BecomeTeacherLogo from "../../assets/BecomeTeacherLogo.png";
+import BecomeTeacherLogo from "../../assets/becomeTeacherLogo.png";
 import {
   submitTeacherApplication,
 } from "../../../../api/teachersApplicationApi";
@@ -34,7 +34,7 @@ import {
   Subheading,
   PrimaryButton,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import Animation from "../../../teacher/assets/animation.json";
+import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import MeetOurTeacher from "../../../../Main/Pages/Meetourteacher/Meetourteacher";
