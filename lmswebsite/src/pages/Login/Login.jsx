@@ -14,7 +14,7 @@ import {
   ForgotPassword,
   SubTitle1,
 } from "./Login.styles";
-import bgImg from "../../assets/image 32.png"; // The background image
+import bgImg from "../../assets/loginbgimage.avif"; // The background image
 import { getStudentByAuthId } from "../../api/studentApi";
 import { getTeacherByAuthId } from "../../api/teacherApi";
 
@@ -55,27 +55,28 @@ const Login = () => {
 
       if (profileData.user.role === "admin") navigate("/admin");
       else if (profileData.user.role === "student") {
-        const studentData= await getStudentByAuthId(user.uid);
-       console.log(" login studentData",studentData);
-       
-        if(studentData.student.custom_package_status == "no_package"&&studentData.student.is_paid==false){
-          navigate("/student")
-        }else{
+        const studentData = await getStudentByAuthId(user.uid);
+        console.log(" login studentData", studentData);
+
+        if (
+          studentData.student.custom_package_status == "no_package" &&
+          studentData.student.is_paid == false
+        ) {
+          navigate("/student");
+        } else {
           navigate("/student/dashboard");
         }
         // navigate("/student");
-
-      }
-      else if (profileData.user.role === "teacher"){
-        const teacherData= await getTeacherByAuthId(profileData.user.auth_id);
-        console.log(" login teacherData",teacherData);
-        if(teacherData.teacher){
+      } else if (profileData.user.role === "teacher") {
+        const teacherData = await getTeacherByAuthId(profileData.user.auth_id);
+        console.log(" login teacherData", teacherData);
+        if (teacherData.teacher) {
           navigate("/teacher/dashboard");
-        }else{
+        } else {
           navigate("/teacher");
         }
         // navigate("/teacher");
-      } 
+      }
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -105,16 +106,18 @@ const Login = () => {
           >
             <Input.Password placeholder="Password" />
           </Form.Item>
-          <Link to="/forgot-password"><ForgotPassword>Forgot Password?</ForgotPassword></Link>
-         
+          <Link to="/forgot-password">
+            <ForgotPassword>Forgot Password?</ForgotPassword>
+          </Link>
+
           {errorMessage && <Alert message={errorMessage} type="error" />}
           <LoginButton type="submit" disabled={isSubmitting}>
             {isSubmitting ? "Logging in..." : "Log In"}
           </LoginButton>
         </Form>
-        <SubTitle1>
+        {/* <SubTitle1>
           New on our platform? <a href="/signup">Create Account</a>
-        </SubTitle1>
+        </SubTitle1> */}
       </LoginFormContainer>
       <Container />
     </LoginPageWrap>
