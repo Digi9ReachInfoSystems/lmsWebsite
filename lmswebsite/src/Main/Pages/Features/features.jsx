@@ -27,10 +27,7 @@ function Features() {
   return (
     <div className="features-section">
       <h2 className="section-title">How it works</h2>
-      <p className="section-description">
-        It’s about you and your family, having a comfortable payment,
-        exceptional service, and a lender.
-      </p>
+      <p className="section-description">Let's make laerning easy.</p>
 
       <div className="features-container" style={{ display: "block" }}>
         {features.map((feature, index) => (
