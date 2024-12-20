@@ -92,3 +92,42 @@ export const Image = styled.img`
   width: 300px;
   height: 300px;
 `;
+
+export const ContactInfo = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  // background: ${theme.colors.white};
+`;
+
+export const ContactItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  // margin-top: 20px;
+
+  .contact-icon {
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+    transition: color 0.5s ease, transform 0.5s ease;
+  }
+
+  .contact-icon:hover {
+    color: #00c897;
+    transform: scale(1.2); /* Optional: Add a slight scaling effect */
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 1.5;
+
+    strong {
+      font-size: 16px;
+      color: #c00;
+    }
+  }
+`;
