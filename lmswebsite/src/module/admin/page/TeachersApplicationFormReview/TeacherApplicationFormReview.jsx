@@ -5,7 +5,7 @@ import {
   getSingleTeacherApplication,
   approveTeacherApplication,
 } from "../../../../api/teachersApplicationApi";
-import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast from react-toastify
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Animation from "../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
@@ -32,9 +32,9 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const [teacher, setTeacher] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const[teacher_name,setTeacherName] = useState('');
+  const [teacher_name, setTeacherName] = useState('');
   const [form] = Form.useForm(); // Ant Design form instance
-
+  const [isResumeModalVisible, setIsResumeModalVisible] = useState(false); // State for Resume Modal
 
   useEffect(() => {
     const fetchTeacherDetails = async () => {
@@ -45,6 +45,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         }
         setTeacher(data);
         setTeacherName(data.application?.teacher_name);
+        console.log("Fetched Teacher Data:", data); // Debugging line
       } catch (err) {
         console.error("Error fetching teacher:", err);
         setError("Failed to fetch teacher details. Please try again later.");
@@ -54,7 +55,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
     };
 
     fetchTeacherDetails();
-  }, []);
+  }, [teacher_Id]);
 
   const handleApprove = async () => {
     try {
@@ -94,9 +95,9 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       await approveTeacherApplication(teacher_Id, {
         microsoft_id: values.microsoft_id,
         microsoft_password: values.password,
-        microsoft_principle_name:values.email,
-        auth_id:user.uid,
-        user_id:userData.user._id,
+        microsoft_principle_name: values.email,
+        auth_id: user.uid,
+        user_id: userData.user._id,
       });
       localStorage.setItem(
         "sessionData",
@@ -124,14 +125,23 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
     }
   };
 
-  if (loading) return <p>Loading teacher details...</p>;
-  if (error) return <p className="error_message">{error}</p>;
   const handleViewResume = () => {
-    if (teacher?.application.resume_Link) {
-      window.open(teacher?.application.resume_Link, "_blank");
+    // Attempt to access resume_Link with different possible cases
+    const resumeLink =
+      teacher?.application?.resume_Link ||
+      teacher?.application?.resume_link ||
+      teacher?.application?.resumeURL ||
+      null;
+
+    if (resumeLink) {
+      setIsResumeModalVisible(true);
     } else {
       toast.error("No resume found.");
     }
+  };
+
+  const handleModalClose = () => {
+    setIsResumeModalVisible(false);
   };
 
   if (loading) {
@@ -166,8 +176,11 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
     );
   }
 
+  if (error) return <p className="error_message">{error}</p>;
+
   return (
     <TeacherApplicationFormReviewWrap>
+      <ToastContainer /> {/* Ensure ToastContainer is included */}
       <div className="modal-header">
         <h2>Review Teacher Application</h2>
       </div>
@@ -185,7 +198,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
             <div className="teacher-details-item">
               <p>Email</p>
               <p className="Values">
-                {teacher?.application?.email || "Na"}
+                {teacher?.application?.email || "N/A"}
               </p>
             </div>
           </div>
@@ -219,7 +232,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
             <div className="teacher-details-item">
               <p>Contact Number</p>
               <p className="Values">
-                {teacher?.application.phoneNumber || "Na"}
+                {teacher?.application.phoneNumber || "N/A"}
               </p>
             </div>
           </div>
@@ -236,12 +249,73 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
             </div>
           </div>
         </div>
-        <button onClick={handleViewResume} className="view-resume-btn">
+        
+        {/* Display Resume Link for Verification */}
+        <div style={{ marginTop: '20px' }}>
+          <p>
+            <strong>Resume Link:</strong>{" "}
+            {teacher?.application?.resume_Link ||
+            teacher?.application?.resume_link ||
+            teacher?.application?.resumeURL ? (
+              <a href={
+                teacher.application.resume_Link ||
+                teacher.application.resume_link ||
+                teacher.application.resumeURL
+              } target="_blank" rel="noopener noreferrer">
+                View Resume
+              </a>
+            ) : (
+              "No resume available."
+            )}
+          </p>
+        </div>
+
+        <Button
+          type="primary"
+          onClick={handleViewResume}
+          className="view-resume-btn"
+          style={{ marginBottom: '20px' }}
+        >
           View Resume
-        </button>
+        </Button>
+
+        {/* Resume Modal */}
+        <Modal
+          title={`${teacher?.application?.teacher_name}'s Resume`}
+          visible={isResumeModalVisible}
+          onCancel={handleModalClose}
+          footer={[
+            <Button key="close" onClick={handleModalClose}>
+              Close
+            </Button>,
+          ]}
+          width={800}
+        >
+          {teacher?.application?.resume_Link ||
+          teacher?.application?.resume_link ||
+          teacher?.application?.resumeURL ? (
+            <iframe
+              src={
+                teacher.application.resume_Link ||
+                teacher.application.resume_link ||
+                teacher.application.resumeURL
+              }
+              title="Resume"
+              width="100%"
+              height="600px"
+              style={{ border: "none" }}
+              onError={(e) => {
+                console.error("Error loading resume iframe:", e);
+                message.error("Failed to load the resume. Please try again later.");
+              }}
+            ></iframe>
+          ) : (
+            <p>No resume available.</p>
+          )}
+        </Modal>
 
         <Form form={form} layout="vertical" onFinish={handleonFinish}>
-          {/* Name */}
+          {/* Microsoft ID */}
           <Form.Item
             label="Microsoft ID"
             name="microsoft_id"
@@ -249,7 +323,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
               { required: true, message: "Please enter the Microsoft ID" },
             ]}
           >
-            <Input placeholder="Enter email" />
+            <Input placeholder="Enter Microsoft ID" />
           </Form.Item>
 
           {/* Email */}
@@ -263,16 +337,19 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           >
             <Input placeholder="Enter email" />
           </Form.Item>
+
+          {/* Password */}
           <Form.Item
             label="Password"
             name="password"
             rules={[
               { required: true, message: "Please enter the password" },
-              { type: "password", message: "Please enter a valid password" },
+              // You might want to add more complex password validation here
             ]}
           >
-            <Input placeholder="Enter email" />
+            <Input.Password placeholder="Enter password" />
           </Form.Item>
+
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={false}>
               Approve
@@ -280,9 +357,15 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           </Form.Item>
         </Form>
 
-        {/* <button onClick={handleApprove} className="approve-btn">
-          Approve
-        </button> */}
+        {/* Optional Reject Button */}
+        {/* <Button
+          type="danger"
+          onClick={handleReject}
+          className="reject-btn"
+          style={{ marginTop: '10px' }}
+        >
+          Reject
+        </Button> */}
       </div>
     </TeacherApplicationFormReviewWrap>
   );
