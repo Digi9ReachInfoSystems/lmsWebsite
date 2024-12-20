@@ -15,6 +15,10 @@ function HeaderSection({ scrollToSection }) {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const handleLogoClick = () => {
+    navigate("/"); // Navigate to the landing page
+  };
+
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [boards, setBoards] = useState({});
@@ -89,6 +93,7 @@ function HeaderSection({ scrollToSection }) {
           <img
             src={Logo}
             alt="Logo"
+            onClick={handleLogoClick}
             style={{
               width: "40px",
               height: "40px",
