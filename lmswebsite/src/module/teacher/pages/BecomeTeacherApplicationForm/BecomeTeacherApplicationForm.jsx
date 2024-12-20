@@ -137,7 +137,7 @@ const BecomeTeacherApplicationForm = () => {
         pincode: values.pincode,
         current_position: values.current_position,
         experience: values.experience,
-        language: values.language,
+        // language: values.language,
         resume_link: values.resume[0].originFileObj, 
         profileImage: values.profileImage[0].originFileObj, 
         board_id: values.board_id,
@@ -415,7 +415,7 @@ const BecomeTeacherApplicationForm = () => {
                     </div>
 
                     <div className="applicationRowThree">
-                    <Form.Item
+                    {/* <Form.Item
                       name="language"
                       label="Language"
                       rules={[
@@ -431,7 +431,7 @@ const BecomeTeacherApplicationForm = () => {
                         <Option value="Spanish">Spanish</Option>
                         <Option value="French">French</Option>
                       </Select>
-                    </Form.Item>
+                    </Form.Item> */}
                     
                     <Form.Item
                       name="resume"

@@ -9,7 +9,7 @@ const ToolbarTeacher = () => {
       <Link to="/teacher/dashboard/quizz/assignedBatch">
         <Box>
           <MdQuiz className="quiz-icon"/>
-          Quiz
+          Assessment
         </Box>
       </Link>
       

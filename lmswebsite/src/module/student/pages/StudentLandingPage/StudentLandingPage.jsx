@@ -143,7 +143,7 @@ export const StudentLandingPage = () => {
       board_id: studentDataForm.student.board_id._id,
       class_id: studentDataForm.student.class._id,
       subjects: slectedSubject,
-      slot: slot,
+      // slot: slot,
     };
     console.log("sel");
     console.log("submissionData", submissionData);
@@ -156,7 +156,7 @@ export const StudentLandingPage = () => {
         const response = await createCustomPackage({
           subject_id: slectedSubject,
           student_id: studentDataForm.student._id,
-          slots: slot,
+          // slots: slot,
         });
         console.log("response", response);
         alert("Request submitted   successfully!");
@@ -211,7 +211,7 @@ export const StudentLandingPage = () => {
                   </StyledRow>
 
                   {/* Row 2: Available Slots */}
-                  <StyledRow>
+                  {/* <StyledRow>
                     <StyledCol>
                       <Form.Item label="Available Slots">
                         <AvailableSlotsContainer>
@@ -230,7 +230,7 @@ export const StudentLandingPage = () => {
                         </AvailableSlotsContainer>
                       </Form.Item>
                     </StyledCol>
-                  </StyledRow>
+                  </StyledRow> */}
 
                   {/* Row 3: Course, Standard, Board */}
                   <StyledRow>

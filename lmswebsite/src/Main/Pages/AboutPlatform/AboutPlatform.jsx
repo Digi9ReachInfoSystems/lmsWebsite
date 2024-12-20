@@ -19,7 +19,7 @@ function AboutPlatform() {
           </div>
         </div>
         <div className="about-platform-text">
-          <h2>What is Topper's Academy?</h2>
+          <h2>What is  The Topper's Academy?</h2>
           <p>
             HubSpot is an AI-powered customer platform with all the software,
             integrations, and resources you need to connect your marketing,
