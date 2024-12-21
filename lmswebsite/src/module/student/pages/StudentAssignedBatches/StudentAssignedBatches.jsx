@@ -149,6 +149,7 @@ export default function StudentAssignedBatches() {
 
   return (
     <StudentAssignedBatchWrap>
+      <h1 >Assigned Batches</h1>
       <Row gutter={[16, 24]} style={{ marginBottom: 20 }}>
         <Col
           span={24}
@@ -164,13 +165,15 @@ export default function StudentAssignedBatches() {
               <BatchCard
                 batch={batch}
                 onClick={() => handleBatchClick(batch._id)}
+                
               />
-              <button>
+               <button>
                 <Link to={`/student/dashboard/assignedBatches/${batch._id}`}>
                   <FaEye style={{ marginRight: "5px" }} />
                   View Materials
                 </Link>
               </button>
+             
             </Col>
           ))
         ) : (

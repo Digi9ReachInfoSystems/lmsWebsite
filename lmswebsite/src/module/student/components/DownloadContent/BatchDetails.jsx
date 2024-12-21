@@ -117,7 +117,16 @@ const BatchDetailsContent = () => {
   }
 
   return (
-    <div>
+    <div
+   style={{
+     display: "flex",
+     flexWrap: "wrap",
+     flexDirection: "row",
+    //  justifyContent: "center",
+     alignItems: "center",
+    //  margin: "20px",
+   }}
+    >
       {batches.map((batch) => {
         // We'll do a quick check
         const subjectInStudent = studentdata.subject_id.find(
@@ -163,7 +172,8 @@ const BatchDetailsContent = () => {
 
             {/* Batch Info */}
             <Row gutter={16} style={{ marginBottom: 20 }}>
-              <Col span={12} style={{ display: "flex", alignItems: "center" }}>
+              <Col span={12} style={{ display: "flex", alignItems: "center"}
+            }>
                 <Text strong>Subject:</Text>
                 <div style={{ marginLeft: 8 }}>{batch.subject_id.subject_name}</div>
               </Col>

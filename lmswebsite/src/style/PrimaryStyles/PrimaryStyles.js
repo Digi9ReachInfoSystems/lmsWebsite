@@ -43,7 +43,7 @@ export const Heading = styled.h1`
   // font-weight: bold;
   margin: 20px;
   color: ${theme.colors.frenchGray};
-  flex: 1;
+  /* flex: 1; */
 
   @media (max-width: 768px) {
     font-size: 28px; /* Slightly smaller for tablets */
@@ -234,7 +234,6 @@ export const PrimaryButton = styled(BaseButton)`
   color: #fff;
   border-color: ${colors.primary};
   font-size: 16px;
-  
 
   &:hover {
     background-color: ${colors.buttonHoverBackground};
