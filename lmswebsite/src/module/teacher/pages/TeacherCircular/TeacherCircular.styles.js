@@ -1,5 +1,6 @@
 import styled from "styled-components";
 
+import {media } from "../../../../style/theme/theme";
 export const TeacherCircularWrap = styled.div`
 
 
