@@ -11,6 +11,7 @@ import {
   studentClockIn,
   studentClockOut,
 } from "../../../../api/studentApi";
+import { ManageMeetingWrap } from "./manageMeetings.Styles";
 import { clockIn, clockOut } from "../../../../api/teacherApi";
 import { useNavigate, Link } from "react-router-dom";
 import {
@@ -144,6 +145,7 @@ function ManageMeetingStudent() {
   // Custom event rendering
   const renderEvent = ({ event }) => {
     return (
+      <ManageMeetingWrap>
       <div>
         <strong>{event.title}</strong>
         <br />
@@ -227,6 +229,7 @@ function ManageMeetingStudent() {
           <span>Meeting Rescheduled</span>
         )}
       </div>
+      </ManageMeetingWrap>
     );
   };
 
