@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import {
   Button,
   Input,
-  Table,
   Modal,
   Form,
   Select,
@@ -12,21 +11,35 @@ import {
   message,
   Spin,
   Upload,
+  List,
+  Card,
+  Typography,
+  Popconfirm,
 } from "antd";
-import { InboxOutlined, UploadOutlined, SearchOutlined } from "@ant-design/icons";
+import { UploadOutlined, SearchOutlined } from "@ant-design/icons";
 import { getBatchesByTeacherId } from "../../../../../api/batchApi"; // Adjust the path as needed
 import { getTeacherByAuthId } from "../../../../../api/teacherApi"; // Adjust the path as needed
-import { createAssignment, getAllAssignments } from "../../../../../api/assignmentApi"; // Adjust the path as needed
-import api from "../../../../../config/axiosConfig"; // Axios instance
+import {
+  createAssignment,
+  getAllAssignments,
+  deleteAssignment,
+} from "../../../../../api/assignmentApi"; // Adjust the path as needed
+import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase"; // Adjust the path as needed
 import { TeacherCircularWrap } from "./TeacherAssignmentUpload.styles"; // Ensure this styled component exists
 import Lottie from "lottie-react"; // For animations
 import Animation from "../../../../teacher/assets/Animation.json"; // Adjust the path as needed
 import moment from "moment"; // For date handling
 
+// Import React Router's useNavigate
+import { useNavigate } from "react-router-dom";
+
 const { Option } = Select;
-const { Dragger } = Upload;
+const { Text, Link, Title } = Typography;
 
 const TeacherAssignmentUpload = () => {
+  // Initialize navigation
+  const navigate = useNavigate();
+
   // State variables
   const [teacherData, setTeacherData] = useState(null);
   const [loadingTeacher, setLoadingTeacher] = useState(true);
@@ -36,10 +49,12 @@ const TeacherAssignmentUpload = () => {
   const [assignments, setAssignments] = useState([]);
   const [loadingAssignments, setLoadingAssignments] = useState(false);
   const [searchInput, setSearchInput] = useState("");
-  const [fileList, setFileList] = useState([]); // Manage uploaded files
-  const [uploading, setUploading] = useState(false); // Manage upload state
-  const [contentUrl, setContentUrl] = useState(""); // Store the uploaded content URL
   const [submitting, setSubmitting] = useState(false); // Manage form submission state
+
+  // State variables for file upload
+  const [fileList, setFileList] = useState([]); // Manage uploaded file list
+  const [contentUrl, setContentUrl] = useState(""); // Store the uploaded file's URL
+  const [uploadingFile, setUploadingFile] = useState(false); // Manage file uploading state
 
   // Form instance
   const [form] = Form.useForm();
@@ -55,6 +70,7 @@ const TeacherAssignmentUpload = () => {
           throw new Error("User is not authenticated.");
         }
         const teacher = await getTeacherByAuthId(sessionData.userId);
+        console.log("Fetched teacher data:", teacher);
         setTeacherData(teacher);
       } catch (error) {
         console.error("Error fetching teacher data:", error);
@@ -72,22 +88,29 @@ const TeacherAssignmentUpload = () => {
    */
   useEffect(() => {
     const fetchBatches = async () => {
-      if (!teacherData || !teacherData._id) return;
+      console.log("Teacher Data:", teacherData);
+
+      let teacherId;
+      if (teacherData && teacherData._id) {
+        teacherId = teacherData._id;
+      } else if (
+        teacherData &&
+        teacherData.teacher &&
+        teacherData.teacher._id
+      ) {
+        teacherId = teacherData.teacher._id;
+      } else {
+        console.log("Teacher ID not found in teacherData");
+        message.error("Teacher ID not found.");
+        return;
+      }
 
       try {
         setLoadingBatches(true);
-        console.log("Teacher ID:", teacherData._id);
-        const batchesData = await getBatchesByTeacherId(teacherData._id);
+        console.log("Teacher ID:", teacherId);
+        const batchesData = await getBatchesByTeacherId(teacherId);
         console.log("Batches fetched successfully:", batchesData);
         setBatches(batchesData);
-        console.log("Batches:", batchesData);
-        // if (Array.isArray(batchesData)) {
-        //   setBatches(batchesData);
-        // } else {
-        //   // Handle unexpected response structure
-        //   console.error("Unexpected batches data format:", batchesData);
-        //   message.error("Failed to fetch batches. Please try again.");
-        // }
       } catch (error) {
         console.error("Error fetching batches:", error);
         message.error("Failed to fetch batches. Please try again.");
@@ -96,7 +119,9 @@ const TeacherAssignmentUpload = () => {
       }
     };
 
-    fetchBatches();
+    if (teacherData) {
+      fetchBatches();
+    }
   }, [teacherData]);
 
   /**
@@ -107,6 +132,7 @@ const TeacherAssignmentUpload = () => {
       try {
         setLoadingAssignments(true);
         const response = await getAllAssignments();
+        console.log("Fetched assignments:", response);
         if (response.assignments && Array.isArray(response.assignments)) {
           setAssignments(response.assignments);
         } else {
@@ -137,101 +163,55 @@ const TeacherAssignmentUpload = () => {
   const handleModalCancel = () => {
     setIsModalVisible(false);
     form.resetFields();
-    setFileList([]);
     setContentUrl("");
+    setFileList([]);
   };
 
   /**
-   * Handle File Upload
+   * Extract Teacher ID
    */
-  const handleFileUpload = async (file) => {
-    // Validate file type and size
-    const isAllowedType =
-      file.type === "application/pdf" ||
-      file.type === "application/msword" ||
-      file.type ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-      file.type.startsWith("image/");
-    if (!isAllowedType) {
-      message.error(
-        "You can only upload PDF, DOC, DOCX, PPT, PPTX, JPG, JPEG, or PNG files!"
-      );
-      return Upload.LIST_IGNORE;
+  const getTeacherId = () => {
+    if (teacherData && teacherData._id) {
+      return teacherData._id;
+    } else if (
+      teacherData &&
+      teacherData.teacher &&
+      teacherData.teacher._id
+    ) {
+      return teacherData.teacher._id;
+    } else {
+      return null;
     }
-
-    const isLt10M = file.size / 1024 / 1024 < 10; // Limit to 10MB
-    if (!isLt10M) {
-      message.error("File must be smaller than 10MB!");
-      return Upload.LIST_IGNORE;
-    }
-
-    try {
-      setUploading(true);
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await api.post("/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log("Upload Response:", response.data); // Debugging
-
-      // Assuming the response contains the URL in response.data.url
-      const uploadedUrl = response.data.url;
-      setContentUrl(uploadedUrl);
-      form.setFieldsValue({ content_url: uploadedUrl });
-
-      message.success(`${file.name} file uploaded successfully.`);
-      setFileList([
-        {
-          uid: file.uid,
-          name: file.name,
-          status: "done",
-          url: uploadedUrl,
-        },
-      ]);
-    } catch (error) {
-      console.error("Error uploading file:", error);
-      message.error("Failed to upload file. Please try again.");
-    } finally {
-      setUploading(false);
-    }
-
-    // Prevent automatic upload by returning false
-    return false;
-  };
-
-  /**
-   * Handle File Removal
-   */
-  const handleRemove = () => {
-    form.setFieldsValue({ content_url: "" });
-    setFileList([]);
-    setContentUrl("");
   };
 
   /**
    * Handle Form Submission
    */
   const handleFormSubmit = async (values) => {
+    if (!contentUrl) {
+      message.error("Please upload a content file before submitting.");
+      return;
+    }
+
+    const teacherId = getTeacherId();
+    if (!teacherId) {
+      message.error("Teacher ID is not available. Please try again.");
+      return;
+    }
+
     setSubmitting(true);
     try {
       const { batch_id, expiry_date } = values;
 
-      if (!contentUrl) {
-        message.error("Please upload a content file.");
-        setSubmitting(false);
-        return;
-      }
-
       const payload = {
         batch_id,
-        teacher_id: teacherData._id,
+        teacher_id: teacherId,
         content_url: contentUrl,
         expiry_date: expiry_date.toISOString(),
       };
+
+      // Debugging: Log the payload to ensure all fields are present
+      console.log("Submitting Assignment Payload:", payload);
 
       const newAssignment = await createAssignment(payload);
 
@@ -240,11 +220,15 @@ const TeacherAssignmentUpload = () => {
       message.success("Assignment created successfully!");
       setIsModalVisible(false);
       form.resetFields();
-      setFileList([]);
       setContentUrl("");
+      setFileList([]);
       // Refresh assignments list
       const assignmentsData = await getAllAssignments();
-      if (assignmentsData.assignments && Array.isArray(assignmentsData.assignments)) {
+      console.log("Fetched assignments after creating:", assignmentsData);
+      if (
+        assignmentsData.assignments &&
+        Array.isArray(assignmentsData.assignments)
+      ) {
         setAssignments(assignmentsData.assignments);
       } else {
         console.error("Unexpected assignments data format:", assignmentsData);
@@ -252,10 +236,14 @@ const TeacherAssignmentUpload = () => {
       }
     } catch (error) {
       console.error("Error creating assignment:", error);
-      message.error(
-        error.response?.data?.error ||
-          "An error occurred while creating the assignment."
-      );
+      // Enhanced error message handling
+      if (error.response && error.response.data && error.response.data.error) {
+        message.error(`Error: ${error.response.data.error}`);
+      } else {
+        message.error(
+          "An error occurred while creating the assignment. Please try again."
+        );
+      }
     } finally {
       setSubmitting(false);
     }
@@ -285,66 +273,19 @@ const TeacherAssignmentUpload = () => {
   });
 
   /**
-   * Define Table Columns
+   * Handle Assignment Deletion with Confirmation
    */
-  const tableColumns = [
-    {
-      title: "Batch",
-      dataIndex: ["batch_id", "batch_name"],
-      key: "batch",
-      sorter: (a, b) =>
-        a.batch_id.batch_name.localeCompare(b.batch_id.batch_name),
-    },
-    {
-      title: "Content",
-      dataIndex: "content_url",
-      key: "content_url",
-      render: (text) => (
-        <a href={text} target="_blank" rel="noopener noreferrer">
-          View Content
-        </a>
-      ),
-      sorter: (a, b) => a.content_url.localeCompare(b.content_url),
-    },
-    {
-      title: "Expiry Date",
-      dataIndex: "expiry_date",
-      key: "expiry_date",
-      render: (date) => new Date(date).toLocaleDateString(),
-      sorter: (a, b) => new Date(a.expiry_date) - new Date(b.expiry_date),
-    },
-    {
-      title: "Teacher",
-      dataIndex: ["teacher_id", "user_id", "name"],
-      key: "teacher",
-      sorter: (a, b) =>
-        a.teacher_id.user_id.name.localeCompare(b.teacher_id.user_id.name),
-    },
-    {
-      title: "Actions",
-      key: "actions",
-      render: (_, record) => (
-        <Button
-          type="link"
-          danger
-          onClick={() => handleDeleteAssignment(record._id)}
-        >
-          Delete
-        </Button>
-      ),
-    },
-  ];
-
-  /**
-   * Handle Assignment Deletion (Optional)
-   */
-  const handleDeleteAssignment = async (assignmentId) => {
+  const confirmDeleteAssignment = async (assignmentId) => {
     try {
-      await api.delete(`/assignments/${assignmentId}`);
+      await deleteAssignment(assignmentId);
       message.success("Assignment deleted successfully!");
       // Refresh assignments list
       const assignmentsData = await getAllAssignments();
-      if (assignmentsData.assignments && Array.isArray(assignmentsData.assignments)) {
+      console.log("Fetched assignments after deletion:", assignmentsData);
+      if (
+        assignmentsData.assignments &&
+        Array.isArray(assignmentsData.assignments)
+      ) {
         setAssignments(assignmentsData.assignments);
       } else {
         console.error("Unexpected assignments data format:", assignmentsData);
@@ -352,11 +293,70 @@ const TeacherAssignmentUpload = () => {
       }
     } catch (error) {
       console.error("Error deleting assignment:", error);
-      message.error(
-        error.response?.data?.error ||
-          "An error occurred while deleting the assignment."
-      );
+      if (error.response && error.response.data && error.response.data.error) {
+        message.error(`Error: ${error.response.data.error}`);
+      } else {
+        message.error(
+          "An error occurred while deleting the assignment. Please try again."
+        );
+      }
     }
+  };
+
+  /**
+   * Handle Viewing Responses
+   */
+  const handleViewResponses = (assignmentId) => {
+    navigate(`/teacher/dashboard/quizz/assignedBatch/uploadContent/${assignmentId}/responses`);
+  };
+
+  /**
+   * Handle File Upload Change
+   */
+  const handleFileChange = async ({ file, fileList }) => {
+    // If the file is removed
+    if (file.status === "removed") {
+      setFileList([]);
+      setContentUrl("");
+      return;
+    }
+
+    // Only handle the first file in the list
+    const currentFile = fileList[0];
+
+    if (currentFile && currentFile.originFileObj) {
+      try {
+        setUploadingFile(true);
+        const uploadedUrl = await uploadFileToFirebase(
+          currentFile.originFileObj,
+          "assignments" // You can specify a different folder if needed
+        );
+        setContentUrl(uploadedUrl);
+        setFileList([
+          {
+            uid: currentFile.uid,
+            name: currentFile.name,
+            status: "done",
+            url: uploadedUrl,
+          },
+        ]);
+        message.success(`${currentFile.name} uploaded successfully.`);
+      } catch (error) {
+        console.error("Upload failed:", error);
+        message.error(`${currentFile.name} upload failed.`);
+        setFileList([]);
+      } finally {
+        setUploadingFile(false);
+      }
+    }
+  };
+
+  /**
+   * Handle File Removal
+   */
+  const handleRemove = () => {
+    setFileList([]);
+    setContentUrl("");
   };
 
   /**
@@ -404,12 +404,13 @@ const TeacherAssignmentUpload = () => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          flexWrap: "wrap",
         }}
       >
-        <h2>Assignment Details</h2>
+        <Title level={2} style={{ marginBottom: "10px", color: "#bdc9d3" }}>Assignment Details</Title>
         <div
           className="header-actions"
-          style={{ display: "flex", alignItems: "center" }}
+          style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
         >
           <Input
             placeholder="Search by Batch, URL, or Teacher Name"
@@ -435,26 +436,66 @@ const TeacherAssignmentUpload = () => {
         </div>
       </div>
 
-      {/* Assignments Table */}
-      <Table
-        columns={tableColumns}
-        dataSource={filteredAssignments}
-        pagination={{ pageSize: 5 }}
-        bordered
-        style={{ marginTop: "20px" }}
-        loading={loadingAssignments}
-        rowKey={(record) => record._id} // Ensure each assignment has a unique _id
-        expandable={{
-          expandedRowRender: (record) => (
-            <p style={{ margin: 0 }}>
-              <strong>Content URL:</strong>{" "}
-              <a href={record.content_url} target="_blank" rel="noopener noreferrer">
-                {record.content_url}
-              </a>
-            </p>
-          ),
-          rowExpandable: (record) => record.content_url !== "",
+      {/* Assignments as Cards */}
+      <List
+        grid={{
+          gutter: 16,
+          xs: 1,
+          sm: 1,
+          md: 2,
+          lg: 2,
+          xl: 3,
+          xxl: 4,
         }}
+        dataSource={filteredAssignments}
+        loading={loadingAssignments}
+        renderItem={(assignment) => (
+          <List.Item key={assignment._id}>
+            <Card
+              title={` ${assignment.batch_id.batch_name}`}
+              extra={
+                <Button
+
+                  type="link"
+                  onClick={() => handleViewResponses(assignment._id)}
+                  style={{ marginRight: "10px", padding:"10px", borderRadius:"10px", backgroundColor: "#ff007a", borderColor: "#ff007a", color: "#fff" }}
+                >
+                  View Responses
+                </Button>
+              }
+              actions={[
+                <Popconfirm
+                  title="Are you sure to delete this assignment?"
+                  onConfirm={() => confirmDeleteAssignment(assignment._id)}
+                  okText="Yes"
+                  cancelText="No"
+                >
+                  <Button type="link" danger>
+                    Delete
+                  </Button>
+                </Popconfirm>,
+              ]}
+              bordered
+              hoverable
+            >
+              <p>
+                <Text strong>Teacher:</Text> {assignment.teacher_id.user_id.name}
+              </p>
+              <p>
+                <Text strong>Expiry Date:</Text>{" "}
+                {new Date(assignment.expiry_date).toLocaleString()}
+              </p>
+              <p>
+                <Text strong>Content:</Text>{" "}
+                <Link href={assignment.content_url} target="_blank" rel="noopener noreferrer"
+                style={{ color: "#ff007a" }}
+                >
+                  View Content
+                </Link>
+              </p>
+            </Card>
+          </List.Item>
+        )}
       />
 
       {/* Upload Assignment Modal */}
@@ -469,20 +510,19 @@ const TeacherAssignmentUpload = () => {
         {loadingBatches ? (
           <Spin tip="Loading batches..." />
         ) : (
-          <Form
-            form={form}
-            layout="vertical"
-            onFinish={handleFormSubmit}
-            initialValues={{
-              content_url: "",
-            }}
-          >
+          <Form form={form} layout="vertical" onFinish={handleFormSubmit}>
             <Form.Item
               name="batch_id"
               label="Select Batch"
               rules={[{ required: true, message: "Please select a batch." }]}
             >
-              <Select placeholder="Select a batch">
+              <Select
+                placeholder="Select a batch"
+                loading={loadingBatches}
+                notFoundContent={
+                  loadingBatches ? <Spin size="small" /> : "No batches available"
+                }
+              >
                 {batches.length > 0 ? (
                   batches.map((batch) => (
                     <Option key={batch._id} value={batch._id}>
@@ -495,34 +535,39 @@ const TeacherAssignmentUpload = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item
-              name="content_url"
-              label="Content File"
-              rules={[{ required: true, message: "Please upload a content file." }]}
-            >
-              <Dragger
-                name="file"
-                multiple={false}
-                beforeUpload={handleFileUpload}
+            {/* Upload Content File */}
+            <Form.Item label="Upload Content File" required>
+              <Upload
+                beforeUpload={() => false} // Prevent automatic upload
+                onChange={handleFileChange}
                 fileList={fileList}
+                accept=".pdf,.doc,.docx,.ppt,.pptx" // Adjust as needed
+                maxCount={1}
                 onRemove={handleRemove}
-                accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.jpeg,.png"
-                showUploadList={{
-                  showPreviewIcon: false,
-                  showRemoveIcon: true,
-                  showDownloadIcon: false,
-                }}
               >
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">
-                  Click or drag file to this area to upload
-                </p>
-                <p className="ant-upload-hint">
-                  Support for a single upload. Only PDF, DOC, DOCX, PPT, PPTX, JPG, JPEG, PNG files are allowed.
-                </p>
-              </Dragger>
+                <Button
+                  icon={<UploadOutlined />}
+                  disabled={uploadingFile}
+                >
+                  Click to Upload
+                </Button>
+              </Upload>
+              {contentUrl && (
+                <div style={{ marginTop: "10px" }}>
+                  <Link
+                    href={contentUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    View Uploaded File
+                  </Link>
+                </div>
+              )}
+              {!contentUrl && submitting && (
+                <div style={{ color: "red", marginTop: "5px" }}>
+                  Please upload a file.
+                </div>
+              )}
             </Form.Item>
 
             <Form.Item
@@ -544,7 +589,7 @@ const TeacherAssignmentUpload = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                loading={submitting || uploading}
+                loading={submitting}
                 style={{
                   backgroundColor: "#EE1B7A",
                   borderColor: "pink",
@@ -559,8 +604,8 @@ const TeacherAssignmentUpload = () => {
         )}
       </Modal>
 
-      {/* Loading Indicator for Uploading or Submitting */}
-      {(uploading || submitting) && (
+      {/* Loading Indicator for Submitting */}
+      {submitting && (
         <div
           style={{
             display: "flex",
