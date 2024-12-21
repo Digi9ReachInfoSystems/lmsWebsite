@@ -5,8 +5,22 @@ import { theme } from "../../../../style/theme/theme"; // Assuming you already h
 export const MaterialContainer = styled.div`
     padding: 20px;
     background-color: ${theme.colors.seasalt};
-    max-width: 100%;
+    // max-width: 100%;
     box-sizing: border-box;
+    // display: flex;
+    // flex-direction: row;
+    // align-items: center;
+    // justify-content: center;
+
+    h2{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: ${theme.colors.frenchGray};
+    font-family: ${theme.typography.fontFamily};
+    font-size: 2rem;
+    margin-bottom: 20px;
+    }
 
     p {
         color: ${theme.colors.black};
@@ -17,9 +31,13 @@ export const MaterialContainer = styled.div`
 
     .card-list {
         display: flex;
-        flex-direction: column; /* Stack cards vertically */
+        flex-direction: row; /* Stack cards vertically */
         gap: 20px;
+        justify-content: center;
+        height: 100%;
         width: 100%;
+        // width: 100%;
+        // border: 1px solid ${theme.colors.gray700};
     }
 `;
 
@@ -34,6 +52,7 @@ export const MaterialCardWrapper = styled.div`
     display: flex;
     flex-direction: column; /* Ensure card content stacks vertically */
     transition: transform 0.3s ease;
+    border: 1px solid ${theme.colors.gray700};
 &:hover {
     box-shadow: 0px 4px 10px pink;
 }
