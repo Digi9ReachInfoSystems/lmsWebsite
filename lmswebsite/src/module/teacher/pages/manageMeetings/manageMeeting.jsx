@@ -13,7 +13,6 @@ import {
 } from "../../../../api/teacherApi"; // Adjust this import path as necessary
 import {
   Heading,
-  PageContainer,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { ManageMeetingwrap } from "./manageMeetings.Styles";
 import Animation from "../../../teacher/assets/Animation.json";
@@ -226,7 +225,6 @@ function ManageMeeting() {
   }
 
   return (
-    <PageContainer>
       <ManageMeetingwrap>
         <div className="meetingSchedule-heading">
           <Heading>Meeting Schedule</Heading>
@@ -251,7 +249,6 @@ function ManageMeeting() {
           />
         )}
       </ManageMeetingwrap>
-    </PageContainer>
   );
 }
 
