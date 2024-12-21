@@ -9,7 +9,7 @@ import {
 } from "antd";
 import { getTeacherAttendance } from '../../../../api/teacherApi';
 import { getTeacherByAuthId } from '../../../../api/teacherApi';
-import { BodyText, Heading, PageContainer } from '../../../../style/PrimaryStyles/PrimaryStyles';
+import { BodyText, Heading} from '../../../../style/PrimaryStyles/PrimaryStyles';
 import { TeacherAttendanceWrap } from './TeacherAttendance.styles';
 import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
@@ -155,7 +155,6 @@ export const TeacherAttendance = () => {
     }
 
     return (
-        <PageContainer>
             <TeacherAttendanceWrap>
                 <div className='TeacherAttendance-heading-row'>
                    <Heading>Attendance List </Heading>
@@ -181,6 +180,5 @@ export const TeacherAttendance = () => {
                     />
                 )}
             </TeacherAttendanceWrap>
-        </PageContainer>
     );
 };
