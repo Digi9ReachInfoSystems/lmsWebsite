@@ -6,6 +6,8 @@ export const LoginPageWrap = styled.div`
   display: flex;
   height: 100vh;
 
+
+  
   background: ${(props) => props.theme.colors.white};
   justify-content: center;
   align-items: center;
@@ -79,13 +81,12 @@ export const Container = styled.div`
 // Container for the login form
 export const LoginFormContainer = styled.div`
   background: ${(props) => props.theme.colors.darkwhite};
-  padding: 4rem;
+  padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 550px;
   // max-height: 500px;
-  height: 65vh;
   z-index: 6;
   margin-left: 40vw;
   // display: flex;
@@ -93,8 +94,10 @@ export const LoginFormContainer = styled.div`
   // justify-content: center;
   // align-items: center;
 
-  ${media.md`
+  ${media.lg`
     padding: 2rem;
+  margin-left: 0vw; 
+
   `}
 `;
 
@@ -166,3 +169,8 @@ export const LoginButton = styled.button`
     cursor: not-allowed;
   }
 `;
+
+
+
+
+
