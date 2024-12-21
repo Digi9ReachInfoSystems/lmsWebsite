@@ -33,19 +33,6 @@ function StatsCard({ title, value, icon, bgColor, position }) {
         animation: `${floatAnimation} 4s ease-in-out infinite`,
         zIndex: 10,
         ...position, // Dynamically apply position styles
-
-        "@media (max-width: 768px)": {
-          width: "150px",
-          height: "90px",
-        },
-        "@media (max-width: 480px)": {
-          width: "130px",
-          height: "70px",
-        },
-        "@media (max-width: 320px)": {
-          width: "130px",
-          height: "70px",
-        },
       }}
     >
       <Box
@@ -150,19 +137,6 @@ function HeroContent() {
               animation: `${floatAnimation} ${4 + index}s infinite ease-in-out`,
               boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
               zIndex: 0,
-
-              "@media (max-width: 768px)": {
-                width: `${30 + index * 10}px`,
-                height: `${30 + index * 10}px`,
-              },
-              "@media (max-width: 480px)": {
-                width: `${25 + index * 10}px`,
-                height: `${25 + index * 10}px`,
-              },
-              "@media (max-width: 320px)": {
-                width: `${20 + index * 10}px`,
-                height: `${20 + index * 10}px`,
-              },
             }}
           />
         ))}
@@ -306,6 +280,7 @@ function HeroContent() {
             borderRadius: "12px",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
             animation: `${textFadeUp} 2.5s ease-in-out`,
+            "@media(max-width:480px)":{margin: "7rem auto 0"}
           }}
         />
 
@@ -315,14 +290,22 @@ function HeroContent() {
           value="15K"
           icon={<GroupIcon sx={{ color: "#fff" }} />}
           bgColor="#6A11CB"
-          position={{ top: "40%", left: "5%" }}
+          position={{
+            top: "40%",
+            left: "5%",
+            "@media(max-width:576px)": { top: "50%" },
+          }}
         />
         <StatsCard
           title="Active Mentors"
           value="500+"
           icon={<GroupIcon sx={{ color: "#fff" }} />}
           bgColor="#00C897"
-          position={{ top: "40%", right: "5%" }}
+          position={{
+            top: "40%",
+            right: "5%",
+            "@media(max-width:576px)": { top: "46%" },
+          }}
         />
         <StatsCard
           title="Total Classes"

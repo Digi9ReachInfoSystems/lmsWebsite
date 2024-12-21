@@ -1,7 +1,11 @@
 .signup-container {
   display: flex;
-  height: 100vh;
-  font-family: "Poppins", sans-serif;
+  /* height: 100vh; */
+  font-family: "Arial", sans-serif;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .image-section {
@@ -14,11 +18,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.image-section img {
-  width: 80%;
-  /* max-width: 400px; */
+  background: #f0f4ff;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
 }
 
 .image-section h2 {

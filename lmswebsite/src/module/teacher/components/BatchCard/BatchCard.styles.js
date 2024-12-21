@@ -1,238 +1,3 @@
-// // src/components/BatchCard.styles.js
-
-// // import styled from "styled-components";
-// // import { media } from "../../../../style/theme/theme";
-
-// // export const BatchCardWrap = styled.div`
-// //   .batch-card {
-// //     display: flex;
-// //     flex-direction: row;
-// //     border: 1px solid ${(props) => props.theme.colors.frenchGray};
-// //     border-radius: 8px;
-// //     overflow: hidden;
-// //     background-color: ${(props) => props.theme.colors.white};
-// //     transition: box-shadow 0.3s ease;
-// //     width: 100%; /* Take full width of the parent */
-// //     height: 300px; /* Increased height */
-// //     max-width: 100%;
-// //      ${media.md`
-// //     flex-direction: column;
-// //       height: auto;
-// //              `
-// //     }
-// //   }
-
-// //   .batch-card:hover {
-// //     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-// //   }
-
-// //   .batch-image-container {
-// //     flex: 1 1 40%;
-// //     max-width: 40%;
-// //     margin: 2vh;
-// //     border-radius: 20px;
-// //     height: 90%;
-// //     overflow: hidden;
-// //      ${media.md`
-// //      max-width: 100%;
-// //       flex: 1 1 100%;
-// //        height: 200px;
-// //              `
-// //     }
-// //   }
-
-// //   .batch-image {
-// //     width: 100%;
-// //     height: 100%;
-// //     object-fit: cover;
-// //   }
-
-// //   .batch-content {
-// //     flex: 1 1 60%;
-// //     padding: 20px;
-// //     display: flex;
-// //     flex-direction: column;
-// //     justify-content: space-between;
-// //      ${media.md`
-// //      max-width: 100%;
-// //       flex: 1 1 100%;
-// //        padding: 16px;
-// //              `
-// //     }
-// //   }
-
-// //   .batch-name {
-// //     font-size: 20px;
-// //     margin: 0 0 16px 0;
-// //     color: ${(props) => props.theme.colors.black};
-// //      ${media.md`
-// //     font-size: 1.5rem;
-// //       margin-bottom: 12px;
-// //              `
-// //     }
-// //   }
-
-// //   .batch-details {
-// //     display: flex;
-// //     flex-direction: column;
-// //     gap: 12px;
-// //     flex-grow: 1;
-// //   }
-
-// //   .detail-item {
-// //     display: flex;
-// //     align-items: center;
-// //   }
-
-// //     .detail-item-date {
-// //     margin-right: 10px;
-// //     float: right;
-// //   }
-
-// //   .detail-icon {
-// //     margin-right: 10px;
-// //     font-size: 12px;
-
-// //      ${media.md`
-// //    font-size: 1.2rem;
-// //       margin-right: 8px;
-// //              `
-// //     }
-// //   }
-
-// //   .detail-text {
-// //     font-size: 1.1rem;
-// //     color: ${(props) => props.theme.colors.black};
-// //     ${media.md`
-// //         font-size: 1rem;
-// //                  `
-// //         }
-// //   }
-
-// //   .no-teacher {
-// //     color:${(props) => props.theme.colors.red}; /* Red color for "No Teacher Assigned" */
-// //   }
-
-// // `;
-
-// // src/components/BatchCard.styles.js
-
-// import styled from "styled-components";
-// import { media } from "../../../../style/theme/theme";
-
-// export const BatchCardWrap = styled.div`
-//   .batch-card {
-//     background-color: #fff;
-//     border-radius: 12px;
-//     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-//     overflow: hidden;
-//     width: 100%;
-//     max-width: 300px;
-//     height: 500px;
-//     transition: all 0.3s ease;
-//     margin: 10px;
-//     &:hover {
-//       transform: translateY() (-5px);
-//       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
-//     }
-//   }
-
-//   .batch-image-container {
-//     width: 100%;
-//     height: 200px;
-//     overflow: hidden;
-//     border-bottom: 2px solid #f1f1f1;
-//   }
-
-//   .batch-image {
-//     width: 100%;
-//     height: 100%;
-//     object-fit: cover;
-//     border-radius: 12px 12px 0 0;
-//   }
-
-//   .batch-content {
-//     padding: 20px;
-//   }
-
-//   /* Header Styles */
-//   .batch-header {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: center;
-//     margin-bottom: 10px;
-//   }
-
-//   .batch-name {
-//     font-size: 18px;
-//     font-weight: bold;
-//     margin: 0;
-//     color: #333;
-//   }
-
-//   .batch-date {
-//     font-size: 14px;
-//     color: #888;
-//   }
-
-//   /* Batch Details */
-//   .batch-details {
-//     margin-top: 10px;
-//     font-size: 14px;
-//     color: #555;
-//     display: flex;
-//     flex-direction: column;
-//     gap: 5px;
-//   }
-
-//   .detail-item {
-//     display: flex;
-//     align-items: center;
-//   }
-
-//   .detail-icon {
-//     margin-right: 10px;
-//     font-size: 12px;
-
-//     ${media.md`
-//       font-size: 1.2rem;
-//       margin-right: 8px;
-//     `}
-//   }
-
-//   .detail-text {
-//     font-size: 1.1rem;
-//     color: ${(props) => props.theme.colors.black};
-
-//     ${media.md`
-//       font-size: 1rem;
-//     `}
-//   }
-
-//   .no-teacher {
-//     color: ${(props) =>
-//       props.theme.colors.red}; /* Red color for "No Teacher Assigned" */
-//   }
-
-//   /* Footer Styles */
-//   .batch-footer {
-//     margin-top: 20px;
-//     display: flex;
-//     justify-content: flex-end;
-//   }
-
-//   .action-text {
-//     color: #fff;
-//     padding: 10px 20px;
-//     border: none;
-//     border-radius: 25px;
-//     cursor: pointer;
-//     font-size: 14px;
-//     font-weight: 600;
-//     transition: background-color 0.3s ease;
-//   }
-// `;
-
 import styled from "styled-components";
 import { media } from "../../../../style/theme/theme";
 
@@ -244,7 +9,7 @@ export const BatchCardWrap = styled.div`
     overflow: hidden;
     width: 100%;
     max-width: 250px;
-    height: 370px;
+    height: 400px;
     transition: all 0.3s ease;
     margin: 10px;
     position: relative; /* Added for positioning footer */
@@ -252,6 +17,24 @@ export const BatchCardWrap = styled.div`
       transform: translateY(-5px);
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     }
+
+    ${media.md`
+      max-width: 300px;
+      height: 420px;
+      margin: 15px;
+    `}
+
+    ${media.sm`
+      max-width: 250px;
+      height: 390px;
+      margin: 10px;
+    `}
+
+    ${media.xs`
+      max-width: 200px;
+      height: 350px;
+      margin: 5px;
+    `}
   }
 
   .batch-image-container {
@@ -259,6 +42,18 @@ export const BatchCardWrap = styled.div`
     height: 150px;
     overflow: hidden;
     border-bottom: 2px solid #f1f1f1;
+
+    ${media.md`
+      height: 180px;
+    `}
+
+    ${media.sm`
+      height: 150px;
+    `}
+
+    ${media.xs`
+      height: 120px;
+    `}
   }
 
   .batch-image {
@@ -266,10 +61,34 @@ export const BatchCardWrap = styled.div`
     height: 100%;
     object-fit: cover;
     border-radius: 12px 12px 0 0;
+
+    ${media.md`
+      height: 180px;
+    `}
+
+    ${media.sm`
+      height: 150px;
+    `}
+
+    ${media.xs`
+      height: 120px;
+    `}
   }
 
   .batch-content {
     padding: 20px;
+
+    ${media.md`
+      padding: 15px;
+    `}
+
+    ${media.sm`
+      padding: 10px;
+    `}
+
+    ${media.xs`
+      padding: 5px;
+    `}
   }
 
   /* Header Styles */
@@ -278,6 +97,19 @@ export const BatchCardWrap = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 10px;
+
+    ${media.md`
+      margin-bottom: 8px;
+    `}
+
+    ${media.sm`
+      margin-bottom: 5px;
+    `}
+
+    ${media.xs`
+      margin-bottom: 3px;
+    `}
+
   }
 
   .batch-name {
@@ -285,11 +117,37 @@ export const BatchCardWrap = styled.div`
     font-weight: bold;
     margin: 0;
     color: #333;
+
+    ${media.md`
+      font-size: 16px;
+    `}
+
+    ${media.sm`
+      font-size: 14px;
+    `}
+
+    ${media.xs`
+      font-size: 12px;
+    `}
+
   }
 
   .batch-date {
     font-size: 14px;
     color: #888;
+
+    ${media.md`
+      font-size: 12px;
+    `}
+
+    ${media.sm`
+      font-size: 10px;
+    `}
+
+    ${media.xs`
+      font-size: 8px;
+    `}
+
   }
 
   /* Batch Details */
@@ -300,6 +158,19 @@ export const BatchCardWrap = styled.div`
     display: flex;
     flex-direction: column;
     gap: 5px;
+
+    ${media.md`
+      font-size: 12px;
+    `}
+
+    ${media.sm`
+      font-size: 10px;
+    `}
+
+    ${media.xs`
+      font-size: 8px;
+    `}
+
   }
 
   .detail-item {
@@ -339,10 +210,30 @@ export const BatchCardWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
+    ${media.md`
+      bottom: 15px;
+      right: 15px;
+    `}
+
+    ${media.sm`
+      bottom: 10px;
+      right: 10px;
+    `}
+
+    ${media.xs`
+      bottom: 5px;
+      right: 5px;
+    `}
   }
 
   .action-text {
     color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: auto;
     padding: 10px 20px;
 
     border: none;
@@ -351,5 +242,21 @@ export const BatchCardWrap = styled.div`
     font-size: 14px;
     font-weight: 600;
     transition: background-color 0.3s ease;
+
+
+    ${media.md`
+      padding: 8px 16px;
+      font-size: 12px;
+    `}
+
+    ${media.sm`
+      padding: 6px 12px;
+      font-size: 10px;
+    `}
+
+    ${media.xs`
+      padding: 4px 8px;
+      font-size: 8px;
+    `}
   }
 `;

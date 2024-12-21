@@ -1,7 +1,7 @@
 // ManagePayment.styles.js
 import styled from "styled-components";
 import { Button } from "antd";
-import { theme } from "../../../../style/theme/theme"; // Adjust the path as needed
+import { media, theme } from "../../../../style/theme/theme"; // Adjust the path as needed
 
 export const Container = styled.div`
   padding: 20px;
@@ -13,11 +13,37 @@ export const Container = styled.div`
     align-items: center;
     margin-bottom: 20px;
 
+    ${media.md`    
+      flex-direction: column;
+      gap: 10px;
+      `}
+
+    ${media.sm`
+      flex-direction: column;
+      gap: 10px;
+      `}
+
+      ${media.xs`
+      flex-direction: column;
+      gap: 10px;
+      `}
+
     h2 {
       font-family: ${theme.typography.fontFamily};
       font-size: 1.8rem;
       font-weight: bold;
-      color: ${theme.colors.black};
+      color: ${theme.colors.frenchGray};
+
+      ${media.sm`
+        font-size: 1.5rem;
+      `}
+
+      ${media.xs`
+        font-size: 1.2rem;
+      `}
+      ${media.md`
+        font-size: 1.5rem;
+      `}
     }
 
     .actions {
@@ -27,18 +53,48 @@ export const Container = styled.div`
       .ant-input {
         border-radius: 4px;
         height: 40px;
+        
+        ${media.md`
+          border-radius: 4px;
+        `}
+        ${media.sm`
+          border-radius: 4px;
+        `}
+        ${media.xs`
+          border-radius: 4px;
+        `}
       }
 
       .ant-btn {
         height: 40px;
         display: flex;
         align-items: center;
+
+        ${media.md`
+          border-radius: 4px;
+        `}
+        ${media.sm`
+          border-radius: 4px;
+        `}
+        ${media.xs`
+          border-radius: 4px;
+        `}
       }
     }
   }
 
   .ant-table {
     margin-top: 20px;
+
+    ${media.md `
+      margin-top: 10px;
+    `}
+    ${media.sm `
+      margin-top: 10px;
+    `}
+    ${media.xs `
+      margin-top: 10px;
+    `}
   }
 
   .ant-table-thead > tr > th {
@@ -60,6 +116,17 @@ export const StyledButton = styled(Button)`
   background-color: #ee1b7a;
   border-color: #ee1b7a;
   color: #fff;
+${media.md`
+  border-radius: 4px;
+`}
+
+${media.sm`
+  border-radius: 4px;
+  `}
+
+${media.xs`
+  border-radius: 4px;
+  `}
 
   &:hover,
   &:focus {
@@ -73,6 +140,18 @@ export const SecondaryButton = styled(Button)`
   background-color: #1890ff;
   border-color: #1890ff;
   color: #fff;
+
+  ${media.md`
+  border-radius: 4px;
+`}
+
+${media.sm` 
+  border-radius: 4px;
+  `}
+
+${media.xs`
+  border-radius: 4px;
+  `}
 
   &:hover,
   &:focus {
@@ -92,10 +171,34 @@ export const LoadingContainer = styled.div`
   justify-content: center;
   align-items: center;
   height: 200px;
+
+  ${media.md`
+    height: 150px;
+  `}
+
+  ${media.sm`
+    height: 100px;
+  `}
+
+  ${media.xs`
+    height: 100px;
+  `}
 `;
 
 export const ModalContent = styled.div`
   padding: 20px;
+
+  ${media.md`
+    padding: 10px;
+  `}  
+
+  ${media.sm`
+    padding: 10px;
+  `}
+
+  ${media.xs`
+    padding: 10px;
+  `}
 
   .details {
     display: flex;

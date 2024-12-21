@@ -17,6 +17,7 @@
 
 .total-amount {
   text-align: center;
+  margin-top: 10vh;
 }
 
 .header h3 {
@@ -55,7 +56,7 @@
 
 .skill-card {
   width: 200px;
-  height: 150px;
+  /* height: 150px; */
   border: 2px solid #e0e0e0;
   border-radius: 10px;
   cursor: pointer;
@@ -80,7 +81,7 @@
 .skill-icon {
   width: 60px;
   height: 60px;
-  background-color: #d1e4ff;
+  /* background-color: #d1e4ff; */
   border-radius: 50%;
 }
 
@@ -134,9 +135,10 @@
 
 .price {
   color: #00c897;
-  font-size: 24px;
+  font-size: 21px;
   /* position: absolute; */
   bottom: 20px;
+  margin-top: 10px;
 }
 
 .price-2{

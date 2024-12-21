@@ -48,22 +48,11 @@ function Footer() {
       </div>
       <div className="footer-bottom">
         <p>
-          <Link to="/privacy-policy" className="footer-link">
-            Privacy Policy
-          </Link>{" "}
-          ·{" "}
-          <Link to="/TermsOfUse" className="footer-link">
-            Terms and Conditions
-          </Link>
-          ·{" "}
-          <Link to="/RefundCancellationPolicy" className="footer-link">
-            Refund & Cancellation Policy
-          </Link>{" "}
-          ·{" "}
-          <Link to="/DisclaimerPolicy" className="footer-link">
-            Disclaimer Policy
-          </Link>{" "}
-          ·{" "}
+        <Link to="/privacy-policy" className="footer-link">Privacy Policy</Link> ·{" "}
+        <Link to="/TermsOfUse" className="footer-link">Terms and Conditions</Link>·{" "}
+        <Link to ="#" className="footer-link">Legal Documentation</Link>
+        <Link to="/RefundCancellationPolicy" className="footer-link">Refund & Cancellation Policy</Link> ·{" "}
+        <Link to="/DisclaimerPolicy" className="footer-link">Disclaimer Policy</Link> ·{" "}
         </p>
         <p>
           <div className="footer-social-icons-new">

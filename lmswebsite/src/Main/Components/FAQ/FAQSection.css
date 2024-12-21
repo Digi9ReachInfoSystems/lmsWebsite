@@ -9,7 +9,12 @@
   background: linear-gradient(to top, white, #f0f9ff);
   /* border-radius: 12px; */
   /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
-}
+
+  @media(max-width:576px){
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+} 
 
 /* Title */
 .faq-title {
