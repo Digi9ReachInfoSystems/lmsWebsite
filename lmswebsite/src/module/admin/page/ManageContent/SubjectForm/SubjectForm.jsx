@@ -189,7 +189,7 @@ const SubjectForm = () => {
         </Form.Item>
 
         {/* Language */}
-        {/* <Form.Item
+        <Form.Item
           label="Language"
           name="language"
           rules={[{ required: true, message: "Please select a language" }]}
@@ -198,10 +198,10 @@ const SubjectForm = () => {
             <Option value="english">English</Option>
             <Option value="hindi">Hindi</Option>
           </Select>
-        </Form.Item> */}
+        </Form.Item>
 
         {/* Is Grammar Subject */}
-        {/* <Form.Item
+        <Form.Item
           label="Is Grammar Subject?"
           name="is_grammar_subject"
           rules={[{ required: true }]}
@@ -210,7 +210,7 @@ const SubjectForm = () => {
             <Radio value="true">True</Radio>
             <Radio value="false">False</Radio>
           </Radio.Group>
-        </Form.Item> */}
+        </Form.Item>
         {/* Image Upload */}
         <Form.Item
           label="Subject Image"

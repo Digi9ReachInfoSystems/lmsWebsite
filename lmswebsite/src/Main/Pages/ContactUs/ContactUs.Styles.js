@@ -21,7 +21,7 @@ export const ContactContainer = styled.div`
   margin: 20px;
 
   ${media.sm`
-    width: 100%;
+    width: 90%;
     `}
 `;
 
