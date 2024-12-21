@@ -80,7 +80,7 @@
 .feature-icon {
   width: 80px;
   height: 80px;
-  margin-bottom: 15px;
+  margin: 15px auto;
 }
 
 .feature-card h3 {

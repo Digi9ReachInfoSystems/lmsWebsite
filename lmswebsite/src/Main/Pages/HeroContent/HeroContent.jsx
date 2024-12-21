@@ -115,6 +115,8 @@ function HeroContent() {
             fontSize: { xs: "2.5rem", md: "3rem" },
             animation: `${textFadeUp} 1.5s ease-in-out`,
             fontFamily: "Nunito, sans-serif",
+            position: "relative",
+            zIndex: 1,
           }}
         >
           Your Personalized Learning Journey
@@ -180,6 +182,7 @@ function HeroContent() {
             borderRadius: "12px",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
             animation: `${textFadeUp} 2.5s ease-in-out`,
+            "@media(max-width:480px)":{margin: "7rem auto 0"}
           }}
         />
 
@@ -189,14 +192,22 @@ function HeroContent() {
           value="15K"
           icon={<GroupIcon sx={{ color: "#fff" }} />}
           bgColor="#6A11CB"
-          position={{ top: "40%", left: "5%" }}
+          position={{
+            top: "40%",
+            left: "5%",
+            "@media(max-width:576px)": { top: "50%" },
+          }}
         />
         <StatsCard
           title="Active Mentors"
           value="500+"
           icon={<GroupIcon sx={{ color: "#fff" }} />}
           bgColor="#00C897"
-          position={{ top: "40%", right: "5%" }}
+          position={{
+            top: "40%",
+            right: "5%",
+            "@media(max-width:576px)": { top: "46%" },
+          }}
         />
         <StatsCard
           title="Total Classes"
