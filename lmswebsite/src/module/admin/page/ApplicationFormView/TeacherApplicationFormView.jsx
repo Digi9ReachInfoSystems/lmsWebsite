@@ -489,7 +489,10 @@ export default function TeacherApplicationFormView() {
             </div>
             {/* Create Button */}
             <div className="TeachersApplicationFormView-create">
-              <Button type="primary" onClick={handleCreate}>
+              <Button type="primary" onClick={handleCreate}
+              style={{ backgroundColor: "#EE1B7A" }}
+              display="flex"
+              >
                 Create
               </Button>
             </div>
@@ -779,7 +782,8 @@ export default function TeacherApplicationFormView() {
 
           {/* Submit Button */}
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={uploading}>
+            <Button type="primary" htmlType="submit" loading={uploading}
+            style={{ backgroundColor: "#EE1B7A" }}>
               Submit
             </Button>
           </Form.Item>

@@ -5,7 +5,11 @@ import { PiListChecksThin } from "react-icons/pi";
 import { FaLayerGroup, FaWpforms, FaTools } from "react-icons/fa";
 import { AiTwotoneNotification } from "react-icons/ai";
 import { RiCustomerServiceLine } from "react-icons/ri";
-import { MdOutlineSettings } from "react-icons/md";
+// import { MdOutlineSettings } from "react-icons/md";
+
+import { LuPackagePlus } from "react-icons/lu";
+
+import { FaRupeeSign } from "react-icons/fa";
 import { VscSignOut } from "react-icons/vsc";
 import styled from "styled-components";
 
@@ -153,7 +157,7 @@ const Sidebar = () => {
     },
     {
       name: "Custom Package",
-      icon: <AiTwotoneNotification />,
+      icon: <LuPackagePlus />,
       link: "/admin/customPackage",
     },
     { name: "Manage Content", icon: <FaTools />, link: "/admin/manageContent" },
@@ -163,9 +167,8 @@ const Sidebar = () => {
       link: "/admin/manageAttendance",
     },
     {
-      name:"Payment", icon: <FaTools />, link: "/admin/customPayments"
-    },
-    { name: "Settings", icon: <MdOutlineSettings />, link: "/admin/settings" },
+      name:"Payment", icon: <FaRupeeSign />, link: "/admin/customPayments"
+    }
   ];
 
   const handleItemClick = (item) => {

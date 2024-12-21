@@ -13,6 +13,23 @@ export const TeacherApplicationFormViewWrap = styled.div`
   background-color: ${theme.colors.pink4};
   border-radius: 4px;
   color: ${theme.colors.white};
+
+  ${media.md`
+    padding: 5px 10px;
+  `}
+  ${media.sm`
+    padding: 5px 10px;
+  `}
+  ${media.xs`
+    padding: 5px 10px;
+  `}
+  }
+
+  .TeachersApplicationFormView-create{
+  display: flex;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 0 1em;
   }
 
   .status-button:hover{
@@ -23,6 +40,18 @@ export const TeacherApplicationFormViewWrap = styled.div`
   .area-row {
     display: flex;
     gap: 24px;
+
+    ${media.md`
+      flex-direction: column;
+    `}
+
+    ${media.sm`
+      flex-direction: column;
+    `}
+
+    ${media.xs`
+      flex-direction: column;
+    `}
 
     &.ar-one {
       justify-content: space-between;
@@ -56,6 +85,15 @@ export const TeacherApplicationFormViewWrap = styled.div`
       align-items: stretch;
       // padding: 1em;
     `}
+
+    ${media.sm,
+    media.xs`
+      flex-direction: column;
+      align-items: stretch;
+      // padding: 1em;
+      `}
+
+
   }
 
   .TeachersApplicationFormView-batch_title {
@@ -65,6 +103,17 @@ export const TeacherApplicationFormViewWrap = styled.div`
     margin: 20px;
     color: ${theme.colors.frenchGray};
     flex: 1;
+    ${media.md`
+      font-size: 20px;
+    `}
+
+    ${media.sm`
+      font-size: 20px;
+    `}
+
+    ${media.xs`
+      font-size: 20px;
+    `}
   }
 
   .TeachersApplicationFormView-search {
@@ -73,6 +122,16 @@ export const TeacherApplicationFormViewWrap = styled.div`
     margin-right: 25px;
 
     ${media.md`
+      max-width: 100%;
+      margin-top: 1em;
+    `}
+
+    ${media.sm`
+      max-width: 100%;
+      margin-top: 1em;
+    `}
+
+    ${media.xs`
       max-width: 100%;
       margin-top: 1em;
     `}
@@ -108,6 +167,16 @@ export const TeacherApplicationFormViewWrap = styled.div`
     gap: 10px;
 
     ${media.md`
+      margin-top: 1em;
+      justify-content: flex-start;
+    `}
+
+    ${media.sm`
+      margin-top: 1em;
+      justify-content: flex-start;
+    `}
+
+    ${media.xs`
       margin-top: 1em;
       justify-content: flex-start;
     `}
@@ -165,6 +234,18 @@ export const TeacherApplicationFormViewWrap = styled.div`
     background: ${theme.colors.white};
     border-radius: 8px;
 
+    ${media.md`
+      width: 100%;
+      `}
+
+    ${media.sm`
+      width: 100%;
+      `}
+
+    ${media.xs`
+      width: 100%;
+      `}
+
     .ant-table-thead > tr > th {
       background: ${theme.colors.gray100};
       font-weight: bold;
@@ -187,11 +268,33 @@ export const TeacherApplicationFormViewWrap = styled.div`
     .ant-modal-content {
       border-radius: 8px;
       overflow: hidden;
+
+      ${media.md`
+        width: 100%;
+      `}
+
+      ${media.sm`
+        width: 100%;
+      `}
+
+      ${media.xs`
+        width: 100%;
+      `}
     }
     .ant-modal-header {
       background-color: ${theme.colors.primaryLight};
       color: ${theme.colors.white};
       font-weight: bold;
+
+      ${media.md`
+        width: 100%;
+        `}
+        ${media.sm`
+        width: 100%;
+        `}
+        ${media.xs`
+        width: 100%;
+        `}
     }
     .ant-modal-body {
       padding: 24px;
