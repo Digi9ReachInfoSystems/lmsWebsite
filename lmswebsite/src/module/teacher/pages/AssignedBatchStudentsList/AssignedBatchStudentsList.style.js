@@ -18,12 +18,27 @@ export const TeacherStudentsListContainer = styled.div`
   ${media.xs`
     padding: 10px;
   `}
+  ${media.md `
+    padding: 15px;
+  `}
 
   .header {
     display: flex;
     align-items: center;
     justify-content: flex-start; /* Changed from space-between to flex-start */
     margin-bottom: 20px;
+
+    ${media.md`
+      margin-bottom: 15px;
+    `}
+
+    ${media.sm`
+      margin-bottom: 10px;
+    `}
+
+    ${media.xs`
+      margin-bottom: 5px;
+    `}
 
     /* Styling the back link */
     a {
@@ -34,7 +49,17 @@ export const TeacherStudentsListContainer = styled.div`
       transition: color 0.3s ease;
       cursor: pointer; /* Ensures the cursor changes to pointer on hover */
 
-    
+    ${media.md`
+      font-size: 1.3rem;
+      `}
+
+      ${media.sm`
+        font-size: 1.1rem;
+        `}
+
+        ${  media.xs`
+        font-size: 1rem;
+        `}
 
       svg {
         margin-right: 8px; /* Add spacing between icon and h2 */
@@ -56,9 +81,11 @@ export const TeacherStudentsListContainer = styled.div`
         font-size: 1.5rem;
       `}
 
-      ${media.sm`
-        font-size: 1.3rem;
-      `}
+   
+
+      ${media.xs`
+        font-size: 1.1rem;
+          `}
     }
 
     ${media.sm`
@@ -67,6 +94,17 @@ export const TeacherStudentsListContainer = styled.div`
 
       h2 {
         margin-top: 10px;
+        ${media.xs`
+          margin-top: 5px;
+          `}
+
+          ${media.md`
+          margin-top: 10px;
+          `}
+
+          ${media.sm`
+          margin-top: 5px;
+          `}
       }
     `}
   }
@@ -166,10 +204,32 @@ export const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+${media.sm`
+    margin-bottom: 15px;
+  `}
 
+  ${media.md`
+    margin-bottom: 10px;
+  `}
+
+  ${media.xs`
+    margin-bottom: 5px;
+      `}
   h1 {
     font-size: 24px;
     margin: 0;
+
+    ${media.md`
+      font-size: 18px;
+      `
+    }
+      ${media.sm`
+      font-size: 16px;
+      `}
+
+      ${media.xs`
+      font-size: 16px;
+        `}
   }
 
   button {
@@ -178,6 +238,18 @@ export const Header = styled.div`
     border: 1px solid #ddd;
     border-radius: 5px;
     cursor: pointer;
+
+    ${media.md`
+      padding: 8px 16px;
+      `}
+
+      ${media.sm`
+      padding: 6px 12px;
+      `}
+
+      ${media.xs`
+      padding: 4px 8px;
+        `}
   }
 
   button:hover {
@@ -192,10 +264,35 @@ export const Container = styled.div`
   padding: 20px;
   min-height: 100vh;
 
+  ${media.md`
+    padding: 15px;
+  `}
+
+  ${media.sm`
+    padding: 10px;
+  `}
+
+  ${media.xs`
+    padding: 5px;
+  `}
+
   h2 {
     font-size: 20px;
     margin: 0;
     text-align: left; /* Align the title text to the right */
+
+    ${media.md`
+      font-size: 18px;
+    `}
+
+    ${media.sm`
+      font-size: 16px;
+    `}
+
+    ${media.xs`
+      font-size: 14px;
+    `}
+
   }
 
   .MeetingTitle {
@@ -203,6 +300,18 @@ export const Container = styled.div`
     width: 16px;
     background-color: #9f9595;
     margin-right: 20px;
+
+    ${media.md`
+      margin-right: 15px;
+    `}
+
+    ${media.sm`
+      margin-right: 10px;
+    `}
+
+    ${media.xs`
+      margin-right: 5px;
+    `}
   }
 
   .Meet {
@@ -235,6 +344,17 @@ export const MeetingDetails = styled.div`
   border: 2px solid #ccc;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
+
+  ${media.md`
+    padding: 15px;
+  `}
+
+  ${media.sm`
+    padding: 10px;
+  `}
+  ${media.xs`
+    padding: 5px;
+  `}
 `;
 
 // Meeting header styles
@@ -243,6 +363,21 @@ export const MeetingHeader = styled.div`
   display: flex;
   flex-direction: column; /* Stack children vertically */
   align-items: flex-end; /* Align content to the right */
+
+  ${media.md`
+    flex-direction: row; /* Stack children horizontally */
+    align-items: center; /* Align content to the center */
+  `}
+
+  ${media.sm`
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-end; /* Align content to the right */ 
+  `}
+
+  ${media.xs`
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-end; /* Align content to the right */
+  `}
 
   .icon-container {
     display: flex;
@@ -284,6 +419,16 @@ export const JoinButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
+
+  ${media.md`
+    padding: 8px 16px;
+  `}
+  ${media.sm`
+    padding: 6px 12px;
+    `}
+    ${media.xs`
+    padding: 4px 8px;
+    `}
 
   &:hover {
     background: #e91e63;
@@ -335,6 +480,25 @@ export const AssignedBatchStudentsListContainer = styled.div`
  justify-content: space-between;
 
 }
+
+${media.md`
+.assigned-students-header-row{
+ display: flex;
+ align-items: center;
+ margin-bottom: 15px;
+ justify-content: space-between;
+
+}
+`}
+${media.sm`
+.assigned-students-header-row
+{
+ display: flex;
+ align-items: center;
+ margin-bottom: 10px;
+ justify-content: space-between;
+}
+`}
 
 `
 

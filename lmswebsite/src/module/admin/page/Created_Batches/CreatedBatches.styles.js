@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { theme,media  } from "../../../../style/theme/theme";
 
 export const Container = styled.div`
+
   padding: 20px;
 
   .header {
