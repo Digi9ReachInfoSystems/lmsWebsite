@@ -101,7 +101,7 @@ import StudentForm from "./pages/SignUpPage/signUpPageStudentForm";
 import ContactUs from "./Main/Pages/ContactUs/ContactUs";
 
 import Blog from "./Main/Pages/Blogs/Blog";
-
+import TeacherAssignmentUpload from "./module/teacher/pages/Quizz/AssignmentUpload/TeacherAssignmentUpload";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -290,6 +290,10 @@ function App() {
             <Route
               path="/teacher/dashboard/quizz/assignedBatch"
               element={<QuizBatches />}
+            />
+            <Route 
+            path="/teacher/dashboard/quizz/assignedBatch/uploadContent"
+            element={<TeacherAssignmentUpload />}
             />
             <Route
               path="/teacher/dashboard/quizz/batches/:batchId"

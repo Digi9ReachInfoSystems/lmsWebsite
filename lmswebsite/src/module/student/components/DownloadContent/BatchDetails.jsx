@@ -64,7 +64,16 @@ const BatchDetailsContent = () => {
   }
 
   return (
-    <div>
+    <div
+   style={{
+     display: "flex",
+     flexWrap: "wrap",
+     flexDirection: "row",
+    //  justifyContent: "center",
+     alignItems: "center",
+    //  margin: "20px",
+   }}
+    >
       {batches.map((batch) => {
         // Determine if the batch is active based on the current date and expiry date
         const currentDate = new Date();
@@ -85,6 +94,7 @@ const BatchDetailsContent = () => {
               boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
               margin: "20px",
               position: "relative", // For absolute positioning of status tab
+           
             }}
           >
             {/* Status Tab */}
@@ -111,7 +121,8 @@ const BatchDetailsContent = () => {
 
             {/* Batch Info */}
             <Row gutter={16} style={{ marginBottom: 20 }}>
-              <Col span={12} style={{ display: "flex", alignItems: "center" }}>
+              <Col span={12} style={{ display: "flex", alignItems: "center"}
+            }>
                 <Text strong>Subject:</Text>
                 <div style={{ marginLeft: 8 }}>{batch.subject_id.subject_name}</div>
               </Col>
