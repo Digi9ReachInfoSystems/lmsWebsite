@@ -13,10 +13,37 @@ export const Header = styled.div`
   gap: 10px;
   margin-bottom: 20px;
 
+  ${media.md `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
+  ${media.sm `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
+  ${media.xs `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
   h2 {
     margin: 0;
     font-size: 24px;
     color: #333;
+
+    ${media.md `
+      font-size: 20px;
+    `}  
+
+    ${media.sm `
+      font-size: 18px;
+    `}
+
+    ${media.xs `
+      font-size: 16px;
+    `}
   }
 
   svg {
@@ -36,6 +63,18 @@ export const title = styled.h2`
   margin: 20px;
   color: ${theme.colors.frenchGray};
   flex: 1;
+
+  ${media.md `
+    font-size: 20px;
+  `}
+
+  ${media.sm `
+    font-size: 18px;
+  `}
+
+  ${media.xs `
+    font-size: 16px;
+  `}
 `;
 
 export const BackIcon = styled.a`
@@ -50,6 +89,18 @@ export const BackIcon = styled.a`
   border-radius: 4px;
   margin-bottom: 20px;
 
+  ${media.md  `
+    font-size: 16px;
+  `}
+
+  ${media.sm  `
+    font-size: 14px;  
+  `}
+
+  ${media.xs  `
+    font-size: 12px;  
+  `}  
+
   &:hover {
     background-color: #f0f0f0;
     text-decoration: none;
@@ -60,6 +111,21 @@ export const BackIcon = styled.a`
 export const TabsContainer = styled.div`
   display: flex;
   margin-bottom: 20px;
+
+  ${media.md `
+    flex-direction: column;
+    gap: 10px;
+  ` }
+
+  ${media.sm `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
+  ${media.xs `
+    flex-direction: column;
+    gap: 10px;
+  `}
 `;
 
 // // Individual tab
@@ -95,12 +161,41 @@ export const ContentSection = styled.div`
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+
+ ${media.md `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
+  ${media.sm `
+    flex-direction: column;
+    gap: 10px;
+  `}
+  ${media.xs `
+    flex-direction: column;
+    gap: 10px;
+  `}
 `;
 
 export const Tab = styled(NavLink)`
   padding: 10px 20px;
   text-decoration: none;
   color: black;
+
+  ${media.md `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
+  ${media.sm `
+    flex-direction: column;
+    gap: 10px;
+  `}
+
+  ${media.xs `
+    flex-direction: column;
+    gap: 10px;
+  `}
 
   &.active {
     font-weight: bold;

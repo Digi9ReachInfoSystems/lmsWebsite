@@ -148,7 +148,7 @@ const [loading, setLoading] = useState(false);
     <CircularWrap>
       <div className="circular-header">
         <h2 className="circular-title">Created Circulars</h2>
-        <div className="circulat-button">
+        <div className="circular-button">
           <Input
             placeholder="Search by Circular Name"
             prefix={<FaSearch />}

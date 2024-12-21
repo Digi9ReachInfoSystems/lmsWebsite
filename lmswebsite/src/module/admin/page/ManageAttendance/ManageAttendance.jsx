@@ -204,7 +204,7 @@ export const ManageAttendance = () => {
     return (
         <div style={{ padding: "20px" }}>
             <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", justifyContent: "space-between" }}>
-                <h2 style={{ margin: 0 }}>Attendance List </h2>
+                <h2 style={{ margin: 0, color:"#bdc9d3"}}>Attendance List </h2>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", justifyContent: "space-between", gap: "10px" }}>
                     <Select
                         defaultValue="teacher"
@@ -236,7 +236,7 @@ export const ManageAttendance = () => {
                     {
                         userList.map((user) => (
                             <Option key={user._id} value={user._id}>
-                                {user.user_id.name}
+                                {user?.user_id?.name}
                             </Option>
                         ))
                     }
