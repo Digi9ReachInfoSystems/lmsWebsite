@@ -32,6 +32,7 @@ import moment from "moment"; // For date handling
 
 // Import React Router's useNavigate
 import { useNavigate } from "react-router-dom";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const { Option } = Select;
 const { Text, Link, Title } = Typography;
@@ -407,6 +408,9 @@ const TeacherAssignmentUpload = () => {
           flexWrap: "wrap",
         }}
       >
+          
+
+        
         <Title level={2} style={{ marginBottom: "10px", color: "#bdc9d3" }}>Assignment Details</Title>
         <div
           className="header-actions"
