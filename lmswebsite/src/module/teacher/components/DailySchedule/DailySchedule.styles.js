@@ -11,6 +11,16 @@ width: 60%;
 border-radius: 10px;
 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
+
+  /* Add horizontal scrolling below 768px */
+  @media (max-width: 768px) {
+    .ant-table-wrapper {
+      overflow-x: scroll; /* Enable horizontal scrolling */
+      width: 600px;
+    }
+  }
+  
+
 .daily-schedule-header{
  font-size: 16px;
  margin-bottom: 10px;

@@ -125,40 +125,42 @@ const TeacherCircular = () => {
     );
   }
   return (
-    <TeacherCircularWrap>
-      {circulars ? (
-        <>
-          <div className="header">
-            <Heading> Circulars</Heading>
-            <Input
-              placeholder="Search by Circular Name"
-              value={searchInput}
-              onChange={handleSearch}
-              allowClear
-              prefix={<SearchOutlined />}
-              style={{ width: 300 }}
+    <PageContainer>
+      <TeacherCircularWrap>
+        {circulars ? (
+          <>
+            <div className="header">
+              <Heading> Circulars</Heading>
+              <Input
+                placeholder="Search by Circular Name"
+                value={searchInput}
+                onChange={handleSearch}
+                allowClear
+                prefix={<SearchOutlined />}
+                style={{ width: 300 }}
+              />
+            </div>
+            <Table
+              dataSource={filteredCirculars}
+              columns={columns}
+              pagination={{ pageSize: 5 }}
+              bordered
             />
-          </div>
-          <Table
-            dataSource={filteredCirculars}
-            columns={columns}
-            pagination={{ pageSize: 5 }}
-            bordered
-          />
-          <Modal
-            // title="View Image"
-            open={isModalVisible}
-            onCancel={closeModal}
-            footer={null}
-            centered
-          >
-            <Image src={selectedImage} alt="Circular" width="100%" />
-          </Modal>
-        </>
-      ) : (
-        <Lottie animationData={Animation} loop={true} />
-      )}
-    </TeacherCircularWrap>
+            <Modal
+              // title="View Image"
+              open={isModalVisible}
+              onCancel={closeModal}
+              footer={null}
+              centered
+            >
+              <Image src={selectedImage} alt="Circular" width="100%" />
+            </Modal>
+          </>
+        ) : (
+          <Lottie animationData={Animation} loop={true} />
+        )}
+      </TeacherCircularWrap>
+    </PageContainer>
   );
 };
 

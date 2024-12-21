@@ -19,7 +19,6 @@ import { getRecentQuizForTeacher } from "../../../../api/teachDashboardApi"; // 
 import TeacherdashBoardQuizCard from "../../components/TeacherDashboardQuizCard/TeacherDashboardQuizCard";
 import DailySchedule from "../../components/DailySchedule/DailySchedule";
 import { Ri24HoursFill } from "react-icons/ri";
-import { PageContainer } from "../../../../style/PrimaryStyles/PrimaryStyles";
 import { Grid } from "@mui/material";
 import welcomeImage from "../../../../assets/image.png";
 import Animation from "../../../teacher/assets/Animation.json";

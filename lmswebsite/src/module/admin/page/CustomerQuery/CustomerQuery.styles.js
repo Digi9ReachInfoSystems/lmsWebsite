@@ -101,7 +101,9 @@ export const CustomerQueryWrap = styled.div`
     display: flex;
     align-items: center;
     margin: 0px;
+    /* border: 1px solid #ccc; */
 
+    border-radius: 10px;
     ${media.md`
       margin-top: 1em;
       justify-content: flex-start;
@@ -117,15 +119,19 @@ export const CustomerQueryWrap = styled.div`
       justify-content: flex-start;
     `}
   }
+  .ant-select-selector {
+    border: none;
+    background-color: none;
+  }
 
   .CustomerQueries-filter-dropdown {
-  width: 100%;
+    width: 100%;
     display: flex;
     align-items: center;
-    border-radius: 4px;
-    padding: 6px;
-    background-color: ${theme.colors.white};
-    margin-top: 10px;
+    border-radius: 10px;
+    /* padding: 6px; */
+    /* background-color: ${theme.colors.white}; */
+    /* margin-top: 10px; */
     margin-bottom: 0px;
     ${media.md`
       font-size: 14px;
@@ -138,21 +144,18 @@ export const CustomerQueryWrap = styled.div`
     ${media.xs`
       font-size: 14px;
     `}
+  }
 
-    .ant-option{
+  .ant-option {
     width: 100%;
 
     ${media.md`
       width: 100%;
-      `
-    }
+      `}
 
     ${media.sm`
       width: 100%;
-      `
-
-      
-    }
+      `}
 
     .ant-select {
       width: 100%;
@@ -192,14 +195,13 @@ export const CustomerQueryWrap = styled.div`
       font-size: 16px;
     `}
   }
-    .CustomerQueries-dropdown
-    {
+  .CustomerQueries-dropdown {
     width: 100%;
     // padding: 5px;
     // display: flex;
     // align-items: center;
     // // border-radius: 4px;
-    // background-color: ${theme.colors.white};
+     /* background-color: ${theme.colors.white}; */
 
     ${media.md`
       font-size: 14px;
@@ -215,7 +217,7 @@ export const CustomerQueryWrap = styled.div`
       font-size: 14px;
       width: 100%;
     `}
-    }
+  }
 
   .area-row {
     display: flex;

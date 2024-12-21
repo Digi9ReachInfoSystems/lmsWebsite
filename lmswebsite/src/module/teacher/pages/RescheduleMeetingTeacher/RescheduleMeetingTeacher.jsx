@@ -12,7 +12,7 @@ import { getTeacherByAuthId } from '../../../../api/teacherApi';
 import { studentClockIn } from '../../../../api/studentApi';
 import { set } from 'lodash';
 import { createMeeting } from '../../../../api/batchApi';
-import { BodyText, Heading, PageContainer, PrimaryButton } from '../../../../style/PrimaryStyles/PrimaryStyles';
+import { BodyText, Heading,  PrimaryButton } from '../../../../style/PrimaryStyles/PrimaryStyles';
 import { RescheduleMeetingTeacherWrap } from './RescheduleMeetingTeacher.styles';
 import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
@@ -237,7 +237,6 @@ function RescheduleMeetingTeacher() {
     }
 
     return (
-        <PageContainer>
             <RescheduleMeetingTeacherWrap>
                 <div className='rescheduleMeetingTeacher-heading-row'>
                     <Heading>Reschedule Meeting List </Heading>
@@ -262,7 +261,7 @@ function RescheduleMeetingTeacher() {
                 )}
             </RescheduleMeetingTeacherWrap>
 
-        </PageContainer>
+    
     )
 }
 
