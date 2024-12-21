@@ -7,7 +7,7 @@ import {
   QuizzesContainer,
   QuizListWrap,
 } from "./QuizList.Styles";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams,useNavigate} from "react-router-dom";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -53,6 +53,7 @@ export default function QuizList() {
   const [teacherId, setTeacherId] = useState("");
   const [filterData, setFilterData] = useState([]);
   const [originalData, setOriginalData] = useState([]);
+  const navigate = useNavigate();
 
   const [selectedQuiz, setSelectedQuiz] = useState(null); // Store selected quiz for modal
   const [quizResponse, setQuizResponse] = useState(null); // Store quiz responses
@@ -91,6 +92,11 @@ export default function QuizList() {
   // Handle closing the dialog
   const handleCloseDialog = () => {
     setShowDialog(false); // Hide dialog when close is clicked
+  };
+
+
+  const handleUploadAssessment = () => {
+    navigate('/teacher/dashboard/quizz/assignedBatch/uploadContent');
   };
 
   // Handle form submission (onSubmit function)
@@ -241,12 +247,23 @@ export default function QuizList() {
               prefix={<SearchOutlined />}
               style={{ width: 300 }}
             />
+
+
             <PrimaryButton
               onClick={handleAddQuiz} // Open modal on click
             >
               <AiOutlineFileAdd size={24} />
               Create Assessment
             </PrimaryButton>
+
+            <PrimaryButton
+            onClick={handleUploadAssessment}
+            >
+              <AiOutlineFileAdd size={24} />
+              Upload Assessment
+            </PrimaryButton>
+
+
           </div>
         </div>
         <div className="area-row ar-two"></div>
