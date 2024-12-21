@@ -2,19 +2,23 @@
 
 import React from 'react';
 import axiosInstance from '../../../../config/axiosConfig'; // Adjust the path as needed
-import { EnrollButton  }from "./PaymentComponet.style";
+import { EnrollButton  }from "./RenewButton.styles.js";
 import { getStudentById } from '../../../../api/studentApi';
 import { useNavigate } from 'react-router-dom';
 import { razorPayKeys } from '../../../../config/razorpayConfig';
-const PaymentComponent = ({ studentId, amount }) => {
+const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
+    console.log("prpos", studentId, amount,batchId,subjectId,duration)
   const navigate = useNavigate();
   const handlePayment = async () => {
     try {
       // Step 1: Create Order on Backend
-      const orderResponse = await axiosInstance.post('/api/payments/create-order', {
+      const orderResponse = await axiosInstance.post('/api/payments/create-order-renewal', {
         studentId,
         amount,
         description: 'Purchase of Premium Package', // Optional
+        batchId,
+        subjectId,
+        duration
       });
       const studentData= await getStudentById(studentId);
       const order = orderResponse.data;
@@ -55,9 +59,12 @@ const PaymentComponent = ({ studentId, amount }) => {
           email: studentData.user_id.email, // Replace with actual student email
           contact: studentData.phone_number, // Replace with actual contact number
         },
-        // notes: {
-        //   address: 'Student Address', // Optional
-        // },
+        notes: {
+          address: 'Student Address', // Optional
+          batchId: batchId, // Replace with actual batch ID
+          subjectId: subjectId, // Replace with actual subject ID
+          duration: duration, // Replace with actual duration
+        },
         theme: {
           color: '#3399cc', // Customize the color as needed
         },
@@ -80,4 +87,4 @@ const PaymentComponent = ({ studentId, amount }) => {
  )
 };
 
-export default PaymentComponent;
+export default RenewButton;

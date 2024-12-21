@@ -6,6 +6,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css"; // Default styles fo
 import "./manageMeeting.css"; // Optional custom styles
 import {
   getStudentAttendance,
+  getStudentBatchStatus,
   getStudentByAuthId,
   getStudentscheduleById,
   studentClockIn,
@@ -53,17 +54,24 @@ function ManageMeetingStudent() {
         console.log("schedule", schedule);
 
         // Map the schedule into events for react-big-calendar
-        let formattedEvents = schedule.map((item, index) => ({
-          id: index,
-          title: item.meeting_title || "No Title", // Use the meeting title from the API response
-          start: new Date(item.date),
-          end: new Date(new Date(item.date).getTime() + 60 * 60 * 1000), // Assume 1-hour meetings
-          meetingId: item.meeting_id, // Use meeting_id to track clocking
-          meeting_url: item.meeting_url || null, // Include meeting URL
-          meeting_reschedule: item.meeting_reschedule,
-          clockIn: false,
-          clockOut: false,
+        let formattedEvents = await Promise.all( schedule.map(async (item, index) => {
+          // console.log("item", item);
+          const status =await  getStudentBatchStatus(studentData.student._id, item.batch_id);
+
+          return ({
+            id: index,
+            title: item.meeting_title || "No Title", // Use the meeting title from the API response
+            start: new Date(item.date),
+            end: new Date(new Date(item.date).getTime() + 60 * 60 * 1000), // Assume 1-hour meetings
+            meetingId: item.meeting_id, // Use meeting_id to track clocking
+            meeting_url: item.meeting_url || null, // Include meeting URL
+            meeting_reschedule: item.meeting_reschedule,
+            status: status.status || false,
+            clockIn: false,
+            clockOut: false,
+          })
         }));
+        console.log("formattedEvents", formattedEvents);
         studentAttendanceData.attendance.map((item) => {
           formattedEvents = formattedEvents.map((event) => {
             if (item.meeting_id === event.meetingId) {
@@ -77,6 +85,7 @@ function ManageMeetingStudent() {
             }
           });
         });
+       
 
         setEvents(formattedEvents);
         setLoading(false);
@@ -146,68 +155,91 @@ function ManageMeetingStudent() {
   const renderEvent = ({ event }) => {
     return (
       <ManageMeetingWrap>
-      <div>
-        <strong>{event.title}</strong>
-        <br />
-        <span style={{ fontSize: "12px", color: "#ffffff" }}>
-          {moment(event.start).format("hh:mm A")} -{" "}
-          {moment(event.end).format("hh:mm A")}
-        </span>
-        <br />
-        {!event.meeting_reschedule ? (
-          <>
-            {" "}
-            {event.meeting_url ? (
-              !event.clockIn ? (
-                <>
+        <div>
+          <strong>{event.title}</strong>
+          <br />
+          <span style={{ fontSize: "12px", color: "#ffffff" }}>
+            {moment(event.start).format("hh:mm A")} -{" "}
+            {moment(event.end).format("hh:mm A")}
+          </span>
+          <br />
+          {!event.meeting_reschedule ? (
+            <>
+              {" "}
+              {event.meeting_url ? (
+                !event.status?(
                   <button
-                    onClick={() => handleSelectEvent(event)}
-                    style={{
-                      backgroundColor: "#4CAF50",
-                      color: "white",
-                      padding: "5px 10px",
-                      marginTop: "5px",
-                    }}
-                  >
-                    Join Meeting
-                  </button>
-                  <Link
-                    state={{ meetingId: event.meetingId }}
-                    to={`/student/dashboard/meetings/reschedule`}
-                  >
-                    {studentMode === "personal" && (
-                      <button
-                        onClick={() => {
-                          naviagte("/student/dashboard/meetings/reschedule");
-                        }}
-                        style={{
-                          backgroundColor: "#ff6347",
-                          color: "white",
-                          padding: "5px 10px",
-                          marginTop: "5px",
-                        }}
-                      >
-                        Reschedule
-                      </button>
-                    )}
-                  </Link>
-                </>
-              ) : null
-            ) : null}
-            <br />
-            {!event.clockIn && !event.clockOut ? (
-              <button
-                onClick={() => handleClockIn(event.meetingId)}
-                style={{
-                  backgroundColor: "#4CAF50",
-                  color: "white",
-                  padding: "5px 10px",
-                  marginTop: "5px",
-                }}
-              >
-                Clock In
-              </button>
-            ) : event.clockIn && !event.clockOut ? (
+                  onClick={() => {
+                    naviagte("/student/dashboard/");
+                  }}
+                  style={{
+                    backgroundColor: "#ff6347",
+                    color: "white",
+                    padding: "5px 10px",
+                    marginTop: "5px",
+                  }}
+                >
+                  Subscribe to Join the Meeting !..
+                </button>
+
+                // <span>Subscribe to Join the Meeting !..</span>   
+                ):(
+
+                !event.clockIn ? (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleSelectEvent(event);
+                        handleClockIn(event.meetingId)
+                      }}
+                      style={{
+                        backgroundColor: "#4CAF50",
+                        color: "white",
+                        padding: "5px 10px",
+                        marginTop: "5px",
+                      }}
+                    >
+                      Join Meeting
+                    </button>
+                    <Link
+                      state={{ meetingId: event.meetingId }}
+                      to={`/student/dashboard/meetings/reschedule`}
+                    >
+                      {studentMode === "personal" && (
+                        <button
+                          onClick={() => {
+                            naviagte("/student/dashboard/meetings/reschedule");
+                          }}
+                          style={{
+                            backgroundColor: "#ff6347",
+                            color: "white",
+                            padding: "5px 10px",
+                            marginTop: "5px",
+                          }}
+                        >
+                          Reschedule
+                        </button>
+                      )}
+                    </Link>
+                  </>
+                ) : null
+              ) ): null}
+              <br />
+              {/* {!event.clockIn && !event.clockOut ? (
+                <button
+                  onClick={() => handleClockIn(event.meetingId)}
+                  style={{
+                    backgroundColor: "#4CAF50",
+                    color: "white",
+                    padding: "5px 10px",
+                    marginTop: "5px",
+                  }}
+                >
+                  Clock In
+                </button>
+              ) : */}
+              {
+              event.clockIn && !event.clockOut ? (
               <button
                 onClick={() => {
                   handleClockOut(event.meetingId);
@@ -221,14 +253,14 @@ function ManageMeetingStudent() {
               >
                 Clock Out
               </button>
-            ) : (
+              ) : event.clockIn && event.clockOut ?(
               <span>Clocked Out</span>
-            )}
-          </>
-        ) : (
-          <span>Meeting Rescheduled</span>
-        )}
-      </div>
+              ):null}
+            </>
+          ) : (
+            <span>Meeting Rescheduled</span>
+          )}
+        </div>
       </ManageMeetingWrap>
     );
   };
