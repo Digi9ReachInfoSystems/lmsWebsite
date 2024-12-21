@@ -5,12 +5,11 @@ import {
   Form,
   Input,
   Select,
-  Upload,
   Button,
   message,
+  Typography,
   Row,
   Col,
-  Typography,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { getClassesByBoardId } from "../../api/classApi";
@@ -26,10 +25,10 @@ import { use } from "react";
 import { getBoards } from "../../api/boardApi";
 import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
-import SignUpImage from "../../assets/SignUpImage.png";
+import SignUpImage from "../../assets/logo1.svg";
 
 const { Option } = Select;
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const StudentForm = () => {
   const [classes, setClasses] = useState([]);
@@ -44,7 +43,7 @@ const StudentForm = () => {
       console.log(response);
 
       setBoards(response);
-    }
+    };
     apiCaller();
   }, []);
 
@@ -135,193 +134,182 @@ const StudentForm = () => {
   };
 
   return (
-    <div className="signup-container">
-      {/* Left Section - Image */}
-      <div className="image-section">
-        <img src={SignUpImage} alt="Registration" />
-        <h2>Register To The Platform</h2>
-        <p>Your Journey Begins Here</p>
+    <div style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
+      {/* Left Section for Logo */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#f9f9f9",
+        }}
+      >
+        <img src={SignUpImage} alt="Logo" style={{ maxWidth: "60%" }} />
       </div>
-      {/* Right Section - Form */}
-      <div className="form-section">
-        {/* <h2 className="form-heading">Registration</h2> */}
-        <h2 className="form-heading">Create Your Acount First !</h2>
-        <p className="form-subheading">Enter Your Details</p>
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-          initialValues={{ student_email: "" }}
-          onValuesChange={(changedValues, allValues) => {
-            if (changedValues.email) {
-              form.setFieldsValue({ student_email: changedValues.email });
-            }
-          }}
-        >
-          {/* Common Fields */}
-          <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="email"
-                label="Email Address"
-                rules={[
-                  { required: true, message: "Please enter your email address" },
-                  { type: "email", message: "Please enter a valid email address" },
-                ]}
-              >
-                <Input placeholder="Email Address" />
-              </Form.Item>
-            </Col>
+
+      {/* Right Section for Form */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "40px",
+          backgroundColor: "#ffffff",
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: "400px" }}>
+          <Title
+            level={3}
+            style={{ textAlign: "center", marginBottom: "10px" }}
+          >
+            Sign up
+          </Title>
+          <Text
+            style={{
+              display: "block",
+              textAlign: "center",
+              marginBottom: "20px",
+              color: "#888",
+            }}
+          >
+            Sign up to continue
+          </Text>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleSubmit}
+            initialValues={{ student_email: "" }}
+          >
             <Form.Item
               name="student_name"
-              label="Student Name"
+              label="Name"
+              rules={[{ required: true, message: "Please enter your name" }]}
+            >
+              <Input placeholder="Name" />
+            </Form.Item>
+
+            <Form.Item
+              name="email"
+              label="Email"
               rules={[
-                { required: true, message: "Please enter your name" },
-                { max: 50, message: "Name cannot exceed 50 characters" },
+                {
+                  required: true,
+                  message: "Please enter your email",
+                },
+                {
+                  type: "email",
+                  message: "Please enter a valid email",
+                },
               ]}
             >
-              <Input placeholder="Student Name" />
+              <Input placeholder="Email" />
             </Form.Item>
-          </Row>
-          <Row guttter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="phone_number"
-                label="Phone Number"
-                rules={[
-                  { required: true, message: "Please enter your phone number" },
-                  {
-                    pattern: /^\d{10}$/,
-                    message: "Phone number must be 10 digits",
-                  },
-                ]}
-              >
-                <Input placeholder="Phone Number" maxLength={10} />
-              </Form.Item>
-            </Col>
-            {/* <Col span={12}>
-              <Form.Item
-                name="studentDOB"
-                label="Date of Birth"
-                rules={[
-                  { required: true, message: "Please enter your date of birth" },
-                ]}
-              >
-                <Input type="date" placeholder="Date of Birth" />
-              </Form.Item>
-            </Col> */}
-          </Row>
 
-          <Form.Item
-            name="password"
-            label="Password"
-            rules={[
-              { required: true, message: "Please enter your password" },
-              { min: 6, message: "Password must be at least 6 characters" },
-            ]}
-            hasFeedback
-          >
-            <Input.Password placeholder="Password" />
-          </Form.Item>
-
-          {/* Student Specific Fields */}
-          {/* <Form.Item
-            name="profile_image"
-            label="Upload Profile Image"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => {
-              if (Array.isArray(e)) {
-                return e;
-              }
-              return e && e.fileList;
-            }}
-            rules={[
-              { required: true, message: "Please upload your profile image" },
-            ]}
-          >
-            <Upload
-              name="profileImage"
-              listType="picture"
-              beforeUpload={() => false} // Prevent automatic upload
-              accept=".jpg,.jpeg,.png"
-              maxCount={1}
+            <Form.Item
+              name="password"
+              label="Password"
+              rules={[
+                { required: true, message: "Please enter your password" },
+                { min: 6, message: "Password must be at least 6 characters" },
+              ]}
             >
-              <Button icon={<UploadOutlined />}>
-                Click to Upload Profile Image
-              </Button>
-            </Upload>
-          </Form.Item> */}
+              <Input.Password placeholder="Password" />
+            </Form.Item>
 
-          {/* Student Email (Read-Only and Same as Main Email) */}
-
-          <Form.Item
-            name="board_id"
-            label="Select Board"
-            rules={[{ required: true, message: "Please select a board" }]}
-          >
-            <Select
-              placeholder="Select Board"
-              onChange={handleBoardChange}
-              allowClear
+            <Form.Item
+              name="phone_number"
+              label="Phone Number"
+              rules={[
+                { required: true, message: "Please enter your phone number" },
+                {
+                  pattern: /^\d{10}$/,
+                  message: "Phone number must be 10 digits",
+                },
+              ]}
             >
-              {boards.map((b) => (
-                <Option key={b._id} value={b._id}>
-                  {b.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+              <Input placeholder="Phone Number" maxLength={10} />
+            </Form.Item>
 
-          <Form.Item
-            name="studentGender"
-            label="Select Gender"
-            rules={[{ required: true, message: "Please select your gender" }]}
-          >
-            <Select placeholder="Select Gender" allowClear>
-              <Option value="male">Male</Option>
-              <Option value="female">Female</Option>
-              <Option value="other">Other</Option>
-            </Select>
-          </Form.Item>
+            <Form.Item
+              name="board_id"
+              label="Select Board"
+              rules={[{ required: true, message: "Please select a board" }]}
+            >
+              <Select
+                placeholder="Select Board"
+                onChange={handleBoardChange}
+                allowClear
+              >
+                {boards.map((b) => (
+                  <Option key={b._id} value={b._id}>
+                    {b.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-          <Form.Item
-            name="class_id"
-            label="Select Class"
-            rules={[
-              { required: true, message: "Please select at least one class" },
-            ]}
-          >
-            <Select placeholder="Select Class" allowClear>
-              {classes.map((cls) => (
-                <Option key={cls._id} value={cls._id}>
-                  {cls.classLevel} - {cls.className}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
+            <Form.Item
+              name="class_id"
+              label="Select Class"
+              rules={[
+                { required: true, message: "Please select at least one class" },
+              ]}
+            >
+              <Select placeholder="Select Class" allowClear>
+                {classes.map((cls) => (
+                  <Option key={cls._id} value={cls._id}>
+                    {cls.classLevel} - {cls.className}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
 
-          <ButtonContainer>
+            <Form.Item
+              name="studentGender"
+              label="Select Gender"
+              rules={[{ required: true, message: "Please select your gender" }]}
+            >
+              <Select placeholder="Select Gender" allowClear>
+                <Option value="male">Male</Option>
+                <Option value="female">Female</Option>
+                <Option value="other">Other</Option>
+              </Select>
+            </Form.Item>
+
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
                 loading={isSubmitting}
                 style={{
-                  backgroundColor: "#00c897", // Pink color for button
-                  borderColor: "#00c897",
-                  color: "white",
-                  width: "27vw",
+                  width: "100%",
+                  backgroundColor: "#007BFF",
+                  borderColor: "#007BFF",
+                  color: "#fff",
+                  height: "40px",
                 }}
               >
-                {isSubmitting ? "Submitting..." : "Create Account"}
+                Sign up
               </Button>
             </Form.Item>
-          </ButtonContainer>
+          </Form>
 
-          <p>
-            Already have an Account? <LinkText href="/login">Log in</LinkText>
-          </p>
-        </Form>
+          <Text
+            style={{
+              display: "block",
+              textAlign: "center",
+              marginTop: "10px",
+              color: "#888",
+            }}
+          >
+            Already have an account?{" "}
+            <a href="/login" style={{ color: "#007BFF" }}>
+              Sign in
+            </a>
+          </Text>
+        </div>
       </div>
     </div>
   );

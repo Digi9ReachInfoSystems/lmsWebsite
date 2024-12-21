@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Typography, Button, keyframes } from "@mui/material";
 import GroupIcon from "@mui/icons-material/Groups";
 import { useNavigate } from "react-router-dom";
+import Typewriter from "react-typewriter-effect";
 
 // Keyframes for animations
 const floatAnimation = keyframes`
@@ -22,7 +23,7 @@ function StatsCard({ title, value, icon, bgColor, position }) {
         position: "absolute",
         backgroundColor: "#fff",
         borderRadius: "12px",
-        boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
+        // boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)",
         padding: "1rem 1.5rem",
         width: "180px",
         height: "100px",
@@ -56,7 +57,7 @@ function StatsCard({ title, value, icon, bgColor, position }) {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
+          // boxShadow: "0 5px 15px rgba(0, 0, 0, 0.2)",
 
           "@media (max-width: 768px)": {
             width: "30px",
@@ -74,6 +75,7 @@ function StatsCard({ title, value, icon, bgColor, position }) {
       >
         {icon}
       </Box>
+
       <Box>
         <Typography
           variant="body2"
@@ -97,7 +99,6 @@ function StatsCard({ title, value, icon, bgColor, position }) {
             "@media (max-width: 320px)": {
               fontSize: "0.7rem",
             },
-
           }}
         >
           {value}
@@ -110,7 +111,7 @@ function StatsCard({ title, value, icon, bgColor, position }) {
 function HeroContent() {
   const navigate = useNavigate();
   return (
-    <Box sx={{ position: "relative", overflow: "hidden" }}>
+    <Box sx={{ position: "relative" }}>
       {/* Background Section */}
       <Box
         sx={{
@@ -119,7 +120,7 @@ function HeroContent() {
           textAlign: "center",
           padding: "6rem 2rem 4rem",
           position: "relative",
-          boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
+          // boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.3)",
 
           "@media (max-width: 768px)": {
             padding: "4rem 1rem 2rem",
@@ -169,13 +170,14 @@ function HeroContent() {
         {/* Hero Title */}
         <Typography
           variant="h3"
+          // Use textAlign to center the entire line of text
+          align="center"
           sx={{
             fontWeight: "bold",
             marginBottom: "1rem",
-            fontSize: { xs: "2.5rem", md: "3rem" },
+            fontSize: { xs: "2.7rem", md: "3.4rem" },
             animation: `${textFadeUp} 1.5s ease-in-out`,
-            fontFamily: "Nunito, sans-serif",
-
+            fontFamily: "Nunito, serif",
             "@media (max-width: 768px)": {
               fontSize: "2rem",
             },
@@ -185,24 +187,44 @@ function HeroContent() {
             "@media (max-width: 320px)": {
               fontSize: "1.2rem",
             },
-          
-            
           }}
         >
-          Your Personalized Learning Journey
+          {/* Wrap Typewriter in a Box or pass textStyle directly */}
+          <Box sx={{ display: "inline-block", textAlign: "center" }}>
+            <Typewriter
+              textStyle={{
+                fontFamily: "Nunito, serif",
+                color: "#fff",
+                fontWeight: "bold",
+                fontSize: "inherit",
+                textAlign: "center", // Ensure typed text is centered
+              }}
+              startDelay={100}
+              cursorColor="#FF4081"
+              multiText={[
+                "Your Personalized Learning",
+                "Your Personalized Learning Journey",
+              ]}
+              multiTextDelay={2000}
+              typeSpeed={50}
+              deleteSpeed={30}
+              loop
+            />
+          </Box>
         </Typography>
 
         <Typography
           variant="body1"
+          align="center" // Another option to center text
           sx={{
             marginBottom: "2rem",
             fontSize: { xs: "1.1rem", md: "1.3rem" },
             maxWidth: "600px",
             margin: "0 auto",
             animation: `${textFadeUp} 1.8s ease-in-out`,
-            fontFamily: "Nunito, sans-serif",
+            fontFamily: "Nunito, serif",
 
-            "media (max-width: 768px)": {
+            "@media (max-width: 768px)": {
               fontSize: "1rem",
             },
             "@media (max-width: 480px)": {
@@ -210,9 +232,7 @@ function HeroContent() {
             },
             "@media (max-width: 320px)": {
               fontSize: "0.7rem",
-            
-      
-            }
+            },
           }}
         >
           Choose your subjects and preferred class sizes – from 1:1 mentorship
@@ -226,16 +246,7 @@ function HeroContent() {
             justifyContent: "center",
             gap: "1rem",
             marginTop: "2rem",
-
             "@media (max-width: 768px)": {
-              flexDirection: "column",
-              alignItems: "center",
-            },
-            "@media (max-width: 480px)": {
-              flexDirection: "column",
-              alignItems: "center",
-            },
-            "@media (max-width: 320px)": {
               flexDirection: "column",
               alignItems: "center",
             },
@@ -247,14 +258,13 @@ function HeroContent() {
             sx={{
               backgroundColor: "#26D07C",
               fontFamily: "Nunito, sans-serif",
-
               "@media (max-width: 768px)": {
                 fontSize: "0.8rem",
               },
               "@media (max-width: 480px)": {
                 fontSize: "0.7rem",
               },
-              "@media (max-width: 320px)": {              
+              "@media (max-width: 320px)": {
                 fontSize: "0.6rem",
               },
             }}
@@ -268,12 +278,11 @@ function HeroContent() {
               borderColor: "#fff",
               color: "#fff",
               fontFamily: "Nunito, sans-serif",
-
               "@media (max-width: 768px)": {
                 fontSize: "0.8rem",
               },
               "@media (max-width: 480px)": {
-                fontSize: "0.7rem", 
+                fontSize: "0.7rem",
               },
               "@media (max-width: 320px)": {
                 fontSize: "0.6rem",
@@ -330,6 +339,8 @@ function HeroContent() {
           position={{ bottom: "20%", right: "15%" }}
         />
       </Box>
+
+      {/* Bottom SVG Wave */}
       <Box
         component="div"
         sx={{
@@ -338,7 +349,7 @@ function HeroContent() {
           left: 0,
           width: "100%",
           lineHeight: 0,
-          zIndex: -1,
+          zIndex: 1,
         }}
       >
         <svg

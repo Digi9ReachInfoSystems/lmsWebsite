@@ -1,6 +1,6 @@
 .choose-us-section {
   text-align: center;
-  padding: 50px 20px;
+  padding: 60px 20px;
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #fff;
@@ -23,6 +23,9 @@
   text-align: center;
   color: #00c897;
   background-color: #fff;
+  font-family: "Nunito", serif;
+  padding-top: 40px;
+
   /* margin-bottom: 10px; */
   text-transform: uppercase;
 
@@ -39,6 +42,8 @@
 
 .heading p {
   font-size: 1rem;
+  font-family: "Nunito", serif;
+
   /* color: #555; */
   /* margin-bottom: 40px; */
   line-height: 1.5;
@@ -169,6 +174,7 @@
   font-size: 1.2rem;
   color: #333;
   margin-bottom: 10px;
+  font-family: "Nunito", serif;
 
   @media (max-width: 768px) {
     font-size: 1rem;
@@ -185,6 +191,8 @@
   font-size: 0.95rem;
   color: #666;
   line-height: 1.6;
+  font-family: "Nunito", serif;
+
   margin-bottom: 15px;
 
   @media (max-width: 768px) {

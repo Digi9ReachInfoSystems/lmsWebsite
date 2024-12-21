@@ -50,18 +50,18 @@
   }
   @media (max-width: 320px) {
     padding: 5px;
-  } 
+  }
 }
 
 .video-content {
   text-align: center;
-
 }
 
 .video-content h3 {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 20px;
+  font-family: "Nunito", serif;
 
   @media (max-width: 768px) {
     font-size: 1.2rem;
@@ -113,6 +113,7 @@
   font-size: 2rem;
   color: #333;
   margin-bottom: 20px;
+  font-family: "Nunito", serif;
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
@@ -128,6 +129,8 @@
 .about-platform-text p {
   font-size: 1rem;
   color: #555;
+  font-family: "Nunito", serif;
+
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
