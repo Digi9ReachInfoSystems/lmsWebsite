@@ -51,7 +51,7 @@ export const StyledLink = styled.div`
     list-style: none;
 
     .categorylist {
-      padding: 10px;
+      padding: 10px 0;
     }
 
     .category-item {
