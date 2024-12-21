@@ -117,7 +117,7 @@ export default function AssignedTeacherBatch() {
         <div className="area-row ar-one">
           <Heading>Assigned Batches</Heading>
           <Input
-            placeholder="Search by Circular Name"
+            placeholder="Search by Batch Name"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
             allowClear

@@ -125,11 +125,12 @@ const TeacherCircular = () => {
     );
   }
   return (
+    <PageContainer>
       <TeacherCircularWrap>
         {circulars ? (
           <>
             <div className="header">
-              <Heading>Created Circulars</Heading>
+              <Heading> Circulars</Heading>
               <Input
                 placeholder="Search by Circular Name"
                 value={searchInput}
@@ -159,6 +160,7 @@ const TeacherCircular = () => {
           <Lottie animationData={Animation} loop={true} />
         )}
       </TeacherCircularWrap>
+    </PageContainer>
   );
 };
 
