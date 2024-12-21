@@ -9,8 +9,8 @@ import {
 } from "@ant-design/icons";
 import GeneralSettings from "../GeneralSettings/GeneralSettings";
 import AccountSettings from "../AccountSettings/AccountSettings";
-// import PaymentSettings from "../PaymentSettings/PaymentSettings";
-// import TermsConditionSettings from "../TermsConditionSettings/TermsConditionSettings";
+import PaymentSettings from "../PaymentSettings/PaymentSettings";
+import TermsConditionSettings from "../TermsConditionSettings/TermsConditionSettings";
 import PushNotificationSettings from "../PushNotificationSettings/PushNotificationSettings";
 import { StyledMenuItem } from "../SettingTapPage/SettingTabs.style";
 
@@ -26,10 +26,10 @@ const SettingsTabs = () => {
         return <GeneralSettings />;
       case "account":
         return <AccountSettings />;
-      // case "billing":
-      //   return <PaymentSettings />;
-      // case "terms":
-      //   return <TermsConditionSettings />;
+      case "billing":
+        return <PaymentSettings />;
+      case "terms":
+        return <TermsConditionSettings />;
       case "notifications":
         return <PushNotificationSettings />;
       default:
@@ -71,12 +71,12 @@ const SettingsTabs = () => {
           <StyledMenuItem key="account" icon={<UserOutlined />}>
             Account
           </StyledMenuItem>
-          {/* <StyledMenuItem key="billing" icon={<CreditCardOutlined />}>
+          <StyledMenuItem key="billing" icon={<CreditCardOutlined />}>
             Payment & Billing
           </StyledMenuItem>
           <StyledMenuItem key="notifications" icon={<BellOutlined />}>
             Push Notification
-          </StyledMenuItem> */}
+          </StyledMenuItem>
           <StyledMenuItem key="terms" icon={<FileTextOutlined />}>
             Terms & Condition
           </StyledMenuItem>

@@ -4,16 +4,6 @@
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #fff;
-
-  @media (max-width: 768px) {
-    padding: 30px 10px;
-  }
-  @media (max-width: 480px) {
-    padding: 20px 5px;
-  }
-  @media (max-width: 320px) {
-    padding: 20px 5px;
-  }
 }
 
 .heading h2 {
@@ -25,16 +15,6 @@
   background-color: #fff;
   /* margin-bottom: 10px; */
   text-transform: uppercase;
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 1.5rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 1.2rem;
-  }
 }
 
 .heading p {
@@ -49,16 +29,6 @@
   margin-left: auto;
   margin-right: auto;
   text-align: center;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.7rem;
-  }
 }
 
 .choose-us-section h2 {
@@ -66,16 +36,6 @@
   color: #00c897;
   margin-bottom: 10px;
   text-transform: uppercase;
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 1.5rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 1.2rem;
-  }
 }
 
 .choose-us-section p {
@@ -86,16 +46,6 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.7rem;
-  }
 }
 
 .features-container {
@@ -110,16 +60,6 @@
   width: 100%;
   max-width: 1200px; /* Prevent it from spanning too wide */
   box-sizing: border-box;
-
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  }
-  @media (max-width: 480px) {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  }
-  @media (max-width: 320px) {
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  }
 }
 
 .feature-card {
@@ -130,16 +70,6 @@
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-
-  @media (max-width: 768px) {
-    padding: 15px;
-  }
-  @media (max-width: 480px) {
-    padding: 10px;
-  }
-  @media (max-width: 320px) {
-    padding: 10px;
-  }
 }
 
 .feature-card:hover {
@@ -150,35 +80,13 @@
 .feature-icon {
   width: 80px;
   height: 80px;
-  margin-bottom: 15px;
-  @media (max-width: 768px) {
-    width: 60px;
-    height: 60px;
-  }
-  @media (max-width: 480px) {
-    width: 50px;
-    height: 50px;
-  }
-  @media (max-width: 320px) {
-    width: 40px;
-    height: 40px;
-  }
+  margin: 15px auto;
 }
 
 .feature-card h3 {
   font-size: 1.2rem;
   color: #333;
   margin-bottom: 10px;
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.8rem;
-  }
 }
 
 .feature-card p {
@@ -186,16 +94,6 @@
   color: #666;
   line-height: 1.6;
   margin-bottom: 15px;
-
-  @media (max-width: 768px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.7rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.6rem;
-  }
 }
 
 .read-more {
@@ -203,16 +101,6 @@
   font-size: 0.9rem;
   text-decoration: none;
   font-weight: bold;
-
-  @media (max-width: 768px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.7rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.6rem;
-  }
 }
 
 .read-more:hover {

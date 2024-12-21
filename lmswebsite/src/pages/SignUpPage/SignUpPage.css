@@ -1,7 +1,11 @@
 .signup-container {
   display: flex;
-  height: 100vh;
-  font-family: "Poppins", sans-serif;
+  /* height: 100vh; */
+  font-family: "Arial", sans-serif;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 }
 
 .image-section {
@@ -14,11 +18,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-.image-section img {
-  width: 80%;
-  /* max-width: 400px; */
+  background: #f0f4ff;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
 }
 
 .image-section h2 {
@@ -33,21 +36,12 @@
 
 .form-section {
   flex: 1;
-  /* height: 100%; */
-  padding-top: 1rem;
-  height: 100%;
-  padding-left: 10vw;
-  padding-right: 10vw;
-  background-color: #fff;
-  padding-top: 8vh;
-
-  width: 400px; /* Set width of the form */
-  /* max-height: 800px; */
-  /* border: 1px solid #ccc; */
-  border-radius: 10px;
-  /* background-color: white; */
-  overflow-y: auto;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  padding: 2rem;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-heading {

@@ -3,16 +3,6 @@
   justify-content: center;
   padding: 50px 20px;
   background-color: #fff;
-
-  @media (max-width: 768px) {
-    padding: 30px 10px;
-  }
-  @media (max-width: 480px) {
-    padding: 20px 5px;
-  }
-  @media (max-width: 320px) {
-    padding: 20px 5px;
-  }
 }
 
 .about-platform-container {
@@ -22,12 +12,6 @@
   gap: 40px;
 
   @media (max-width: 768px) {
-    flex-direction: column;
-  }
-  @media (max-width: 480px) {
-    flex-direction: column;
-  }
-  @media (max-width: 320px) {
     flex-direction: column;
   }
 }
@@ -41,37 +25,16 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-
-  @media (max-width: 768px) {
-    padding: 10px;
-  }
-  @media (max-width: 480px) {
-    padding: 5px;
-  }
-  @media (max-width: 320px) {
-    padding: 5px;
-  } 
 }
 
 .video-content {
   text-align: center;
-
 }
 
 .video-content h3 {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    font-size: 1.2rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 1rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.8rem;
-  }
 }
 
 .video-play-icon button {
@@ -83,22 +46,9 @@
   width: 60px;
   height: 60px;
   cursor: pointer;
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
-
-  @media (max-width: 768px) {
-    width: 50px;
-    height: 50px;
-  }
-  @media (max-width: 480px) {
-    width: 40px;
-    height: 40px;
-  }
-  @media (max-width: 320px) {
-    width: 30px;
-    height: 30px;
-  }
+  align-items: center; */
 }
 
 .video-play-icon button:hover {
@@ -113,47 +63,21 @@
   font-size: 2rem;
   color: #333;
   margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 1.2rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 1rem;
-  }
+  padding: 0 20px;
 }
 
 .about-platform-text p {
   font-size: 1rem;
   color: #555;
   margin-bottom: 20px;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.7rem;
-  }
+  text-align: justify;
+  padding: 0 20px;
 }
 
 .about-platform-buttons {
   display: flex;
   gap: 10px;
-
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
-  @media (max-width: 480px) {
-    flex-direction: column;
-  }
-  @media (max-width: 320px) {
-    flex-direction: column;
-  }
+  padding: 0 20px;
 }
 
 .demo-button,
@@ -163,47 +87,17 @@
   font-size: 1rem;
   cursor: pointer;
   border: none;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.7rem;
-  }
 }
 
 .demo-button {
   background-color: #00c897;
   color: white;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.7rem;
-  }
 }
 
 .start-button {
   background-color: white;
   border: 2px solid #00c897;
   color: #00c897;
-
-  @media (max-width: 768px) {
-    font-size: 0.9rem;
-  }
-  @media (max-width: 480px) {
-    font-size: 0.8rem;
-  }
-  @media (max-width: 320px) {
-    font-size: 0.7rem;
-  }
 }
 
 .demo-button:hover {
