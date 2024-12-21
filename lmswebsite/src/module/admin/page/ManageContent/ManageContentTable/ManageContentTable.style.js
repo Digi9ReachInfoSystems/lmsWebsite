@@ -7,19 +7,18 @@ export const Container = styled.div`
   background-color: ${theme.colors.bgLight};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
-  margin: 0 auto;
+
+  ${media.md`
+    padding: 16px;
+  `}
 
   ${media.sm`
     padding: 16px;
   `}
 
-  ${media.xs` 
+  ${media.xs`
     padding: 8px;
   `}
-
-  ${media.md`
-    padding: 16px;
-    `}
 `;
 
 // Title for the page
@@ -28,6 +27,10 @@ export const Title = styled.h1`
   color: ${theme.colors.gray800};
   margin-bottom: 16px;
 
+  ${media.md`
+    font-size: 24px;
+  `}
+
   ${media.sm`
     font-size: 24px;
   `}
@@ -35,11 +38,6 @@ export const Title = styled.h1`
   ${media.xs`
     font-size: 20px;
   `}
-
-  ${media.md`
-    font-size: 24px;
-  `}
-
 `;
 
 // Wrapper for the button
@@ -48,18 +46,20 @@ export const ButtonWrapper = styled.div`
   justify-content: flex-start;
   margin-bottom: 24px;
 
+  ${media.md`
+    flex-direction: column;
+    gap: 10px;
+  `}
+
   ${media.sm`
     flex-direction: column;
     gap: 10px;
-    `}
-    ${media.xs`
+  `}
+
+  ${media.xs`
     flex-direction: column;
     gap: 10px;
-    `}
-    ${media.md`
-    flex-direction: column;
-    gap: 10px;
-    ` }
+  `}
 `;
 
 // Styled button for creating a new class
@@ -67,7 +67,6 @@ export const StyledButton = styled.button`
   background-color: ${theme.colors.pink};
   color: ${theme.colors.white};
   border-radius: 4px;
-  float: right;
   border: none;
   padding: 12px 24px;
   font-size: 16px;
@@ -76,17 +75,17 @@ export const StyledButton = styled.button`
   display: flex;
   align-items: center;
 
-  ${media.sm`
-    font-size: 14px;
-  `}
-  ${media.xs`
-    font-size: 12px;
-  `}
   ${media.md`
     font-size: 14px;
   `}
 
-  
+  ${media.sm`
+    font-size: 14px;
+  `}
+
+  ${media.xs`
+    font-size: 12px;
+  `}
 
   &:focus {
     outline: none;
@@ -100,9 +99,11 @@ export const StyledButton = styled.button`
 
 // Modal styles can be customized as needed
 export const ModalContainer = styled.div`
-  // padding: 24px;
-
   background-color: ${theme.colors.white};
+
+  ${media.md`
+    padding: 16px;
+  `}
 
   ${media.sm`
     padding: 16px;
@@ -111,12 +112,9 @@ export const ModalContainer = styled.div`
   ${media.xs`
     padding: 8px;
   `}
-
-  ${media.md`
-    padding: 16px;
-  `}
 `;
 
+// Table styles
 export const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -125,47 +123,40 @@ export const Table = styled.table`
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: ${theme.colors.white};
-  margin-bottom: 24px;  
+  margin-bottom: 24px;
 
   ${media.md`
     width: 100%;
     padding: 15px;
-    `}
-    ${media.sm`
-      width: 100%;
-      padding: 10px;
-      `}
-    ${media.xs`
-      width: 100%;
-      padding: 5px;
-      `}
+  `}
 
+  ${media.sm`
+    width: 100%;
+    padding: 10px;
+  `}
 
-  // .antdtable-thead {
-  //   background-color: ${theme.colors.pink};
-  //   color: ${theme.colors.white};
-  // }
-
-  .anttable-thead > tr > th {
-    background-color: ${theme.colors.pink};
-    color: ${theme.colors.pink};
-  }
+  ${media.xs`
+    width: 100%;
+    padding: 5px;
+  `}
 `;
 
+// Styled Table with custom header
 export const StyledTable = styled(Table)`
-  /* Styling the entire table */
   .ant-table-thead > tr > th {
-    background-color: #4CAF50; /* Table header background */
-    color: white; /* Text color in the header */
+    background-color: ${theme.colors.pink}; /* Table header background */
+    color: ${theme.colors.white}; /* Text color in the header */
+
+    ${media.md`
+      font-size: 12px;
+    `}
 
     ${media.sm`
       font-size: 12px;
     `}
+
     ${media.xs`
       font-size: 10px;
     `}
-    ${media.md`
-      font-size: 12px;
-    `}  
-  }
+  }
 `;

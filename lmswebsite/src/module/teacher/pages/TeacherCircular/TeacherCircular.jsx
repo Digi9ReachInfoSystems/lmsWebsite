@@ -125,7 +125,6 @@ const TeacherCircular = () => {
     );
   }
   return (
-    <PageContainer>
       <TeacherCircularWrap>
         {circulars ? (
           <>
@@ -160,7 +159,6 @@ const TeacherCircular = () => {
           <Lottie animationData={Animation} loop={true} />
         )}
       </TeacherCircularWrap>
-    </PageContainer>
   );
 };
 

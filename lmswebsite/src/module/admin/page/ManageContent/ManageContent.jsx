@@ -1,5 +1,4 @@
-// ManageContent.jsx
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, NavLink, Outlet } from "react-router-dom";
 import { IoArrowBackCircleOutline } from "react-icons/io5";
 import {
@@ -7,59 +6,45 @@ import {
   Header,
   TabsContainer,
   Tab,
-  title,
+  Title,
+  HamburgerMenu,
+  // HamburgerIcon,
 } from "./ManageContent.style";
 
 const ManageContent = () => {
   const navigate = useNavigate();
+  const [isMenuOpen, setMenuOpen] = useState(false);
 
   const handleBack = () => {
     navigate(-1);
   };
 
-  // useEffect(() => {
-  //   navigate("class");
-  // }, [useEffect]);
+  const toggleMenu = () => {
+    setMenuOpen(!isMenuOpen);
+  };
 
   return (
     <Container>
       <Header>
         {/* <IoArrowBackCircleOutline size={30} onClick={handleBack} /> */}
-        <title>Manage Content</title>
+        <Title>Manage Content</Title>
+        <HamburgerMenu onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </HamburgerMenu>
       </Header>
-      <TabsContainer>
-        <Tab to="/admin/manageContent/" as={NavLink}>
-          Class
-        </Tab>
-        <Tab to="subject" as={NavLink}>
-          Subject
-        </Tab>
-        <Tab to="board" as={NavLink}>
-          Board
-        </Tab>
-        <Tab to="package" as={NavLink}>
-          Package
-        </Tab>
-        <Tab to="faq" as={NavLink}>
-          FAQ's
-        </Tab>
-        <Tab to="banner" as={NavLink}>
-          Banner
-        </Tab>
-        <Tab to="chooseUs" as={NavLink}>
-          Choose Us
-        </Tab>
-
-        <Tab to="benefits" as={NavLink}>
-          Benefits
-        </Tab>
-        <Tab to="typeOfBatch"  as={NavLink}>
-          Type Of Batch
-        </Tab>
-
-        <Tab to="blog" as={NavLink}>
-          Blog
-        </Tab>
+      <TabsContainer isMenuOpen={isMenuOpen}>
+        <Tab to="/admin/manageContent/">Class</Tab>
+        <Tab to="subject">Subject</Tab>
+        <Tab to="board">Board</Tab>
+        <Tab to="package">Package</Tab>
+        <Tab to="faq">FAQ's</Tab>
+        <Tab to="banner">Banner</Tab>
+        <Tab to="chooseUs">Choose Us</Tab>
+        <Tab to="benefits">Benefits</Tab>
+        <Tab to="typeOfBatch">Type Of Batch</Tab>
+        <Tab to="blog">Blog</Tab>
       </TabsContainer>
       <Outlet />
     </Container>

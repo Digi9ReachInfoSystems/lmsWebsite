@@ -131,8 +131,7 @@ export default function TeacherApplicationFormView() {
             id: teacher._id?.$oid || teacher._id, // Extract $oid or use _id directly if already a string
             name: teacher?.teacher_name || "N/A",
             email: teacher?.email || "N/A",
-            date:
-              new Date(teacher.date_applied).toLocaleDateString() || "N/A",
+            date: new Date(teacher.date_applied).toLocaleDateString() || "N/A",
             status: teacher.approval_status || "N/A",
           }));
           setOriginalData(transformedData);
@@ -284,14 +283,20 @@ export default function TeacherApplicationFormView() {
         refresh_token: userCredential._tokenResponse.refreshToken,
       });
 
-
       // Extract and prepare the data
       const applicationData = {
         auth_id: user.uid,
         user_id: userData.user._id,
-        teacher_id:"",
+        teacher_id: "",
         role: "teacher",
-        bio: values.city + " " + values.state + " " + values.pincode + " " + values.current_position,
+        bio:
+          values.city +
+          " " +
+          values.state +
+          " " +
+          values.pincode +
+          " " +
+          values.current_position,
         phone_number: values.phone_number,
         experience: values.experience,
         class_id: values.class_id, // Array of class IDs
@@ -308,7 +313,8 @@ export default function TeacherApplicationFormView() {
 
       // Handle file uploads
       const resumeFile = values.resume_link?.fileList?.[0]?.originFileObj;
-      const profileImageFile = values.profileImage?.fileList?.[0]?.originFileObj;
+      const profileImageFile =
+        values.profileImage?.fileList?.[0]?.originFileObj;
 
       if (!resumeFile || !profileImageFile) {
         message.error("Please upload both resume and profile image.");
@@ -346,11 +352,8 @@ export default function TeacherApplicationFormView() {
       // Submit the application
       console.log("Submitting application:56dbchdb", applicationData);
       // const response = await submitTeacherApplication(applicationData);
-      localStorage.setItem(
-        "sessionData",
-        JSON.stringify(oldSessionData)
-      );
-       const response = await createTeacher(applicationData);
+      localStorage.setItem("sessionData", JSON.stringify(oldSessionData));
+      const response = await createTeacher(applicationData);
       // console.log("Application submitted successfully:", response);
 
       message.success("Teacher application submitted successfully!");
@@ -358,12 +361,15 @@ export default function TeacherApplicationFormView() {
       // Refresh the table data
       setStatusFilter("pending"); // Assuming new applications are pending
       // Alternatively, you can fetch the data again if needed
-      
+
       // Close the modal and reset the form
       closeCreateModal();
     } catch (error) {
       message.error("Failed to submit the application. Please try again.");
-      console.error("Error submitting application:", error.response?.data || error.message);
+      console.error(
+        "Error submitting application:",
+        error.response?.data || error.message
+      );
     } finally {
       setUploading(false);
     }
@@ -386,7 +392,7 @@ export default function TeacherApplicationFormView() {
         file.type === "application/pdf" ||
         file.type === "application/msword" ||
         file.type ===
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
       if (!isAllowed) {
         message.error("You can only upload PDF or Word files!");
       }
@@ -489,9 +495,15 @@ export default function TeacherApplicationFormView() {
             </div>
             {/* Create Button */}
             <div className="TeachersApplicationFormView-create">
-              <Button type="primary" onClick={handleCreate}
-              style={{ backgroundColor: "#EE1B7A" }}
-              display="flex"
+              <Button
+                type="primary"
+                onClick={handleCreate}
+                style={{
+                  backgroundColor: "#EE1B7A",
+                  padding: "1.4em 4em",
+                  marginTop: "10px",
+                }}
+                display="flex"
               >
                 Create
               </Button>
@@ -577,7 +589,6 @@ export default function TeacherApplicationFormView() {
           >
             <Input placeholder="Enter email" />
           </Form.Item>
-
 
           {/* State */}
           <Form.Item
@@ -665,7 +676,12 @@ export default function TeacherApplicationFormView() {
               },
             ]}
           >
-            <Input type="number" placeholder="Enter Experience" min={0} max={100} />
+            <Input
+              type="number"
+              placeholder="Enter Experience"
+              min={0}
+              max={100}
+            />
           </Form.Item>
 
           {/* Board Selection */}
@@ -782,8 +798,12 @@ export default function TeacherApplicationFormView() {
 
           {/* Submit Button */}
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={uploading}
-            style={{ backgroundColor: "#EE1B7A" }}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              loading={uploading}
+              style={{ backgroundColor: "#EE1B7A" }}
+            >
               Submit
             </Button>
           </Form.Item>
