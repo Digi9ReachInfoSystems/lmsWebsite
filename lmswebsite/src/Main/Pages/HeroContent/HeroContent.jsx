@@ -280,7 +280,7 @@ function HeroContent() {
             borderRadius: "12px",
             boxShadow: "0 10px 30px rgba(0, 0, 0, 0.5)",
             animation: `${textFadeUp} 2.5s ease-in-out`,
-            "@media(max-width:480px)":{margin: "7rem auto 0"}
+            "@media(max-width:480px)": { margin: "7rem auto 0" },
           }}
         />
 
