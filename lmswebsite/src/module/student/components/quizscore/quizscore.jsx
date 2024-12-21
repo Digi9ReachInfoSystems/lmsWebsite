@@ -3,9 +3,7 @@ import { Card, Typography, Spin, Alert, Progress } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { getBatchesByStudentId } from "../../../../api/batchApi";
-import { getQuizByBatchId, getQuizBySubjectId } from "../../../../api/quizApi";
-// import  Animation from "../../../student/assets/Animation.json";
-import Lottie from "lottie-react";
+import { getQuizByBatchId } from "../../../../api/quizApi";
 
 const { Title, Text } = Typography;
 
@@ -15,115 +13,77 @@ const QuizScore = () => {
   const [answeredCount, setAnsweredCount] = useState(0);
   const [totalQuizzes, setTotalQuizzes] = useState(0);
   const [percentage, setPercentage] = useState(0);
-  // const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiCaller = async () => {
+    const fetchQuizData = async () => {
       try {
-        // Fetching student data from localStorage
+        // Fetch student data from localStorage
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
-        if (!sessionData || !sessionData.userId) {
-          console.error("User is not authenticated.");
+        if (!sessionData?.userId) {
           throw new Error("User is not authenticated.");
         }
 
         const authId = sessionData.userId;
         const studentData = await getStudentByAuthId(authId);
+        const currentStudentId = studentData?.student?._id;
 
-        if (!studentData.student || !studentData.student._id) {
-          console.error("Student data is incomplete.");
+        if (!currentStudentId) {
           throw new Error("Student data is incomplete.");
         }
 
-        const currentStudentId = studentData.student._id;
         setStudentId(currentStudentId);
 
-        // Fetch batches based on student ID
+        // Fetch batches associated with the student
         const fetchedBatches = await getBatchesByStudentId(currentStudentId);
-
-        // Extract unique subject IDs from the batches
-        // const subjectIds = fetchedBatches.map((batch) => batch.subject_id._id);
-        // const uniqueSubjectIds = [...new Set(subjectIds)];
-
-        // Fetch unique batch IDs from the batches
         const batchIds = fetchedBatches.map((batch) => batch._id);
-        const uniqueBatchIds = [...new Set(batchIds)];
 
-        // Fetch quizzes for each unique batch ID
+        // Fetch quizzes for each batch
         const quizzesData = await Promise.all(
-          uniqueBatchIds.map((batchId) => getQuizByBatchId(batchId))
+          batchIds.map((batchId) => getQuizByBatchId(batchId))
         );
-        // Fetch quizzes for each unique subject ID
-        // const quizzesData = await Promise.all(
-        //   uniqueSubjectIds.map((subjectId) => getQuizBySubjectId(subjectId))
-        // );
 
-        // For simplicity, this example assumes data from quizzesData[0], 
-        // but ideally you would aggregate all quizzes from all subjects.
-        const allQuizzes = quizzesData[0]?.quizzes || [];
+        // Aggregate quizzes
+        const allQuizzes = quizzesData.flatMap((batch) => batch.quizzes || []);
+        const total = allQuizzes.length;
 
-        let answered = 0;
-        let total = allQuizzes.length;
-
-        // Count how many quizzes have been answered by this student
-        allQuizzes.forEach((quiz) => {
-          const isAnswered = quiz.answered_by?.some(
-            (answer) => answer.student_id === currentStudentId
-          );
-          if (isAnswered) answered++;
-        });
+        // Determine answered and pending quizzes
+        const answered = allQuizzes.filter((quiz) =>
+          quiz.answered_by?.some((answer) => answer.student_id === currentStudentId)
+        ).length;
 
         const pending = total - answered;
-
-        // Calculate percentage of answered quizzes
         const completionPercentage = total > 0 ? (answered / total) * 100 : 0;
 
         setAnsweredCount(answered);
         setTotalQuizzes(total);
         setPendingQuizzes(pending);
         setPercentage(Math.round(completionPercentage));
-        // setLoading(false);
       } catch (err) {
         setError(err.message);
-        // setLoading(false);
+      } finally {
+        setLoading(false);
       }
     };
 
-    apiCaller();
+    fetchQuizData();
   }, []);
 
-  // if (loading) {
-  //   return (
-  //     <div
-  //       style={{
-  //         display: "flex",
-  //         justifyContent: "center",
-  //         alignItems: "center",
-  //         height: "100vh",
-  //       }}
-  //     >
-  //       <div
-  //         style={{
-  //           width: "300px",
-  //           height: "300px",
-  //           overflow: "hidden",
-  //           display: "flex",
-  //           justifyContent: "center",
-  //           alignItems: "center",
-  //           // Scale down the animation using transform
-  //           transform: "scale(0.5)", 
-  //           transformOrigin: "center center",
-  //         }}
-  //       >
-  //         <Lottie
-  //           animationData={Animation}
-  //           loop={true}
-  //         />
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   if (error) {
     return (
@@ -165,8 +125,9 @@ const QuizScore = () => {
       <Text strong style={{ fontSize: "24px" }}>
         {pendingQuizzes}
       </Text>
-
-      <Text type="secondary" style={{ paddingLeft: "10px" }}>Assessment remaining</Text>
+      <Text type="secondary" style={{ paddingLeft: "10px" }}>
+        Assessment remaining
+      </Text>
 
       <br />
       <Text>

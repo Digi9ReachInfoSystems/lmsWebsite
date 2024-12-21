@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+// src/components/QuizModel/QuizList.jsx
 
+import React, { useEffect, useState } from "react";
 import {
   ViewButton,
   StyledButton,
@@ -7,15 +8,14 @@ import {
   QuizzesContainer,
   QuizListWrap,
 } from "./QuizList.Styles";
-import { Link, useParams,useNavigate} from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { getUserByAuthId } from "../../../../../api/userApi";
 import { getTeacherByAuthId } from "../../../../../api/teacherApi";
-import { getQuizzesByTeacher } from "../../../../../api/quizApi";
+import { getQuizzesByTeacher, createQuiz } from "../../../../../api/quizApi";
 import TeacherCreateQuizForm from "../TeacherCreateQuizForm/TeacherCreateQuizForm";
-import { createQuiz } from "../../../../../api/quizApi";
 import {
   BodyText,
   Heading,
@@ -40,6 +40,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { SubHeading } from "../../../../../components/common/landingPageComponents/SingleCoursePerClass.styles";
 import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
+
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
 
@@ -64,25 +65,50 @@ export default function QuizList() {
 
   const param = useParams();
   const batchId = param.batchId;
+
   useEffect(() => {
     const apicaller = async () => {
-        setLoading(true);
-      const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
-      const teacherData = await getTeacherByAuthId(authId);
-      console.log("Teacher Data:", teacherData);
-      const data = await getQuizzesByTeacher({
-        teacher_id: teacherData.teacher._id,
-        batch_id: batchId,
-      });
-      console.log("Teacher ID:", data);
-      setQuizzes(data.quizzes);
-      setOriginalData(data.quizzes);
-      setFilterData(data.quizzes);
-      setTeacherId(teacherData.teacher._id);
+      setLoading(true);
+      try {
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        if (!sessionData || !sessionData.userId) {
+          message.error("User session not found. Please log in again.");
+          navigate("/login"); // Redirect to login if session data is missing
+          return;
+        }
+
+        const authId = sessionData.userId;
+        const teacherData = await getTeacherByAuthId(authId);
+        console.log("Teacher Data:", teacherData);
+
+        if (!teacherData || !teacherData.teacher || !teacherData.teacher._id) {
+          message.error("Teacher data not found.");
+          return;
+        }
+
+        const data = await getQuizzesByTeacher({
+          teacher_id: teacherData.teacher._id,
+          batch_id: batchId,
+        });
+        console.log("Quizzes Data:", data);
+
+        if (data && data.quizzes) {
+          setQuizzes(data.quizzes);
+          setOriginalData(data.quizzes);
+          setFilterData(data.quizzes);
+          setTeacherId(teacherData.teacher._id);
+        } else {
+          message.warning("No quizzes found for this batch.");
+        }
+      } catch (err) {
+        console.error("Error fetching quizzes:", err);
+        setError("Failed to fetch quizzes. Please try again.");
+      } finally {
+        setLoading(false);
+      }
     };
     apicaller();
-    setLoading(false);
-  }, [batchId]);
+  }, [batchId, navigate]);
 
   // Handle showing the dialog
   const handleAddQuiz = () => {
@@ -94,9 +120,8 @@ export default function QuizList() {
     setShowDialog(false); // Hide dialog when close is clicked
   };
 
-
   const handleUploadAssessment = () => {
-    navigate('/teacher/dashboard/quizz/assignedBatch/uploadContent');
+    navigate("/teacher/dashboard/quizz/assignedBatch/uploadContent");
   };
 
   // Handle form submission (onSubmit function)
@@ -107,44 +132,28 @@ export default function QuizList() {
     setError(null);
     setSuccess(null);
 
-    // Prepare the data according to the backend requirements
-    const responseData = {
-      quiz_title: formData.title,
-      teacher_id: teacherId, // Use the passed teacherId
-      batch_index: formData.batch,
-      class_level: formData.classLevel,
-      subject: formData.subject,
-      description: formData.description,
-      // dueDate: formData.dueDate, // Uncomment if using dueDate
-      questions: formData.questions.map((q, index) => ({
-        question_number: index + 1,
-        question_text: q.questionText,
-        options: [
-          { option_id: 1, option_text: q.options.a },
-          { option_id: 2, option_text: q.options.b },
-          { option_id: 3, option_text: q.options.c },
-          { option_id: 4, option_text: q.options.d },
-        ],
-        correct_option_id: parseInt(q.correctOption, 10),
-        is_answer_valid: true, // Assuming validation is done
-      })),
-    };
     try {
       const response = await createQuiz(formData);
       if (response && response.quiz) {
-        // setQuizzes((prevQuizzes) => [...prevQuizzes, response.quiz]);
+        setQuizzes((prevQuizzes) => [...prevQuizzes, response.quiz]);
+        setOriginalData((prevQuizzes) => [...prevQuizzes, response.quiz]);
+        setFilterData((prevQuizzes) => [...prevQuizzes, response.quiz]);
         setShowDialog(false); // Close the form dialog after submission
         setSuccess("Quiz created successfully!");
-        setTimeout(() => setSuccess(null), 3000); // Clear success message after 3 seconds
+        message.success("Quiz created successfully!");
       } else {
         setError("Failed to create quiz. Please try again.");
+        message.error("Failed to create quiz. Please try again.");
       }
     } catch (err) {
+      console.error("Error creating quiz:", err.response || err.message);
       setError("An error occurred while creating the quiz.");
+      message.error("An error occurred while creating the quiz.");
     } finally {
       setLoading(false);
     }
   };
+
   // Filter data based on searchInput for "Quiz Name"
   useEffect(() => {
     if (searchInput) {
@@ -155,23 +164,23 @@ export default function QuizList() {
     } else {
       setFilterData(originalData); // Reset to original data if search is empty
     }
-    console.log("filtered Data", filterData);
+    console.log("Filtered Data:", filterData);
   }, [searchInput, originalData]);
 
   const handleViewQuestions = (quiz) => {
-    setSelectedQuiz(quiz); // Set selected quiz to show its questions in modal'
+    setSelectedQuiz(quiz); // Set selected quiz to show its questions in modal
   };
 
   const handleViewResponses = (quiz) => {
     setQuizResponse(quiz.answered_by || []); // Assuming responses are inside the quiz object
-    const filterData = quiz.answered_by.map((item) => {
+    const tableData = (quiz.answered_by || []).map((item) => {
       return {
         _id: item._id,
-        student_name: item.student_id.user_id.name,
+        student_name: item.student_id?.user_id?.name || "Unknown",
         score: item.score,
       };
     });
-    setAntTableData(filterData);
+    setAntTableData(tableData);
     setLoadingResponses(false);
     setModel2(true);
   };
@@ -216,18 +225,16 @@ export default function QuizList() {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
-}
+  }
+
   return (
     <>
       <QuizListWrap>
@@ -248,27 +255,19 @@ export default function QuizList() {
               style={{ width: 300 }}
             />
 
-
-            <PrimaryButton
-              onClick={handleAddQuiz} // Open modal on click
-            >
+            <PrimaryButton onClick={handleAddQuiz}>
               <AiOutlineFileAdd size={24} />
               Create Assessment
             </PrimaryButton>
 
-            <PrimaryButton
-            onClick={handleUploadAssessment}
-            >
+            <PrimaryButton onClick={handleUploadAssessment}>
               <AiOutlineFileAdd size={24} />
               Upload Assessment
             </PrimaryButton>
-
-
           </div>
         </div>
         <div className="area-row ar-two"></div>
         <div className="area-row ar-three">
-          {loading && <Lottie animationData={Animation} loop={true} />} 
           {error && <p style={{ color: "red" }}>{error}</p>}
           {success && <p style={{ color: "green" }}>{success}</p>}
           <QuizzesContainer>
@@ -278,31 +277,28 @@ export default function QuizList() {
 
                 <div className="batch">
                   <p className="red">
-                    <strong>Batch:</strong> {quiz.batch_index.batch_name}{" "}
-                    {/* Asming populated */}
+                    <strong>Batch:</strong> {quiz.batch_index?.batch_name || "N/A"}
                   </p>
                 </div>
 
                 <div className="quizdisplay">
                   <div className="subject">
                     <p>
-                      <strong>Subject:</strong> {quiz.subject?.subject_name}{" "}
-                      {/* Assuming populated */}
+                      <strong>Subject:</strong> {quiz.subject?.subject_name || "N/A"}
                     </p>
                   </div>
 
                   <div className="class">
                     <p>
-                      <strong>Class :</strong> {quiz.class_level?.classLevel}{" "}
-                      {/* Assumig populated */}
+                      <strong>Class :</strong> {quiz.class_level?.classLevel || "N/A"}
                     </p>
                   </div>
 
                   <div className="description">
                     <p>
-                      <strong>Description:</strong> {quiz.description}
+                      <strong>Description:</strong> {quiz.description || "No description provided."}
                     </p>
-                  </div>   
+                  </div>
                 </div>
 
                 <div className="view-questions-button">
@@ -317,34 +313,26 @@ export default function QuizList() {
               </QuizCard>
             ))}
           </QuizzesContainer>
-          {
-            <Modal
-              title={`Create New Assessment`}
-              open={showDialog}
-              onCancel={() => {
-                setShowDialog(false);
-              }}
-              footer={null}
-            >
-              <ModalBody>
-                <TeacherCreateQuizForm
-                  onSubmit={handleFormSubmit} // Pass the onSubmit function
-                  onClose={handleCloseDialog} // Pass onClose for closing the dialog
-                  teacherId={teacherId} // Pass the teacherId
-                />
-              </ModalBody>
-            </Modal>
-          }
-          {/* Conditionally render the TeacherCreateQuizForm dialog */}
-          {/* {showDialog==undefined && (
-                        <TeacherCreateQuizForm
-                            onSubmit={handleFormSubmit} // Pass the onSubmit function
-                            onClose={handleCloseDialog} // Pass onClose for closing the dialog
-                            teacherId={teacherId} // Pass the teacherId
-                        />
-                    )} */}
+
+          {/* Create Quiz Modal */}
           <Modal
-            title={<SubHeading>{selectedQuiz?.quiz_title}</SubHeading>} // Use the selectedQuiz?.quiz_title}
+            title={`Create New Assessment`}
+            open={showDialog}
+            onCancel={handleCloseDialog}
+            footer={null}
+          >
+            <ModalBody>
+              <TeacherCreateQuizForm
+                onSubmit={handleFormSubmit} // Pass the onSubmit function
+                onClose={handleCloseDialog} // Pass onClose for closing the dialog
+                teacherId={teacherId} // Pass the teacherId
+              />
+            </ModalBody>
+          </Modal>
+
+          {/* View Questions Modal */}
+          <Modal
+            title={<SubHeading>{selectedQuiz?.quiz_title}</SubHeading>}
             open={!!selectedQuiz}
             onCancel={() => setSelectedQuiz(null)}
             footer={null}
@@ -359,21 +347,35 @@ export default function QuizList() {
                     <Panel
                       header={
                         <Title level={5}>
-                          <BodyText>{`Q${index + 1}: ${
-                            question.question_text
-                          }`}</BodyText>
+                          <BodyText>{`Q${index + 1}: ${question.question_text}`}</BodyText>
                         </Title>
                       }
                       key={question._id || index} // Use unique identifier if available
                     >
+                      {/* Display Image if available */}
+                      {question.image && (
+                        <div style={{ marginBottom: "15px" }}>
+                          <Image
+                            src={question.image}
+                            alt={`Question ${index + 1} Image`}
+                            width={200}
+                            height={200}
+                            style={{ objectFit: "cover" }}
+                            placeholder={
+                              <Spin />
+                            }
+                          />
+                        </div>
+                      )}
+
+                      {/* Display Options */}
                       <List
                         dataSource={question.options}
                         renderItem={(option) => (
                           <List.Item key={option.option_id}>
                             <Text>
                               <BodyText>
-                                <strong>{option.option_id}.</strong>{" "}
-                                {option.option_text}
+                                <strong>{option.option_id}.</strong> {option.option_text}
                               </BodyText>
                             </Text>
                           </List.Item>
@@ -403,7 +405,7 @@ export default function QuizList() {
             ) : (
               <div>
                 {quizResponse && quizResponse.length === 0 ? (
-                  <BodyText>No Answer's Submitted By Students Yet!</BodyText>
+                  <BodyText>No answers submitted by students yet!</BodyText>
                 ) : (
                   <Table
                     columns={columns}
