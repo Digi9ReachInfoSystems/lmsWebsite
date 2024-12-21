@@ -55,23 +55,23 @@ function Footer() {
         <Link to="/DisclaimerPolicy" className="footer-link">Disclaimer Policy</Link> ·{" "}
         </p>
         <p>
-   <div className="footer-social-icons-new">
-           <a href="#" aria-label="Facebook">
-             <FaFacebook />
-           </a>
-           <a href="#" aria-label="Instagram">
-             <FaInstagram />
-           </a>
-           <a href="#" aria-label="LinkedIn">
-             <FaLinkedin />
-           </a>
-           {/* <a href="#" aria-label="Twitter">
+          <div className="footer-social-icons-new">
+            <a href="#" aria-label="Facebook">
+              <FaFacebook />
+            </a>
+            <a href="#" aria-label="Instagram">
+              <FaInstagram />
+            </a>
+            <a href="#" aria-label="LinkedIn">
+              <FaLinkedin />
+            </a>
+            {/* <a href="#" aria-label="Twitter">
              <FaTwitter />
            </a>
            <a href="#" aria-label="YouTube">
              <FaYoutube />
            </a> */}
-         </div>
+          </div>
         </p>
       </div>
     </footer>
