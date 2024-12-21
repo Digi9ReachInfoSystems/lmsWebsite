@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Card, Typography, Button, Row, Col, Modal, InputNumber } from "antd";
+import { Card, Typography, Button, Row, Col, Modal, InputNumber,Select } from "antd";
 import { Link } from "react-router-dom";
 import { getBatchesByStudentId } from "../../../../api/batchApi";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { getTeacherByAuthId } from "../../../../api/teacherApi";
 import { getTypeOfBatchById } from "../../../../api/typeOfBatchApi";
+import RenewButton from "../RenewButton/RenewButton";
 
 const { Title, Text } = Typography;
 
@@ -15,35 +16,42 @@ const BatchDetailsContent = () => {
   const [studentId, setStudentId] = useState(null);
   const [teacherId, setTeacherId] = useState(null);
   const [studentdata, setStudentData] = useState({});
+  const [subjectId, setSubjectId] = useState(null);
+  const [batchId, setBatchId] = useState(null);
 
   // Modal states
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [enteredDuration, setEnteredDuration] = useState(0);
+  const [enteredDuration, setEnteredDuration] = useState(1);
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [gstRate] = useState(0.18); // 18% GST, for example
   const [basePrice] = useState(1000); // Example base price per month (customize as needed)
 
   // Show or hide modal
-  const showModal = () => setIsModalVisible(true);
+  const showModal = (data) => {
+    setSubjectId(data.subjectId);
+    setBatchId(data.batchId);
+    setIsModalVisible(true);
+  };
   const hideModal = () => setIsModalVisible(false);
 
   // Handle changes in duration
   const handleDurationChange = (value) => {
+    console.log("value", value);  
     setEnteredDuration(value);
   };
 
   // Recalculate price whenever duration changes
   useEffect(() => {
-    const apiCaller=async () => {
+    const apiCaller = async () => {
       try {
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const studentData = await getStudentByAuthId(authId);
         console.log("studentData", studentData);
-        const batchType= await getTypeOfBatchById( studentData.student.type_of_batch);
-  console.log("batchType", batchType);
-        
-  const price = batchType.price * enteredDuration; // Simple formula: basePrice * months
-    setCalculatedPrice(price);
+        const batchType = await getTypeOfBatchById(studentData.student.type_of_batch);
+        console.log("batchType", batchType);
+
+        const price = batchType.price * enteredDuration; // Simple formula: basePrice * months
+        setCalculatedPrice(price);
       } catch (error) {
         console.error("Error fetching student data:", error);
       }
@@ -80,7 +88,7 @@ const BatchDetailsContent = () => {
           console.error("Student data is incomplete.");
           throw new Error("Student data is incomplete.");
         }
-        
+
         setStudentId(studentData.student._id);
       } catch (err) {
         setError(err.message);
@@ -118,17 +126,18 @@ const BatchDetailsContent = () => {
 
   return (
     <div
-   style={{
-     display: "flex",
-     flexWrap: "wrap",
-     flexDirection: "row",
-    //  justifyContent: "center",
-     alignItems: "center",
-    //  margin: "20px",
-   }}
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        flexDirection: "row",
+        //  justifyContent: "center",
+        alignItems: "center",
+        //  margin: "20px",
+      }}
     >
       {batches.map((batch) => {
         // We'll do a quick check
+        console.log("batch", batch);
         const subjectInStudent = studentdata.subject_id.find(
           (subject) => subject?.batch_id == batch._id
         );
@@ -172,8 +181,8 @@ const BatchDetailsContent = () => {
 
             {/* Batch Info */}
             <Row gutter={16} style={{ marginBottom: 20 }}>
-              <Col span={12} style={{ display: "flex", alignItems: "center"}
-            }>
+              <Col span={12} style={{ display: "flex", alignItems: "center" }
+              }>
                 <Text strong>Subject:</Text>
                 <div style={{ marginLeft: 8 }}>{batch.subject_id.subject_name}</div>
               </Col>
@@ -214,7 +223,7 @@ const BatchDetailsContent = () => {
                   borderColor: "#e91e63",
                   color: "#fff",
                 }}
-                onClick={showModal}
+                onClick={() => { showModal({ batchId: batch._id, subjectId: batch.subject_id._id }) }}
               >
                 Subscribe to continue
               </Button>
@@ -230,7 +239,7 @@ const BatchDetailsContent = () => {
         onCancel={hideModal}
         footer={null} // We'll handle buttons inside the modal content
       >
-        <div style={{ marginBottom: 16 }}>
+        {/* <div style={{ marginBottom: 16 }}>
           <Text>Enter Duration (in months):</Text>
           <InputNumber
             min={1}
@@ -238,6 +247,20 @@ const BatchDetailsContent = () => {
             value={enteredDuration}
             onChange={handleDurationChange}
           />
+        </div> */}
+        <div style={{ marginBottom: 16 }}>
+          <Text>Enter Duration (in months):</Text>
+          <Select
+            placeholder="Select duration"
+            style={{ marginLeft: 10, width: 120 }}
+            value={enteredDuration}
+            onChange={handleDurationChange}
+          >
+            <Option value={1}>1 Month</Option>
+            <Option value={3}>3 Months</Option>
+            <Option value={5}>5 Months</Option>
+            <Option value={10}>10 Months</Option>
+          </Select>
         </div>
 
         {/* Price Calculation */}
@@ -253,15 +276,16 @@ const BatchDetailsContent = () => {
           <Text>Total: </Text>
           <Text strong>{(calculatedPrice + calculatedPrice * gstRate).toFixed(2)}</Text>
         </div>
+        <RenewButton studentId={studentId} amount={(calculatedPrice + calculatedPrice * gstRate)} batchId={batchId} subjectId={subjectId} duration={enteredDuration} />
 
-        <Button
+        {/* <Button
           type="primary"
           block
           onClick={handlePayNow}
           style={{ backgroundColor: "#e91e63", borderColor: "#e91e63", color: "#fff" }}
         >
           Pay Now
-        </Button>
+        </Button> */}
       </Modal>
     </div>
   );
