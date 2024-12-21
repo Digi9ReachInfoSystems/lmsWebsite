@@ -1,43 +1,43 @@
-import React, { useEffect } from "react";
-import "./features.css"; // Import the CSS file
+import React from "react";
+import "./features.css"; // Ensure you apply the correct CSS
 
 function Features() {
   const features = [
     {
       number: "01",
-      title: "Select Your Package",
-      description:
-        "Create your package by selecting your board, class and subject ",
-      buttonText: "Next",
+      title: "Create Account",
+      description: "Latter person am secure of estate genius at.",
     },
     {
       number: "02",
-      title: "Sign Up ",
-      description: "Create Your Account and Start Your Learning Journey",
-      buttonText: "Next",
+      title: "Pay  Fee",
+      description: "Latter person am secure of estate genius at.",
     },
     {
       number: "03",
-      title: "Complete Payment",
-      description: "Complete Payment and Get Instant Access to Your Dashboard",
-      buttonText: "Completed",
+      title: "Onboard Class",
+      description: "Latter person am secure of estate genius at.",
+    },
+    {
+      number: "04",
+      title: "Start  Learning",
+      description: "Latter person am secure of estate genius at.",
     },
   ];
 
   return (
     <div className="features-section">
-      <h2 className="section-title">How it works</h2>
-      <p className="section-description">Let's make laerning easy.</p>
+      <h2 className="section-title">How it Works</h2>
+      <p className="section-description">
+        We have been providing great flooring solutions service.
+      </p>
 
-      <div className="features-container" style={{ display: "block" }}>
+      <div className="features-container">
         {features.map((feature, index) => (
-          <div key={index} className={`feature-box feature-${index + 1}`}>
+          <div key={index} className="feature-box">
             <div className="feature-number">{feature.number}</div>
-            <div className="feature-content">
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
-              <button className="feature-button">{feature.buttonText}</button>
-            </div>
+            <h3 className="feature-title">{feature.title}</h3>
+            <p className="feature-description">{feature.description}</p>
           </div>
         ))}
       </div>

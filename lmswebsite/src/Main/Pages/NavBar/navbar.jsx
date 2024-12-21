@@ -1,5 +1,19 @@
 import React, { useState, useRef } from "react";
-import { AppBar, Toolbar, Typography, Box, Button, Link } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  IconButton,
+  TextField,
+  Link,
+  Drawer,
+} from "@mui/material";
+import { Form, Input, Alert } from "antd";
+import Lottie from "lottie-react";
+
+import CloseIcon from "@mui/icons-material/Close";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { getBoards } from "../../../api/boardApi";
 import { getClassesByBoardId } from "../../../api/classApi";
@@ -8,8 +22,16 @@ import { StyledLink, HamburgerMenu, StyledBox } from "./navbar.style";
 import schoolIcon from "../../assets/school.png";
 import collegeIcon from "../../assets/college.png";
 import universityIcon from "../../assets/university.png";
-import Logo from "../../../assets/LOGO.png";
+import Logo from "../../../assets/Logofinal.png";
 import { useNavigate } from "react-router-dom";
+import { getStudentByAuthId } from "../../../api/studentApi";
+import { getTeacherByAuthId } from "../../../api/teacherApi";
+import { auth } from "../../../config/firebaseConfig";
+import { getUserByAuthId } from "../../../api/userApi";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import animationData from "../../../../src/assets/Login.json";
+// import { Link } from "react-router-dom";
+
 function HeaderSection({ scrollToSection }) {
   const scrollToComponent = (ref) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -26,6 +48,72 @@ function HeaderSection({ scrollToSection }) {
   const [packages, setPackages] = useState({});
   const [hoveredBoardId, setHoveredBoardId] = useState(null);
   const [hoveredClassId, setHoveredClassId] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleLogin = async (values) => {
+    const { email, password } = values;
+    setIsSubmitting(true);
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const { user } = userCredential;
+
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({ accessToken: user.accessToken })
+      );
+
+      const profileData = await getUserByAuthId(user.uid);
+
+      const sessionData = {
+        userId: user.uid,
+        accessToken: user.accessToken,
+        refreshToken: profileData.user.refresh_token,
+        name: profileData.user.name,
+        loggedIn: "true",
+      };
+      console.log("profileData", profileData);
+
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
+
+      if (profileData.user.role === "admin") navigate("/admin");
+      else if (profileData.user.role === "student") {
+        const studentData = await getStudentByAuthId(user.uid);
+        console.log(" login studentData", studentData);
+
+        if (
+          studentData.student.custom_package_status == "no_package" &&
+          studentData.student.is_paid == false
+        ) {
+          navigate("/student");
+        } else {
+          navigate("/student/dashboard");
+        }
+        // navigate("/student");
+      } else if (profileData.user.role === "teacher") {
+        const teacherData = await getTeacherByAuthId(profileData.user.auth_id);
+        console.log(" login teacherData", teacherData);
+        if (teacherData.teacher) {
+          navigate("/teacher/dashboard");
+        } else {
+          navigate("/teacher");
+        }
+        // navigate("/teacher");
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+    setIsSubmitting(false);
+  };
+  const toggleDrawer = (open) => () => {
+    setIsDrawerOpen(open);
+  };
 
   const [isMenuOpen, setIsMenuOpen] = useState(false); // State for Hamburger toggle
 
@@ -95,12 +183,13 @@ function HeaderSection({ scrollToSection }) {
             alt="Logo"
             onClick={handleLogoClick}
             style={{
-              width: "40px",
-              height: "40px",
+              width: "120px",
+              height: "80px",
               // marginRight: "8px",
               "@media (max-width: 768px)": { width: "20px", height: "20px" },
             }}
           />
+
           <Typography
             variant="h6"
             sx={{
@@ -310,7 +399,8 @@ function HeaderSection({ scrollToSection }) {
         >
           <Button
             variant="outlined"
-            onClick={() => navigate("/login")}
+            // onClick={() => navigate("/login")}
+            onClick={toggleDrawer(true)}
             sx={{
               borderColor: "#ccc",
               color: "#333",
@@ -351,6 +441,94 @@ function HeaderSection({ scrollToSection }) {
             Explore
           </Button> */}
         </Box>
+        <Drawer
+          anchor="right"
+          open={isDrawerOpen}
+          width="30vw"
+          onClose={toggleDrawer(false)}
+        >
+          <Box
+            sx={{
+              maxWidth: 400,
+              width: "25vw",
+              mx: "auto", // center horizontally
+              p: { xs: 2, sm: 3 },
+              backgroundColor: "#fff",
+              borderRadius: 2,
+              boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+            }}
+          >
+            {/* Title + sub-link */}
+            <Typography
+              variant="h5"
+              sx={{
+                fontWeight: "bold",
+                mb: 2, // margin-bottom
+                pt: 3, // padding-top
+                pb: 3, // padding-bottom
+                color: "#00C897", // Change this to your desired color
+                fontFamily: "Nunito",
+                textAlign: "center", // Center-align text if needed
+              }}
+            >
+              Login
+            </Typography>
+            {/* ... Drawer Header ... */}
+
+            <Form onFinish={handleLogin}>
+              <Form.Item
+                name="email"
+                rules={[
+                  { required: true, message: "Please input your email!" },
+                ]}
+              >
+                <Input placeholder="Email" />
+              </Form.Item>
+              <Form.Item
+                name="password"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                ]}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
+              {errorMessage && <Alert message={errorMessage} type="error" />}
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  mt: 2,
+                }}
+              >
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  loading={isSubmitting}
+                  style={{
+                    background: "#00C897",
+                    borderColor: "#00C897",
+                    textTransform: "none",
+                    color: "#fff",
+                    width: "100%",
+                  }}
+                >
+                  {isSubmitting ? "Logging in..." : "Log In"}
+                </Button>
+              </Box>
+            </Form>
+            <Box
+              sx={{
+                width: "100%",
+                mt: 4,
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <Lottie animationData={animationData} />
+            </Box>
+          </Box>
+        </Drawer>
       </Toolbar>
     </AppBar>
   );
