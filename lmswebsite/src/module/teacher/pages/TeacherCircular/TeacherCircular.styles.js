@@ -1,9 +1,8 @@
 import styled from "styled-components";
+import { media } from "../../../../style/theme/theme";
 
-import {media } from "../../../../style/theme/theme";
+// import {media } from "../../../../style/theme/theme";
 export const TeacherCircularWrap = styled.div`
-
-
   .header {
     display: flex;
     flex-direction: row;

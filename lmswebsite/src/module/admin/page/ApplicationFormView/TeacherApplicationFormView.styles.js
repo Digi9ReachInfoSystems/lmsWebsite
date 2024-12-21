@@ -186,7 +186,7 @@ export const TeacherApplicationFormViewWrap = styled.div`
       align-items: center;
       // border-radius: 4px;
       padding: 5px;
-      background-color: ${theme.colors.white};
+      /* background-color: ${theme.colors.white}; */
 
       .filter-icon {
         font-size: 18px;

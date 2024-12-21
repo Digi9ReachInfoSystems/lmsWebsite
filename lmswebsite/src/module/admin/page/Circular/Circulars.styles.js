@@ -7,22 +7,18 @@ export const CircularWrap = styled.div`
   gap: 24px;
   width: 100%;
   padding: 20px;
-  
-  ${media.md
-    `
+
+  ${media.md`
     padding: 15px;
   `}
 
-  ${media.sm
-    `
+  ${media.sm`
     padding: 10px;
   `}
 
-  ${media.xs
-    `
+  ${media.xs`
     padding: 10px;
   `}
-  }
 
   .circular-header {
     display: flex;
@@ -51,9 +47,7 @@ export const CircularWrap = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    y
     color: ${theme.colors.frenchGray};
-    flex: 1;
 
     ${media.md`
       text-align: center;
@@ -96,7 +90,7 @@ export const CircularWrap = styled.div`
   }
 `;
 
-export const Button = styled.button`
+export const StyledButton = styled.button`
   background-color: ${theme.colors.pink4};
   color: ${theme.colors.white};
   padding: 0.7em 1.5em;
@@ -105,13 +99,11 @@ export const Button = styled.button`
   cursor: pointer;
   font-size: 1rem;
   font-family: ${theme.typography.fontFamily};
-  transition: background-color 0.3s;
-  align-self: center; /* Center the button horizontally */
+  transition: background-color 0.3s ease;
+  align-self: center; /* Centers the button horizontally */
 
   &:hover {
-    background-color: ${theme.colors.pink4};  
-
-
+    background-color: ${theme.colors.pink5}; /* A slightly darker pink on hover for better UX */
   }
 
   ${media.md`

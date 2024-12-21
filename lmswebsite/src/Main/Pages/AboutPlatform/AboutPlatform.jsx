@@ -1,6 +1,7 @@
 import React from "react";
 import "./AboutPlatform.css";
 import { useNavigate } from "react-router-dom";
+import "../../../App.css";
 
 function AboutPlatform() {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ function AboutPlatform() {
           </div>
         </div>
         <div className="about-platform-text">
-          <h2>What is  The Topper's Academy?</h2>
+          <h2>What is The Topper's Academy?</h2>
           <p>
             HubSpot is an AI-powered customer platform with all the software,
             integrations, and resources you need to connect your marketing,
@@ -37,7 +38,7 @@ function AboutPlatform() {
               className="start-button"
               onClick={() => navigate("/signupStudent")}
             >
-              Create Custom  
+              Create Custom
             </button>
           </div>
         </div>
