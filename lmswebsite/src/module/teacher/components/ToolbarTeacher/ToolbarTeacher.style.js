@@ -57,8 +57,8 @@ export const Box = styled.div`
   flex: 1;
  display : flex;
  align-items: center;
- font-size: 16px;
-  padding: 15px 30px;
+ font-size: 14px;
+  padding: 15px 15px;
   margin: 5px;
   text-align: center;
   font-weight: bold;
@@ -105,11 +105,11 @@ export const Box = styled.div`
   }
  ${media.xxl`
     padding: 15px 15px;
-    font-size: 16px;
+    font-size: 12px;
     `}
         ${media.xl`
     padding: 15px 3px;
-    font-size: 14px;
+    font-size: 12px;
     `}
   ${media.lg`
     padding: 15px 3px;
@@ -121,9 +121,6 @@ export const Box = styled.div`
   ${media.md`
     padding: 15px 30px;
     `}
-    // ${media.sm`
-    // padding: 15px 30px;
-    // `}
     ${media.xs`
     padding: 15px 20px;
     `}
