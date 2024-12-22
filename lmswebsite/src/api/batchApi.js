@@ -98,3 +98,14 @@ export const getBatchesByStudentId = async (studentId) => {
   }
 };
 
+export const addStudentToBatch = async (batchId, data) => {
+  try {
+    const response = await api.post(`/batches/addstudents/${batchId}`,data);
+    console.log("Student added to batch successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error adding student to batch:", error.response?.data || error.message);
+    throw error; // Re-throw the error to handle it in the calling function
+  }
+};
+

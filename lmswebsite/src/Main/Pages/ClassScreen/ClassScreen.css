@@ -1,6 +1,6 @@
 /* General Styles */
 .board-container {
-  width: 80%;
+  width: 100%;
   margin-top: 30vh;
   /* margin-left: 20vh; */
   text-align: center;
@@ -83,7 +83,7 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  width: 20vw;
+  /* width: 20vw; */
 }
 
 .back-btn {

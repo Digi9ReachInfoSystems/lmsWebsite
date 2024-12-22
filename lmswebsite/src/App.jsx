@@ -102,6 +102,9 @@ import ContactUs from "./Main/Pages/ContactUs/ContactUs";
 
 import Blog from "./Main/Pages/Blogs/Blog";
 import TeacherAssignmentUpload from "./module/teacher/pages/Quizz/AssignmentUpload/TeacherAssignmentUpload";
+import AssignmentResponse from "./module/teacher/pages/Quizz/AssignmentResponse/AssignmentResponse";
+import StudentAssignment from "./module/student/pages/StudentAssignment/StudentAssignment";
+import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpload/StudentAssignmentUpload";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -239,6 +242,17 @@ function App() {
               path="/student/dashboard/taskBoard/quiz/:quizId"
               element={<QuizQuestionPage />}
             />
+
+            <Route 
+            path="/student/dashboard/assignments"
+            element={<StudentAssignment />}
+            />
+
+            <Route 
+            path="/student/dashboard/batches/:batchId/assignments"
+            element={<StudentAssignmentUpload />}
+            />
+
             <Route
               path="/student/dashboard/meetings"
               element={<ManageMeetingStudent />}
@@ -294,6 +308,10 @@ function App() {
             <Route 
             path="/teacher/dashboard/quizz/assignedBatch/uploadContent"
             element={<TeacherAssignmentUpload />}
+            />
+            <Route
+              path="/teacher/dashboard/quizz/assignedBatch/uploadContent/:assignmentId/responses"
+              element={<AssignmentResponse />}
             />
             <Route
               path="/teacher/dashboard/quizz/batches/:batchId"

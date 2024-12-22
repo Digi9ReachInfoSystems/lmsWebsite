@@ -208,3 +208,19 @@ export const getEligibleStudentsForBatch = async (filterData) => {
     throw error;
   }
 };
+
+export const getStudentBatchStatus = async (studentId,batchId) => {
+  try { 
+    console.log("inside studentId", studentId);  
+    console.log("inside batchId", batchId);
+    const batchData = {
+      studentId: studentId,
+      batchId: batchId
+    }
+    const response = await api.post(`/students/student/batchstatus`,batchData);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching student batch status:', error);
+    throw error;
+  }
+};

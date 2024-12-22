@@ -11,7 +11,7 @@ export const LandingBranchesWarp = styled.div`
 
   .CountStudent {
     background: ${theme.colors.white};
-    width: 15%;
+    width: 20%;
     margin-left: 15em;
     margin-top: 12em;
     padding: 10px;
@@ -62,7 +62,7 @@ export const LandingBranchesWarp = styled.div`
       font-size: 16px;
     }
     .CountStudent {
-      width: 20%;
+      width: 25%;
       margin-left: 12em;
       margin-top: 12em;
     }
@@ -76,6 +76,7 @@ export const LandingBranchesWarp = styled.div`
       font-size: 16px;
     }
       .CountStudent {
+        width: 30%;
         margin-top: 11em;
       }
             .StudentDetail {
@@ -93,9 +94,9 @@ export const LandingBranchesWarp = styled.div`
       margin-top: 3em;
     }
     .CountStudent {
-      width: 30%;
-      margin-left: 10em;
-      margin-top: 8em;
+      width: 35%;
+      margin-left: 6em;
+      margin-top: 6em;
     }
 
     .StudentDetail {
@@ -115,23 +116,24 @@ export const LandingBranchesWarp = styled.div`
       font-size: 12px;
     }
     .CountStudent {
-      width: 30%;
+      width: 35%;
       margin-left: 2em;
-      margin-top: 5em;
+      margin-top: 3em;
     }
 
     @media (max-width: ${theme.breakpoints.xs}) {
       .Neverbtn {
-        width: 40%;
+        width: 45%;
         margin-left: 3em;
       }
         .Count{
         font-size: 12px;
         }
       .CountStudent {
-        width: 40%;
+        width: 80%;
         margin-left: 1em;
-        margin-top: 8.5em;
+        margin-top:4em;
+        margin-bottom: 4em;
       }
     }
   }
@@ -147,7 +149,7 @@ export const LandingBranchesImage = styled.img`
     height: 400px;
   }
 
-  @media (max-width: ${theme.breakpoints.xs}) {
+  @media (max-width: ${theme.breakpoints.sm}) {
     width: 100%;
   }
 `;
@@ -178,7 +180,7 @@ export const BranchHeading = styled.h2`
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: 20px;
     margin-left: 5em;
-    width: 50%;
+    width: 90%;
   }
 
   @media (max-width: ${theme.breakpoints.xs}) {
@@ -215,12 +217,15 @@ export const StyledButton = styled(Button)`
   @media (max-width: ${theme.breakpoints.md}) {
     font-size: 14px;
     padding: 25px 40px;
-    margin-left: 8em;
+    margin-left: 7em;
+        margin-top: 7em;
   }
 
   @media (max-width: ${theme.breakpoints.sm}) {
     font-size: 14px;
     padding: 25px 40px;
+    margin-top: 3em;
+    margin-left: 5em;
   }
 
   @media (max-width: ${theme.breakpoints.xs}) {
