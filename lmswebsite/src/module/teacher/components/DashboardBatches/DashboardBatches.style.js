@@ -18,6 +18,10 @@ export const StyledDashboard = styled.div`
         font-size: 16px;
     }
 
+    ${media.lg`
+    width: 100%;
+    `}
+
     ${media.md`
         padding: 10px;
     `}
@@ -44,7 +48,9 @@ export const MainCardContainer = styled.div`
     padding: 20px;
     box-sizing: border-box;
     position: relative;
-
+  ${media.lg`
+  width: 100%;
+  `}
     
 `;
 
