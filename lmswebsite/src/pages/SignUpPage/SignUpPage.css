@@ -2,17 +2,62 @@
   display: flex;
   height: 100vh;
   font-family: "Arial", sans-serif;
-  background: #f9fafb;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.image-section {
+  flex: 0.5;
+  width: 40%;
+  background-color: #6A11CB ;
+  color: #fff;
+  display: flex;
+  /* height: 100vh; */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #f0f4ff;
+  flex-direction: column;
+  text-align: center;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+}
+
+.image-section h2 {
+  font-size: 2rem;
+  margin-top: 1rem;
+  color: black;
+}
+
+.imagesignup {
+  width: 60%;
+}
+
+.image-section p {
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+  color: black;
 }
 
 .form-section {
   flex: 1;
-  padding: 4rem;
-  display: flex;
 
-  flex-direction: column;
-  justify-content: center;
-  background: white;
+  padding-top: 1rem;
+  padding-left: 10vw;
+  padding-right: 10vw;
+  background-color: #fff;
+  padding-top: 8vh;
+  padding-bottom: 8vh;
+
+  width: 400px; /* Set width of the form */
+  border-radius: 10px;
+  /* background-color: white; */
+  overflow-y: auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 768px) {
@@ -20,28 +65,27 @@
   }
 }
 
-.form-heading h2 {
+.form-heading {
   font-size: 2rem;
-  margin-bottom: 1rem;
-  margin-top: 8vh;
-  margin-left: 100px;
+  color: #6A11CB;
+  text-align: center;
+  /* padding-bottom: 30px; */
 }
 
-.signup-form {
-  margin-top: 2rem;
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-bottom: 100px;
+.form-subheading {
+  color: #000;
+  margin-bottom: 1.5rem;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
 }
 
 .signup-form .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.2rem;
 }
 
 .signup-form label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+  font-weight: 600;
   color: #333;
 }
 
@@ -49,78 +93,39 @@
 .signup-form .ant-picker,
 .signup-form .ant-radio-group {
   width: 100%;
-  padding: 0.8rem;
-  border: 1px solid #ddd;
+  padding: 0.7rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.signup-form input[readonly] {
+  background-color: #f1f1f1;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1.5rem;
 }
 
 .confirm-btn {
+  background-color: #6A11CB;
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  /* margin-right: 1rem; */
   width: 100%;
-  padding: 0.8rem;
-  background: #00c897;
-  color: white;
+  padding: 0.1rem 1.5rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 1rem;
 }
 
-.signup-footer {
-  margin-top: 2rem;
-  text-align: center;
-}
-
-.signup-footer a {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.image-section {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 4rem;
-
-  /* Gradient Background */
-  background: linear-gradient(
-    to right,
-    #c8fcff,
-    #00c897
-  ); /* Replace with exact color stops */
-  backdrop-filter: blur(15px); /* Glass effect */
-  -webkit-backdrop-filter: blur(15px); /* Safari support */
-  /* border: 1px solid rgba(255, 255, 255, 0.3); */
-  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-  border-radius: 15px; /* Rounded corners for smooth look */
-}
-
-.image-section img {
-  max-width: 80%;
-  margin-bottom: 2rem;
-}
-
-.image-section h2 {
-  font-size: 1.8rem;
-  color: #ffffff;
-  font-family: "Nunito", serif;
-  font-size: 48px;
-  font-weight: 800;
-}
-
-.image-section p {
-  margin-top: 1rem;
-  color: #555;
-  /* background: #f0f4ff; */
-}
-
-.start-academy-btn {
-  margin-top: 2rem;
-  padding: 0.8rem 2rem;
-  background: #007bff;
-  color: white;
+.cancel-btn {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 0.8rem 1.5rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;

@@ -11,8 +11,7 @@ import {
 import { auth } from "../../config/firebaseConfig";
 import { uploadFileToFirebase } from "../../utils/uploadFileToFirebase";
 import { signupUser } from "../../api/authApi";
-import Animation from "../../assets/Animation - 1734856388103.json";
-import Lottie from "lottie-react";
+import { getUserByAuthId } from "../../api/userApi";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -144,14 +143,22 @@ const SignUpPage = () => {
 
   return (
     <div className="signup-container">
-      {/* Left Section - Form */}
+      {/* Left Section - Image */}
+      <div className="image-section">
+        <img src={SignUpImage} alt="Registration" className="imagesignup" />
+        <h2>Register To The Platform</h2>
+        <p>Your Journey Begins Here</p>
+      </div>
+
+      {/* Right Section - Form */}
       <div className="form-section">
-        <div className="form-heading">
-          <h2>Create Account</h2>
-          {/* <p>Log in with Google or email to continue</p> */}
-        </div>
+        {/* <h2 className="form-heading">Registration</h2> */}
+        <p className="form-subheading">Enter Your Details</p>
 
         <form onSubmit={handleSubmit} className="signup-form">
+          {/* Static Fields */}
+
+          {/* Editable Fields */}
           <div className="form-group">
             <label>Full Name</label>
             <input
@@ -163,7 +170,7 @@ const SignUpPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Email Address</label>
+            <label>Email</label>
             <input
               type="email"
               name="email"
@@ -224,17 +231,6 @@ const SignUpPage = () => {
             </button>
           </div>
         </form>
-      </div>
-
-      <div className="image-section">
-        <Lottie
-          animationData={Animation}
-          loop={true}
-          style={{ height: 400, width: 400 }}
-        />
-        <h2>Let the Learning Begin</h2>
-
-        {/* <button className="start-academy-btn">Start Academy</button> */}
       </div>
     </div>
   );
