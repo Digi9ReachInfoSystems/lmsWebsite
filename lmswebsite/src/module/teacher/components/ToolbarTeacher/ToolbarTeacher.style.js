@@ -104,7 +104,7 @@ export const Box = styled.div`
     `}
   }
  ${media.xxl`
-    padding: 15px 15px;
+    padding: 15px 10px;
     font-size: 12px;
     `}
         ${media.xl`
