@@ -6,7 +6,7 @@ export const TeacherCircularWrap = styled.div`
   .header {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 
