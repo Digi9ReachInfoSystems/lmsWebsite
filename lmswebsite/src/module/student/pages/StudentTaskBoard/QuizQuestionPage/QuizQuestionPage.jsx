@@ -96,7 +96,6 @@ const QuizQuestionPage = () => {
 
   return (
     <div style={{ padding: "20px" }}>
-      {" "}
       <button
         onClick={() => navigate(-1)}
         style={{ fontSize: "30px", top: "10px", left: "10px" }}
@@ -112,6 +111,17 @@ const QuizQuestionPage = () => {
             <div style={{ fontWeight: "bold", marginBottom: "10px" }}>
               Question {index + 1}: {question.question_text}
             </div>
+
+            {/* Display image if available */}
+            {question.image && (
+              <div style={{ marginBottom: "10px" }}>
+                <img
+                  src={question.image}
+                  alt={`Question ${index + 1} Image`}
+                  style={{ maxWidth: "20%", borderRadius: "5px" }}
+                />
+              </div>
+            )}
 
             <Form.Item
               name={`question_${index}`}
