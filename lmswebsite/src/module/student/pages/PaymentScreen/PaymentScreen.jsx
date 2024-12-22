@@ -5,6 +5,7 @@ import "./PaymentScreen.css";
 // import "./PaymentScreen.css";
 import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import PaymentComponent from "../../components/PaymentComponent/PaymentComponet";
+import { MdOutlineMarkEmailRead } from "react-icons/md";
 
 const PaymentScreen = () => {
     const navigate = useNavigate();
@@ -43,7 +44,11 @@ const PaymentScreen = () => {
             <HeaderSection />
             <div className="board-container-payment">
                 <div className="skill-card-payment">
+                <div className="header-payment-icon">
+                    <MdOutlineMarkEmailRead className="payment-icon" />
+                    </div>
                     <div className="header-payment">
+
                         <h2>Verify The Details!</h2>
                     </div>
 

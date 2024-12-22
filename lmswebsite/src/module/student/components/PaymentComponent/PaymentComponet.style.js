@@ -10,7 +10,7 @@ export const EnrollButton = styled.button`
   padding: 10px 20px;
   font-size: 1rem;
   font-weight: 600;
-  border: 1px solidrgb(189, 243, 155);
+  border: 1px solid rgb(189, 243, 155);
   border-radius: 5px;
   cursor: pointer;
   text-transform: uppercase;

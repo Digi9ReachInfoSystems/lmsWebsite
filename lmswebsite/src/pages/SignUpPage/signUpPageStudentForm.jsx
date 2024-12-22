@@ -134,7 +134,14 @@ const StudentForm = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100vh" }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection:"row",
+        justifyContent: "center",
+        "@media(max-width:768px)": { flexDirection: "column" },
+      }}
+    >
       {/* Left Section for Logo */}
       <div
         style={{
@@ -143,9 +150,10 @@ const StudentForm = () => {
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#f9f9f9",
+          "@media(max-width:768px)": { display: "none!important" },
         }}
       >
-        <img src={SignUpImage} alt="Logo" style={{ maxWidth: "60%" }} />
+        <img src={SignUpImage} alt="Logo" />
       </div>
 
       {/* Right Section for Form */}
@@ -159,7 +167,7 @@ const StudentForm = () => {
           backgroundColor: "#ffffff",
         }}
       >
-        <div style={{ width: "100%", maxWidth: "400px" }}>
+        <div style={{ width: "100%", maxWidth: "600px" }}>
           <Title
             level={3}
             style={{ textAlign: "center", marginBottom: "10px" }}
@@ -285,8 +293,8 @@ const StudentForm = () => {
                 loading={isSubmitting}
                 style={{
                   width: "100%",
-                  backgroundColor: "#007BFF",
-                  borderColor: "#007BFF",
+                  backgroundColor: "#00c897",
+                  borderColor: "#00c897",
                   color: "#fff",
                   height: "40px",
                 }}
@@ -305,7 +313,7 @@ const StudentForm = () => {
             }}
           >
             Already have an account?{" "}
-            <a href="/login" style={{ color: "#007BFF" }}>
+            <a href="/login" style={{ color: "#00c897","&:hover":{textDecoration:"underline!important"} }}>
               Sign in
             </a>
           </Text>

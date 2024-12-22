@@ -145,7 +145,7 @@ const SignUpPage = () => {
     <div className="signup-container">
       {/* Left Section - Image */}
       <div className="image-section">
-        <img src={SignUpImage} alt="Registration" />
+        <img src={SignUpImage} alt="Registration" className="imagesignup" />
         <h2>Register To The Platform</h2>
         <p>Your Journey Begins Here</p>
       </div>
