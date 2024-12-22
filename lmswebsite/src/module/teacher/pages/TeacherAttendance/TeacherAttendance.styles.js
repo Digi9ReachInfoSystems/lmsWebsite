@@ -12,7 +12,7 @@ export const TeacherAttendanceWrap = styled.div`
   @media (max-width: 768px) {
     .ant-table-wrapper {
       overflow-x: scroll; /* Enable horizontal scrolling */
-      width: 600px;
+      width: 700px;
     }
   }
 `;
