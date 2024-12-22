@@ -22,7 +22,7 @@
 .faq-input {
   width: 70%;
   padding: 10px;
-  border: 1px solid #00c897;
+  border: 1px solid #6b11cb5d;
   border-radius: 5px 0 0 5px;
   outline: none;
   font-size: 1rem;
@@ -30,7 +30,7 @@
 
 .faq-search-button {
   padding: 10px 20px;
-  background-color: #007d67;
+  background-color: #6b11cb5d;
   color: white;
   border: none;
   border-radius: 0 5px 5px 0;
@@ -39,7 +39,7 @@
 }
 
 .faq-search-button:hover {
-  background-color: #005a4b;
+  background-color: #6b11cb5d;
 }
 
 .faq-container {
@@ -47,7 +47,7 @@
 }
 
 .faq-item {
-  border-bottom: 1px solid #00c897;
+  border-bottom: 1px solid #6b11cb5d;
   padding: 15px 0;
 }
 
@@ -67,7 +67,7 @@
 .faq-question span {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #007d67;
+  color: #6b11cb5d;
 }
 
 .faq-answer {

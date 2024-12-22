@@ -88,7 +88,7 @@ function SelectType() {
                   ))}
                 </ul>
                 <div className="batch-price">
-                  <p >{batch.price}/month</p>
+                  <p >₹ {batch.price}/month</p>
                 </div>
               </div>
             ))}

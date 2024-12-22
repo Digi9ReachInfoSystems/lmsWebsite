@@ -1,9 +1,10 @@
 .features-section {
   text-align: center;
   padding: 50px 20px;
-  background: linear-gradient(360deg, #63dabc41 0%, #ffffff 80%);
+  background: linear-gradient(360deg, #6b11cb5d 0%, #ffffff 80%);
 }
 
+/* Section Title & Description */
 .section-title {
   font-size: 1.8rem;
   font-weight: 700;
@@ -16,32 +17,23 @@
   font-size: 1rem;
   color: #666;
   font-family: "Nunito", serif;
-
   margin-bottom: 40px;
-  font-family: "Nunito", serif;
 }
 
+/* Container for the features */
 .features-container {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Already done, but crucial for responsive layout */
 }
 
-.features-container .select-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
-}
-
-.features-container .select-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
+/* Feature Box */
 .feature-box {
-  flex: 1 1 calc(25% - 20px); /* Four equal columns */
-  max-width: 25vw; /* Adjust max width for responsiveness */
+  flex: 1 1 calc(25% - 20px); /* By default: 4 columns (25% each) */
+  max-width: 25vw;
   background-color: #f9f9f9;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -49,16 +41,18 @@
   text-align: center;
   transition: box-shadow 0.3s ease;
   cursor: pointer;
+  box-sizing: border-box;
+  margin-bottom: 20px; /* extra spacing for wrapping rows */
 }
 
 .feature-box:hover {
-  box-shadow: 0 4px 10px #00c897;
+  box-shadow: 0 4px 10px #6b11cb5d;
 }
 
 .feature-number {
   font-size: 3rem;
   font-weight: bold;
-  color: #00c897;
+  color: #6b11cb5d;
   margin-bottom: 10px;
 }
 
@@ -75,4 +69,78 @@
   color: #777;
   line-height: 1.5;
   font-family: "Nunito", serif;
+}
+
+/* Hover state for the container if needed */
+.features-container .select-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.features-container .select-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* -----------
+   MEDIA QUERIES
+  -----------
+   Adjust columns and font sizes for different breakpoints.
+*/
+
+/* For devices <= 1024px (e.g. tablets in landscape) */
+@media (max-width: 1024px) {
+  .feature-box {
+    flex: 1 1 calc(33.33% - 20px); /* 3 columns */
+    max-width: 30vw;
+  }
+  .feature-title {
+    font-size: 1.6rem; 
+  }
+  .feature-description {
+    font-size: 1.1rem; 
+  }
+}
+
+/* For devices <= 768px (e.g. tablets/phones in portrait) */
+@media (max-width: 768px) {
+  .feature-box {
+    flex: 1 1 calc(50% - 20px); /* 2 columns */
+    max-width: 45vw;
+  }
+  .section-title {
+    font-size: 1.6rem;
+  }
+  .section-description {
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+  .feature-title {
+    font-size: 1.4rem; 
+  }
+  .feature-description {
+    font-size: 1rem; 
+  }
+}
+
+/* For devices <= 480px (typical phones) */
+@media (max-width: 480px) {
+  .feature-box {
+    flex: 1 1 100%; /* 1 column */
+    max-width: 100%;
+  }
+  .section-title {
+    font-size: 1.4rem;
+  }
+  .section-description {
+    font-size: 0.9rem;
+  }
+  .feature-title {
+    font-size: 1.2rem; 
+  }
+  .feature-description {
+    font-size: 0.9rem; 
+  }
+  .feature-number {
+    font-size: 2.5rem; 
+  }
 }

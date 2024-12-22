@@ -110,7 +110,7 @@ function SelectDuration() {
                 </ul>
                 <div>
                 <p className="price">Total = ₹{totalPrice} </p>{" "}
-                  <p className="price-2">({batch.duration}X{batchPrice})</p>
+                  <p className="price-2">({batchPrice}X{batch.duration})</p>
                   </div>
               </div>
             );

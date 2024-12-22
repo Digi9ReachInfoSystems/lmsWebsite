@@ -2,7 +2,7 @@
 .board-container {
   width: 80%;
   margin-top: 30vh;
-  margin-left: 20vh;
+  /* margin-left: 20vh; */
   text-align: center;
   font-family: Arial, sans-serif;
 }
@@ -11,7 +11,7 @@
   font-size: 42px;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #00c897;
+  color: #6a11cb;
 }
 /* Specific Header Styling */
 .black-text {
@@ -20,7 +20,7 @@
 }
 
 .green-text {
-  color: #00c897; /* Green color */
+  color: #6a11cb; /* Green color */
   font-style: italic;
 }
 
@@ -87,11 +87,11 @@
 }
 
 .back-btn {
-  background-color: #e0e0e0;
+  background-color: #6a11cb;
 }
 
 .next-btn {
-  background-color: #00c897;
+  background-color: #6a11cb;
   color: white;
 }
 
@@ -107,7 +107,7 @@
 
 .progress {
   height: 100%;
-  background-color: #00c897;
+  background-color: #6a11cb;
 }
 
 /* Step Info */
@@ -115,7 +115,6 @@
   font-size: 12px;
   color: gray;
 }
-
 
 .skill-card {
   cursor: pointer;
@@ -128,8 +127,7 @@
 }
 
 .skill-card.selected {
-  border: 2px solid #28a745;
+  border: 2px solid #6A11CB;
   background-color: #e6ffe6;
   font-weight: bold;
 }
-

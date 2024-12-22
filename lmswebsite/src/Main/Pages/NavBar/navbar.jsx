@@ -1,46 +1,43 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
   Typography,
   Box,
   Button,
-  IconButton,
-  TextField,
   Link,
   Drawer,
+  IconButton,
 } from "@mui/material";
 import { Form, Input, Alert } from "antd";
 import Lottie from "lottie-react";
-
-import CloseIcon from "@mui/icons-material/Close";
+import { Grid, Paper } from "@mui/material";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Menu"; // MUI menu icon for the hamburger
+import animationData from "../../../../src/assets/Login.json";
+
 import { getBoards } from "../../../api/boardApi";
 import { getClassesByBoardId } from "../../../api/classApi";
 import { getPackageByClassId } from "../../../api/packagesApi";
-import { StyledLink, HamburgerMenu, StyledBox } from "./navbar.style";
-import schoolIcon from "../../assets/school.png";
-import collegeIcon from "../../assets/college.png";
-import universityIcon from "../../assets/university.png";
-import Logo from "../../../assets/Logofinal.png";
-import { useNavigate } from "react-router-dom";
 import { getStudentByAuthId } from "../../../api/studentApi";
 import { getTeacherByAuthId } from "../../../api/teacherApi";
-import { auth } from "../../../config/firebaseConfig";
 import { getUserByAuthId } from "../../../api/userApi";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import animationData from "../../../../src/assets/Login.json";
-// import { Link } from "react-router-dom";
+import { auth } from "../../../config/firebaseConfig";
+import { useNavigate } from "react-router-dom";
 
-function HeaderSection({ scrollToSection }) {
-  const scrollToComponent = (ref) => {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+import Logo from "../../../assets/Logofinal.png";
 
-  const handleLogoClick = () => {
-    navigate("/"); // Navigate to the landing page
-  };
+/* 
+  Imported custom style elements can remain 
+  import { StyledLink, HamburgerMenu, StyledBox } from "./navbar.style"; 
+*/
 
+function HeaderSection() {
+  const navigate = useNavigate();
+
+  // States
   const [isCoursesOpen, setIsCoursesOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [boards, setBoards] = useState({});
@@ -51,75 +48,23 @@ function HeaderSection({ scrollToSection }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isNestedOpen, setIsNestedOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // for the hamburger menu
 
-  const handleLogin = async (values) => {
-    const { email, password } = values;
-    setIsSubmitting(true);
-
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const { user } = userCredential;
-
-      localStorage.setItem(
-        "sessionData",
-        JSON.stringify({ accessToken: user.accessToken })
-      );
-
-      const profileData = await getUserByAuthId(user.uid);
-
-      const sessionData = {
-        userId: user.uid,
-        accessToken: user.accessToken,
-        refreshToken: profileData.user.refresh_token,
-        name: profileData.user.name,
-        loggedIn: "true",
-      };
-      console.log("profileData", profileData);
-
-      localStorage.setItem("sessionData", JSON.stringify(sessionData));
-
-      if (profileData.user.role === "admin") navigate("/admin");
-      else if (profileData.user.role === "student") {
-        const studentData = await getStudentByAuthId(user.uid);
-        console.log(" login studentData", studentData);
-
-        if (
-          studentData.student.custom_package_status == "no_package" &&
-          studentData.student.is_paid == false
-        ) {
-          navigate("/student");
-        } else {
-          navigate("/student/dashboard");
-        }
-        // navigate("/student");
-      } else if (profileData.user.role === "teacher") {
-        const teacherData = await getTeacherByAuthId(profileData.user.auth_id);
-        console.log(" login teacherData", teacherData);
-        if (teacherData.teacher) {
-          navigate("/teacher/dashboard");
-        } else {
-          navigate("/teacher");
-        }
-        // navigate("/teacher");
-      }
-    } catch (error) {
-      setErrorMessage(error.message);
-    }
-    setIsSubmitting(false);
-  };
-  const toggleDrawer = (open) => () => {
-    setIsDrawerOpen(open);
+  // Logo click -> homepage
+  const handleLogoClick = () => {
+    navigate("/");
   };
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // State for Hamburger toggle
+  const handleDropdownToggle = () => {
+    setIsCoursesOpen((prev) => !prev);
+  };
 
+  // Example category mouse enter
   const handleCategoryMouseEnter = async (category) => {
     setSelectedCategory(category);
-    setIsCoursesOpen(true);
+    setIsNestedOpen(true);
+
     if (!boards[category]) {
       try {
         const fetchedBoards = await getBoards(category);
@@ -128,10 +73,6 @@ function HeaderSection({ scrollToSection }) {
         console.error(`Error fetching boards: ${error}`);
       }
     }
-  };
-
-  const handleClick = () => {
-    navigate("/selectBoard"); // Navigate to the Select Board page
   };
 
   const handleBoardMouseEnter = async (boardId) => {
@@ -146,184 +87,242 @@ function HeaderSection({ scrollToSection }) {
     }
   };
 
-  const navigate = useNavigate();
-
-  const handleSelectBoard = () => {
-    navigate("/selectBoard"); // Navigate to the /class route
+  // Drawer toggles
+  const toggleDrawer = (open) => () => {
+    setIsDrawerOpen(open);
   };
 
-  const handleClassMouseEnter = async (classId) => {
-    setHoveredClassId(classId);
-    if (!packages[classId]) {
-      try {
-        const fetchedPackages = await getPackageByClassId(classId, "normal");
-        setPackages((prev) => ({ ...prev, [classId]: fetchedPackages }));
-      } catch (error) {
-        console.error(`Error fetching packages: ${error}`);
+  // Login
+  const handleLogin = async (values) => {
+    const { email, password } = values;
+    setIsSubmitting(true);
+
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({ accessToken: user.accessToken })
+      );
+
+      const profileData = await getUserByAuthId(user.uid);
+      const sessionData = {
+        userId: user.uid,
+        accessToken: user.accessToken,
+        refreshToken: profileData.user.refresh_token,
+        name: profileData.user.name,
+        loggedIn: "true",
+      };
+
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
+
+      // Navigate by role
+      if (profileData.user.role === "admin") {
+        navigate("/admin");
+      } else if (profileData.user.role === "student") {
+        const studentData = await getStudentByAuthId(user.uid);
+        if (
+          studentData.student.custom_package_status === "no_package" &&
+          studentData.student.is_paid === false
+        ) {
+          navigate("/student");
+        } else {
+          navigate("/student/dashboard");
+        }
+      } else if (profileData.user.role === "teacher") {
+        const teacherData = await getTeacherByAuthId(profileData.user.auth_id);
+        if (teacherData.teacher) {
+          navigate("/teacher/dashboard");
+        } else {
+          navigate("/teacher");
+        }
       }
+    } catch (error) {
+      setErrorMessage(error.message);
     }
+
+    setIsSubmitting(false);
   };
 
   return (
     <AppBar
       position="static"
-      sx={{ backgroundColor: "#E8F8F5", color: "#333" }}
+      sx={{
+        backgroundColor: "#fdf2f8",
+        color: "#333",
+        boxShadow: "none",
+      }}
     >
       <Toolbar
         sx={{
-          // display: "flex",
+          display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
+          height: "80px",
+          px: { xs: 2, md: 4 },
         }}
       >
-        {/* Logo */}
-        <Box>
-          <img
+        {/* Left Section: Logo */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            component="img"
             src={Logo}
             alt="Logo"
             onClick={handleLogoClick}
-            style={{
-              width: "120px",
-              height: "80px",
-              // marginRight: "8px",
-              "@media (max-width: 768px)": { width: "20px", height: "20px" },
+            sx={{
+              width: { xs: "60px", md: "140px" },
+              height: { xs: "60px", md: "140px" },
+              cursor: "pointer",
             }}
           />
-
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: "bold",
-              "@media (max-width: 990px)": { fontSize: "12px" },
-              "@media (max-width: 768px)": { lineHeight: "1" },
-            }}
-          >
-            <span
-              style={{
-                fontSize: "12px",
-                color: "#777",
-              }}
-              sx={{
-                fontSize: { xs: "10px!important", md: "10px" }, // Use the sx prop for media queries
-              }}
-            ></span>
-          </Typography>
         </Box>
 
-        {/* Navigation Links */}
-
-        <StyledBox
-          isMenuOpen={isMenuOpen} // Pass the state to StyledBox
+        {/* Center Navigation (hidden on mobile, shown on md+) */}
+        <Box
           sx={{
-            display: { xs: isMenuOpen ? "flex" : "none", sm: "flex" },
-            flexDirection: { xs: "column", sm: "row" },
-            position: { xs: "absolute", sm: "static" },
-            top: { xs: "60px", sm: "unset" },
-            left: 0,
-            backgroundColor: { xs: "#fff", sm: "transparent" },
-            width: { xs: "100%", sm: "auto" },
-            padding: { xs: "10px", sm: 0 },
-            zIndex: 2,
+            display: { xs: "none", md: "flex" },
+            alignItems: "center",
+            gap: 3,
           }}
         >
-          <StyledLink
-            isCoursesOpen={isCoursesOpen}
-            onMouseEnter={() => setIsCoursesOpen(true)}
-            onMouseLeave={() => setIsCoursesOpen(false)}
-          >
-            <div className="dropdown-button">
-              Courses {isCoursesOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
-            </div>
+          {/* Courses Dropdown Trigger */}
+          <Box sx={{ position: "relative" }}>
+            <Box
+              onClick={handleDropdownToggle}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                p: "0.5rem 1rem",
+                borderRadius: "8px",
+                backgroundColor: "#fff",
+                "&:hover": { backgroundColor: "#f9f9f9" },
+              }}
+            >
+              <Typography variant="body1" sx={{ fontWeight: "medium" }}>
+                Courses
+              </Typography>
+              {isCoursesOpen ? (
+                <IoIosArrowUp style={{ marginLeft: "0.5rem" }} />
+              ) : (
+                <IoIosArrowDown style={{ marginLeft: "0.5rem" }} />
+              )}
+            </Box>
+
+            {/* Courses Dropdown Menu */}
             {isCoursesOpen && (
-              <ul className="category-menu">
-                {["School", "College", "University"].map((category) => (
-                  <li
-                    key={category}
-                    onMouseEnter={() => handleCategoryMouseEnter(category)}
-                    className="categorylist"
+              <Paper
+                elevation={3}
+                sx={{
+                  position: "absolute",
+                  top: "100%",
+                  left: 0,
+                  mt: 1,
+                  width: "300px",
+                  borderRadius: "12px",
+                  p: "1rem",
+                  zIndex: 10,
+                  backgroundColor: "#fff",
+                  boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
+                }}
+              >
+                <Grid container spacing={2}>
+                  {/* School Level */}
+                  <Grid
+                    item
+                    xs={12}
+                    onMouseEnter={() => handleCategoryMouseEnter("School")}
+                    onMouseLeave={() => setIsNestedOpen(false)}
+                    sx={{
+                      position: "relative",
+                      "&:hover": {
+                        backgroundColor: "#f9f9f9",
+                        borderRadius: "8px",
+                      },
+                    }}
                   >
-                    <span className="categorylink">
-                      {category === "School" && (
-                        <img src={schoolIcon} alt="School" className="img" />
-                      )}
-                      {category === "College" && (
-                        <img src={collegeIcon} alt="College" className="img" />
-                      )}
-                      {category === "University" && (
-                        <img
-                          src={universityIcon}
-                          alt="University"
-                          className="img"
-                        />
-                      )}
-                      {category}
-                    </span>
-                    {selectedCategory === category && boards[category] && (
-                      <ul className="boards-menu">
-                        {boards[category].map((board) => (
-                          <li
+                    <Box>
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ fontWeight: "bold", color: "#6A11CB" }}
+                      >
+                        School Level
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "#555" }}>
+                        Study for School Level
+                      </Typography>
+                    </Box>
+
+                    {isNestedOpen && boards["School"] && (
+                      <Paper
+                        elevation={3}
+                        sx={{
+                          position: "absolute",
+                          top: 0,
+                          left: "100%",
+                          width: "250px",
+                          borderRadius: "8px",
+                          p: "1rem",
+                          zIndex: 20,
+                          backgroundColor: "#fff",
+                          boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
+                        }}
+                      >
+                        {boards["School"].map((board) => (
+                          <Box
                             key={board._id}
-                            onMouseEnter={() =>
-                              handleBoardMouseEnter(board._id)
-                            }
+                            onClick={() => handleBoardMouseEnter(board._id)}
+                            sx={{
+                              cursor: "pointer",
+                              "&:hover": {
+                                backgroundColor: "#f0f0f0",
+                                borderRadius: "8px",
+                              },
+                              p: "0.5rem",
+                            }}
                           >
-                            <a
-                              href={`/pages/BatchesDetailPage/BatchesLandingPage/${board._id}`}
+                            <Typography
+                              variant="subtitle2"
+                              sx={{ fontWeight: "bold", color: "#333" }}
                             >
                               {board.name}
-                            </a>
-                            {/* {hoveredBoardId === board._id &&
-                              classes[board._id] && (
-                                <ul className="classes-menu">
-                                  {classes[board._id].map((cls) => (
-                                    <li
-                                      key={cls._id}
-                                      onMouseEnter={() =>
-                                        handleClassMouseEnter(cls._id)
-                                      }
-                                    >
-                                      <a href={`/testingClass/${cls._id}`}>
-                                        {cls.className}
-                                      </a>
-                                      {hoveredClassId === cls._id &&
-                                        packages[cls._id] && (
-                                          <ul className="packages-menu">
-                                            {packages[cls._id].map((pkg) => (
-                                              <li key={pkg._id}>
-                                                <a
-                                                  href={`/testingPackage/${pkg._id}`}
-                                                >
-                                                  {pkg.package_name}
-                                                </a>
-                                              </li>
-                                            ))}
-                                          </ul>
-                                        )}
-                                    </li>
-                                  ))}
-                                </ul>
-                              )} */}
-                          </li>
+                            </Typography>
+                            <Typography variant="body2" sx={{ color: "#555" }}>
+                              {board.description}
+                            </Typography>
+                          </Box>
                         ))}
-                      </ul>
+                      </Paper>
                     )}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </StyledLink>
+                  </Grid>
 
+                  {/* Another Dropdown Item (Competitive) */}
+                  <Grid item xs={12}>
+                    <Box>
+                      <Typography
+                        variant="subtitle1"
+                        sx={{ fontWeight: "bold", color: "#6A11CB" }}
+                      >
+                        Competitive Level
+                      </Typography>
+                      <Typography variant="body2" sx={{ color: "#555" }}>
+                        For the Competitive Exams
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+              </Paper>
+            )}
+          </Box>
+
+          {/* Other Navigation Links */}
           <Link
             href="#"
             underline="none"
             sx={{
               color: "#333",
               fontWeight: "medium",
-              display: "flex",
-              alignItems: "center",
-              "&:hover": { color: "#00a87d" },
-              "@media (max-width: 990px)": { fontSize: "12px" },
-              "@media (max-width: 768px)": { fontSize: "10px" },
+              "&:hover": { color: "#6A11CB" },
             }}
           >
             Features
@@ -334,11 +333,7 @@ function HeaderSection({ scrollToSection }) {
             sx={{
               color: "#333",
               fontWeight: "medium",
-              display: "flex",
-              alignItems: "center",
-              "&:hover": { color: "#00a87d" },
-              "@media (max-width: 990px)": { fontSize: "12px" },
-              "@media (max-width: 768px)": { fontSize: "10px" },
+              "&:hover": { color: "#6A11CB" },
             }}
           >
             Blogs
@@ -349,11 +344,7 @@ function HeaderSection({ scrollToSection }) {
             sx={{
               color: "#333",
               fontWeight: "medium",
-              display: "flex",
-              alignItems: "center",
-              "&:hover": { color: "#00a87d" },
-              "@media (max-width: 990px)": { fontSize: "12px" },
-              "@media (max-width: 768px)": { fontSize: "10px" },
+              "&:hover": { color: "#6A11CB" },
             }}
           >
             Testimonials
@@ -362,174 +353,235 @@ function HeaderSection({ scrollToSection }) {
             href="/ContactUs"
             underline="none"
             sx={{
-              color: "#000",
+              color: "#333",
               fontWeight: "medium",
-              display: "flex",
-              alignItems: "center",
-              "&:hover": { color: "#00a87d" },
-              "@media (max-width: 990px)": {
-                fontSize: "12px",
-                marginRight: "10px",
-              },
-              "@media (max-width: 768px)": {
-                fontSize: "10px",
-                marginRight: "10px",
-              },
+              "&:hover": { color: "#6A11CB" },
             }}
           >
             Contact Us
           </Link>
-        </StyledBox>
+        </Box>
 
-        {/* Hamburger Menu for Mobile */}
-        <HamburgerMenu onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          <span />
-          <span />
-          <span />
-        </HamburgerMenu>
-
-        {/* Action Buttons */}
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            "@media (max-width: 990px)": { gap: 2 },
-            "@media (max-width: 768px)": { gap: 1 },
-          }}
-        >
+        {/* Right Section: Action Buttons + Hamburger (Mobile) */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          {/* Hide the button or adjust on small screens */}
           <Button
             variant="outlined"
-            // onClick={() => navigate("/login")}
             onClick={toggleDrawer(true)}
             sx={{
-              borderColor: "#ccc",
-              color: "#333",
               textTransform: "none",
               borderRadius: "8px",
+              borderColor: "#ccc",
+              color: "#333",
               "&:hover": {
-                borderColor: "#00a87d",
-                background: "#00C897",
+                borderColor: "#6A11CB",
+                background: "#6A11CB",
                 color: "#fff",
               },
-              "@media (max-width: 768px)": {
-                fontSize: "10px!important",
-                marginTop: "10px",
-                marginBottom: "10px",
-              },
-              "@media (max-width: 990px)": {
-                fontSize: "10px",
-                marginTop: "10px",
-                marginBottom: "10px",
-              },
+              display: { xs: "none", md: "block" }, // Hide on mobile
             }}
           >
             Log in
           </Button>
-          {/* <Button
-            variant="contained"
-            sx={{
-              backgroundColor: "#00C897", // Green button
-              color: "#fff",
-              textTransform: "none",
-              borderRadius: "24px", // Fully rounded edges
-              paddingX: 3,
-              "&:hover": { backgroundColor: "#00a87d" },
-              "@media (max-width: 990px)": { fontSize: "12px" },
-              "@media (max-width: 768px)": { paddingX: 2 },
-            }}
-          >
-            Explore
-          </Button> */}
-        </Box>
-        <Drawer
-          anchor="right"
-          open={isDrawerOpen}
-          width="30vw"
-          onClose={toggleDrawer(false)}
-        >
-          <Box
-            sx={{
-              maxWidth: 400,
-              width: "25vw",
-              mx: "auto", // center horizontally
-              p: { xs: 2, sm: 3 },
-              backgroundColor: "#fff",
-              borderRadius: 2,
-              boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
-            }}
-          >
-            {/* Title + sub-link */}
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                mb: 2, // margin-bottom
-                pt: 3, // padding-top
-                pb: 3, // padding-bottom
-                color: "#00C897", // Change this to your desired color
-                fontFamily: "Nunito",
-                textAlign: "center", // Center-align text if needed
-              }}
-            >
-              Login
-            </Typography>
-            {/* ... Drawer Header ... */}
 
-            <Form onFinish={handleLogin}>
-              <Form.Item
-                name="email"
-                rules={[
-                  { required: true, message: "Please input your email!" },
-                ]}
-              >
-                <Input placeholder="Email" />
-              </Form.Item>
-              <Form.Item
-                name="password"
-                rules={[
-                  { required: true, message: "Please input your password!" },
-                ]}
-              >
-                <Input.Password placeholder="Password" />
-              </Form.Item>
-              {errorMessage && <Alert message={errorMessage} type="error" />}
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  mt: 2,
+          {/* Hamburger Icon - shown only on mobile */}
+          <IconButton
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            sx={{
+              display: { xs: "flex", md: "none" },
+              color: "#333",
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
+        </Box>
+      </Toolbar>
+
+      {/* Mobile Menu Drawer (for the hamburger) */}
+      <Drawer
+        anchor="right"
+        open={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: "70%", // adjust as needed
+            p: 2,
+          },
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            mt: 2,
+          }}
+        >
+          {/* You can replicate your nav links here */}
+          <Link
+            href="#"
+            underline="none"
+            sx={{
+              color: "#333",
+              fontWeight: "medium",
+              "&:hover": { color: "#6A11CB" },
+            }}
+          >
+            Courses
+          </Link>
+          <Link
+            href="#"
+            underline="none"
+            sx={{
+              color: "#333",
+              fontWeight: "medium",
+              "&:hover": { color: "#6A11CB" },
+            }}
+          >
+            Features
+          </Link>
+          <Link
+            href="/blogs"
+            underline="none"
+            sx={{
+              color: "#333",
+              fontWeight: "medium",
+              "&:hover": { color: "#6A11CB" },
+            }}
+          >
+            Blogs
+          </Link>
+          <Link
+            href="#"
+            underline="none"
+            sx={{
+              color: "#333",
+              fontWeight: "medium",
+              "&:hover": { color: "#6A11CB" },
+            }}
+          >
+            Testimonials
+          </Link>
+          <Link
+            href="/ContactUs"
+            underline="none"
+            sx={{
+              color: "#333",
+              fontWeight: "medium",
+              "&:hover": { color: "#6A11CB" },
+            }}
+          >
+            Contact Us
+          </Link>
+
+          {/* Mobile Log in button (optional) */}
+          <Button
+            variant="outlined"
+            onClick={toggleDrawer(true)}
+            sx={{
+              textTransform: "none",
+              borderRadius: "8px",
+              borderColor: "#ccc",
+              color: "#333",
+              "&:hover": {
+                borderColor: "#6A11CB",
+                background: "#6A11CB",
+                color: "#fff",
+              },
+            }}
+          >
+            Log In
+          </Button>
+        </Box>
+      </Drawer>
+
+      {/* Login Drawer (for the "Log in" button) */}
+      <Drawer
+        anchor="right"
+        open={isDrawerOpen}
+        onClose={toggleDrawer(false)}
+        sx={{
+          "& .MuiDrawer-paper": {
+            width: { xs: "100%", sm: 400 },
+          },
+        }}
+      >
+        <Box
+          sx={{
+            maxWidth: 400,
+            width: "100%",
+            mx: "auto",
+            p: { xs: 2, sm: 3 },
+            backgroundColor: "#fff",
+            borderRadius: 2,
+            boxShadow: "0 1px 6px rgba(0,0,0,0.1)",
+          }}
+        >
+          {/* Title + sub-link */}
+          <Typography
+            variant="h5"
+            sx={{
+              fontWeight: "bold",
+              mb: 2,
+              pt: 3,
+              pb: 3,
+              color: "#6A11CB",
+              fontFamily: "Nunito",
+              textAlign: "center",
+            }}
+          >
+            Login
+          </Typography>
+
+          <Form onFinish={handleLogin}>
+            <Form.Item
+              name="email"
+              rules={[{ required: true, message: "Please input your email!" }]}
+            >
+              <Input placeholder="Email" />
+            </Form.Item>
+
+            <Form.Item
+              name="password"
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
+
+            {errorMessage && <Alert message={errorMessage} type="error" />}
+
+            <Box sx={{ mt: 2 }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={isSubmitting}
+                style={{
+                  background: "#6A11CB",
+                  borderColor: "#6A11CB",
+                  textTransform: "none",
+                  color: "#fff",
+                  width: "100%",
                 }}
               >
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  loading={isSubmitting}
-                  style={{
-                    background: "#00C897",
-                    borderColor: "#00C897",
-                    textTransform: "none",
-                    color: "#fff",
-                    width: "100%",
-                  }}
-                >
-                  {isSubmitting ? "Logging in..." : "Log In"}
-                </Button>
-              </Box>
-            </Form>
-            <Box
-              sx={{
-                width: "100%",
-                mt: 4,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <Lottie animationData={animationData} />
+                {isSubmitting ? "Logging in..." : "Log In"}
+              </Button>
             </Box>
+          </Form>
+
+          <Box
+            sx={{
+              width: "100%",
+              mt: 4,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Lottie animationData={animationData} />
           </Box>
-        </Drawer>
-      </Toolbar>
+        </Box>
+      </Drawer>
     </AppBar>
   );
 }
