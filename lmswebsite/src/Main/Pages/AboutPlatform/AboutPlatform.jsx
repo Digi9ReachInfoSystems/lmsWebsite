@@ -21,17 +21,20 @@ function AboutPlatform() {
         </div>
         <div className="about-platform-text">
           <h2>What is The Topper Academy?</h2>
+
           <p>
-            HubSpot is an AI-powered customer platform with all the software,
-            integrations, and resources you need to connect your marketing,
-            sales, and customer service. HubSpot’s connected platforms enable
-            you to grow your business faster by focusing on what matters most:
-            your customers.
+            The Topper Academy is a virtual learning platform that provides
+            coaching and mentorship in a variety of levels, ranging from school
+            level, competitive level and Job level. The Topper Academy typically
+            features interactive courses, one-on-one sessions, group coaching,
+            and a mix of live and on-demand content. 
           </p>
-          <p>
-            Get a demo to learn about our premium software, or get started with
-            our full suite of free tools and upgrade as you grow.
-          </p>
+
+          <p>The focus is not just on
+            imparting knowledge, but also on providing tailored coaching that
+            helps learners achieve their personal or professional goals.</p>
+
+            
           <div className="about-platform-buttons">
             <button className="demo-button">Join </button>
             <button

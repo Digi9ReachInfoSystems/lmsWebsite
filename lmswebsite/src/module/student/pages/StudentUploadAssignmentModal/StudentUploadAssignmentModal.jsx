@@ -68,7 +68,7 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
       alert('Assignment submitted successfully!');
       onUploadSuccess();
     } catch (err) {
-      console.error('Error uploading assignment:', err.response?.data || err.message);
+      //console.error('Error uploading assignment:', err.response?.data || err.message);
       setError(err.message || 'Failed to upload assignment. Please try again.');
     } finally {
       setUploading(false);
@@ -91,7 +91,7 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
             ...styles.formGroup,
             
           }}>
-            <label>Select File:</label>
+            <label>Please upload your answer pdf</label>
             <input type="file" onChange={handleFileChange} required />
           </div>
           {error && <div style={styles.error}>{error}</div>}

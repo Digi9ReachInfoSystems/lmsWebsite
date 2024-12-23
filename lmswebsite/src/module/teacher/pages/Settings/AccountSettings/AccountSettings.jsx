@@ -28,7 +28,7 @@ const AccountSettings = () => {
     const apiCaller = async () => {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const DataTeacher = await getTeacherByAuthId(authId);
-      console.log(DataTeacher);
+      //console.log(DataTeacher);
       setFirstName(DataTeacher.teacher.user_id.name);
       setUsername(DataTeacher.teacher?.microsoft_principle_name);
       setEmail(DataTeacher.teacher.user_id.email);

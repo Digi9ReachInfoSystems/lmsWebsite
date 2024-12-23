@@ -10,7 +10,7 @@ export const getUserByAuthId = async (authId) => {
         });
         return response.data; // Return the user data from the API response
     } catch (error) {
-        console.error('Error fetching user by auth_id:', error);
+        ////console.error('Error fetching user by auth_id:', error);
         throw error; // Re-throw error for further handling if needed
     }
 };
@@ -25,7 +25,7 @@ export const getUserProfile = async (authId) => {
         });
         return response.data; // Return user profile data
     } catch (error) {
-        console.error('Error fetching user profile:', error);
+        ////console.error('Error fetching user profile:', error);
         throw error; // Re-throw the error for handling
     }
 };
@@ -39,7 +39,7 @@ export const updateUserByAuthId = async (authId,updateData) => {
         });
         return response.data; // Return the user data from the API response
     } catch (error) {
-        console.error('Error fetching user by auth_id:', error);
+        ////console.error('Error fetching user by auth_id:', error);
         throw error; // Re-throw error for further handling if needed
     }
 };

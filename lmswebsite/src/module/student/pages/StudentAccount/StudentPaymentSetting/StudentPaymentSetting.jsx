@@ -106,7 +106,7 @@ const StudentPaymentSettings = () => {
   ];
 
   const handleExport = () => {
-    console.log("Exporting payment history...");
+    //console.log("Exporting payment history...");
     // Add export functionality here
   };
 

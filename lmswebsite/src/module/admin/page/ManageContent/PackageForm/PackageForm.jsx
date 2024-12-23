@@ -201,7 +201,7 @@ const PackageForm = () => {
         error.response?.data?.error ||
           "Failed to create package. Please try again later."
       );
-      console.error("Error creating package:", error.response?.data || error);
+      //console.error("Error creating package:", error.response?.data || error);
     } finally {
       setIsSubmitting(false);
     }

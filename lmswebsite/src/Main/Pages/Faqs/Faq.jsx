@@ -6,24 +6,24 @@ function Faq() {
 
   const faqs = [
     {
-      question: "How can I accept credit cards online?",
+      question: "1. Do I need any prior experience or knowledge to join?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec suspendisse in felis nulla dolor, egestas odio risus.",
+        "No prior experience is required! Our coaching programs are designed for individuals at all skill levels, and our coaches tailor their approach based on your current knowledge and goals.",
     },
     {
-      question: "Is there a limit on how many products I can add?",
+      question: "2. How long are the coaching programs?",
       answer:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam ac nisl a dolor varius placerat.",
+        "Our coaching programs vary in length depending on the course and package you choose. Some are short-term (a few weeks), while others may extend over several months. You’ll be able to choose a plan that suits your needs.",
     },
     {
-      question: "Do you ship abroad?",
+      question: "3. How are the coaching sessions delivered?",
       answer:
-        "Yes, we ship to most countries. Please check our shipping policy for more details.",
+        "Coaching sessions are delivered through a combination of live virtual meetings, recorded video lessons, and online resources. You’ll also have access to written materials and assignments to enhance your learning experience.",
     },
     {
-      question: "How long will it take to receive my order?",
+      question: "4. What if I need more personalized attention?",
       answer:
-        "Delivery time depends on your location and the shipping method chosen. Typically, it takes 3-7 business days.",
+        "We offer one-on-one coaching for those who need more tailored, intensive support. Our coaches are here to provide you with the attention and guidance you need to succeed.",
     },
   ];
 
@@ -33,7 +33,7 @@ function Faq() {
 
   return (
     <div className="faq-section">
-      <h2>Frequently Asked Questions</h2>
+      <h2>Frequently Asked Questions (FAQs)</h2>
       <div className="faq-search">
         <input
           type="text"

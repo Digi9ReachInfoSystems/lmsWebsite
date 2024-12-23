@@ -88,7 +88,7 @@ const AssignedBatchStudentsList = () => {
         setStudents(studentDetails);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching batch details:", err);
+        //////console.error("Error fetching batch details:", err);
         setError(err.message || "Failed to fetch batch details.");
         setLoading(false);
       }
@@ -101,7 +101,7 @@ const AssignedBatchStudentsList = () => {
 
         setTeacherId(response.teacher._id); // Save the teacher ID
       } catch (err) {
-        console.error("Error fetching teacher details:", err);
+        //////console.error("Error fetching teacher details:", err);
       }
     };
 
@@ -133,7 +133,7 @@ const AssignedBatchStudentsList = () => {
         students: students.map((student) => student.id), // Pass all student IDs in the batch
       };
 
-      console.log("Creating meeting with payload:", meetingPayload);
+      //////console.log("Creating meeting with payload:", meetingPayload);
 
       // Call the API to create the meeting
       const response = await createMeeting(meetingPayload);
@@ -143,7 +143,7 @@ const AssignedBatchStudentsList = () => {
       form.resetFields();
       setCreateMeeting(false);
     } catch (err) {
-      console.error("Error creating meeting:", err);
+      ////console.error("Error creating meeting:", err);
       message.error("Failed to create meeting.");
     }
   };
@@ -188,7 +188,7 @@ const AssignedBatchStudentsList = () => {
 
 
   const handleUploadContent = async () => {
-    console.log("Uploading content...", file);
+    ////console.log("Uploading content...", file);
     if (!file) {
       message.error("Please select a file to upload.");
       return;
@@ -198,7 +198,7 @@ const AssignedBatchStudentsList = () => {
       setLoading(true);
       // Call the uploadContent API function
       const response = await uploadContent(batchId, teacherId, file, description);
-      console.log("Content uploaded successfully:", response);
+      ////console.log("Content uploaded successfully:", response);
       message.success("Content uploaded successfully!");
       setIsModel2visble(false); // Close the modal after success
       form.resetFields(); // Reset the form
@@ -211,7 +211,7 @@ const AssignedBatchStudentsList = () => {
   };
 
   const handleFileChange = (info) => {
-    console.log("Selected file:", info.file);
+    ////console.log("Selected file:", info.file);
     // if (info.file.status === "done") {
     setFile(info.file.originFileObj); // Store the selected file
     // }
@@ -284,7 +284,7 @@ const AssignedBatchStudentsList = () => {
             <PrimaryButton
               type="primary"
               onClick={openUploadModal2}>
-              Upload Content
+              Upload Material
             </PrimaryButton>
           </div>
         </div>

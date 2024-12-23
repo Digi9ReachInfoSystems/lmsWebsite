@@ -63,12 +63,12 @@ const ContactUs = () => {
       const response = await createQuery(submissionData);
 
       if (response) {
-        console.log("Query successfully submitted:", response);
+        //console.log("Query successfully submitted:", response);
         alert("Query submitted successfully!");
         form.resetFields(); // Reset form fields after successful submission
       }
     } catch (error) {
-      console.error("Error submitting query:", error);
+      //console.error("Error submitting query:", error);
       alert("Failed to submit query. Please try again.");
     }
   };

@@ -84,7 +84,7 @@ const UserEngagementChart = () => {
       });
       setLoading(false);
     } catch (error) {
-      console.error("Failed to fetch chart data:", error);
+      //console.error("Failed to fetch chart data:", error);
       setLoading(false);
     }
   };

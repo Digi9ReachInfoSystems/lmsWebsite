@@ -21,7 +21,7 @@ const [loading, setLoading] = useState(true);
       setLoading(true);
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const DataTeacher = await getTeacherByAuthId(authId);
-      console.log("dfghjk",DataTeacher);
+      //console.log("dfghjk",DataTeacher);
 
       // Populate fields with data from the API
       setFullName(DataTeacher.teacher.user_id.name);

@@ -150,8 +150,12 @@ const ModeBatch = () => {
       subject_id: selectedSubject,
     };
 
+    // Debugging: Log the data being sent to the API
+    //console.log('Submitting data:', data);
+
     try {
       const response = await createTypeOfBatch(data);
+      //console.log('API Response:', response);
       if (response) {
         setSuccess("Type of batch created successfully!");
         // Reset form
@@ -170,8 +174,8 @@ const ModeBatch = () => {
         setSelectedSubject("");
       }
     } catch (err) {
-      console.error("API Error:", err);
-      setError(err.response?.data?.error || "Failed to create Type of Batch.");
+      //console.error('API Error:', err);
+      setError(err.response?.data?.error || 'Failed to create Type of Batch.');
     }
   };
 

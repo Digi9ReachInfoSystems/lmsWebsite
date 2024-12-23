@@ -15,7 +15,7 @@ const DynamicMenu = () => {
       try {
         // 1. Fetch all boards
         const boards = await getBoards();
-        console.log("Fetched Boards:", boards);
+        //console.log("Fetched Boards:", boards);
 
         // 2. Initialize the top-level "Explore Courses" menu item
         const exploreCoursesItem = {
@@ -43,7 +43,7 @@ const DynamicMenu = () => {
           ])
         );
         const packagesResults = await Promise.all(packagesPromises);
-        console.log("Fetched Packages: 1234567 ", packagesResults);
+        //console.log("Fetched Packages: 1234567 ", packagesResults);
 
         // 6. Map packages to their respective classes
         const classIdToPackages = {};
@@ -92,7 +92,7 @@ const DynamicMenu = () => {
             // Add the class item to the board's children
             boardItem.children.push(classItem);
           }
-           console.log('boardItem', boardItem);
+           //console.log('boardItem', boardItem);
           // Add the board item to the "Explore Courses" menu
           exploreCoursesItem.children.push(boardItem);
         }
@@ -102,7 +102,7 @@ const DynamicMenu = () => {
         setCurrent('explore_courses'); // Optionally set a default selected key
 
       } catch (error) {
-        console.error("Error fetching menu data:", error);
+        //console.error("Error fetching menu data:", error);
       }
     };
 
@@ -112,14 +112,14 @@ const DynamicMenu = () => {
   useEffect(() => {
     const apiCaller=async()=>{
        const boardData= await getBoards();
-       console.log(" sdfghj",boardData);
+       //console.log(" sdfghj",boardData);
        const classData= await getClassesByBoardId("67515a9984ee0be15b5e6797");
-       console.log(" classData",classData);
+       //console.log(" classData",classData);
        
        const normalPackageData= await getPackageByClassId("67515b1284ee0be15b5e67a1","normal");
-       console.log(" normalPackageData",normalPackageData);
+       //console.log(" normalPackageData",normalPackageData);
        const personalPackageData= await getPackageByClassId("67515b1284ee0be15b5e67a1","personal");
-       console.log(" personalPackageData",personalPackageData);
+       //console.log(" personalPackageData",personalPackageData);
     } 
     apiCaller();
      
@@ -127,7 +127,7 @@ const DynamicMenu = () => {
   
 
   const onClick = (e) => {
-    console.log('Menu Clicked:', e);
+    //console.log('Menu Clicked:', e);
     setCurrent(e.key);
   };
 

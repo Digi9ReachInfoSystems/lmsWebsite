@@ -70,7 +70,7 @@ function HeaderSection() {
         const fetchedBoards = await getBoards(category);
         setBoards((prev) => ({ ...prev, [category]: fetchedBoards }));
       } catch (error) {
-        console.error(`Error fetching boards: ${error}`);
+        //console.error(`Error fetching boards: ${error}`);
       }
     }
   };
@@ -82,7 +82,7 @@ function HeaderSection() {
         const fetchedClasses = await getClassesByBoardId(boardId);
         setClasses((prev) => ({ ...prev, [boardId]: fetchedClasses }));
       } catch (error) {
-        console.error(`Error fetching classes: ${error}`);
+        //console.error(`Error fetching classes: ${error}`);
       }
     }
   };
@@ -318,7 +318,7 @@ function HeaderSection() {
 
           {/* Other Navigation Links */}
           <Link
-            href="#"
+            href="/Our-Academy"
             underline="none"
             sx={{
               color: "#333",
@@ -326,7 +326,7 @@ function HeaderSection() {
               "&:hover": { color: "#6A11CB" },
             }}
           >
-            Features
+            Our Academy
           </Link>
           <Link
             href="/blogs"

@@ -100,7 +100,7 @@ function ManageMeeting() {
         setLoadData(!loadData);
       }
     } catch (error) {
-      console.error("Error clocking in:", error);
+      //console.error("Error clocking in:", error);
     }
   };
 
@@ -119,7 +119,7 @@ function ManageMeeting() {
         setLoadData(!loadData);
       }
     } catch (error) {
-      console.error("Error clocking out:", error);
+      //console.error("Error clocking out:", error);
     }
   };
 

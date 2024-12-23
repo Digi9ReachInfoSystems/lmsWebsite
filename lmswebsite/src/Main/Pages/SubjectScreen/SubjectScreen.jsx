@@ -3,6 +3,7 @@ import "./SubjectScreen.css";
 import HeaderSection from "../NavBar/navbar";
 import { getSubjectsByClassId } from "../../../api/subjectApi";
 import { useNavigate } from "react-router-dom";
+import combo from "../../../Main/assets/combo.avif";
 
 function SubjectScreen() {
   const [selectedSubjects, setSelectedSubjects] = useState([]); // To track selected subjects
@@ -16,7 +17,7 @@ function SubjectScreen() {
     return JSON.parse(localStorage.getItem("selectedClass"));
   });
 
-  console.log("Selected Class:", selectedClass);
+  //console.log("Selected Class:", selectedClass);
 
   useEffect(() => {
     if (!selectedClass || !selectedClass._id) {
@@ -29,7 +30,7 @@ function SubjectScreen() {
       try {
         const response = await getSubjectsByClassId(selectedClass._id);
         setSubjects(response); // Set fetched subjects
-        console.log("Fetched subjects:", response);
+        //console.log("Fetched subjects:", response);
         localStorage.setItem("subjects", JSON.stringify(response));
       } catch (error) {
         setError("Failed to fetch subjects. Please try again later.");
@@ -115,7 +116,7 @@ function SubjectScreen() {
             >
               <div className="skill-icon">
                 <img
-                  src="/assets/custom-subject-icon.png"
+                  src={combo}
                   alt="Custom Subject"
                   className="board-icon"
                 />

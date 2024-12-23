@@ -21,7 +21,7 @@ export const refreshAccessToken = async (refreshToken) => {
     // Return the API response data
     return response.data;
   } catch (error) {
-    console.error('Error refreshing access token:', error.message);
+    //console.error('Error refreshing access token:', error.message);
 
     // Handle error based on response
     if (error.response) {

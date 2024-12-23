@@ -13,7 +13,7 @@ const FAQSection = () => {
         const response = await getAllFAQ();
         setFaqs(response.slice(0, 5)); // Limit to 5 FAQs
       } catch (error) {
-        console.error("Error fetching FAQs:", error);
+        //console.error("Error fetching FAQs:", error);
       }
     };
 

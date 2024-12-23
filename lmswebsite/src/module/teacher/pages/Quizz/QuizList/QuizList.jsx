@@ -8,6 +8,8 @@ import {
   QuizzesContainer,
   QuizListWrap,
 } from "./QuizList.Styles";
+
+import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
@@ -79,7 +81,7 @@ export default function QuizList() {
 
         const authId = sessionData.userId;
         const teacherData = await getTeacherByAuthId(authId);
-        console.log("Teacher Data:", teacherData);
+        //console.log("Teacher Data:", teacherData);
 
         if (!teacherData || !teacherData.teacher || !teacherData.teacher._id) {
           message.error("Teacher data not found.");
@@ -90,7 +92,7 @@ export default function QuizList() {
           teacher_id: teacherData.teacher._id,
           batch_id: batchId,
         });
-        console.log("Quizzes Data:", data);
+        //console.log("Quizzes Data:", data);
 
         if (data && data.quizzes) {
           setQuizzes(data.quizzes);
@@ -101,7 +103,7 @@ export default function QuizList() {
           message.warning("No quizzes found for this batch.");
         }
       } catch (err) {
-        console.error("Error fetching quizzes:", err);
+        //console.error("Error fetching quizzes:", err);
         setError("Failed to fetch quizzes. Please try again.");
       } finally {
         setLoading(false);
@@ -126,7 +128,7 @@ export default function QuizList() {
 
   // Handle form submission (onSubmit function)
   const handleFormSubmit = async (formData) => {
-    console.log("Form submitted with data: ", formData);
+    //console.log("Form submitted with data: ", formData);
 
     setLoading(true);
     setError(null);
@@ -146,7 +148,7 @@ export default function QuizList() {
         message.error("Failed to create quiz. Please try again.");
       }
     } catch (err) {
-      console.error("Error creating quiz:", err.response || err.message);
+      //console.error("Error creating quiz:", err.response || err.message);
       setError("An error occurred while creating the quiz.");
       message.error("An error occurred while creating the quiz.");
     } finally {
@@ -164,7 +166,7 @@ export default function QuizList() {
     } else {
       setFilterData(originalData); // Reset to original data if search is empty
     }
-    console.log("Filtered Data:", filterData);
+    //console.log("Filtered Data:", filterData);
   }, [searchInput, originalData]);
 
   const handleViewQuestions = (quiz) => {
@@ -185,6 +187,12 @@ export default function QuizList() {
     setModel2(true);
   };
 
+
+  const handleBackPage =() =>{
+    navigate(-1);
+  }
+
+  
   const columns = [
     {
       title: "Sl No.",
@@ -240,10 +248,10 @@ export default function QuizList() {
       <QuizListWrap>
         <div className="created-quizes-batches-row-one">
           <div className="created-quizes-batches-title-section">
-            <Link to={`/teacher/dashboard/quizz/assignedBatch`}>
+            {/* <Link to={`/teacher/dashboard/quizz/assignedBatch`}>
               <IoMdArrowRoundBack size={24} />
-            </Link>
-            <Heading>Created Assessment</Heading>
+            </Link> */}
+            <Heading style={{display:"flex", justifyContent:"center",alignItems:"center"}}>  <IoArrowBackOutline style={{fontSize: "24px", marginRight:"8px", color:"black", }} onClick={handleBackPage} /> Created Assessment</Heading>
           </div>
           <div className="created-quizes-batches-action-section">
             <Input
@@ -257,12 +265,12 @@ export default function QuizList() {
 
             <PrimaryButton onClick={handleAddQuiz}>
               <AiOutlineFileAdd size={24} />
-              Create Assessment
+              Create Assignment
             </PrimaryButton>
 
             <PrimaryButton onClick={handleUploadAssessment}>
               <AiOutlineFileAdd size={24} />
-              Upload Assessment
+              Upload Homework
             </PrimaryButton>
           </div>
         </div>

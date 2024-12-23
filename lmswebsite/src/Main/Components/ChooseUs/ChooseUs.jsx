@@ -14,11 +14,11 @@ const ChooseUs = () => {
     const fetchData = async () => {
       try {
         const response = await getChooseUsData();
-        console.log("Choose us data fetched successfully:", response);
+        //console.log("Choose us data fetched successfully:", response);
         setChooseUsData(response);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        //console.error("Error fetching data:", err);
         setError(err);
         setLoading(false);
       }

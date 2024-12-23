@@ -19,22 +19,22 @@ const AssignmentsPage = () => {
       try {
         const assignmentsData = await getAssignmentsByBatchId(batchId);
 
-        console.log("assignmentsData:", assignmentsData);
-        console.log('Type of assignmentsData:', typeof assignmentsData);
-        console.log('Is assignmentsData an array?', Array.isArray(assignmentsData));
+        ////console.log("assignmentsData:", assignmentsData);
+        ////console.log('Type of assignmentsData:', typeof assignmentsData);
+        //console.log('Is assignmentsData an array?', Array.isArray(assignmentsData));
 
         if (Array.isArray(assignmentsData)) {
           setAssignments(assignmentsData);
-          console.log('Assignments set:', assignmentsData);
+          //console.log('Assignments set:', assignmentsData);
         } else if (assignmentsData && Array.isArray(assignmentsData.assignments)) {
           setAssignments(assignmentsData.assignments);
-          console.log('Assignments set from assignmentsData.assignments:', assignmentsData.assignments);
+          //console.log('Assignments set from assignmentsData.assignments:', assignmentsData.assignments);
         } else {
-          console.warn('No assignments found or unexpected response structure.');
+          //console.warn('No assignments found or unexpected response structure.');
           setAssignments([]); // Default to empty array
         }
       } catch (err) {
-        console.error('Error fetching assignments:', err);
+        //console.error('Error fetching assignments:', err);
         setError(err.message || 'Failed to fetch assignments.');
       } finally {
         setLoading(false);
@@ -70,7 +70,7 @@ const AssignmentsPage = () => {
         }
       })
       .catch((err) => {
-        console.error('Error refetching assignments after upload:', err);
+        //console.error('Error refetching assignments after upload:', err);
         setError('Failed to refresh assignments after upload.');
       })
       .finally(() => {

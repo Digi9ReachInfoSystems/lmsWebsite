@@ -5,13 +5,13 @@ import { MdLiveTv } from "react-icons/md";
 import { TeacherDashboardQuizCardwrap } from "./TeacherDashboardQuizCard.styles";
 import { Link } from "react-router-dom";
 const TeacherdashBoardQuizCard = ({ cardsdata }) => {
-    console.log("Quizcardsdata", cardsdata);
+    //console.log("Quizcardsdata", cardsdata);
 
     const iconMap = {
         "Recent Quiz": <MdLiveTv />,
     };
 const onClick = () => {
-    console.log("clicked");
+    //console.log("clicked");
 }
 
   return (

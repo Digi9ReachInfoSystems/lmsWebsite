@@ -36,7 +36,7 @@ export default function AssignedTeacherBatch() {
 
         const authId = sessionData.userId;
         const teacherData = await getTeacherByAuthId(authId);
-        console.log("Teacher Data:", teacherData);
+        ////console.log("Teacher Data:", teacherData);
 
         if (!teacherData.teacher || !teacherData.teacher._id) {
           throw new Error("Teacher data is incomplete.");
@@ -48,11 +48,11 @@ export default function AssignedTeacherBatch() {
         setBatches(fetchedBatches);
         setOriginalData(fetchedBatches);
         setFilterData(fetchedBatches);
-        console.log("Fetched Batches:", fetchedBatches);
+        //console.log("Fetched Batches:", fetchedBatches);
         setLoading(false);
       } catch (err) {
         setBatches(null);
-        console.error("Error fetching batches:", err);
+        //console.error("Error fetching batches:", err);
         // setError(err.message || 'Failed to fetch batches');
         setLoading(false);
       }

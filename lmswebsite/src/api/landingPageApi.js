@@ -40,16 +40,16 @@ export const fetchLandingPageData = async () => {
       api.get(apiEndpoints.faqs),
     ]);
 
-     // Logging each response to the console
-     console.log('Banners:', bannersResponse.data);
-     console.log('Courses:', coursesResponse.data);
-     console.log('Stats:', statsResponse.data);
-     console.log('Benefits:', benefitsResponse.data);
-     console.log('Single Course Per Class:', singleCoursePerClassResponse.data);
-     console.log('Why Choose Us:', chooseUsResponse.data);
-     console.log('Experienced Teachers:', experienceTeachersResponse.data);
-     console.log('Testimonials:', testimonialsResponse.data);
-     console.log('FAQs:', faqsResponse.data);
+     // Logging each response to the //console
+     //console.log('Banners:', bannersResponse.data);
+     //console.log('Courses:', coursesResponse.data);
+     //console.log('Stats:', statsResponse.data);
+     //console.log('Benefits:', benefitsResponse.data);
+     //console.log('Single Course Per Class:', singleCoursePerClassResponse.data);
+     //console.log('Why Choose Us:', chooseUsResponse.data);
+     //console.log('Experienced Teachers:', experienceTeachersResponse.data);
+     //console.log('Testimonials:', testimonialsResponse.data);
+     //console.log('FAQs:', faqsResponse.data);
 
     // Returning all responses as a single object
     return {
@@ -64,7 +64,7 @@ export const fetchLandingPageData = async () => {
       faqs: faqsResponse.data,
     };
   } catch (error) {
-    console.error('Error fetching landing page data:', error);
+    //console.error('Error fetching landing page data:', error);
     throw error; // You can handle the error as needed
   }
 };

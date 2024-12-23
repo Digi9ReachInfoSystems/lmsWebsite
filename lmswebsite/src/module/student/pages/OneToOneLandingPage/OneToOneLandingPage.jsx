@@ -47,7 +47,7 @@ export const OneToOneStudentlandingPage = () => {
   const [slectedSubject, setSelectedSubject] = useState([]);
   const navigate = useNavigate();
   // const loaderData= useLoaderData();
-  // console.log("loaderData", loaderData);
+  // ////console.log("loaderData", loaderData);
   useEffect(() => {
 
     const apiCaller = async () => {
@@ -55,30 +55,30 @@ export const OneToOneStudentlandingPage = () => {
 
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
-          console.error("No session data found.");
+          //console.error("No session data found.");
           return;
         }
         // Await the user data if getUserByAuthId returns a promise
         const user = await getUserByAuthId(sessionData.userId);
         if (!user) {
-          console.error("User not found.");
+          //console.error("User not found.");
           return;
         }
         const data = await getStudentByAuthId(sessionData.userId);
-        console.log("studentData", data);
+        //console.log("studentData", data);
 
         if (!data || !data.student) {
-          console.error("Student data not found.");
+          //console.error("Student data not found.");
           return;
         }
-        console.log("studentData", data);
+        //console.log("studentData", data);
         setStudentDataForm(data);
         const packageResponse = await getPackageByClassId(data.student.class._id,"personal");
         setPackagesData(packageResponse);
-        console.log("packageResponse", data.student.class._id, "gg", packageResponse);
+        //console.log("packageResponse", data.student.class._id, "gg", packageResponse);
         const subjectResponse = await getSubjects(data.student.class._id);
         setSubjects(subjectResponse);
-        console.log("subjectResponse", subjectResponse);
+        //console.log("subjectResponse", subjectResponse);
         const response = await getClassesByBoardId(data.student.board_id._id);
         setClassData(response);
 
@@ -91,7 +91,7 @@ export const OneToOneStudentlandingPage = () => {
         }
 
       } catch (error) {
-        console.error("API Caller Error:", error);
+        //console.error("API Caller Error:", error);
       }
 
 
@@ -131,17 +131,17 @@ export const OneToOneStudentlandingPage = () => {
       subjects: slectedSubject,
       slot: slot
     }
-    console.log("sel")
-    console.log("submissionData", submissionData);
+    //console.log("sel")
+    //console.log("submissionData", submissionData);
 
     const apiCaller = async () => {
       try {
         const response = await createCustomPackage({ subject_id: slectedSubject, student_id: studentDataForm.student._id, slots: slot });
-        console.log("response", response);
+        //console.log("response", response);
         alert("Request submitted   successfully!");
         window.location.reload();
       } catch (err) {
-        console.error("Error submitting Packages:", err);
+        //console.error("Error submitting Packages:", err);
       }
 
 
@@ -285,7 +285,7 @@ export const OneToOneStudentlandingPage = () => {
                           onChange={(options) => {
                             setSelectedSubject(options);
                             // setSelectedSubject(options);
-                            console.log("Selected subjects:", options);
+                            //console.log("Selected subjects:", options);
                           }}
                         />
                       </Form.Item>

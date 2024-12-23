@@ -56,7 +56,7 @@ const TeacherAddQuestionModel = ({ onSave }) => {
               );
             } catch (error) {
               message.error(`Failed to upload image for question ${index + 1}`);
-              console.error(error);
+              ////console.error(error);
             }
           }
 
@@ -84,7 +84,7 @@ const TeacherAddQuestionModel = ({ onSave }) => {
       form.resetFields(); // Reset the form after successful submission
     } catch (error) {
       message.error("Failed to create quiz. Please try again.");
-      console.error("Error creating quiz:", error);
+      //console.error("Error creating quiz:", error);
     } finally {
       setLoading(false); // End loading indicator
     }
@@ -107,7 +107,7 @@ const TeacherAddQuestionModel = ({ onSave }) => {
           ],
         }}
       >
-        <h4>Assessment Questions</h4>
+        <h4>Assignment Questions</h4>
 
         <Form.List name="questions">
           {(fields, { add, remove }) => (

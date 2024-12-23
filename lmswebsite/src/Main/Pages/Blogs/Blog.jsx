@@ -36,7 +36,7 @@ const Blog = () => {
           setError("Invalid blog data format received.");
         }
       } catch (err) {
-        console.error("Error fetching blogs:", err);
+        //console.error("Error fetching blogs:", err);
         setError(
           "Failed to fetch blogs: " +
             (err.error || "An unexpected error occurred.")

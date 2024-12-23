@@ -31,7 +31,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
 
     const apicaller = async () => {
       const response = await getBoards();
-      console.log("response", response);
+      ////console.log("response", response);
       setBoard(response);
     }
     apicaller();
@@ -53,19 +53,19 @@ const CreateNewBatch = ({ open, closeModal }) => {
       switch (typeOfBatchData.mode) {
         case "1:1":
           setSelectionLength(1);
-          console.log("selectionLength", 1);
+          ////console.log("selectionLength", 1);
           break;
         case "1:3":
           setSelectionLength(3);
-          console.log("selectionLength", 3);
+          //console.log("selectionLength", 3);
           break;
         case "1:5":
           setSelectionLength(5);
-          console.log("selectionLength", 5);
+          //console.log("selectionLength", 5);
           break;
         case "1:7":
           setSelectionLength(7);
-          console.log("selectionLength", 7);
+          //console.log("selectionLength", 7);
           break;
         default:
           setSelectionLength(0);
@@ -90,13 +90,13 @@ const CreateNewBatch = ({ open, closeModal }) => {
   const handleSubjectChange = async (value) => {
     const teacherData = await getTeachersBySubjectAndClass(value, form.getFieldValue("class"));
     // const studentData = await getStudentsForBatchBySubjectId(value, mode);
-    console.log("hehehe", { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") })
+    //console.log("hehehe", { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") })
     const filterData = { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") };
     const studentData = await getEligibleStudentsForBatch(filterData);
-    console.log("studentData", studentData);
+    //console.log("studentData", studentData);
     // if (studentData.customPackageCriteria.length > 0 || studentData.normalCriteria.length > 0) {
     //   const totalStudents = studentData.customPackageCriteria.concat(studentData.normalCriteria);
-    //   console.log("totalStudents", totalStudents);
+    //   //console.log("totalStudents", totalStudents);
     //   setStudents(totalStudents);
     // } else {
     //   setStudents([]);
@@ -109,7 +109,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
   const handleFileUpload = async (info) => {
 
     const url = await uploadFileToFirebase(info.file, "batchImages");
-    console.log("url", url);
+    //console.log("url", url);
 
     form.setFieldsValue({ batchImage: url });
     message.success("File uploaded successfully!");
@@ -119,14 +119,14 @@ const CreateNewBatch = ({ open, closeModal }) => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      console.log("Form Values:", values);
+      //console.log("Form Values:", values);
       // const batchData = {
       //   ...values,
       //   date: values.date.format("YYYY-MM-DD"),
       //   teachers: values.teachers || [],
       //   students: values.students || [],
       // };
-      // console.log("batchData", batchData);
+      // //console.log("batchData", batchData);
       // let currentDate = dayjs(); // Get the current date
       //  const newDate = currentDate.add(values.duration, "month").format("YYYY-MM-DD");
       const submissionData = {
@@ -140,7 +140,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
         type_of_batch: values.type_of_batch,
 
       }
-      console.log("submissionData", submissionData);
+      //console.log("submissionData", submissionData);
 
       const response = await createBatch(submissionData);
       if (response?.message) {
@@ -186,7 +186,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
             <Select
               placeholder="Select Board"
               onChange={(value) => {
-                console.log("value", value);
+                //console.log("value", value);
                 setSelectedBoard(value);
               }}
               allowClear

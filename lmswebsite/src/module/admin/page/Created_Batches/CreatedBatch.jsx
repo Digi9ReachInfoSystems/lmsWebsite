@@ -57,7 +57,7 @@ const CreatedBatch = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.error("Error fetching batches:", error);
+      //console.error("Error fetching batches:", error);
       message.error("Failed to fetch batches.");
       setLoading(false);
     }
@@ -67,12 +67,12 @@ const CreatedBatch = () => {
   const fetchStudents = async (record) => {
     try {
       setLoadingAddStudent(true);
-      console.log("record", record);
+      //////console.log("record", record);
 
 
       const filterData = { subject_id: record.subject_id, type_of_batch: record.type_of_batch_id }
       const data = await getEligibleStudentsForBatch(filterData);
-      console.log("data", data);
+      //////console.log("data", data);
       if (data && Array.isArray(data.students)) {
         if (data.students.length === 0) {
           message.error("No eligible students found.");
@@ -92,7 +92,7 @@ const CreatedBatch = () => {
       }
       setLoadingAddStudent(false);
     } catch (error) {
-      console.error("Error fetching students:", error);
+      //console.error("Error fetching students:", error);
       setStudents([]);
       message.error("No Eligible Students Found for this Batch.");
       setLoadingAddStudent(false);
@@ -105,7 +105,7 @@ const CreatedBatch = () => {
   const handleStudentAddCheck = (record) => {
     const apiCaller = async () => {
       try {
-        console.log("calling api");
+        ////console.log("calling api");
         const typeOfBatchData = await getTypeOfBatchById(record.type_of_batch_id);
         setSeletedSubjectId(record.subject_id)
         switch (typeOfBatchData.mode) {
@@ -116,7 +116,7 @@ const CreatedBatch = () => {
               setRemStudentCount(1 - record.numOfStudents);
             }
             setSelectionLength(1);
-            console.log("selectionLength", 1);
+            ////console.log("selectionLength", 1);
             break;
           case "1:3":
             if (record.numOfStudents === 3) {
@@ -125,17 +125,17 @@ const CreatedBatch = () => {
               setRemStudentCount(3 - record.numOfStudents);
             }
             setSelectionLength(3);
-            console.log("selectionLength", 3);
+            ////console.log("selectionLength", 3);
             break;
           case "1:5":
-            console.log("record.numOfStudents", record.numOfStudents);
+            ////console.log("record.numOfStudents", record.numOfStudents);
             if (record.numOfStudents === 5) {
               setRemStudentCount(0);
             } else {
               setRemStudentCount(5 - record.numOfStudents);
             }
             setSelectionLength(5);
-            console.log("selectionLength", 5);
+            ////console.log("selectionLength", 5);
             break;
           case "1:7":
             if (record.numOfStudents === 7) {
@@ -144,14 +144,14 @@ const CreatedBatch = () => {
               setRemStudentCount(7 - record.numOfStudents);
             }
             setSelectionLength(7);
-            console.log("selectionLength", 7);
+            ////console.log("selectionLength", 7);
             break;
           default:
             setSelectionLength(0);
             break;
         }
       } catch (error) {
-        console.error("Error fetching students:", error);
+        ////console.error("Error fetching students:", error);
       }
     }
 
@@ -213,8 +213,8 @@ const CreatedBatch = () => {
         studentIds: selectedStudents,
         subjectId: seletedSubjectId
       }
-      console.log("submissionData", submissionData);
-      console.log("selectedBatch.key", selectedBatch.key);
+      //////console.log("submissionData", submissionData);
+      //////console.log("selectedBatch.key", selectedBatch.key);
 
       const response = await addStudentToBatch(
         selectedBatch.key,
@@ -231,7 +231,7 @@ const CreatedBatch = () => {
       }
       setLoadingAddStudent(false);
     } catch (error) {
-      console.error("Error adding student to batch:", error);
+      ////console.error("Error adding student to batch:", error);
       message.error("Failed to add student(s) to batch.");
       setLoadingAddStudent(false);
     }

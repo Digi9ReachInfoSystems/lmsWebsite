@@ -66,7 +66,7 @@ const SignUpPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", formData);
+    //console.log("Form Submitted:", formData);
     // Add API integration logic here
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -87,7 +87,7 @@ const SignUpPage = () => {
         formData.profileImage,
         "studentProfile"
       );
-      console.log("Profile Image URL:", profileImageUrl);
+      //console.log("Profile Image URL:", profileImageUrl);
       // Prepare data to send to API
       const data = {
         role: "student",
@@ -105,7 +105,7 @@ const SignUpPage = () => {
         type_of_batch: formData.type_of_batch,
         subject_id: formData.subject,
       };
-      console.log(data);
+      //console.log(data);
       await signupUser(data);
       message.success("Registration Successful!");
       try {
@@ -133,12 +133,11 @@ const SignUpPage = () => {
         console.error(error.message);
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      //console.error("Registration error:", error);
       const errorMessage =
         error.message || "Registration failed. Please try again.";
       message.error(`Registration failed: ${errorMessage}`);
     }
-
     // navigate("/login");
   };
 
