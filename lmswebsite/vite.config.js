@@ -5,7 +5,8 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ["aos"], // Exclude "aos" from bundling
+      external: [],
+      input: "index.html",
     },
   },
 });
