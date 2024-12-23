@@ -20,7 +20,7 @@
   font-size: 42px;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #00c897;
+  color: #6a11cb;
 }
 
 /* Specific Header Styling */
@@ -30,7 +30,7 @@
 }
 
 .green-text {
-  color: #00c897; /* Green color */
+  color: #6a11cb; /* Green color */
   font-style: italic;
 }
 
@@ -102,7 +102,7 @@
 }
 
 .next-btn {
-  background-color: #00c897;
+  background-color: #6a11cb;
   color: white;
 }
 
@@ -118,7 +118,7 @@
 
 .progress {
   height: 100%;
-  background-color: #00c897;
+  background-color: #6a11cb;
 }
 
 /* Step Info */

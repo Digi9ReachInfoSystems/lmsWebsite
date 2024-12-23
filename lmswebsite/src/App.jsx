@@ -243,14 +243,14 @@ function App() {
               element={<QuizQuestionPage />}
             />
 
-            <Route 
-            path="/student/dashboard/assignments"
-            element={<StudentAssignment />}
+            <Route
+              path="/student/dashboard/assignments"
+              element={<StudentAssignment />}
             />
 
-            <Route 
-            path="/student/dashboard/batches/:batchId/assignments"
-            element={<StudentAssignmentUpload />}
+            <Route
+              path="/student/dashboard/batches/:batchId/assignments"
+              element={<StudentAssignmentUpload />}
             />
 
             <Route
@@ -305,9 +305,9 @@ function App() {
               path="/teacher/dashboard/quizz/assignedBatch"
               element={<QuizBatches />}
             />
-            <Route 
-            path="/teacher/dashboard/quizz/assignedBatch/uploadContent"
-            element={<TeacherAssignmentUpload />}
+            <Route
+              path="/teacher/dashboard/quizz/assignedBatch/uploadContent"
+              element={<TeacherAssignmentUpload />}
             />
             <Route
               path="/teacher/dashboard/quizz/assignedBatch/uploadContent/:assignmentId/responses"
