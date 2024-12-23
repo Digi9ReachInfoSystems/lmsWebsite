@@ -391,7 +391,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
             block
             style={{ backgroundColor: '#ff0080', borderColor: '#ff0080' }}
           >
-            Create Assessment
+            Create Assignment
           </Button>
         </Form.Item>
       </Form>

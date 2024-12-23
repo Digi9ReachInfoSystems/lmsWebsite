@@ -257,12 +257,12 @@ export default function QuizList() {
 
             <PrimaryButton onClick={handleAddQuiz}>
               <AiOutlineFileAdd size={24} />
-              Create Assessment
+              Create Assignment
             </PrimaryButton>
 
             <PrimaryButton onClick={handleUploadAssessment}>
               <AiOutlineFileAdd size={24} />
-              Upload Assessment
+              Upload Homework
             </PrimaryButton>
           </div>
         </div>

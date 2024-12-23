@@ -284,7 +284,7 @@ const AssignedBatchStudentsList = () => {
             <PrimaryButton
               type="primary"
               onClick={openUploadModal2}>
-              Upload Content
+              Upload Material
             </PrimaryButton>
           </div>
         </div>
