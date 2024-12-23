@@ -225,7 +225,7 @@ function ManageMeeting() {
   }
 
   return (
-      <ManageMeetingwrap>
+      <ManageMeetingwrap style={{ padding: "20px" }}>
         <div className="meetingSchedule-heading">
           <Heading>Meeting Schedule</Heading>
         </div>

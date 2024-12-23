@@ -118,11 +118,11 @@ const GeneralSettings = () => {
         </Form.Item>
       </Col>
     </Row>
-    <Row gutter={16}>
+    {/* <Row gutter={16}>
       <Col span={12}>
         <Form.Item label="Date of Birth" name="dob">
           <div>
-            {/* <pre>{JSON.stringify(dob)}</pre> Log the value */}
+           
             <StyledDatePicker
               value={dob ? dayjs(dob, "YYYY-MM-DD") : null}
               format="YYYY-MM-DD"
@@ -133,6 +133,7 @@ const GeneralSettings = () => {
         </Form.Item>
       </Col>
     </Row>
+     */}
   </Form>
 </div>
 }

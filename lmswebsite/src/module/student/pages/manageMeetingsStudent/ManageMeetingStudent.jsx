@@ -295,7 +295,7 @@ function ManageMeetingStudent() {
   }
 
   return (
-    <div>
+    <div style={{ padding: "20px" }}>
       <Heading>Manage Meetings</Heading>
       {/* <h1>Manage Meetings</h1> */}
       {loading ? (

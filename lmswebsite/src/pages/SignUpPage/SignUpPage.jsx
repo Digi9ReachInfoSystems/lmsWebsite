@@ -107,36 +107,36 @@ const SignUpPage = () => {
       };
       //console.log(data);
       await signupUser(data);
+      message.success("Registration Successful!");
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          formData.email,
+          formData.password
+        );
+        const { user } = userCredential;
+        localStorage.setItem(
+          "sessionData",
+          JSON.stringify({ accessToken: user.accessToken })
+        );
+        const profileData = await getUserByAuthId(user.uid);
+        const sessionData = {
+          userId: user.uid,
+          accessToken: user.accessToken,
+          refreshToken: profileData.user.refresh_token,
+          name: profileData.user.name,
+          loggedIn: "true",
+        };
+        localStorage.setItem("sessionData", JSON.stringify(sessionData));
+        navigate("/paymentScreen");
+      } catch (error) {
+        console.error(error.message);
+      }
     } catch (error) {
       //console.error("Registration error:", error);
       const errorMessage =
         error.message || "Registration failed. Please try again.";
       message.error(`Registration failed: ${errorMessage}`);
-    }
-    message.success("Registration Successful!");
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        formData.email,
-        formData.password
-      );
-      const { user } = userCredential;
-      localStorage.setItem(
-        "sessionData",
-        JSON.stringify({ accessToken: user.accessToken })
-      );
-      const profileData = await getUserByAuthId(user.uid);
-      const sessionData = {
-        userId: user.uid,
-        accessToken: user.accessToken,
-        refreshToken: profileData.user.refresh_token,
-        name: profileData.user.name,
-        loggedIn: "true",
-      };
-      localStorage.setItem("sessionData", JSON.stringify(sessionData));
-      navigate("/paymentScreen");
-    } catch (error) {
-      //console.error(error.message);
     }
     // navigate("/login");
   };

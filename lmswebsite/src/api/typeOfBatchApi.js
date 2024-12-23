@@ -23,7 +23,7 @@ export const getTypeOfBatchById = async (id) => {
     }
 };
 
-export const                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 getAllTypeOfBatches = async () => {
+export const getAllTypeOfBatches = async () => {
     try {
         const response = await api.get("/typeOfBatch/");
         //console.log("All type of batches fetched successfully:", response.data);
@@ -66,3 +66,14 @@ export const deleteTypeOfBatch = async (id) => {
         throw error; // Re-throw the error to handle it in the calling function
     }
 };
+
+export const getTypeOfBatchBySubjectId= async(subjectId) =>{
+    try {
+        const response = await api.get(`/typeOfBatch/subject/${subjectId}`);
+        console.log("Type of batch fetched successfully:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all type of batches:", error.response?.data || error.message);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+}

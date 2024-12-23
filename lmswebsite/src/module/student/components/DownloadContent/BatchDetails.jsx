@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Card, Typography, Button, Row, Col, Modal, InputNumber,Select } from "antd";
+// import { Card, Typography, Button, Row, Col, Modal, InputNumber,Select } from "antd";
+import { Table, Input, Button, Space, Row, Col, Card, InputNumber, Select, Modal, Typography,  } from "antd";
 import { Link } from "react-router-dom";
 import { getBatchesByStudentId } from "../../../../api/batchApi";
 import { getStudentByAuthId } from "../../../../api/studentApi";
@@ -121,7 +122,13 @@ const BatchDetailsContent = () => {
 
   // Optional: Display loading state while fetching studentId or batches
   if (!studentId || batches.length === 0) {
-    return <div style={{ margin: "20px" }}>Loading...</div>;
+    return (
+      <Col span={24} style={{ textAlign: "center" , marginTop: "20px"}}>
+        <Card style={{ width: "100%", backgroundColor: "#a0f2e3" }}>
+          <h3>No Batches has been assigned to your Profile yet!</h3>
+        </Card>
+      </Col>
+    );
   }
 
   return (

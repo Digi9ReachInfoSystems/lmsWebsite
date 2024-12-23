@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { getStudentBatchStatus, getStudentByAuthId } from '../../../../api/studentApi';
 import { getBatchesByStudentId } from '../../../../api/batchApi';
 import { useNavigate } from 'react-router-dom';
+import { Table, Input, Button, Space, Row, Col, Card } from "antd";
 
 // Replace this with your actual authentication logic
 const getAuthId = () => {
@@ -98,7 +99,11 @@ const StudentAssignment = () => {
         }
       >Your Batches</h1>
       {batches.length === 0 ? (
-        <div>No batches found.</div>
+        <Col span={24} style={{ textAlign: "center" }}>
+          <Card style={{ width: "100%", backgroundColor: "#a0f2e3" }}>
+            <h3>No Batches has been assigned to your Profile yet!</h3>
+          </Card>
+        </Col>
       ) : (
         <div style={styles.cardContainer}>
           {batches.map((batch) => (

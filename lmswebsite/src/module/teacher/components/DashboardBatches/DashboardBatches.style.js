@@ -66,7 +66,7 @@ export const CardContainer = styled.div`
     }
 `;
 
-export const Card = styled.div`
+export const CardOne = styled.div`
     width: calc(25% - 20px); /* 4 cards in a row */
     background-color: #fff;
     border: 1px solid #ddd;

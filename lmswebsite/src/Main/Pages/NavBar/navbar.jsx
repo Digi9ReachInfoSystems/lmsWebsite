@@ -123,7 +123,7 @@ function HeaderSection() {
       } else if (profileData.user.role === "student") {
         const studentData = await getStudentByAuthId(user.uid);
         if (
-          studentData.student.custom_package_status === "no_package" &&
+         ( studentData.student.custom_package_status === "no_package"|| studentData.student.custom_package_status === "pending") &&
           studentData.student.is_paid === false
         ) {
           navigate("/student");

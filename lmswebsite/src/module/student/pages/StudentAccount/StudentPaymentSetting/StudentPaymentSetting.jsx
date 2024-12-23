@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Table, Button, Typography } from "antd";
 import { Heading, PageContainer, PrimaryButton, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
+import { getPaymentByStudentId } from "../../../../../api/paymentsApi";
+import { getStudentByAuthId } from "../../../../../api/studentApi";
 
 const { Title } = Typography;
 
@@ -35,22 +37,56 @@ const paymentHistory = [
   },
 ];
 
+
 const StudentPaymentSettings = () => {
+  const [paymentData, setPaymentData] = React.useState([]);
+  useEffect(() => {
+    const apiCaller = async () => {
+      const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const studentData = await getStudentByAuthId(authId);
+      const data = await getPaymentByStudentId(studentData.student._id);
+      console.log(data);
+      setPaymentData(data.payments);
+    };
+    apiCaller();
+  }, []);
   const columns = [
     {
-      title: "Batch",
-      dataIndex: "batch",
-      key: "batch",
+      title: "Payment ID",
+      dataIndex: "payment_id",
+      key: "payment_id",
     },
     {
-      title: "Payment",
-      dataIndex: "payment",
-      key: "payment",
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+    },
+    {
+      title: "Receipt",
+      dataIndex: "receipt",
+      key: "receipt",
     },
     {
       title: "Date",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (text) => {
+        // if (text == null) {
+        //     return <span>00:00.00</span>;
+        // } else {
+        const date = new Date(text);
+        const formattedDate = date.toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        });
+        // const formattedTime = date.toLocaleTimeString("en-US", {
+        //     hour: "2-digit",
+        //     minute: "2-digit",
+        // });
+        return <span>{formattedDate} </span>;
+        // }
+      },
     },
     {
       title: "Status",
@@ -59,7 +95,7 @@ const StudentPaymentSettings = () => {
       render: (status) => (
         <span
           style={{
-            color: status === "Confirmed" ? "green" : "orange",
+            color: status === "paid" ? "green" : "orange",
             fontWeight: "bold",
           }}
         >
@@ -75,25 +111,26 @@ const StudentPaymentSettings = () => {
   };
 
   return (
-  
+
     <PageContainer>
-    <Subheading>Payment History</Subheading>
-     <Table
-       dataSource={paymentHistory}
-       columns={columns}
-       pagination={{ pageSize: 5 }}
-       bordered
-       style={{ marginTop: "16px" }}
-     />
-     <PrimaryButton
-      //  type="primary" 
-      //  style={{ marginTop: "16px", backgroundColor: "#f52754", borderColor: "#f52754" , 
+      <Subheading>Payment History</Subheading>
+      <Table
+        dataSource={paymentData}
+        columns={columns}
+        pagination={{ pageSize: 5 }}
+        bordered
+        style={{ marginTop: "16px" }}
+      />
+      {/* <PrimaryButton
+       type="primary" 
+       style={{ marginTop: "16px", backgroundColor: "#f52754", borderColor: "#f52754" , 
        
-      //  } }
+       } }
        onClick={handleExport}
      >
        Export History
-     </PrimaryButton></PageContainer>
+     </PrimaryButton> */}
+    </PageContainer>
   );
 };
 
