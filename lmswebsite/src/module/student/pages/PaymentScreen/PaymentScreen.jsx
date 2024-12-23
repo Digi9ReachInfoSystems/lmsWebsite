@@ -55,20 +55,20 @@ const PaymentScreen = () => {
                     <div className="payment-name-payment">
 
                         <div className="info-group-payment">
-                            <label className="info-label-payment">Student Name</label>
+                            <label className="info-label-payment">Name</label>
                             <div className="info-box-payment">
                                 <p>{student.user_id?.name}</p>
 
-                                <span className="tick-mark">✔</span>
+                                {/* <span className="tick-mark">✔</span> */}
                             </div>
                         </div>
 
                         <div className="info-group-payment">
-                            <label className="info-label-payment">Student Email</label>
+                            <label className="info-label-payment">Email</label>
                             <div className="info-box-payment">
                                 <p>{student.user_id?.email}</p>
 
-                                <span className="tick-mark"> ✔</span>
+                                {/* <span className="tick-mark"> ✔</span> */}
                             </div>
                         </div>
                     </div>
@@ -76,9 +76,9 @@ const PaymentScreen = () => {
 
                     <div className="info-group2-payment">
                         <label className="info-label-payment">Total  Price</label>
-                        <div className="info-box-payment">
+                        <div className="info-box-payments">
                             <p>Rs.{student.amount}.00 /-</p>
-                            <span className="tick-mark"></span>
+                            {/* <span className="tick-mark"></span> */}
                         </div>
                     </div>
 
