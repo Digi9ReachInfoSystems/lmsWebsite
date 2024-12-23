@@ -235,14 +235,14 @@ export const StudentLandingPage = () => {
                   {/* Row 3: Course, Standard, Board */}
                   <StyledRow>
                     <StyledCol>
-                      <Form.Item label="Select Board" name="board">
+                      <Form.Item label="Selected Board" name="board">
                         {/* <Input value={studentDataForm.student.board_id.name} readOnly /> */}
 
                         {studentDataForm.student.board_id?.name}
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item label="Select Class" name="class">
+                      <Form.Item label="Selected Class" name="class">
                         {/* <Input value={studentDataForm.student.class.classLevel} readOnly /> */}
                         {studentDataForm.student.class.classLevel}
                       </Form.Item>

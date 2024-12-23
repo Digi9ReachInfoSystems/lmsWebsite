@@ -53,8 +53,14 @@ const ContactUs = () => {
   // Handle form submission
   const handleSubmit = async (values) => {
     try {
+      const submissionData = {
+        title: values.title,
+        contactEmail: values.email,
+        contactNumber: values.number,
+        message: values.message,
+      }
       // Call the API to create the query
-      const response = await createQuery(values);
+      const response = await createQuery(submissionData);
 
       if (response) {
         console.log("Query successfully submitted:", response);

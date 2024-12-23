@@ -11,7 +11,7 @@
   /* align-items: center;
    */
   text-align: center;
-  color: #00c897;
+  color: #6a11cb;
   background-color: #fff;
   font-family: "Nunito", serif;
   padding-top: 40px;
@@ -38,7 +38,7 @@
 
 .choose-us-section h2 {
   font-size: 2.5rem;
-  color: #00c897;
+  color: #6a11cb;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
@@ -115,7 +115,7 @@
 }
 
 .read-more {
-  color: #00c897;
+  color: #6a11cb;
   font-size: 0.9rem;
   text-decoration: none;
   font-weight: bold;

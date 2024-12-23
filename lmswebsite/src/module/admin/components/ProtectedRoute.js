@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
   // Check for authentication (e.g., a token in localStorage)
-  const isAuthenticated = localStorage.getItem("sessionData"); // Example: Replace with actual auth logic
+  const isAuthenticated = JSON.parse(localStorage.getItem("sessionData")).userId; // Example: Replace with actual auth logic
 
   // Redirect to login if not authenticated
 

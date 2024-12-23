@@ -167,12 +167,12 @@ export default function StudentAssignedBatches() {
                 onClick={() => handleBatchClick(batch._id)}
                 
               />
-               <button>
+               {/* <button>
                 <Link to={`/student/dashboard/assignedBatches/${batch._id}`}>
                   <FaEye style={{ marginRight: "5px" }} />
                   View Materials
                 </Link>
-              </button>
+              </button> */}
              
             </Col>
           ))
