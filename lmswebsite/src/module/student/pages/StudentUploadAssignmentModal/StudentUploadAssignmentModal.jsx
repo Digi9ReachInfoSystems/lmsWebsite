@@ -91,7 +91,7 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
             ...styles.formGroup,
             
           }}>
-            <label>Select File:</label>
+            <label>Please upload your answer pdf</label>
             <input type="file" onChange={handleFileChange} required />
           </div>
           {error && <div style={styles.error}>{error}</div>}

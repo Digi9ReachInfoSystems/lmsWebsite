@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { RiCustomerServiceLine } from "react-icons/ri";
 import { FaWpforms } from "react-icons/fa6";
 import { PiListChecksThin } from "react-icons/pi";
+import { FaBuildingCircleCheck } from "react-icons/fa6";
 const SidebarWrapper = styled.div`
   width: ${(props) => (props.isHovered ? "240px" : "80px")};
   height: 100vh;
@@ -163,7 +164,7 @@ const Sidebar = () => {
     },
     {
       name: "Attendance",
-      icon: <AiTwotoneNotification />,
+      icon: <FaBuildingCircleCheck />,
       link: "/teacher/dashboard/teacherAttendance",
     },
     {

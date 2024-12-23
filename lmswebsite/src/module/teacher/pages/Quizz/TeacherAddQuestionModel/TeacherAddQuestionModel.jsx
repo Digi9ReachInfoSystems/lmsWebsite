@@ -107,7 +107,7 @@ const TeacherAddQuestionModel = ({ onSave }) => {
           ],
         }}
       >
-        <h4>Assessment Questions</h4>
+        <h4>Assignment Questions</h4>
 
         <Form.List name="questions">
           {(fields, { add, remove }) => (
