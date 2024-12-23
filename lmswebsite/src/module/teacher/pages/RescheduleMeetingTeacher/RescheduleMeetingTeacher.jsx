@@ -27,10 +27,10 @@ function RescheduleMeetingTeacher() {
             setLoading(true);
             const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
             const teacherData = await getTeacherByAuthId(authId);
-            console.log(teacherData);
+            ////console.log(teacherData);
             const response = await getRescheduleByTeacherId(teacherData.teacher._id);
 
-            console.log(response);
+            ////console.log(response);
             const renderData = response.rescheduleMeetings.map((item) => ({
                 _id: item._id,
                 student_name: item.student_id.user_id.name,
@@ -44,7 +44,7 @@ function RescheduleMeetingTeacher() {
                 start_time: item.start,
                 end_time: item.end,
             }));
-            console.log("renderData", renderData);
+            //console.log("renderData", renderData);
             setRescheduleData(renderData);
             setFilteredData(renderData);
             setLoading(false);
@@ -55,7 +55,7 @@ function RescheduleMeetingTeacher() {
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        console.log(value);
+        //console.log(value);
         if (value === '') {
             setSearchTerm(null);
             setFilteredData(rescheduleData);
@@ -76,7 +76,7 @@ function RescheduleMeetingTeacher() {
     const handleRescheduleApprove = async (record) => {
 
         approveReschedule(record.meeting_id).then((response) => {
-            console.log(response);
+            //console.log(response);
             if (response) {
                 const meetingPayload = {
                     title: record.meeting_title,
@@ -86,7 +86,7 @@ function RescheduleMeetingTeacher() {
                     batch_id: record.batch_id,
                     students: [record.student_id], // Pass all student IDs in the batch
                 };
-                console.log("Creating meeting with payload:", meetingPayload);
+                //console.log("Creating meeting with payload:", meetingPayload);
                 createMeeting(meetingPayload).then((response) => {
                     message.success("Meeting created successfully!");
                     setLoadData(!loadData);
@@ -95,14 +95,14 @@ function RescheduleMeetingTeacher() {
                 message.success(response.message);
             }
         }).catch((error) => {
-            console.log(error);
+            //console.log(error);
             message.error(error.message);
         });
     }
 
     const handleRescheduleReject = async (record) => {
         rejectReschedule(record.meeting_id).then((response) => {
-            console.log(response);
+            //console.log(response);
             if (response) {
                 setLoadData(!loadData);
                 message.success(response.message);

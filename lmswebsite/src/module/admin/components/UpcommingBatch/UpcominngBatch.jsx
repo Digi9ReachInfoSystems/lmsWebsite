@@ -14,10 +14,10 @@ const UpcomingBatch = () => {
       try {
         const data = await getAllBatches(); // Fetch data from the API
         setBatchData(data.batches || []); // Set batch data in state
-        console.log("Fetched Batch Data:", data.batches);
+        //console.log("Fetched Batch Data:", data.batches);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching batches:", err);
+        //console.error("Error fetching batches:", err);
         setError("Failed to load batch data");
         setLoading(false);
       }

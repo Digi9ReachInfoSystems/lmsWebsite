@@ -144,7 +144,7 @@ const ManageContentTable = ({ contentType }) => {
           break;
 
         case 'benefits':
-          console.log('Fetching benefits');
+          ////console.log('Fetching benefits');
           const benefitData = await getAllBenefits();
           setData(benefitData.benefits);
           break;
@@ -156,7 +156,7 @@ const ManageContentTable = ({ contentType }) => {
 
         case 'blog':
           const blogData = await getAllBlogs();
-          console.log("Blogs fetched successfully", blogData);
+          ////console.log("Blogs fetched successfully", blogData);
           if (blogData.success && Array.isArray(blogData.data)) {
             setData(blogData.data); // Correctly set to the data array
           } else {
@@ -666,7 +666,8 @@ const ManageContentTable = ({ contentType }) => {
           render: (_, record) => (
             <Popconfirm
               title="Are you sure you want to delete this batch type?"
-              onConfirm={() => { console.log("delete", record); handleDelete(record) }}
+              onConfirm={() => {  
+                handleDelete(record) }}
               okText="Yes"
               cancelText="No"
             >
@@ -679,9 +680,9 @@ const ManageContentTable = ({ contentType }) => {
           key: 'edit',
           render: (_, record) => (
             <button type="button" onClick={() => {
-              console.log("edit", record);
+              //console.log("edit", record);
               const id = getId(record);
-              console.log("id", id);
+              //console.log("id", id);
               const percentageStr = window.prompt(
                 "Enter discount percentage (0-100):",
                 record.discountPercentage !== undefined ? record.discountPercentage : ""

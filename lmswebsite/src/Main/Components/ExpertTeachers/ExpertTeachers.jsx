@@ -11,7 +11,7 @@ const ExpertTeachers = () => {
     const fetchTeachers = async () => {
       try {
         const response = await getTeachersByExperience();
-        console.log("Teachers fetched successfully:", response);
+        //console.log("Teachers fetched successfully:", response);
 
         // Sort and limit to top 3 experienced teachers
         const topTeachers = response
@@ -21,7 +21,7 @@ const ExpertTeachers = () => {
         setTeachers(topTeachers);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        //console.error("Error fetching data:", err);
         setError(err);
         setLoading(false);
       }

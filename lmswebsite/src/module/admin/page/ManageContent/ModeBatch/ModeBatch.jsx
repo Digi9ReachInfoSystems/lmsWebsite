@@ -113,11 +113,11 @@ const ModeBatch = () => {
     };
 
     // Debugging: Log the data being sent to the API
-    console.log('Submitting data:', data);
+    //console.log('Submitting data:', data);
 
     try {
       const response = await createTypeOfBatch(data);
-      console.log('API Response:', response);
+      //console.log('API Response:', response);
       if (response) {
         setSuccess('Type of batch created successfully!');
         // Reset form fields
@@ -131,7 +131,7 @@ const ModeBatch = () => {
         // Optionally, you can remove window.location.reload(); to avoid full page reload
       }
     } catch (err) {
-      console.error('API Error:', err);
+      //console.error('API Error:', err);
       setError(err.response?.data?.error || 'Failed to create Type of Batch.');
     }
   };

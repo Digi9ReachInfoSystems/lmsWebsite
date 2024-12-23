@@ -34,15 +34,15 @@ const StudentAssignment = () => {
           throw new Error('User is not a student or student data is incomplete.');
         }
 
-        console.log("studentData:", studentData); // For debugging
+        ////console.log("studentData:", studentData); // For debugging
 
         const studentId = studentData.student._id;
 
         const batchesData = await getBatchesByStudentId(studentId);
 
-        console.log("batchesData:", batchesData); // For debugging
-        console.log('Type of batchesData:', typeof batchesData);
-        console.log('Is batchesData an array?', Array.isArray(batchesData));
+        ////console.log("batchesData:", batchesData); // For debugging
+        ////console.log('Type of batchesData:', typeof batchesData);
+        //console.log('Is batchesData an array?', Array.isArray(batchesData));
 
 
         const updatedBatches = await Promise.all(
@@ -54,21 +54,21 @@ const StudentAssignment = () => {
             };
           })
         );
-        console.log("updatedBatches:", updatedBatches);
+        //console.log("updatedBatches:", updatedBatches);
 
         // **Adjusting to handle array response**
         if (Array.isArray(updatedBatches)) {
           setBatches(updatedBatches);
-          console.log('Batches set:', batchesData);
+          //console.log('Batches set:', batchesData);
         } else if (batchesData && Array.isArray(batchesData.batches)) {
           setBatches(batchesData.batches);
-          console.log('Batches set from batchesData.batches:', batchesData.batches);
+          //console.log('Batches set from batchesData.batches:', batchesData.batches);
         } else {
-          console.warn('No batches found or unexpected response structure.');
+          //console.warn('No batches found or unexpected response structure.');
           setBatches([]); // Default to empty array
         }
       } catch (err) {
-        console.error('Error fetching batches:', err);
+        //console.error('Error fetching batches:', err);
         setError(err.message || 'Failed to fetch batches.');
       } finally {
         setLoading(false);

@@ -15,11 +15,11 @@ const UpcomingMeetings = () => {
       const autId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const teacherdata = await getTeacherByAuthId(autId);
       // setStudentMode(studentData.student.mode);
-      // console.log("studentData", studentData.student._id);
+      // //console.log("studentData", studentData.student._id);
       const response = await getTeacherscheduleForSevenDaysById(teacherdata.teacher._id);
       const studentAttendanceData = await getTeacherAttendance(teacherdata.teacher._id);
       const schedule = response.data.schedule;
-      console.log("schedule", schedule);
+      //console.log("schedule", schedule);
       // Map the schedule into events for react-big-calendar
       let formattedEvents = schedule.map((item, index) => ({
         id: index,
@@ -63,11 +63,11 @@ const UpcomingMeetings = () => {
     { title: "Geography Class", time: "04:00 PM - 05:00 PM" },
     { title: "Geography Class", time: "04:00 PM - 05:00 PM" },
   ];
-  console.log("meetingData", meetingData);
+  //console.log("meetingData", meetingData);
 
   // Handle when a user clicks on an event
   const handleSelectEvent = (event) => {
-  console.log("event", event);
+  //console.log("event", event);
     if (event.meeting_url) {
       window.open(event.meeting_url, "_blank"); // Open the meeting URL in a new tab
       handleClockIn(event.meetingId);
@@ -91,13 +91,13 @@ const UpcomingMeetings = () => {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error clocking in:", error);
+      //console.error("Error clocking in:", error);
     }
   };
 
   // Handle clock-out action
   const handleClockOut = async (item) => {
-    console.log("meetingId", item);
+    //console.log("meetingId", item);
     try {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const teacherdata = await getTeacherByAuthId(authId);
@@ -114,7 +114,7 @@ const UpcomingMeetings = () => {
         window.location.reload(); 
       }
     } catch (error) {
-      console.error("Error clocking out:", error);
+      //console.error("Error clocking out:", error);
     }
   };
   return (
@@ -135,7 +135,7 @@ const UpcomingMeetings = () => {
           itemLayout="horizontal"
           dataSource={meetingData}
           renderItem={(item) => {
-            console.log("item", item);
+            //console.log("item", item);
             return (
               <List.Item
                 actions={[!item.clockIn ?

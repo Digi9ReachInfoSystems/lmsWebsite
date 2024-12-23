@@ -26,10 +26,10 @@ export const createCircularNotificationApi = async (notificationData) => {
             },
         });
 
-        console.log('Circular notification created successfully:', response.data);
+        //console.log('Circular notification created successfully:', response.data);
         return response.data; // Return the response for further use if needed
     } catch (error) {
-        console.error('Error creating circular notification:', error.response ? error.response.data : error.message);
+        //console.error('Error creating circular notification:', error.response ? error.response.data : error.message);
         throw error; // Rethrow the error for handling in the calling function if needed
     }
 };
@@ -41,10 +41,10 @@ export const createCircularNotificationApi = async (notificationData) => {
 export const getAllCircularNotificationsApi = async (role) => {
     try {
         const response = await api.get(`/circularNotifications/all?role=${role}`);
-        console.log('Circular notifications fetched successfully:', response.data);
+        //console.log('Circular notifications fetched successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching circular notifications:', error.response ? error.response.data : error.message);
+        //console.error('Error fetching circular notifications:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -60,10 +60,10 @@ export const getAllCircularNotificationsApi = async (role) => {
 export const updateCircularNotificationApi = async (notificationId, updateData) => {
     try {
         const response = await api.put(`/circularNotifications/${notificationId}`, updateData);
-        console.log('Circular notification updated successfully:', response.data);
+        //console.log('Circular notification updated successfully:', response.data);
         return response.data; // Return the updated circular notification data
     } catch (error) {
-        console.error('Error updating circular notification:', error.response ? error.response.data : error.message);
+        //console.error('Error updating circular notification:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -76,10 +76,10 @@ export const updateCircularNotificationApi = async (notificationId, updateData) 
 export const deleteCircularNotificationApi = async (notificationId) => {
     try {
         const response = await api.delete(`/circularNotifications/${notificationId}`);
-        console.log('Circular notification deleted successfully:', response.data);
+        //console.log('Circular notification deleted successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error deleting circular notification:', error.response ? error.response.data : error.message);
+        //console.error('Error deleting circular notification:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };

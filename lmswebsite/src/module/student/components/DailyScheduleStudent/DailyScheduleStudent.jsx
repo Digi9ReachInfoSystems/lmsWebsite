@@ -62,7 +62,7 @@ export default function DailyScheduleStudent() {
 
     // Custom event rendering
     const renderEvent = ({ event }) => {
-        // console.log("event", event);
+        // //console.log("event", event);
         return (
             <div style={{ padding: "5px", backgroundColor: event?.backgroundColor }}>
                

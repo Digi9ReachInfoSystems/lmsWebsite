@@ -22,7 +22,7 @@ const SubscriptionSuccess = () => {
           const response = await getPackageById(packageId);
           setPackageName(response?.package_name);
         } catch (err) {
-          console.error("Error fetching Packages:", err);
+          //console.error("Error fetching Packages:", err);
         }
       };
       apiCaller();

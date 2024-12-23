@@ -68,7 +68,7 @@ const SubjectForm = () => {
   const handleSubmit = async (values) => {
     setIsSubmitting(true);
     const downloadUrl = await uploadFileToFirebase(imageFile, "subjectImage");
-    console.log('Form Values:', values); // Log form values
+    //console.log('Form Values:', values); // Log form values
     const submissionData = { ...values, icon: downloadUrl };
     try {
       await createSubject(submissionData);

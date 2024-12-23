@@ -10,15 +10,15 @@ import { uploadFileToFirebase } from '../utils/uploadFileToFirebase';
  * @returns {Object} - The response data containing the uploaded content details
  */
 export const uploadContent = async (batchId, teacherId, file, description) => {
-    // console.log("Uploading content...hdgfhgjhkjlj",teacherId,batchId, file);
+    // ////console.log("Uploading content...hdgfhgjhkjlj",teacherId,batchId, file);
     try {
         const file_link= await uploadFileToFirebase(file, "contentFiles");
         const response = await api.post('/contents/upload', { batchId:batchId, teacherId:teacherId, materialLink:file_link, description:description });
 
-        console.log('Content uploaded successfully:', response.data);
+        ////console.log('Content uploaded successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error uploading content:', error.response?.data || error.message);
+        //console.error('Error uploading content:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -30,10 +30,10 @@ export const uploadContent = async (batchId, teacherId, file, description) => {
 export const getAllContents = async () => {
     try {
         const response = await api.get('/contents/');
-        console.log('All contents fetched successfully:', response.data);
+        //console.log('All contents fetched successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching contents:', error.response?.data || error.message);
+        //console.error('Error fetching contents:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -46,10 +46,10 @@ export const getAllContents = async () => {
 export const getContentsByTeacherId = async (teacherId) => {
     try {
         const response = await api.get(`/contents/teacher/${teacherId}`);
-        console.log('Contents fetched successfully for teacher:', response.data);
+        //console.log('Contents fetched successfully for teacher:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching contents by teacher ID:', error.response?.data || error.message);
+        //console.error('Error fetching contents by teacher ID:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -61,12 +61,12 @@ export const getContentsByTeacherId = async (teacherId) => {
  */
 export const getContentByBatchId = async (batchId) => {
     try {
-        console.log("Batch ID: console", batchId);
+        //console.log("Batch ID: //console", batchId);
         const response = await api.get(`/contents/batch/${batchId}`);
-        console.log('Contents fetched successfully for batch:', response.data);
+        //console.log('Contents fetched successfully for batch:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching contents by batch ID:', error.response?.data || error.message);
+        //console.error('Error fetching contents by batch ID:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };

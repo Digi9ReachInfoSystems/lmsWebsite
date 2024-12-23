@@ -18,11 +18,11 @@ const TeachersSection = () => {
     const fetchTeachers = async () => {
       try {
         const response = await getTeachersByExperience();
-        console.log("Teachers fetched successfully:", response);
+        //console.log("Teachers fetched successfully:", response);
         setTeachers(response.slice(0, 3)); // Get the top 3 experienced teachers
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching teachers:", err);
+        //console.error("Error fetching teachers:", err);
         setError("Failed to load teachers data");
         setLoading(false);
       }

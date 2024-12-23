@@ -33,17 +33,17 @@ const DashboardBatches = () => {
 
                 const teacherId = sessionData.userId;
                 const teacherData = await getTeacherByAuthId(teacherId);
-                console.log("Teacher Data:", teacherData);
+                //console.log("Teacher Data:", teacherData);
                 setTeacher(teacherData.teacher);
 
                 // Fetch batches and limit to 4
                 const allBatches = await getBatchesByTeacherId(teacherData.teacher._id);
-                console.log("Batches fetched successfully:", allBatches);
+                //console.log("Batches fetched successfully:", allBatches);
                 setBatches(allBatches.slice(0, 4));
 
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching data:", error.message);
+                //console.error("Error fetching data:", error.message);
                 setError(error.message || "An error occurred while loading data.");
                 setLoading(false);
             }

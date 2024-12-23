@@ -16,7 +16,7 @@ function SubjectScreen() {
     return JSON.parse(localStorage.getItem("selectedClass"));
   });
 
-  console.log("Selected Class:", selectedClass);
+  //console.log("Selected Class:", selectedClass);
 
   useEffect(() => {
     if (!selectedClass || !selectedClass._id) {
@@ -29,7 +29,7 @@ function SubjectScreen() {
       try {
         const response = await getSubjectsByClassId(selectedClass._id);
         setSubjects(response); // Set fetched subjects
-        console.log("Fetched subjects:", response);
+        //console.log("Fetched subjects:", response);
         localStorage.setItem("subjects", JSON.stringify(response));
       } catch (error) {
         setError("Failed to fetch subjects. Please try again later.");

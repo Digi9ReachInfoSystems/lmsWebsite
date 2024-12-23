@@ -2,13 +2,13 @@ import api from "../config/axiosConfig";
 
 export const createQuiz = async (responseData) => {
     try {
-      console.log("responseData", responseData);
+      //console.log("responseData", responseData);
         // Call the backend API using the Axios instance
         const response = await api.post("/quizzes/create", responseData);
-        console.log("Quiz created successfully:", response.data);
+        //console.log("Quiz created successfully:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error creating quiz:", error.response?.data || error.message);
+        //console.error("Error creating quiz:", error.response?.data || error.message);
     }
 };
 
@@ -18,10 +18,10 @@ export const getQuizForSpecificBatcAndClass = async (batch_index, class_level) =
       
         // Call the backend API using the Axios instance
         const response = await api.get(`/quizzes/batch/${batch_index}/class/${class_level}`);
-        console.log("Quiz fetched successfully:", response.data);
+        //console.log("Quiz fetched successfully:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error fetching quiz:", error.response?.data || error.message);
+        //console.error("Error fetching quiz:", error.response?.data || error.message);
     }
     
 }
@@ -31,10 +31,10 @@ export const getQuizById = async (quiz_id) => {
     try {
         // Call the backend API using the Axios instance
         const response = await api.get(`/quizzes/${quiz_id}`);
-        console.log("Quiz fetched successfully:", response.data);
+        //console.log("Quiz fetched successfully:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error fetching quiz:", error.response?.data || error.message);
+        //console.error("Error fetching quiz:", error.response?.data || error.message);
     }
     
 }
@@ -98,10 +98,10 @@ export const getQuizzesByTeacher = async (filters = {}) => {
 
         // Call the backend API using the Axios instance
         const response = await api.get(`/quizzes/subject/${subject_id}`);
-        console.log("Quiz fetched successfully:", response.data);
+        //console.log("Quiz fetched successfully:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error fetching quiz:", error.response?.data || error.message);
+        //console.error("Error fetching quiz:", error.response?.data || error.message);
     }
     
 }
@@ -110,10 +110,10 @@ export const getQuizByBatchId = async (batch_id) => {
     try {
         // Call the backend API using the Axios instance
         const response = await api.get(`/quizzes/batch/${batch_id}`);
-        console.log("Quiz fetched successfully:", response.data);
+        //console.log("Quiz fetched successfully:", response.data);
         return response.data;
     } catch (error) {
-        console.error("Error fetching quiz:", error.response?.data || error.message);
+        //console.error("Error fetching quiz:", error.response?.data || error.message);
     }
     
 }

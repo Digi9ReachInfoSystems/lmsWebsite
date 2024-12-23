@@ -68,7 +68,7 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
       alert('Assignment submitted successfully!');
       onUploadSuccess();
     } catch (err) {
-      console.error('Error uploading assignment:', err.response?.data || err.message);
+      //console.error('Error uploading assignment:', err.response?.data || err.message);
       setError(err.message || 'Failed to upload assignment. Please try again.');
     } finally {
       setUploading(false);

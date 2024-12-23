@@ -7,7 +7,7 @@ import api from "../config/axiosConfig";
         const response = await api.get('/adminDashboard/dashboard/numberOfStudents');
         return response.data;
     } catch (error) {
-        console.error(error);
+        ////console.error(error);
     }
 }
 export const getTotalNumberOfTeachers = async () => {
@@ -15,7 +15,7 @@ export const getTotalNumberOfTeachers = async () => {
         const response = await api.get('/adminDashboard/dashboard/numberOfTeachers');
         return response.data;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }
 
@@ -24,7 +24,7 @@ export const getTotalNumberOfBatches = async () => {
         const response = await api.get('/adminDashboard/dashboard/totalBatches');
         return response.data;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }
 
@@ -33,7 +33,7 @@ export const getTotalRevenue = async () => {
         const response = await api.get('/adminDashboard/dashboard/totalrevenue');
         return response.data;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }
 
@@ -42,7 +42,7 @@ export const getPaidAndUnpaidAmount = async () => {
         const response = await api.get('/adminDashboard/dashboard/amountPaidUnpaid');
         return response.data;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }
 
@@ -52,7 +52,7 @@ export const getWeeklyTeacherApplicationCount=  async () => {
         const response = await api.get('/adminDashboard/dashboard/weeklyTeacherApplication');
         return response.data;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }
 
@@ -62,6 +62,6 @@ export const getDailyRevenueByMonth=  async (month) => {
         const response = await api.get(`/adminDashboard/dashboard/dailyRevenueForMonth?year=${currentYear}&month=${month}`);
         return response.data;
     } catch (error) {
-        console.error(error);
+        //console.error(error);
     }
 }

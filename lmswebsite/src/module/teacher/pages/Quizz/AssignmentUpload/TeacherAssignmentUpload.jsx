@@ -74,10 +74,10 @@ const TeacherAssignmentUpload = () => {
           throw new Error("User is not authenticated.");
         }
         const teacher = await getTeacherByAuthId(sessionData.userId);
-        console.log("Fetched teacher data:", teacher);
+        //console.log("Fetched teacher data:", teacher);
         setTeacherData(teacher);
       } catch (error) {
-        console.error("Error fetching teacher data:", error);
+        //console.error("Error fetching teacher data:", error);
         message.error("Failed to fetch teacher data. Please try again.");
       } finally {
         setLoadingTeacher(false);
@@ -92,7 +92,7 @@ const TeacherAssignmentUpload = () => {
    */
   useEffect(() => {
     const fetchBatches = async () => {
-      console.log("Teacher Data:", teacherData);
+      //console.log("Teacher Data:", teacherData);
 
       let teacherId;
       if (teacherData && teacherData._id) {
@@ -104,19 +104,19 @@ const TeacherAssignmentUpload = () => {
       ) {
         teacherId = teacherData.teacher._id;
       } else {
-        console.log("Teacher ID not found in teacherData");
+        //console.log("Teacher ID not found in teacherData");
         message.error("Teacher ID not found.");
         return;
       }
 
       try {
         setLoadingBatches(true);
-        console.log("Teacher ID:", teacherId);
+        //console.log("Teacher ID:", teacherId);
         const batchesData = await getBatchesByTeacherId(teacherId);
-        console.log("Batches fetched successfully:", batchesData);
+        //console.log("Batches fetched successfully:", batchesData);
         setBatches(batchesData);
       } catch (error) {
-        console.error("Error fetching batches:", error);
+        //console.error("Error fetching batches:", error);
         message.error("Failed to fetch batches. Please try again.");
       } finally {
         setLoadingBatches(false);
@@ -152,25 +152,25 @@ const TeacherAssignmentUpload = () => {
     const fetchAssignmentsByTeacherId = async () => {
       const teacherId = getTeacherId();
       if (!teacherId) {
-        console.error("Teacher ID not found. Unable to fetch assignments.");
+        //console.error("Teacher ID not found. Unable to fetch assignments.");
         return;
       }
 
       try {
         setLoadingAssignments(true);
         const response = await getAssignmentsByTeacherId(teacherId);
-        console.log("Fetched assignments:", response);
+        //console.log("Fetched assignments:", response);
 
         // Adjust this based on how your API returns data.
         // For instance, if response already is an array, you may not need the .assignments check.
         if (response.assignments && Array.isArray(response.assignments)) {
           setAssignments(response.assignments);
         } else {
-          console.error("Unexpected assignments data format:", response);
+          //console.error("Unexpected assignments data format:", response);
           message.error("Failed to fetch assignments. Please try again.");
         }
       } catch (error) {
-        console.error("Error fetching assignments:", error);
+        //console.error("Error fetching assignments:", error);
         message.error("Failed to fetch assignments. Please try again.");
       } finally {
         setLoadingAssignments(false);
@@ -226,11 +226,11 @@ const TeacherAssignmentUpload = () => {
       };
 
       // Debugging: Log the payload to ensure all fields are present
-      console.log("Submitting Assignment Payload:", payload);
+      //console.log("Submitting Assignment Payload:", payload);
 
       const newAssignment = await createAssignment(payload);
 
-      console.log("Created Assignment:", newAssignment); // Debugging
+      //console.log("Created Assignment:", newAssignment); // Debugging
 
       message.success("Assignment created successfully!");
       setIsModalVisible(false);
@@ -246,11 +246,11 @@ const TeacherAssignmentUpload = () => {
       ) {
         setAssignments(assignmentsData.assignments);
       } else {
-        console.error("Unexpected assignments data format:", assignmentsData);
+        //console.error("Unexpected assignments data format:", assignmentsData);
         message.error("Failed to refresh assignments. Please try again.");
       }
     } catch (error) {
-      console.error("Error creating assignment:", error);
+      //console.error("Error creating assignment:", error);
       // Enhanced error message handling
       if (error.response && error.response.data && error.response.data.error) {
         message.error(`Error: ${error.response.data.error}`);
@@ -309,11 +309,11 @@ const TeacherAssignmentUpload = () => {
       ) {
         setAssignments(assignmentsData.assignments);
       } else {
-        console.error("Unexpected assignments data format:", assignmentsData);
+        //console.error("Unexpected assignments data format:", assignmentsData);
         message.error("Failed to refresh assignments. Please try again.");
       }
     } catch (error) {
-      console.error("Error deleting assignment:", error);
+      //console.error("Error deleting assignment:", error);
       if (error.response && error.response.data && error.response.data.error) {
         message.error(`Error: ${error.response.data.error}`);
       } else {
@@ -365,7 +365,7 @@ const TeacherAssignmentUpload = () => {
         ]);
         message.success(`${currentFile.name} uploaded successfully.`);
       } catch (error) {
-        console.error("Upload failed:", error);
+        //console.error("Upload failed:", error);
         message.error(`${currentFile.name} upload failed.`);
         setFileList([]);
       } finally {

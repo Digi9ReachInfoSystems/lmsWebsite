@@ -26,7 +26,7 @@ const AssignmentResponses = () => {
           navigate(-1); // Navigate back if assignment not found
         }
       } catch (error) {
-        console.error("Error fetching assignment:", error);
+        //console.error("Error fetching assignment:", error);
         message.error("Failed to fetch assignment. Please try again.");
         navigate(-1);
       } finally {

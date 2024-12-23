@@ -92,7 +92,7 @@ export const ManageAttendance = () => {
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        console.log(value);
+        //console.log(value);
         if (value === '') {
             setSearchTerm(null);
             setFilteredAttendance(attendance);

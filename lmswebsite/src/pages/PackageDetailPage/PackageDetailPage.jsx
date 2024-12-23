@@ -40,7 +40,7 @@ const PackageDetailPage = () => {
     getPackageById(packageId)
       .then((data) => {
         setPackageData(data);
-        console.log("Hello namsakara", data);
+        //console.log("Hello namsakara", data);
         setLoading(false);
       })
       .catch((error) => {

@@ -154,7 +154,7 @@ export default function TeacherApplicationFormView() {
     const fetchBoards = async () => {
       try {
         const boardsData = await getBoards();
-        console.log("Fetched Boards Data:", boardsData); // For debugging
+        ////console.log("Fetched Boards Data:", boardsData); // For debugging
 
         // Check if boardsData is an array
         if (Array.isArray(boardsData)) {
@@ -182,7 +182,7 @@ export default function TeacherApplicationFormView() {
       setSubjects([]);
       if (value) {
         const classesData = await getClassesByBoardId(value);
-        console.log("Fetched Classes Data:", classesData); // For debugging
+        //console.log("Fetched Classes Data:", classesData); // For debugging
 
         let transformedClasses = [];
 
@@ -215,7 +215,7 @@ export default function TeacherApplicationFormView() {
           getSubjectsByClassId(classId)
         );
         const subjectsResponses = await Promise.all(subjectsPromises);
-        console.log("Fetched Subjects Data:", subjectsResponses); // For debugging
+        //console.log("Fetched Subjects Data:", subjectsResponses); // For debugging
 
         // Combine all subjects and remove duplicates based on subject ID
         const combinedSubjects = subjectsResponses
@@ -274,7 +274,7 @@ export default function TeacherApplicationFormView() {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
-      console.log("user", user);
+      //console.log("user", user);
       const userData = await signupUser({
         role: "teacher",
         student_name: values.name,
@@ -329,8 +329,8 @@ export default function TeacherApplicationFormView() {
         "profileImages"
       );
 
-      console.log("Resume URL:", resumeUrl);
-      console.log("Profile Image URL:", profileImageUrl);
+      //console.log("Resume URL:", resumeUrl);
+      //console.log("Profile Image URL:", profileImageUrl);
 
       // Add URLs to application data
       applicationData.resume_link = resumeUrl;
@@ -350,11 +350,11 @@ export default function TeacherApplicationFormView() {
       // });
 
       // Submit the application
-      console.log("Submitting application:56dbchdb", applicationData);
+      //console.log("Submitting application:56dbchdb", applicationData);
       // const response = await submitTeacherApplication(applicationData);
       localStorage.setItem("sessionData", JSON.stringify(oldSessionData));
       const response = await createTeacher(applicationData);
-      // console.log("Application submitted successfully:", response);
+      // //console.log("Application submitted successfully:", response);
 
       message.success("Teacher application submitted successfully!");
 
@@ -377,7 +377,7 @@ export default function TeacherApplicationFormView() {
 
   // Prevent automatic upload and handle file list
   const normFile = (e) => {
-    console.log("Upload event:", e);
+    //console.log("Upload event:", e);
     if (Array.isArray(e)) {
       return e;
     }
