@@ -100,7 +100,7 @@ const ManageContentTable = ({ contentType }) => {
 
           // Enrich subjects with class levels and board names
           const enrichedSubjects = subjectsData.map((subject) => {
-            const classId = subject.class_id?.$oid || subject.class_id;
+            const classId = subject.class_id._id || subject.class_id;
             const classData = classMap[classId];
             const classLevel = classData ? classData.classLevel : 'N/A';
 
@@ -823,11 +823,13 @@ const ManageContentTable = ({ contentType }) => {
 
   return (
     <Container>
+      <div style={{display:"flex", justifyContent:"space-between", padding:"20px"}}>
       <Title>{title}</Title>
       <div style={{ textAlign: 'right', marginBottom: '16px' }}>
         <StyledButton icon={<PlusOutlined />} onClick={showModal}>
           Create {title}
         </StyledButton>
+      </div>
       </div>
       {/* Table */}
       {data.length > 0 ? (

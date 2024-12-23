@@ -123,7 +123,7 @@ function HeaderSection() {
       } else if (profileData.user.role === "student") {
         const studentData = await getStudentByAuthId(user.uid);
         if (
-          studentData.student.custom_package_status === "no_package" &&
+         ( studentData.student.custom_package_status === "no_package"|| studentData.student.custom_package_status === "pending") &&
           studentData.student.is_paid === false
         ) {
           navigate("/student");
@@ -318,7 +318,7 @@ function HeaderSection() {
 
           {/* Other Navigation Links */}
           <Link
-            href="#"
+            href="/Our-Academy"
             underline="none"
             sx={{
               color: "#333",
@@ -326,7 +326,7 @@ function HeaderSection() {
               "&:hover": { color: "#6A11CB" },
             }}
           >
-            Features
+            Our Academy
           </Link>
           <Link
             href="/blogs"

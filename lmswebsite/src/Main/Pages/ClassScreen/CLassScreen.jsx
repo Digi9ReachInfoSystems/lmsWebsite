@@ -55,7 +55,7 @@ function ClassScreen() {
   return (
     <div>
       <HeaderSection />
-      <div className="board-container">
+      <div className="board-containers">
         <div className="header">
           <h3>
             <span className="black-text">Select Your</span>{" "}
@@ -102,7 +102,7 @@ function ClassScreen() {
             {selectedClass && (
               <div className="selected-class-info">
                 <p>
-                  Selected Class: <strong>{selectedClass.className}</strong>
+                  Select Class: <strong>{selectedClass.classLevel}</strong>
                 </p>
               </div>
             )}

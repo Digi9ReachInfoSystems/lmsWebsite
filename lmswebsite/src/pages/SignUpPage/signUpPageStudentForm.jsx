@@ -18,6 +18,7 @@ import { signupUser } from "../../api/authApi";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  signInWithEmailAndPassword
 } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import { LinkText, ButtonContainer } from "./SignUpPage.style";
@@ -26,6 +27,7 @@ import { getBoards } from "../../api/boardApi";
 import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import SignUpImage from "../../assets/logo1.svg";
+import { getUserByAuthId } from "../../api/userApi";
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -122,7 +124,33 @@ const StudentForm = () => {
       // Clear local storage and navigate to login
       localStorage.clear();
       message.success("Registration successful! Please verify your email.");
-      navigate("/login");
+      message.success("Registration Successful!");
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          values.email,
+          values.password
+        );
+        const { user } = userCredential;
+        localStorage.setItem(
+          "sessionData",
+          JSON.stringify({ accessToken: user.accessToken })
+        );
+        const profileData = await getUserByAuthId(user.uid);
+        const sessionData = {
+          userId: user.uid,
+          accessToken: user.accessToken,
+          refreshToken: profileData.user.refresh_token,
+          name: profileData.user.name,
+          loggedIn: "true",
+          role: profileData.user.role,
+        };
+        localStorage.setItem("sessionData", JSON.stringify(sessionData));
+        navigate("/student");
+      } catch (error) {
+        console.error(error.message);
+      }
+      // navigate("/");
     } catch (error) {
       console.error("Registration error:", error);
       const errorMessage =
@@ -137,7 +165,7 @@ const StudentForm = () => {
     <div
       style={{
         display: "flex",
-        flexDirection:"row",
+        flexDirection: "row",
         justifyContent: "center",
         "@media(max-width:768px)": { flexDirection: "column" },
       }}
@@ -182,7 +210,7 @@ const StudentForm = () => {
               color: "#888",
             }}
           >
-            Sign up to continue 
+            Sign up to continue
           </Text>
           <Form
             form={form}
@@ -313,7 +341,7 @@ const StudentForm = () => {
             }}
           >
             Already have an account?{" "}
-            <a href="/login" style={{ color: "purple","&:hover":{textDecoration:"underline!important"} }}>
+            <a href="/" style={{ color: "purple", "&:hover": { textDecoration: "underline!important" } }}>
               Sign in
             </a>
           </Text>

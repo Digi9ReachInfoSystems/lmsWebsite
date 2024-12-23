@@ -63,3 +63,14 @@ export const createPaymentForCustomPackage = async (paymentData) => {
         throw error; // Throw the error for further handling
     }
 };
+
+export const getPaymentByStudentId = async (studentId) => {
+    try {
+        const response = await api.get(`/api/payments/getPayoutByStudentId/${studentId}`);
+        console.log('Payment fetched successfully:', response.data);
+        return response.data; // Return the response data containing all payments
+    } catch (error) {
+        console.error('Error fetching payments:', error.response ? error.response.data : error.message);
+        throw error; // Throw the error for further handling
+    }
+};

@@ -6,7 +6,7 @@ export const Container = styled.div`
   padding: 24px;
   background-color: ${theme.colors.bgLight};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
+  /* max-width: 1200px; */
 
   ${media.md`
     padding: 16px;

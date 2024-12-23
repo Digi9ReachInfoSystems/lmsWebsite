@@ -47,7 +47,7 @@ const ManagePayment = () => {
 
   // Filter payments dynamically based on search input
   const filteredPayments = payments.filter((payment) =>
-    payment.student_id.user_id.email.toLowerCase().includes(searchInput)
+    payment.student_id?.user_id?.email.toLowerCase().includes(searchInput)
   );
 
   const columns = [
@@ -197,11 +197,11 @@ const ManagePayment = () => {
               </p>
               <p>
                 <strong>Student Name:</strong>{" "}
-                {selectedPayment.student_id.user_id.name}
+                {selectedPayment.student_id?.user_id?.name}
               </p>
               <p>
                 <strong>Email:</strong>{" "}
-                {selectedPayment.student_id.user_id.email}
+                {selectedPayment.student_id?.user_id?.email}
               </p>
               <p>
                 <strong>Package Name:</strong>{" "}

@@ -12,13 +12,13 @@ import api from "../config/axiosConfig";
 export const createSubject = async (subjectData) => {
   try {
     const response = await api.post("/subjects", subjectData);
-    //console.log("Subject created successfully:", response.data);
+    console.log("Subject created successfully:", response.data);
     return response.data;
   } catch (error) {
-    //console.error(
-    //   "Error creating subject:",
-    //   error.response?.data || error.message
-    // );
+    console.error(
+      "Error creating subject:",
+      error.response?.data || error.message
+    );
     throw error;
   }
 };
