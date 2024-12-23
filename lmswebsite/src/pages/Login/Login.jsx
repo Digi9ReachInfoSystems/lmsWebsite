@@ -49,14 +49,14 @@ const Login = () => {
         name: profileData.user.name,
         loggedIn: "true",
       };
-      console.log("profileData", profileData);
+      //console.log("profileData", profileData);
 
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
 
       if (profileData.user.role === "admin") navigate("/admin");
       else if (profileData.user.role === "student") {
         const studentData = await getStudentByAuthId(user.uid);
-        console.log(" login studentData", studentData);
+        //console.log(" login studentData", studentData);
 
         if (
           studentData.student.custom_package_status == "no_package" &&
@@ -69,7 +69,7 @@ const Login = () => {
         // navigate("/student");
       } else if (profileData.user.role === "teacher") {
         const teacherData = await getTeacherByAuthId(profileData.user.auth_id);
-        console.log(" login teacherData", teacherData);
+        //console.log(" login teacherData", teacherData);
         if (teacherData.teacher) {
           navigate("/teacher/dashboard");
         } else {
@@ -90,7 +90,7 @@ const Login = () => {
 
       <LoginFormContainer>
         <Title>Welcome Back 👋 </Title>
-        <SubTitle>Please sign-in to your account and start learning </SubTitle>
+        <SubTitle>Please Sign in to your account and start learning </SubTitle>
         <Form className="login-textfields" onFinish={handleLogin}>
           <p className="caption">EMAIL</p>
           <Form.Item

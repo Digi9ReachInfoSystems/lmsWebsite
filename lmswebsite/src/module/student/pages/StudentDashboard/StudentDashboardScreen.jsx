@@ -51,7 +51,7 @@ const StudentDashboardScreen = () => {
 
         const authId = sessionData.userId;
         const studentData = await getStudentByAuthId(authId);
-        console.log("Student Data:", studentData);
+        ////console.log("Student Data:", studentData);
 
         if (!studentData.student || !studentData.student._id) {
           throw new Error("Student data is incomplete.");
@@ -83,7 +83,7 @@ const StudentDashboardScreen = () => {
         ]);
         setLoading(false);
       } catch (error) {
-        console.error(error);
+        ////console.error(error);
         // Handle error appropriately, e.g., set an error state
       }
     };
@@ -99,7 +99,7 @@ const StudentDashboardScreen = () => {
   
         const authId = sessionData.userId;
         const studentData = await getStudentByAuthId(authId);
-        console.log("Student Data:", studentData);
+        //console.log("Student Data:", studentData);
   
         if (!studentData.student || !studentData.student._id) {
           throw new Error("Student data is incomplete.");
@@ -135,7 +135,7 @@ const StudentDashboardScreen = () => {
           }
         }
       } catch (error) {
-        console.error("Error fetching batches:", error);
+        //console.error("Error fetching batches:", error);
       }
     };
   

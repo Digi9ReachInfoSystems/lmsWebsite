@@ -4,23 +4,23 @@ import "./MeetourTeacher.css";
 function MeetOurTeacher() {
   const mentors = [
     {
-      name: "Roshan Thakur",
+      name: "Munmi Boruah",
       title: "English Teacher",
       image:
         "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/pngtree-beauty-teacher-beauty-teacher-beautiful-female-teacher-teachers-day-png-image_493410-removebg-preview.png?alt=media&token=e25d7202-3230-4139-8c99-32bf2cc9c157",
       reviews: "44k",
     },
     {
-      name: "Sunil Pal",
-      title: "Science Teacher",
+      name: "Anil Kumar",
+      title: "Mathemathics Teacher",
       image:
         "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/pngtree-beauty-teacher-beauty-teacher-beautiful-female-teacher-teachers-day-png-image_493410-removebg-preview.png?alt=media&token=e25d7202-3230-4139-8c99-32bf2cc9c157", // Replace with the correct image path
       rating: 4.8,
       reviews: "44k",
     },
     {
-      name: "Deepak Yadav",
-      title: "Maths Teacher",
+      name: "Geetam Singh",
+      title: "Mathemathics Teacher",
       image:
         "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/pngtree-beauty-teacher-beauty-teacher-beautiful-female-teacher-teachers-day-png-image_493410-removebg-preview.png?alt=media&token=e25d7202-3230-4139-8c99-32bf2cc9c157", // Replace with the correct image path
       rating: 4.8,
@@ -31,7 +31,7 @@ function MeetOurTeacher() {
   return (
     <div className="meet-our-teacher-section">
       <h2>
-        Meet our professional <span>mentors</span>
+        Meet few of our professional <span>mentors</span>
       </h2>
       <div className="mentors-container">
         {mentors.map((mentor, index) => (

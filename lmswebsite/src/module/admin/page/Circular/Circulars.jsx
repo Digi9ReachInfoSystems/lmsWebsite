@@ -71,7 +71,7 @@ const [loading, setLoading] = useState(false);
     const apiCaller = async () => {
       setLoading(true);
       const data = await getAllCircularNotificationsApi(filter);
-      console.log("Fetched Circulars:", data);
+      //console.log("Fetched Circulars:", data);
       if (data) {
         const formattedData = data.circularNotifications.map((circular) => ({
 

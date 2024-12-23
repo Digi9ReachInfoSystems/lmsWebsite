@@ -48,17 +48,17 @@ export default function QuizBatches() {
         setLoading(true);
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const teacherData = await getTeacherByAuthId(authId);
-        console.log("Teacher Data:", teacherData);
+        ////console.log("Teacher Data:", teacherData);
         const fetchedBatches = await getBatchesByTeacherId(
           teacherData.teacher._id
         );
         setBatches(fetchedBatches);
         setOriginalData(fetchedBatches);
         setFilterData(fetchedBatches);
-        console.log("Fetched Batches:", fetchedBatches);
+        //console.log("Fetched Batches:", fetchedBatches);
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching batches:", err);
+        //console.error("Error fetching batches:", err);
         // setError('Failed to fetch batches');
         setLoading(false);
       }
@@ -80,7 +80,7 @@ export default function QuizBatches() {
   }, [searchInput, originalData]);
 
   useEffect(() => {
-    console.log(stdTableIndex);
+    //console.log(stdTableIndex);
     if (stdTableIndex >= 0) {
       const batch = originalData[stdTableIndex];
       if (batch && batch.students) {

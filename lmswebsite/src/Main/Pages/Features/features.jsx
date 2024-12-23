@@ -5,23 +5,27 @@ function Features() {
   const features = [
     {
       number: "01",
-      title: "Create Account",
-      description: "Latter person am secure of estate genius at.",
+      title: "Sign Up",
+      description:
+        "Browse through our coaching programs and select the one that fits your goals. Signing up is quick and easy—simply create an account, choose your package, and you're ready to start.",
     },
     {
       number: "02",
-      title: "Pay  Fee",
-      description: "Latter person am secure of estate genius at.",
+      title: "Personalized Assessment",
+      description:
+        "We’ll begin with an initial consultation to assess your needs and goals. This helps us tailor a coaching plan that works for you, ensuring you get the most value from your time with us.",
     },
     {
       number: "03",
-      title: "Onboard Class",
-      description: "Latter person am secure of estate genius at.",
+      title: "Start Learning",
+      description:
+        "Dive into your coaching program! You’ll have access to all the materials, sessions, and resources you need.",
     },
     {
       number: "04",
-      title: "Start  Learning",
-      description: "Latter person am secure of estate genius at.",
+      title: "Get Ongoing Support",
+      description:
+        "You’re never alone in your journey. We’ll be there to guide and support you every step of the way, with regular check-ins and feedback to help you stay on track.",
     },
   ];
 
@@ -29,7 +33,7 @@ function Features() {
     <div className="features-section">
       <h2 className="section-title">How it Works</h2>
       <p className="section-description">
-        We have been providing great flooring solutions service.
+        We are providing tailored coaching solutions.
       </p>
 
       <div className="features-container">

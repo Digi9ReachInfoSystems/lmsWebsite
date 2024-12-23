@@ -36,7 +36,7 @@ const TeacherCircular = () => {
           message.error("Failed to fetch circular notifications.");
         }
       } catch (error) {
-        console.error("Error fetching circulars:", error);
+        //console.error("Error fetching circulars:", error);
         message.error("Error fetching circular data.");
       }
     };

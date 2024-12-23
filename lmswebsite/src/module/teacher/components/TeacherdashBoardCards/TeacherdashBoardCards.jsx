@@ -16,7 +16,7 @@ const iconMap = {
 
 const TeacherdashBoardCards = ({ cardsData = [] }) => {
   // Log the received data for debugging
-  console.log('Received cardsData:', cardsData);
+  //console.log('Received cardsData:', cardsData);
 
   // Check if cardsData is an array
   if (!Array.isArray(cardsData)) {

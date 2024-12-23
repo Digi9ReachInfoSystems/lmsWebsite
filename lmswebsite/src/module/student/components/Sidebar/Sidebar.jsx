@@ -183,7 +183,7 @@ const Sidebar = () => {
       link: "/student/dashboard/attendance",
     },
     {
-      name: "Assignments",
+      name: "Homework",
       icon: <RiCustomerServiceLine />,
       link: "/student/dashboard/assignments",
     },

@@ -25,7 +25,7 @@ function SelectType() {
     const fetchBatchTypes = async () => {
       try {
         const response = await getAllTypeOfBatches();
-        console.log("Batch types fetched successfully:", response);
+        //console.log("Batch types fetched successfully:", response);
         setBatchTypes(response); // Set fetched batch types
       } catch (error) {
         setError("Failed to fetch batch types. Please try again.");

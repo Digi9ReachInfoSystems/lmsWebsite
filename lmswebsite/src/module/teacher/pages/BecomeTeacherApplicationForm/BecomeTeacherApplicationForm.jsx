@@ -66,7 +66,7 @@ const BecomeTeacherApplicationForm = () => {
         setBoardData(board);
         updateAccessToken();
       } catch (err) {
-        console.error("Error loading boards:", err);
+        //console.error("Error loading boards:", err);
       } finally {
         setLoading(false);
       }
@@ -85,7 +85,7 @@ const BecomeTeacherApplicationForm = () => {
           setClasses([]);
         }
       } catch (err) {
-        console.error("Error loading classes:", err);
+        //console.error("Error loading classes:", err);
       } finally {
         setLoading(false);
       }
@@ -108,7 +108,7 @@ const BecomeTeacherApplicationForm = () => {
           setSubjects([]);
         }
       } catch (err) {
-        console.error("Error loading subjects:", err);
+        //console.error("Error loading subjects:", err);
       } finally {
         setLoading(false);
       }
@@ -143,13 +143,14 @@ const BecomeTeacherApplicationForm = () => {
 
       message.success("Application submitted successfully!");
       // Redirect or reload as needed
-      navigate("/teacher");
+      // navigate("/teacher");
+      form.resetFields();
     } catch (error) {
       message.error("Failed to submit the application. Please try again.");
-      console.error(
-        "Application Submission Error:",
-        error.response?.data || error.message
-      );
+      // console.error(
+      //   "Application Submission Error:",
+      //   error.response?.data || error.message
+      // );
     } finally {
       setIsSubmitting(false);
     }

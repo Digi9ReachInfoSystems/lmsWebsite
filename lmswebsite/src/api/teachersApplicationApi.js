@@ -17,7 +17,7 @@ import { uploadFileToFirebase } from '../utils/uploadFileToFirebase'; // Utility
 
 export const submitTeacherApplication = async (applicationData) => {
     try {
-      console.log('Submitting application:', applicationData);
+      ////console.log('Submitting application:', applicationData);
       // Upload resume and profile image to Firebase
       const resumeUrl = await uploadFileToFirebase(applicationData.resume_link, 'resume');
       const profileImageUrl = await uploadFileToFirebase(applicationData.profileImage, 'profileImage');
@@ -42,10 +42,10 @@ export const submitTeacherApplication = async (applicationData) => {
       };
       // Send the request to the backend
       const response = await api.post('/teacher-application/apply', requestBody);
-      console.log('Application submitted successfully:', response.data);
+      ////console.log('Application submitted successfully:', response.data);
       return response.data; // Return the response data
     } catch (error) {
-      console.error('Error submitting application:', error.response?.data || error.message);
+      ////console.error('Error submitting application:', error.response?.data || error.message);
       throw error; // Throw the error for further handling
     }
   };
@@ -62,10 +62,10 @@ export const getTeacherApplications = async (approvalStatus) => {
                 approval_status: approvalStatus, // Set the approval status as a query parameter
             },
         });
-        console.log('Teacher applications fetched successfully:', response.data);
+        ////console.log('Teacher applications fetched successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching teacher applications:', error.response?.data || error.message);
+        //console.error('Error fetching teacher applications:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -78,10 +78,10 @@ export const getTeacherApplications = async (approvalStatus) => {
 export const approveTeacherApplication = async (applicationId,data) => {
     try {
         const response = await api.put(`/teacher-application/approve/${applicationId}`,data);
-        console.log('Teacher application approved successfully:', response.data);
+        //console.log('Teacher application approved successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error approving teacher application:', error.response?.data || error.message);
+        //console.error('Error approving teacher application:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -96,10 +96,10 @@ export const getSingleTeacherApplication = async (applicationId) => {
       const response = await api.get(
         `/teacher-application/application/single/${applicationId}`
       );
-      console.log('Fetched Application:', response.data); // For debugging
+      //console.log('Fetched Application:', response.data); // For debugging
       return response.data; // Return the application data
     } catch (error) {
-      console.error('Error fetching application:', error.response?.data || error.message);
+      //console.error('Error fetching application:', error.response?.data || error.message);
       throw error; // Re-throw the error for further handling if needed
     }
   };
@@ -107,10 +107,10 @@ export const getSingleTeacherApplication = async (applicationId) => {
 export const getTeacherApplicationsByUserId = async (user_id) => {
     try {
         const response = await api.get(`/teacher-application/application/single/teacher/${user_id}`);
-        console.log('Teacher applications fetched successfully:', response.data);
+        //console.log('Teacher applications fetched successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching teacher applications:', error.response?.data || error.message);
+        //console.error('Error fetching teacher applications:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };

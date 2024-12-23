@@ -53,7 +53,7 @@ const StudentTaskBoard = () => {
         // Fetching student data from localStorage
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
-          console.error("User is not authenticated.");
+          //console.error("User is not authenticated.");
           throw new Error("User is not authenticated.");
         }
         const authId = sessionData.userId;
@@ -61,7 +61,7 @@ const StudentTaskBoard = () => {
         const studentData = await getStudentByAuthId(authId);
 
         if (!studentData.student || !studentData.student._id) {
-          console.error("Student data is incomplete.");
+          //console.error("Student data is incomplete.");
           throw new Error("Student data is incomplete.");
         }
 
@@ -87,13 +87,13 @@ const StudentTaskBoard = () => {
 
         // const sampleData= await getQuizByBatchId("67598e66b01bb506b14cc91f")
 
-        // console.log("Unique Batch IDs:",sampleData );
+        // //console.log("Unique Batch IDs:",sampleData );
         // Fetch quizzes for each unique batch ID
         const quizzesData = await Promise.all(
           uniqueBatchIds.map((batchId) => getQuizByBatchId(batchId))
         );
 
-        console.log("Quizzes Data:", quizzesData);
+        //console.log("Quizzes Data:", quizzesData);
 
         // Fetch quizzes for each unique subject ID
         // const quizzesData = await Promise.all(
@@ -102,7 +102,7 @@ const StudentTaskBoard = () => {
 
         // Flatten the quizzes array
         const allQuizzes = quizzesData.flatMap((data) => data.quizzes);
-        console.log("All Quizzes:", allQuizzes);
+        //console.log("All Quizzes:", allQuizzes);
         const upDatedQuiz = await Promise.all(
           allQuizzes.map(async (quiz) => {
 
@@ -113,7 +113,7 @@ const StudentTaskBoard = () => {
             };
           })
         )
-        console.log("Updated Quizzes:", upDatedQuiz);
+        //console.log("Updated Quizzes:", upDatedQuiz);
         setQuizzes(upDatedQuiz);
 
         // Fetch scores for each quiz for the student
@@ -121,33 +121,33 @@ const StudentTaskBoard = () => {
         await Promise.all(
           allQuizzes.map(async (quiz) => {
             const scoreResponse = await getscoreforstudent(studentId, quiz._id);
-            console.log(
-              "Score Response for Quiz ID",
-              quiz._id,
-              ":",
-              scoreResponse
-            );
+            //console.log(
+            //   "Score Response for Quiz ID",
+            //   quiz._id,
+            //   ":",
+            //   scoreResponse
+            // );
             if (
               scoreResponse &&
               scoreResponse.data &&
               scoreResponse.data.length > 0
             ) {
               responseMap[quiz._id] = scoreResponse.data[0].score;
-              console.log(
-                "Response Map Updated for Quiz ID:",
-                quiz._id,
-                "Score:",
-                scoreResponse.data[0].score
-              );
+              //console.log(
+              //   "Response Map Updated for Quiz ID:",
+              //   quiz._id,
+              //   "Score:",
+              //   scoreResponse.data[0].score
+              // );
             }
           })
         );
 
         setResponses(responseMap);
-        console.log("Final Response Map:", responseMap);
+        //console.log("Final Response Map:", responseMap);
       } catch (error) {
         setError("Failed to load quizzes");
-        console.error("Error in fetchTaskBoardData:", error);
+        //console.error("Error in fetchTaskBoardData:", error);
       } finally {
         setLoading(false);
       }

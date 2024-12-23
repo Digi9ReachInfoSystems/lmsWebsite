@@ -55,9 +55,9 @@ const TeacherDashBoardScreen = () => {
         const teacherData = await getTeacherByAuthId(sessionData.userId);
         setTeacherData(teacherData);
         setTeacherId(teacherData.teacher?._id); // Set teacherId
-        console.log("Teacher Data:", teacherData);
+        ////console.log("Teacher Data:", teacherData);
       } catch (error) {
-        console.error("Error fetching teacher data:", error);
+        //console.error("Error fetching teacher data:", error);
       }
     };
 
@@ -98,7 +98,7 @@ const TeacherDashBoardScreen = () => {
           },
         ]);
       } catch (error) {
-        console.error("Error fetching counts:", error);
+        //console.error("Error fetching counts:", error);
       }
     };
 
@@ -115,7 +115,7 @@ const TeacherDashBoardScreen = () => {
         setLoading(true);
         const recentQuizData = await getRecentQuizForTeacher(teacherId);
         setRecentQuiz(recentQuizData);
-        console.log("Recent Quiz fetched:", recentQuizData);
+        //console.log("Recent Quiz fetched:", recentQuizData);
 
         // Set up quiz card data
         setQuizCardData({
@@ -128,7 +128,7 @@ const TeacherDashBoardScreen = () => {
           answeredBy: recentQuizData.answered_by.length || "0",
         });
       } catch (error) {
-        console.error("Error fetching recent quiz:", error);
+        //console.error("Error fetching recent quiz:", error);
       }
     };
 

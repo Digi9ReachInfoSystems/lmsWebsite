@@ -12,10 +12,10 @@ import api from '../config/axiosConfig';
 export const createPaymentApi = async (paymentData) => {
     try {
         const response = await api.post('/api/payment', paymentData);
-        console.log('Payment created successfully:', response.data);
+        ////console.log('Payment created successfully:', response.data);
         return response.data; // Return the payment details
     } catch (error) {
-        console.error('Error creating payment:', error.response ? error.response.data : error.message);
+        ////console.error('Error creating payment:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -27,10 +27,10 @@ export const createPaymentApi = async (paymentData) => {
 export const getAllPaymentsApi = async () => {
     try {
         const response = await api.get('/api/payments/allPayments');
-        console.log('Payments fetched successfully:', response.data);
+        ////console.log('Payments fetched successfully:', response.data);
         return response.data; // Return the response data containing all payments
     } catch (error) {
-        console.error('Error fetching payments:', error.response ? error.response.data : error.message);
+        ////console.error('Error fetching payments:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -43,10 +43,10 @@ export const getAllPaymentsApi = async () => {
 export const getPaymentDetailsByIdApi = async (paymentId) => {
     try {
         const response = await api.get(`/payment/details/${paymentId}`);
-        console.log('Payment details fetched successfully:', response.data);
+        //console.log('Payment details fetched successfully:', response.data);
         return response.data; // Return the response data containing payment details
     } catch (error) {
-        console.error('Error fetching payment details:', error.response ? error.response.data : error.message);
+        //console.error('Error fetching payment details:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -56,10 +56,10 @@ export const getPaymentDetailsByIdApi = async (paymentId) => {
 export const createPaymentForCustomPackage = async (paymentData) => {
     try {
         const response = await api.post('/api/payments/customPackage/create-order', paymentData);
-        console.log('Payment link successfully:', response.data);
+        //console.log('Payment link successfully:', response.data);
         return response.data; // Return the payment details
     } catch (error) {
-        console.error('Error creating payment Link:', error.response ? error.response.data : error.message);
+        //console.error('Error creating payment Link:', error.response ? error.response.data : error.message);
         throw error; // Throw the error for further handling
     }
 };

@@ -64,7 +64,7 @@ const ForgotPasswordPage = () => {
             }, 10000);
 
         } catch (error) {
-            console.error("Password reset error:", error);
+            //console.error("Password reset error:", error);
             setErrorMessage("Incorrect email  Please try again.");
         } finally {
             setIsResetting(false); // Stop loading

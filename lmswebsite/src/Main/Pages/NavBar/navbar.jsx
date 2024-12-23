@@ -70,7 +70,7 @@ function HeaderSection() {
         const fetchedBoards = await getBoards(category);
         setBoards((prev) => ({ ...prev, [category]: fetchedBoards }));
       } catch (error) {
-        console.error(`Error fetching boards: ${error}`);
+        //console.error(`Error fetching boards: ${error}`);
       }
     }
   };
@@ -82,7 +82,7 @@ function HeaderSection() {
         const fetchedClasses = await getClassesByBoardId(boardId);
         setClasses((prev) => ({ ...prev, [boardId]: fetchedClasses }));
       } catch (error) {
-        console.error(`Error fetching classes: ${error}`);
+        //console.error(`Error fetching classes: ${error}`);
       }
     }
   };

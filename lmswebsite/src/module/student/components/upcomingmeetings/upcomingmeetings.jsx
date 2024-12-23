@@ -14,14 +14,14 @@ const UpcomingMeetings = () => {
       const autId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const studentData = await getStudentByAuthId(autId);
       setStudentMode(studentData.student.mode);
-      console.log("studentData", studentData.student._id);
+      ////console.log("studentData", studentData.student._id);
       const response = await getStudentscheduleForSevenDaysById(studentData.student._id);
       const studentAttendanceData = await getStudentAttendance(studentData.student._id);
       const schedule = response.data.schedule;
-      console.log("schedule", schedule);
+      //console.log("schedule", schedule);
       // Map the schedule into events for react-big-calendar
       let formattedEvents = await Promise.all(schedule.map(async (item, index) => {
-        console.log ("item", item);
+        //console.log ("item", item);
         const status = await getStudentBatchStatus(studentData.student._id, item.batch_id);
 
         return ({
@@ -69,11 +69,11 @@ const UpcomingMeetings = () => {
     { title: "Geography Class", time: "04:00 PM - 05:00 PM" },
     { title: "Geography Class", time: "04:00 PM - 05:00 PM" },
   ];
-  console.log("meetingData", meetingData);
+  //console.log("meetingData", meetingData);
 
   // Handle when a user clicks on an event
   const handleSelectEvent = (event) => {
-    console.log("event", event);
+    //console.log("event", event);
     if (event.meeting_url) {
       window.open(event.meeting_url, "_blank"); // Open the meeting URL in a new tab
       handleClockIn(event.meetingId);
@@ -97,13 +97,13 @@ const UpcomingMeetings = () => {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error clocking in:", error);
+      //console.error("Error clocking in:", error);
     }
   };
 
   // Handle clock-out action
   const handleClockOut = async (item) => {
-    console.log("meetingId", item);
+    //console.log("meetingId", item);
     try {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const studentData = await getStudentByAuthId(authId);
@@ -120,7 +120,7 @@ const UpcomingMeetings = () => {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Error clocking out:", error);
+      //console.error("Error clocking out:", error);
     }
   };
   return (

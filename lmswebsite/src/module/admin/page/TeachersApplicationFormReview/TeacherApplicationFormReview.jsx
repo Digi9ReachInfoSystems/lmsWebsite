@@ -45,9 +45,9 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         }
         setTeacher(data);
         setTeacherName(data.application?.teacher_name);
-        console.log("Fetched Teacher Data:", data); // Debugging line
+        ////console.log("Fetched Teacher Data:", data); // Debugging line
       } catch (err) {
-        console.error("Error fetching teacher:", err);
+        //console.error("Error fetching teacher:", err);
         setError("Failed to fetch teacher details. Please try again later.");
       } finally {
         setLoading(false);
@@ -63,7 +63,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       toast.success("Application approved successfully!");
       closeModal();
     } catch (error) {
-      console.error("Error approving application:", error);
+      //console.error("Error approving application:", error);
       toast.error("Failed to approve the application.");
     }
   };
@@ -84,7 +84,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
-      console.log("user", values);
+      //console.log("user", values);
       const userData = await signupUser({
         role: "teacher",
         student_name: teacher_name,
@@ -103,11 +103,11 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         "sessionData",
         JSON.stringify(oldSessionData)
       );
-      console.log("Form Values:", values);
+      //console.log("Form Values:", values);
       toast.success("Application approved successfully!");
       closeModal();
     } catch (error) {
-      console.error("Error approving application:", error);
+      //console.error("Error approving application:", error);
       toast.error("Failed to approve the application.");
     }
   };
@@ -120,7 +120,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       toast.error("Application rejected.");
       navigate("/admin/applicationFormReview"); // Redirect to applications list
     } catch (error) {
-      console.error("Error rejecting application:", error);
+      //console.error("Error rejecting application:", error);
       toast.error("Failed to reject the application.");
     }
   };
@@ -274,7 +274,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           type="primary"
           onClick={handleViewResume}
           className="view-resume-btn"
-          style={{ marginBottom: '20px' }}
+          style={{ marginBottom: '20px', backgroundColor:"purple"}}
         >
           View Resume
         </Button>
@@ -305,7 +305,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
               height="600px"
               style={{ border: "none" }}
               onError={(e) => {
-                console.error("Error loading resume iframe:", e);
+                //console.error("Error loading resume iframe:", e);
                 message.error("Failed to load the resume. Please try again later.");
               }}
             ></iframe>
@@ -351,7 +351,8 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={false} 
+            style={{backgroundColor:"pink"}}>
               Approve
             </Button>
           </Form.Item>

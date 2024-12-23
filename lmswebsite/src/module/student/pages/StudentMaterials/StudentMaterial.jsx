@@ -15,14 +15,14 @@ const StudentMaterial = () => {
     useEffect(() => {
         const fetchContents = async () => {
             try {
-                console.log("Batch ID:", batchId); // Log batchId to ensure it's correct
+                ////console.log("Batch ID:", batchId); // Log batchId to ensure it's correct
                 const batchData = await getBatchById(batchId);  // Fetch batch info using batchId
-                console.log("Batch Data:", batchData);
+                ////console.log("Batch Data:", batchData);
 
                 if (batchData && batchData.batch?.batch_name) {
                     setBatchName(batchData.batch?.batch_name);  // Set batch name from the response
 
-                    console.log("Batch dcdcdcdName:", batchData.batch?.batch_name);
+                    ////console.log("Batch dcdcdcdName:", batchData.batch?.batch_name);
                 } else {
                     setError("Batch not found.");
                     setLoading(false);
@@ -38,7 +38,7 @@ const StudentMaterial = () => {
 
                 // Fetch contents based on batchId
                 const response = await getContentByBatchId(batchId);
-                console.log("Response:", response);
+                ////console.log("Response:", response);
 
                 if (response && response.length === 0) {
                     setError("No materials available for this batch.");
@@ -47,7 +47,7 @@ const StudentMaterial = () => {
                 }
                 setLoading(false);
             } catch (error) {
-                console.error("Error fetching contents:", error); // Log the error for debugging
+                //console.error("Error fetching contents:", error); // Log the error for debugging
                 setError("Error fetching contents."); // Set error message for display
                 setLoading(false);
             }
@@ -67,7 +67,7 @@ const StudentMaterial = () => {
             <h2>Materials for {batchName} </h2>
             <div className="card-list">
                 {contents.map((material) =>{
-                     {console.log("material",material)}
+                    //  {// //console.log("material",material)}
                     return  (
                     <MaterialCardWrapper key={material.id}>
                         <div className="card-header">

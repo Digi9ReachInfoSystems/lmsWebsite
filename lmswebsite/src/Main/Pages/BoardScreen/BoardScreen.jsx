@@ -83,7 +83,7 @@ function BoardScreen() {
 
         {/* Progress Bar */}
         <div className="progressBar">
-          <div className="progress"></div>
+          <div className="progress" style={{ width: "20%" }}></div>
         </div>
         <p className="step-info">Step 1 out of 5</p>
       </div>

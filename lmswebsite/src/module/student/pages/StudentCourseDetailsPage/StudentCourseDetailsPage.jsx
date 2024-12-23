@@ -25,7 +25,7 @@ import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
 const StudentCourseDetailsPage = () => {
   const location = useLocation();
-  console.log("location", location);
+  //console.log("location", location);
   return (<>{
     location ?
       <>

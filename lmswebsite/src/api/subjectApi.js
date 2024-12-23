@@ -12,13 +12,13 @@ import api from "../config/axiosConfig";
 export const createSubject = async (subjectData) => {
   try {
     const response = await api.post("/subjects", subjectData);
-    console.log("Subject created successfully:", response.data);
+    //console.log("Subject created successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error creating subject:",
-      error.response?.data || error.message
-    );
+    //console.error(
+    //   "Error creating subject:",
+    //   error.response?.data || error.message
+    // );
     throw error;
   }
 };
@@ -26,13 +26,13 @@ export const createSubject = async (subjectData) => {
 export const getAllSubjects = async () => {
   try {
     const response = await api.get("/subjects");
-    console.log("Subjects fetched successfully:", response.data);
+    //console.log("Subjects fetched successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error fetching subjects:",
-      error.response?.data || error.message
-    );
+    //console.error(
+    //   "Error fetching subjects:",
+    //   error.response?.data || error.message
+    // );
     throw error;
   }
 };
@@ -40,13 +40,13 @@ export const getAllSubjects = async () => {
 export const deleteSubjectById = async (subjectId) => {
   try {
     const response = await api.delete(`/subjects/${subjectId}`);
-    console.log("Subject deleted successfully:", response.data);
+    //console.log("Subject deleted successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error deleting subject:",
-      error.response?.data || error.message
-    );
+    //console.error(
+    //   "Error deleting subject:",
+    //   error.response?.data || error.message
+    // );
     throw error;
   }
   ``;
@@ -55,13 +55,13 @@ export const deleteSubjectById = async (subjectId) => {
 export const getSubjectsByClassId = async (classId) => {
   try {
     const response = await api.get(`/subjects/class/${classId}`);
-    console.log("Subjects fetched successfully:", response.data);
+    //console.log("Subjects fetched successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error fetching subjects:",
-      error.response?.data || error.message
-    );
+    //console.error(
+    //   "Error fetching subjects:",
+    //   error.response?.data || error.message
+    // );
     throw error;
   }
 };

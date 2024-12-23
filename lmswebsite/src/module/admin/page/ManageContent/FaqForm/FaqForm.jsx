@@ -50,7 +50,7 @@ const FaqForm = () => {
         error.response?.data?.error ||
           "Failed to create FAQ. Please try again later."
       );
-      console.error("Error creating FAQ:", error.response?.data || error);
+      //console.error("Error creating FAQ:", error.response?.data || error);
     } finally {
       setIsSubmitting(false);
       setLoading(false);

@@ -6,7 +6,7 @@ const LandingPageContactUs = ({ onClose }) => {
   const [form] = Form.useForm();
 
   const handleSubmit = (values) => {
-    console.log("Submitted values:", values);
+    //console.log("Submitted values:", values);
     onClose(); // Close modal on submission
   };
 

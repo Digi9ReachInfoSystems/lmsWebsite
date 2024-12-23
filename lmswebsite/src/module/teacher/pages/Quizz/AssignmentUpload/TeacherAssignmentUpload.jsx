@@ -19,11 +19,14 @@ import {
 import { UploadOutlined, SearchOutlined } from "@ant-design/icons";
 import { getBatchesByTeacherId } from "../../../../../api/batchApi"; // Adjust the path as needed
 import { getTeacherByAuthId } from "../../../../../api/teacherApi"; // Adjust the path as needed
+
+// UPDATED: Removed getAllAssignments import, added getAssignmentsByTeacherId
 import {
   createAssignment,
-  getAllAssignments,
   deleteAssignment,
+  getAssignmentsByTeacherId, // <-- import this
 } from "../../../../../api/assignmentApi"; // Adjust the path as needed
+
 import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase"; // Adjust the path as needed
 import { TeacherCircularWrap } from "./TeacherAssignmentUpload.styles"; // Ensure this styled component exists
 import Lottie from "lottie-react"; // For animations
@@ -71,10 +74,10 @@ const TeacherAssignmentUpload = () => {
           throw new Error("User is not authenticated.");
         }
         const teacher = await getTeacherByAuthId(sessionData.userId);
-        console.log("Fetched teacher data:", teacher);
+        //console.log("Fetched teacher data:", teacher);
         setTeacherData(teacher);
       } catch (error) {
-        console.error("Error fetching teacher data:", error);
+        //console.error("Error fetching teacher data:", error);
         message.error("Failed to fetch teacher data. Please try again.");
       } finally {
         setLoadingTeacher(false);
@@ -89,7 +92,7 @@ const TeacherAssignmentUpload = () => {
    */
   useEffect(() => {
     const fetchBatches = async () => {
-      console.log("Teacher Data:", teacherData);
+      //console.log("Teacher Data:", teacherData);
 
       let teacherId;
       if (teacherData && teacherData._id) {
@@ -101,19 +104,19 @@ const TeacherAssignmentUpload = () => {
       ) {
         teacherId = teacherData.teacher._id;
       } else {
-        console.log("Teacher ID not found in teacherData");
+        //console.log("Teacher ID not found in teacherData");
         message.error("Teacher ID not found.");
         return;
       }
 
       try {
         setLoadingBatches(true);
-        console.log("Teacher ID:", teacherId);
+        //console.log("Teacher ID:", teacherId);
         const batchesData = await getBatchesByTeacherId(teacherId);
-        console.log("Batches fetched successfully:", batchesData);
+        //console.log("Batches fetched successfully:", batchesData);
         setBatches(batchesData);
       } catch (error) {
-        console.error("Error fetching batches:", error);
+        //console.error("Error fetching batches:", error);
         message.error("Failed to fetch batches. Please try again.");
       } finally {
         setLoadingBatches(false);
@@ -126,30 +129,58 @@ const TeacherAssignmentUpload = () => {
   }, [teacherData]);
 
   /**
-   * Fetch All Assignments
+   * Helper to extract Teacher ID
+   */
+  const getTeacherId = () => {
+    if (teacherData && teacherData._id) {
+      return teacherData._id;
+    } else if (
+      teacherData &&
+      teacherData.teacher &&
+      teacherData.teacher._id
+    ) {
+      return teacherData.teacher._id;
+    } else {
+      return null;
+    }
+  };
+
+  /**
+   * Fetch Assignments by Teacher ID
    */
   useEffect(() => {
-    const fetchAssignments = async () => {
+    const fetchAssignmentsByTeacherId = async () => {
+      const teacherId = getTeacherId();
+      if (!teacherId) {
+        //console.error("Teacher ID not found. Unable to fetch assignments.");
+        return;
+      }
+
       try {
         setLoadingAssignments(true);
-        const response = await getAllAssignments();
-        console.log("Fetched assignments:", response);
+        const response = await getAssignmentsByTeacherId(teacherId);
+        //console.log("Fetched assignments:", response);
+
+        // Adjust this based on how your API returns data.
+        // For instance, if response already is an array, you may not need the .assignments check.
         if (response.assignments && Array.isArray(response.assignments)) {
           setAssignments(response.assignments);
         } else {
-          console.error("Unexpected assignments data format:", response);
+          //console.error("Unexpected assignments data format:", response);
           message.error("Failed to fetch assignments. Please try again.");
         }
       } catch (error) {
-        console.error("Error fetching assignments:", error);
+        //console.error("Error fetching assignments:", error);
         message.error("Failed to fetch assignments. Please try again.");
       } finally {
         setLoadingAssignments(false);
       }
     };
 
-    fetchAssignments();
-  }, []);
+    if (teacherData) {
+      fetchAssignmentsByTeacherId();
+    }
+  }, [teacherData]);
 
   /**
    * Handle "Upload" Button Click
@@ -166,23 +197,6 @@ const TeacherAssignmentUpload = () => {
     form.resetFields();
     setContentUrl("");
     setFileList([]);
-  };
-
-  /**
-   * Extract Teacher ID
-   */
-  const getTeacherId = () => {
-    if (teacherData && teacherData._id) {
-      return teacherData._id;
-    } else if (
-      teacherData &&
-      teacherData.teacher &&
-      teacherData.teacher._id
-    ) {
-      return teacherData.teacher._id;
-    } else {
-      return null;
-    }
   };
 
   /**
@@ -212,31 +226,31 @@ const TeacherAssignmentUpload = () => {
       };
 
       // Debugging: Log the payload to ensure all fields are present
-      console.log("Submitting Assignment Payload:", payload);
+      //console.log("Submitting Assignment Payload:", payload);
 
       const newAssignment = await createAssignment(payload);
 
-      console.log("Created Assignment:", newAssignment); // Debugging
+      //console.log("Created Assignment:", newAssignment); // Debugging
 
       message.success("Assignment created successfully!");
       setIsModalVisible(false);
       form.resetFields();
       setContentUrl("");
       setFileList([]);
-      // Refresh assignments list
-      const assignmentsData = await getAllAssignments();
-      console.log("Fetched assignments after creating:", assignmentsData);
+
+      // Refresh assignments list (by teacher)
+      const assignmentsData = await getAssignmentsByTeacherId(teacherId);
       if (
         assignmentsData.assignments &&
         Array.isArray(assignmentsData.assignments)
       ) {
         setAssignments(assignmentsData.assignments);
       } else {
-        console.error("Unexpected assignments data format:", assignmentsData);
+        //console.error("Unexpected assignments data format:", assignmentsData);
         message.error("Failed to refresh assignments. Please try again.");
       }
     } catch (error) {
-      console.error("Error creating assignment:", error);
+      //console.error("Error creating assignment:", error);
       // Enhanced error message handling
       if (error.response && error.response.data && error.response.data.error) {
         message.error(`Error: ${error.response.data.error}`);
@@ -277,23 +291,29 @@ const TeacherAssignmentUpload = () => {
    * Handle Assignment Deletion with Confirmation
    */
   const confirmDeleteAssignment = async (assignmentId) => {
+    const teacherId = getTeacherId();
+    if (!teacherId) {
+      message.error("Teacher ID is not available. Please try again.");
+      return;
+    }
+
     try {
       await deleteAssignment(assignmentId);
       message.success("Assignment deleted successfully!");
-      // Refresh assignments list
-      const assignmentsData = await getAllAssignments();
-      console.log("Fetched assignments after deletion:", assignmentsData);
+
+      // Refresh assignments list (by teacher)
+      const assignmentsData = await getAssignmentsByTeacherId(teacherId);
       if (
         assignmentsData.assignments &&
         Array.isArray(assignmentsData.assignments)
       ) {
         setAssignments(assignmentsData.assignments);
       } else {
-        console.error("Unexpected assignments data format:", assignmentsData);
+        //console.error("Unexpected assignments data format:", assignmentsData);
         message.error("Failed to refresh assignments. Please try again.");
       }
     } catch (error) {
-      console.error("Error deleting assignment:", error);
+      //console.error("Error deleting assignment:", error);
       if (error.response && error.response.data && error.response.data.error) {
         message.error(`Error: ${error.response.data.error}`);
       } else {
@@ -308,7 +328,9 @@ const TeacherAssignmentUpload = () => {
    * Handle Viewing Responses
    */
   const handleViewResponses = (assignmentId) => {
-    navigate(`/teacher/dashboard/quizz/assignedBatch/uploadContent/${assignmentId}/responses`);
+    navigate(
+      `/teacher/dashboard/quizz/assignedBatch/uploadContent/${assignmentId}/responses`
+    );
   };
 
   /**
@@ -343,7 +365,7 @@ const TeacherAssignmentUpload = () => {
         ]);
         message.success(`${currentFile.name} uploaded successfully.`);
       } catch (error) {
-        console.error("Upload failed:", error);
+        //console.error("Upload failed:", error);
         message.error(`${currentFile.name} upload failed.`);
         setFileList([]);
       } finally {
@@ -408,10 +430,9 @@ const TeacherAssignmentUpload = () => {
           flexWrap: "wrap",
         }}
       >
-          
-
-        
-        <Title level={2} style={{ marginBottom: "10px", color: "#bdc9d3" }}>Assignment Details</Title>
+        <Title level={2} style={{ marginBottom: "10px", color: "#bdc9d3" }}>
+          Assignment Details
+        </Title>
         <div
           className="header-actions"
           style={{ display: "flex", alignItems: "center", marginTop: "10px" }}
@@ -459,10 +480,16 @@ const TeacherAssignmentUpload = () => {
               title={` ${assignment.batch_id.batch_name}`}
               extra={
                 <Button
-
                   type="link"
                   onClick={() => handleViewResponses(assignment._id)}
-                  style={{ marginRight: "10px", padding:"10px", borderRadius:"10px", backgroundColor: "#ff007a", borderColor: "#ff007a", color: "#fff" }}
+                  style={{
+                    marginRight: "10px",
+                    padding: "10px",
+                    borderRadius: "10px",
+                    backgroundColor: "#ff007a",
+                    borderColor: "#ff007a",
+                    color: "#fff",
+                  }}
                 >
                   View Responses
                 </Button>
@@ -491,8 +518,11 @@ const TeacherAssignmentUpload = () => {
               </p>
               <p>
                 <Text strong>Content:</Text>{" "}
-                <Link href={assignment.content_url} target="_blank" rel="noopener noreferrer"
-                style={{ color: "#ff007a" }}
+                <Link
+                  href={assignment.content_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#ff007a" }}
                 >
                   View Content
                 </Link>
@@ -549,10 +579,7 @@ const TeacherAssignmentUpload = () => {
                 maxCount={1}
                 onRemove={handleRemove}
               >
-                <Button
-                  icon={<UploadOutlined />}
-                  disabled={uploadingFile}
-                >
+                <Button icon={<UploadOutlined />} disabled={uploadingFile}>
                   Click to Upload
                 </Button>
               </Upload>
@@ -577,7 +604,9 @@ const TeacherAssignmentUpload = () => {
             <Form.Item
               name="expiry_date"
               label="Expiry Date"
-              rules={[{ required: true, message: "Please select an expiry date." }]}
+              rules={[
+                { required: true, message: "Please select an expiry date." },
+              ]}
             >
               <DatePicker
                 style={{ width: "100%" }}

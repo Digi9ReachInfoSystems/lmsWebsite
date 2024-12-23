@@ -23,15 +23,15 @@ const CustomPackage = () => {
     const fetchPackages = async () => {
       try {
         const data = await getPackages();
-        console.log("data", data);
+        ////console.log("data", data);
         if (data && data.packages) {
           setPackages(data.packages);
           setFilteredPackages(data.packages);
         } else {
-          console.error("Failed to fetch packages");
+          ////console.error("Failed to fetch packages");
         }
       } catch (error) {
-        console.error("Error fetching packages:", error);
+        //console.error("Error fetching packages:", error);
       }
     };
 
@@ -51,7 +51,7 @@ const CustomPackage = () => {
     setSelectedPackage(record);
     setEditedPrice(record.package_price); // Initialize edited price
     setIsModalVisible(true);
-    console.log("record", record.student_id.type_of_batch.mode);
+    //console.log("record", record.student_id.type_of_batch.mode);
     form.setFieldsValue({
       studentName: record.student_id?.user_id?.name || "N/A",
       email: record.student_id?.user_id?.email || "N/A",
@@ -84,7 +84,7 @@ const CustomPackage = () => {
       return;
     }
     try {
-      console.log("selectedPackage", selectedPackage);
+      //console.log("selectedPackage", selectedPackage);
       const updateStudentData= await updateStudent(selectedPackage.student_id._id,{updateData:{
         duration: duration.toString()
       }})
@@ -94,11 +94,11 @@ const CustomPackage = () => {
         student_id: selectedPackage.student_id._id,
         duration: duration
       })
-      console.log("Payment data:", paymentData);
+      //console.log("Payment data:", paymentData);
       message.success("Payment request sent successfully.");
       handleModalClose();
     } catch (error) {
-      console.error("Error sending payment request:", error);
+      //console.error("Error sending payment request:", error);
       message.error("Failed to send payment request.");
     }
   };
