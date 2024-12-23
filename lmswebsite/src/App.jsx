@@ -105,6 +105,7 @@ import TeacherAssignmentUpload from "./module/teacher/pages/Quizz/AssignmentUplo
 import AssignmentResponse from "./module/teacher/pages/Quizz/AssignmentResponse/AssignmentResponse";
 import StudentAssignment from "./module/student/pages/StudentAssignment/StudentAssignment";
 import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpload/StudentAssignmentUpload";
+import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -127,6 +128,15 @@ function App() {
             element={
               <PublicRoute>
                 <ClassScreen />
+              </PublicRoute>
+            }
+            key=""
+          ></Route>
+          <Route
+            path="/Our-Academy"
+            element={
+              <PublicRoute>
+                <OurAcademyPage />
               </PublicRoute>
             }
             key=""

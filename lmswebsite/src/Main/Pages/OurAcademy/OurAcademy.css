@@ -1,0 +1,77 @@
+/* Reset CSS */
+
+  /* Academy Hero section */
+  .academy-hero-section {
+    background-color: #6a11cb;
+    padding: 50px;
+    text-align: left;
+    color: #fff;
+    display: flex;
+
+  }
+
+  .academy-hero-section4 {
+    background-color: #ffffff;
+    padding: 50px;
+    text-align: left;
+    color: #000000;
+    display: flex;
+
+  }
+
+  .OurAcadamyImage{
+    width: 20%;
+    
+  }
+
+  .academy-hero-section1 {
+    background-color: #ffffff;
+    padding: 50px;
+    text-align: left;
+    color: #180146;
+    width: 80%;
+  }
+  
+  .academy-content {
+    max-width: 80%;
+    margin: 0 auto;
+
+  }
+  
+.academy-title {
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom:2rem;
+  }
+  
+  .academy-highlight {
+    color: #8e57ff;
+  }
+  
+  .academy-description {
+    font-size: 20px;
+    margin-top: 20px;
+    position: relative;
+    text-align: justify;
+  }
+  
+  .academy-line {
+    display: inline-block;
+    width: 60px;
+    height: 2px;
+    background-color: #fff;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+
+  .academy-hero-section2{
+    width: 50%;
+    
+  }
+
+  .academy-hero-section3{
+    width: 50%;
+  }
+  
