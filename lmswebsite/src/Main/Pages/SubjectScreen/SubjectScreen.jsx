@@ -3,6 +3,7 @@ import "./SubjectScreen.css";
 import HeaderSection from "../NavBar/navbar";
 import { getSubjectsByClassId } from "../../../api/subjectApi";
 import { useNavigate } from "react-router-dom";
+import combo from "../../../Main/assets/combo.avif";
 
 function SubjectScreen() {
   const [selectedSubjects, setSelectedSubjects] = useState([]); // To track selected subjects
@@ -115,7 +116,7 @@ function SubjectScreen() {
             >
               <div className="skill-icon">
                 <img
-                  src="/assets/custom-subject-icon.png"
+                  src={combo}
                   alt="Custom Subject"
                   className="board-icon"
                 />
