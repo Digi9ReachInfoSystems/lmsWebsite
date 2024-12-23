@@ -6,6 +6,7 @@ export const QuizListWrap = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-right: 20px;
     ${media.sm`
   flex-direction: column; 
   align-items: stretch; `}
