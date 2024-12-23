@@ -182,7 +182,7 @@ const StudentForm = () => {
               color: "#888",
             }}
           >
-            Sign up to continue
+            Sign up to continue 
           </Text>
           <Form
             form={form}
@@ -293,8 +293,8 @@ const StudentForm = () => {
                 loading={isSubmitting}
                 style={{
                   width: "100%",
-                  backgroundColor: "#00c897",
-                  borderColor: "#00c897",
+                  backgroundColor: "purple",
+                  borderColor: "purple",
                   color: "#fff",
                   height: "40px",
                 }}
@@ -313,7 +313,7 @@ const StudentForm = () => {
             }}
           >
             Already have an account?{" "}
-            <a href="/login" style={{ color: "#00c897","&:hover":{textDecoration:"underline!important"} }}>
+            <a href="/login" style={{ color: "purple","&:hover":{textDecoration:"underline!important"} }}>
               Sign in
             </a>
           </Text>
