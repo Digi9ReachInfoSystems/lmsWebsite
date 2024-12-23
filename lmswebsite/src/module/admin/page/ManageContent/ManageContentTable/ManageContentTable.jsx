@@ -640,15 +640,16 @@ const ManageContentTable = ({ contentType }) => {
           dataIndex: 'mode',
           key: 'mode',
         },
-        {
-          title: 'Discount Price',
-          dataIndex: 'discountedPrice',
-          key: 'discountedPrice',
-        },
+        
         {
           title: 'Price',
           dataIndex: 'price',
           key: 'price',
+        },
+        {
+          title: 'Discount Price',
+          dataIndex: 'discountedPrice',
+          key: 'discountedPrice',
         },
         {
           title: 'Duration',
