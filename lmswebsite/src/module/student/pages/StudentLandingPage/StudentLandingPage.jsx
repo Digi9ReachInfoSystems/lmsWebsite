@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { UploadOutlined, WindowsFilled } from "@ant-design/icons";
 import { Input, Select, Button, Upload, Form, message } from "antd";
-// import Header from "../../components/Header/Header";
+import Header from "../../components/Header/Header";
 // import studentApplicationImage from "../../../../assets/SignUpImage.png";
 import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import {
@@ -174,7 +174,8 @@ export const StudentLandingPage = () => {
 
       {studentDataForm ? (
         <>
-          <HeaderSection />
+          {/* <HeaderSection /> */}
+          <Header/>
           {/* studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" */}
           {(studentDataForm.student.custom_package_status === "no_package" || studentDataForm.student.custom_package_status === "expired") ? (
             <ApplicationContainer>

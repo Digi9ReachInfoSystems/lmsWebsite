@@ -25,7 +25,7 @@ const [loading, setLoading] = useState(true);
 
       // Populate fields with data from the API
       setFullName(DataTeacher.teacher.user_id.name);
-      setUsername(DataTeacher.teacher.user_id.email);
+      setUsername(DataTeacher.teacher?.microsoft_principle_namel);
       setEmail(DataTeacher.teacher.user_id.email);
       setPhone(DataTeacher.teacher.phone_number);
       setMicrosoft_id(DataTeacher.teacher?.microsoft_id);

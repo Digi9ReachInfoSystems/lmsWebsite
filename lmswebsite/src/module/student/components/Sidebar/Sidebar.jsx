@@ -39,6 +39,7 @@ import { FaUsersGear } from "react-icons/fa6";
 import { VscSignOut } from "react-icons/vsc";
 import { MdPayment } from "react-icons/md";
 import styled from "styled-components";
+import { FaBuildingCircleCheck } from "react-icons/fa6";
 const SidebarWrapper = styled.div`
   width: ${(props) => (props.isHovered ? "240px" : "80px")};
   height: 100vh;
@@ -177,11 +178,11 @@ const Sidebar = () => {
       icon: <FaWpforms />,
       link: "/student/dashboard/circular",
     },
-    {
-      name: "Attendance",
-      icon: <AiTwotoneNotification />,
-      link: "/student/dashboard/attendance",
-    },
+    // {
+    //   name: "Attendance",
+    //   icon: <FaBuildingCircleCheck/>,
+    //   link: "/student/dashboard/attendance",
+    // },
     {
       name: "Assignments",
       icon: <RiCustomerServiceLine />,

@@ -1,57 +1,99 @@
-// src/components/ModeBatch.jsx
-
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
-  Container,
-  Form,
-  Label,
-  Input,
-  Select,
-  Button,
-  ErrorMessage,
-  SuccessMessage,
-  DiscountInfo,
-  FeatureContainer,
-  FeatureInput,
-  AddFeatureButton,
-  FeatureList,
-  FeatureItem,
-  RemoveFeatureButton,
-} from './ModeBatch.style';
-import { createTypeOfBatch } from '../../../../../api/typeOfBatchApi';
-import { FaPlus, FaTrash } from 'react-icons/fa'; // For icons (optional)
+  Form as AntdForm,
+  Input as AntdInput,
+  Select as AntdSelect,
+  Button as AntdButton,
+  Alert,
+} from "antd";
+import { FaPlus, FaTrash } from "react-icons/fa";
+import { createTypeOfBatch } from "../../../../../api/typeOfBatchApi";
+import { getBoards } from "../../../../../api/boardApi";
+import { getClassesByBoardId } from "../../../../../api/classApi";
+import { getSubjectsByClassId } from "../../../../../api/subjectApi";
+
+const { Option } = AntdSelect;
 
 const ModeBatch = () => {
-  const [mode, setMode] = useState('');
-  const [price, setPrice] = useState('');
-  const [duration, setDuration] = useState('');
-  const [discountPercentage, setDiscountPercentage] = useState('');
-  const [discountedPrice, setDiscountedPrice] = useState('');
-  const [features, setFeatures] = useState([]); // New state for features
-  const [featureInput, setFeatureInput] = useState(''); // State for current feature input
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
-  const[title, setTitle] = useState('');
+  // State
+  const [mode, setMode] = useState("");
+  const [price, setPrice] = useState("");
+  const [duration, setDuration] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState("");
+  const [discountedPrice, setDiscountedPrice] = useState("");
+  const [features, setFeatures] = useState([]);
+  const [featureInput, setFeatureInput] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [title, setTitle] = useState("");
+  const [boardData, setBoardData] = useState([]);
+  const [selectedBoard, setSelectedBoard] = useState("");
+  const [classData, setClassData] = useState([]);
+  const [selectedClass, setSelectedClass] = useState("");
+  const [subjectData, setSubjectData] = useState([]);
+  const [selectedSubject, setSelectedSubject] = useState("");
 
-  // Maximum number of features allowed
   const MAX_FEATURES = 10;
 
-  // Calculate discounted price whenever price or discountPercentage changes
+  // Fetch boards only after `mode` is set (non-empty)
   useEffect(() => {
-    if (price && discountPercentage !== '') {
+    if (mode === "") return;
+    const fetchBoards = async () => {
+      try {
+        const boards = await getBoards();
+        setBoardData(boards);
+      } catch (err) {
+        console.error("Error fetching boards:", err);
+      }
+    };
+    fetchBoards();
+  }, [mode]);
+
+  // Fetch classes by board
+  useEffect(() => {
+    const fetchClasses = async () => {
+      if (!selectedBoard) return;
+      try {
+        const classDataresponse = await getClassesByBoardId(selectedBoard);
+        setClassData(classDataresponse);
+      } catch (err) {
+        console.error("Error fetching classes:", err);
+      }
+    };
+    fetchClasses();
+  }, [selectedBoard]);
+
+  // Fetch subjects by class
+  useEffect(() => {
+    const fetchSubjects = async () => {
+      if (!selectedClass) return;
+      try {
+        const subjectDataresponse = await getSubjectsByClassId(selectedClass);
+        setSubjectData(subjectDataresponse);
+      } catch (err) {
+        console.error("Error fetching subjects:", err);
+      }
+    };
+    fetchSubjects();
+  }, [selectedClass]);
+
+  // Calculate discounted price
+  useEffect(() => {
+    if (price && discountPercentage !== "") {
       const discount = (parseFloat(discountPercentage) / 100) * parseFloat(price);
       const calculatedDiscountedPrice = parseFloat(price) - discount;
       setDiscountedPrice(calculatedDiscountedPrice.toFixed(2));
     } else {
-      setDiscountedPrice('');
+      setDiscountedPrice("");
     }
   }, [price, discountPercentage]);
 
+  // Handle feature input
   const handleAddFeature = () => {
     const trimmedFeature = featureInput.trim();
     if (trimmedFeature) {
       if (features.includes(trimmedFeature)) {
-        setError('This feature has already been added.');
+        setError("This feature has already been added.");
         return;
       }
       if (features.length >= MAX_FEATURES) {
@@ -59,191 +101,253 @@ const ModeBatch = () => {
         return;
       }
       setFeatures([...features, trimmedFeature]);
-      setFeatureInput('');
-      setError('');
+      setFeatureInput("");
+      setError("");
     }
   };
 
   const handleRemoveFeature = (featureToRemove) => {
     setFeatures(features.filter((feature) => feature !== featureToRemove));
-    setError('');
+    setError("");
   };
 
   const handleFeatureKeyDown = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       handleAddFeature();
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+  // AntD form submission
+  const onFinish = async () => {
+    setError("");
+    setSuccess("");
 
     // Basic validation
     if (!mode || !price) {
-      setError('Please select a mode and enter a price.');
+      setError("Please select a mode and enter a price.");
       return;
     }
 
     // Validate discountPercentage if provided
-    if (discountPercentage !== '') {
+    if (discountPercentage !== "") {
       const discount = parseFloat(discountPercentage);
       if (isNaN(discount) || discount < 0 || discount > 100) {
-        setError('Discount Percentage must be a number between 0 and 100.');
+        setError("Discount Percentage must be a number between 0 and 100.");
         return;
       }
     }
-
-    // Optional: Validate features if needed (e.g., minimum number of features)
-    // if (features.length === 0) {
-    //   setError('Please add at least one feature.');
-    //   return;
-    // }
 
     const data = {
       mode,
       price: parseFloat(price),
       duration: duration ? parseInt(duration, 10) : undefined,
-      discountPercentage: discountPercentage !== '' ? parseFloat(discountPercentage) : undefined,
+      discountPercentage:
+        discountPercentage !== "" ? parseFloat(discountPercentage) : undefined,
       discountedPrice: discountedPrice ? parseFloat(discountedPrice) : undefined,
-      features, // Include features array
-      title
+      features,
+      title,
+      subject_id: selectedSubject,
     };
-
-    // Debugging: Log the data being sent to the API
-    console.log('Submitting data:', data);
 
     try {
       const response = await createTypeOfBatch(data);
-      console.log('API Response:', response);
       if (response) {
-        setSuccess('Type of batch created successfully!');
-        // Reset form fields
-        setMode('');
-        setPrice('');
-        setDuration('');
-        setDiscountPercentage('');
-        setDiscountedPrice('');
+        setSuccess("Type of batch created successfully!");
+        // Reset form
+        setMode("");
+        setPrice("");
+        setDuration("");
+        setDiscountPercentage("");
+        setDiscountedPrice("");
         setFeatures([]);
-        setFeatureInput('');
-        // Optionally, you can remove window.location.reload(); to avoid full page reload
+        setFeatureInput("");
+        setTitle("");
+        setSelectedBoard("");
+        setClassData([]);
+        setSelectedClass("");
+        setSubjectData([]);
+        setSelectedSubject("");
       }
     } catch (err) {
-      console.error('API Error:', err);
-      setError(err.response?.data?.error || 'Failed to create Type of Batch.');
+      console.error("API Error:", err);
+      setError(err.response?.data?.error || "Failed to create Type of Batch.");
     }
   };
 
   return (
-    <Container>
-      <h2>Create Type of Batch</h2>
-      <Form onSubmit={handleSubmit}>
-      <Label htmlFor="title">Batch Title</Label>
-        <Input
-          type="text"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
-        <Label htmlFor="mode">Type of Batch</Label>
-        <Select
-          id="mode"
-          value={mode}
-          onChange={(e) => setMode(e.target.value)}
-          required
-        >
-          <option value="">Select Mode</option>
-          <option value="1:1">1:1</option>
-          <option value="1:3">1:3</option>
-          <option value="1:5">1:5</option>
-          <option value="1:7">1:7</option>
-        </Select>
+    <div style={{ maxWidth: 600, margin: "0 auto" }}>
+      <h2>Create Type of Batch (Using Ant Design Form)</h2>
 
-        <Label htmlFor="price">Price ($)</Label>
-        <Input
-          type="number"
-          id="price"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          min="0"
-          step="0.01"
-          required
-        />
+      {/* Ant Design Form */}
+      <AntdForm layout="vertical" onFinish={onFinish}>
+        {/* Title */}
+        <AntdForm.Item label="Batch Title" required>
+          <AntdInput
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter batch title"
+          />
+        </AntdForm.Item>
 
-        {/* <Label htmlFor="discountPercentage">Discount Percentage (%)</Label>
-        <Input
-          type="number"
-          id="discountPercentage"
-          value={discountPercentage}
-          onChange={(e) => setDiscountPercentage(e.target.value)}
-          min="0"
-          max="100"
-          step="0.01"
-          placeholder="Optional"
-        /> */}
+        {/* Mode */}
+        <AntdForm.Item label="Type of Batch" required>
+          <AntdSelect
+            value={mode}
+            onChange={(val) => setMode(val)}
+            placeholder="Select Mode"
+          >
+            <Option value="">Select Mode</Option>
+            <Option value="1:1">1:1</Option>
+            <Option value="1:3">1:3</Option>
+            <Option value="1:5">1:5</Option>
+            <Option value="1:7">1:7</Option>
+          </AntdSelect>
+        </AntdForm.Item>
+
+        {/* Board */}
+        <AntdForm.Item label="Select Board" required>
+          <AntdSelect
+            placeholder="Select Board"
+            value={selectedBoard}
+            onChange={(val) => {
+              setSelectedBoard(val);
+              setSelectedClass("");
+              setSubjectData([]);
+              setSelectedSubject("");
+            }}
+          >
+            <Option value="">-- Select Board --</Option>
+            {boardData.map((board) => (
+              <Option key={board._id} value={board._id}>
+                {board.name}
+              </Option>
+            ))}
+          </AntdSelect>
+        </AntdForm.Item>
+
+        {/* Class */}
+        <AntdForm.Item label="Select Class" required>
+          <AntdSelect
+            placeholder="Select Class"
+            value={selectedClass}
+            onChange={(val) => setSelectedClass(val)}
+          >
+            <Option value="">-- Select Class --</Option>
+            {classData.map((classItem) => (
+              <Option key={classItem._id} value={classItem._id}>
+                {classItem.classLevel}
+              </Option>
+            ))}
+          </AntdSelect>
+        </AntdForm.Item>
+
+        {/* Subject */}
+        <AntdForm.Item label="Select Subject" required>
+          <AntdSelect
+            placeholder="Select Subject"
+            value={selectedSubject}
+            onChange={(val) => setSelectedSubject(val)}
+          >
+            <Option value="">-- Select Subject --</Option>
+            {subjectData.map((subject) => (
+              <Option key={subject._id} value={subject._id}>
+                {subject.subject_name}
+              </Option>
+            ))}
+          </AntdSelect>
+        </AntdForm.Item>
+
+        {/* Price */}
+        <AntdForm.Item label="Price ($)" required>
+          <AntdInput
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            min="0"
+            step="0.01"
+            placeholder="Enter price"
+          />
+        </AntdForm.Item>
+
+        {/* Discount Percentage (optional) */}
+        {/* <AntdForm.Item label="Discount Percentage (%)">
+          <AntdInput
+            type="number"
+            value={discountPercentage}
+            onChange={(e) => setDiscountPercentage(e.target.value)}
+            min="0"
+            max="100"
+            step="0.01"
+            placeholder="Optional"
+          />
+        </AntdForm.Item>
 
         {discountedPrice && (
-          <DiscountInfo>
-            Discounted Price: ${discountedPrice}
-          </DiscountInfo>
-        )}
+          <p style={{ color: "#666", marginBottom: 16 }}>
+            Discounted Price: <strong>${discountedPrice}</strong>
+          </p>
+        )} */}
 
-        {/* <Label htmlFor="duration">Duration (days)</Label>
-        <Input
-          type="number"
-          id="duration"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          min="0"
-          step="1"
-        /> */}
-
-        {/* New Feature Input Section */}
-        <Label htmlFor="features">Features</Label>
-        <FeatureContainer>
-          <FeatureInput
-            type="text"
-            id="features"
-            value={featureInput}
-            onChange={(e) => setFeatureInput(e.target.value)}
-            onKeyDown={handleFeatureKeyDown}
-            placeholder="Enter a feature"
+        {/* Duration (optional) */}
+        {/* <AntdForm.Item label="Duration (days)">
+          <AntdInput
+            type="number"
+            value={duration}
+            onChange={(e) => setDuration(e.target.value)}
+            min="0"
+            step="1"
+            placeholder="Optional duration in days"
           />
-          <AddFeatureButton
-            type="button"
-            onClick={handleAddFeature}
-            disabled={!featureInput.trim() || features.length >= MAX_FEATURES}
-          >
-            <FaPlus /> Add
-          </AddFeatureButton>
-        </FeatureContainer>
+        </AntdForm.Item> */}
 
-        {features.length >= MAX_FEATURES && (
-          <ErrorMessage>You can only add up to {MAX_FEATURES} features.</ErrorMessage>
-        )}
+        {/* Features */}
+        <AntdForm.Item label="Features">
+          <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+            <AntdInput
+              value={featureInput}
+              onChange={(e) => setFeatureInput(e.target.value)}
+              onKeyDown={handleFeatureKeyDown}
+              placeholder="Enter a feature"
+            />
+            <AntdButton
+              type="primary"
+              onClick={handleAddFeature}
+              disabled={!featureInput.trim() || features.length >= MAX_FEATURES}
+            >
+              <FaPlus /> Add
+            </AntdButton>
+          </div>
+          {features.length >= MAX_FEATURES && (
+            <Alert message={`You can only add up to ${MAX_FEATURES} features.`} type="warning" />
+          )}
+          {features.length > 0 && (
+            <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+              {features.map((feature, index) => (
+                <li key={index} style={{ marginBottom: "4px" }}>
+                  {feature}{" "}
+                  <AntdButton
+                    danger
+                    type="text"
+                    icon={<FaTrash />}
+                    onClick={() => handleRemoveFeature(feature)}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </AntdForm.Item>
 
-        {features.length > 0 && (
-          <FeatureList>
-            {features.map((feature, index) => (
-              <FeatureItem key={index}>
-                {feature}
-                <RemoveFeatureButton type="button" onClick={() => handleRemoveFeature(feature)}>
-                  <FaTrash />
-                </RemoveFeatureButton>
-              </FeatureItem>
-            ))}
-          </FeatureList>
-        )}
+        {/* Error and Success Messages */}
+        {error && <Alert style={{ marginBottom: 10 }} message={error} type="error" />}
+        {success && <Alert style={{ marginBottom: 10 }} message={success} type="success" />}
 
-        {error && <ErrorMessage>{error}</ErrorMessage>}
-        {success && <SuccessMessage>{success}</SuccessMessage>}
-
-        <Button type="submit">Create</Button>
-      </Form>
-    </Container>
+        {/* Submit Button */}
+        <AntdButton type="primary" htmlType="submit">
+          Create
+        </AntdButton>
+      </AntdForm>
+    </div>
   );
 };
 

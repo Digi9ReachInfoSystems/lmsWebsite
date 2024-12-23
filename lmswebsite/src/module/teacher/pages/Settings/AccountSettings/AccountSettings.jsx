@@ -30,7 +30,7 @@ const AccountSettings = () => {
       const DataTeacher = await getTeacherByAuthId(authId);
       console.log(DataTeacher);
       setFirstName(DataTeacher.teacher.user_id.name);
-      setUsername(DataTeacher.teacher.user_id.email);
+      setUsername(DataTeacher.teacher?.microsoft_principle_name);
       setEmail(DataTeacher.teacher.user_id.email);
       setPhone(DataTeacher.teacher.phone_number);
     }

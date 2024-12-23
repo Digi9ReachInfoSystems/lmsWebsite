@@ -12,7 +12,7 @@ import {
   Heading,
   PageContainer,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
-import { Table, Button, Input, Modal, Image, message } from "antd";
+import { Table, Button, Input, Modal, Image, message, Space, Row, Col, Card } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
@@ -98,7 +98,7 @@ export default function AssignedTeacherBatch() {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -109,7 +109,7 @@ export default function AssignedTeacherBatch() {
         </div>
       </div>
     );
-}
+  }
 
   return (
     <>
@@ -190,11 +190,11 @@ export default function AssignedTeacherBatch() {
             })
           ) : (
             <>
-              <div className="assignedBatches-batchNotFound">
-                <h2 className="AssignedTeacherBatch-batch_title">
-                  No batches Assigned for you.
-                </h2>
-              </div>
+              <Col span={24} style={{ textAlign: "center" }}>
+                <Card style={{ width: "100%", backgroundColor: "#a0f2e3" }}>
+                  <h3>No Batches has been assigned to your Profile yet!</h3>
+                </Card>
+              </Col>
             </>
           )}
         </div>

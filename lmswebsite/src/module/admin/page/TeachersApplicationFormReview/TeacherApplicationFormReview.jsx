@@ -35,7 +35,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const [teacher_name, setTeacherName] = useState('');
   const [form] = Form.useForm(); // Ant Design form instance
   const [isResumeModalVisible, setIsResumeModalVisible] = useState(false); // State for Resume Modal
-
+  const [submitButton, setSubmitButton] = useState(false);
   useEffect(() => {
     const fetchTeacherDetails = async () => {
       try {
@@ -70,6 +70,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
 
   const handleonFinish = async (values) => {
     try {
+      setSubmitButton(true);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         values.email,
@@ -105,6 +106,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       );
       console.log("Form Values:", values);
       toast.success("Application approved successfully!");
+      setSubmitButton(false);
       closeModal();
     } catch (error) {
       console.error("Error approving application:", error);
@@ -351,8 +353,8 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={false}>
-              Approve
+            <Button type="primary" htmlType="submit" loading={false} disabled={submitButton}>
+              { submitButton ? "Processing" : "Approve" }
             </Button>
           </Form.Item>
         </Form>

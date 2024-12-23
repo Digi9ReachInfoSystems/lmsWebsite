@@ -142,6 +142,7 @@ const BecomeTeacherApplicationForm = () => {
       const response = await submitTeacherApplication(submissionData);
 
       message.success("Application submitted successfully!");
+      form.resetFields();
       // Redirect or reload as needed
       navigate("/teacher");
     } catch (error) {
@@ -520,7 +521,7 @@ const BecomeTeacherApplicationForm = () => {
                       >
                         {classes.map((classItem) => (
                           <Option key={classItem._id} value={classItem._id}>
-                            {classItem.classLevel} - {classItem.className}
+                            {classItem.classLevel} 
                           </Option>
                         ))}
                       </Select>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SelectType.css";
 import HeaderSection from "../NavBar/navbar";
-import { getAllTypeOfBatches } from "../../../api/typeOfBatchApi";
+import { getAllTypeOfBatches, getTypeOfBatchBySubjectId } from "../../../api/typeOfBatchApi";
 import { useNavigate } from "react-router-dom";
 
 function SelectType() {
@@ -24,7 +24,8 @@ function SelectType() {
 
     const fetchBatchTypes = async () => {
       try {
-        const response = await getAllTypeOfBatches();
+        const subjectId= JSON.parse(localStorage.getItem("selectedSubjects"));
+        const response = await getTypeOfBatchBySubjectId(subjectId[0]);
         console.log("Batch types fetched successfully:", response);
         setBatchTypes(response); // Set fetched batch types
       } catch (error) {

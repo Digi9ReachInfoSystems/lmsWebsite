@@ -163,14 +163,14 @@ const Sidebar = () => {
     },
     {
       name: "Attendance",
-      icon: <AiTwotoneNotification />,
+      icon:  <PiListChecksThin />,
       link: "/teacher/dashboard/teacherAttendance",
     },
-    {
-      name: "Reschedule Meeting",
-      icon: <PiListChecksThin />,
-      link: "/teacher/dashboard/meetingReschedule",
-    },
+    // {
+    //   name: "Reschedule Meeting",
+    //   icon: <PiListChecksThin />,
+    //   link: "/teacher/dashboard/meetingReschedule",
+    // },
     {
       name: "Settings",
       icon: <MdOutlineSettings />,
