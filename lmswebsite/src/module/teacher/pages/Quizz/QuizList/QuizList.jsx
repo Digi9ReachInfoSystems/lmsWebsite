@@ -8,6 +8,8 @@ import {
   QuizzesContainer,
   QuizListWrap,
 } from "./QuizList.Styles";
+
+import { IoArrowBackOutline } from "react-icons/io5";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
@@ -185,6 +187,12 @@ export default function QuizList() {
     setModel2(true);
   };
 
+
+  const handleBackPage =() =>{
+    navigate(-1);
+  }
+
+  
   const columns = [
     {
       title: "Sl No.",
@@ -240,10 +248,10 @@ export default function QuizList() {
       <QuizListWrap>
         <div className="created-quizes-batches-row-one">
           <div className="created-quizes-batches-title-section">
-            <Link to={`/teacher/dashboard/quizz/assignedBatch`}>
+            {/* <Link to={`/teacher/dashboard/quizz/assignedBatch`}>
               <IoMdArrowRoundBack size={24} />
-            </Link>
-            <Heading>Created Assessment</Heading>
+            </Link> */}
+            <Heading style={{display:"flex", justifyContent:"center",alignItems:"center"}}>  <IoArrowBackOutline style={{fontSize: "24px", marginRight:"8px", color:"black", }} onClick={handleBackPage} /> Created Assessment</Heading>
           </div>
           <div className="created-quizes-batches-action-section">
             <Input

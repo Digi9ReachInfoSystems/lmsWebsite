@@ -822,11 +822,13 @@ const ManageContentTable = ({ contentType }) => {
 
   return (
     <Container>
+      <div style={{display:"flex", justifyContent:"space-between", padding:"20px"}}>
       <Title>{title}</Title>
       <div style={{ textAlign: 'right', marginBottom: '16px' }}>
         <StyledButton icon={<PlusOutlined />} onClick={showModal}>
           Create {title}
         </StyledButton>
+      </div>
       </div>
       {/* Table */}
       {data.length > 0 ? (

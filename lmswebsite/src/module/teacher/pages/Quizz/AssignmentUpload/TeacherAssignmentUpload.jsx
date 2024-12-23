@@ -19,6 +19,7 @@ import {
 import { UploadOutlined, SearchOutlined } from "@ant-design/icons";
 import { getBatchesByTeacherId } from "../../../../../api/batchApi"; // Adjust the path as needed
 import { getTeacherByAuthId } from "../../../../../api/teacherApi"; // Adjust the path as needed
+import { IoArrowBackCircleOutline } from "react-icons/io5";
 
 // UPDATED: Removed getAllAssignments import, added getAssignmentsByTeacherId
 import {
@@ -36,6 +37,7 @@ import moment from "moment"; // For date handling
 // Import React Router's useNavigate
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const { Option } = Select;
 const { Text, Link, Title } = Typography;
@@ -382,6 +384,10 @@ const TeacherAssignmentUpload = () => {
     setContentUrl("");
   };
 
+  const handleBackPage =() =>{
+    navigate(-1);
+  }
+
   /**
    * Render Loading Animation
    */
@@ -430,7 +436,9 @@ const TeacherAssignmentUpload = () => {
           flexWrap: "wrap",
         }}
       >
-        <Title level={2} style={{ marginBottom: "10px", color: "#bdc9d3" }}>
+        
+        <Title level={2} style={{ marginBottom: "10px", color: "#bdc9d3", display: "flex", justifyContent:"center", alignItems:"center" }}> 
+           <IoArrowBackOutline style={{fontSize: "24px", marginRight:"8px", color:"black", }} onClick={handleBackPage} />
           Assignment Details
         </Title>
         <div
