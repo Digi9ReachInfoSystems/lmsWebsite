@@ -5,6 +5,7 @@ import { getAssignmentsByBatchId } from '../../../../api/assignmentApi';
 import { useParams, Link } from 'react-router-dom';
 import UploadAssignmentModal from '../StudentUploadAssignmentModal/StudentUploadAssignmentModal';
 import { IoMdArrowRoundBack } from "react-icons/io";
+
 const AssignmentsPage = () => {
   const { batchId } = useParams();
   const [assignments, setAssignments] = useState([]);
@@ -54,10 +55,10 @@ const AssignmentsPage = () => {
   };
 
   const handleUploadSuccess = () => {
-    // Optionally, refresh assignments or show a success message
+    // Close modal and re-fetch assignments to update UI
     setModalOpen(false);
-    // For simplicity, refetch assignments
     setLoading(true);
+
     getAssignmentsByBatchId(batchId)
       .then((assignmentsData) => {
         if (Array.isArray(assignmentsData)) {
@@ -82,64 +83,86 @@ const AssignmentsPage = () => {
 
   return (
     <div style={styles.container}>
+      {/* Back arrow link */}
+      <Link to={`/student/dashboard/assignments`}>
+        <IoMdArrowRoundBack />
+      </Link>
 
-         <Link to={`/student/dashboard/assignments`   } >
-              <IoMdArrowRoundBack />
-              </Link>
-              <h1
-               style={
-                {
-                  color: '#bdc9d3',
-                  fontSize: '24px',
-                  fontWeight: 'bold',
-                  marginBottom: '20px',
-                }
-            }
-              >
+      {/* Page Title */}
+      <h1
+        style={{
+          color: '#bdc9d3',
+          fontSize: '24px',
+          fontWeight: 'bold',
+          marginBottom: '20px',
+        }}
+      >
         Assignments for {assignments.length > 0 ? assignments[0].batch_id.batch_name : 'Batch'}
       </h1>
+
       {assignments.length === 0 ? (
         <div>No assignments found.</div>
       ) : (
         <div style={styles.cardContainer}>
-          {assignments.map((assignment) => (
-            <div key={assignment._id} style={styles.card}>
-              <h3
-              style={
-                {
-                  color: 'black',
-                  fontSize: '18px',
-                  fontWeight: 'bold',
-                  marginBottom: '10px',
-                }
+          {assignments.map((assignment) => {
+            const expiryDate = new Date(assignment.expiry_date);
+            const now = new Date();
+            const isDeadlineCrossed = expiryDate < now;
 
-              }
-              > {assignment.batch_id?.batch_name}</h3>
-              <p>
-                <strong>Content:</strong>{' '}
-                <a href={assignment.content_url} target="_blank" rel="noopener noreferrer"
-                style={
-                  {
-                    color:"#EE1B7A",
-                }}
-                >
-                  View Content
-                </a>
-              </p>
-              <p>
-                <strong>Expiry Date:</strong> {new Date(assignment.expiry_date).toLocaleDateString()}
-              </p>
-              {/* Add more assignment details as needed */}
-              <button onClick={() => handleUploadClick(assignment)} 
-                // style={styles.button}
-                style={{ marginTop: '10px', padding: '10px', backgroundColor: '#EE1B7A', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
-                Upload Assignment
-              </button>
-            </div>
-          ))}
+            // If there's at least one response, consider it submitted
+            const isSubmitted = assignment.responses && assignment.responses.length > 0;
+
+            return (
+              <div key={assignment._id} style={styles.card}>
+                {/* Card Header: Batch Name on the left, "Submitted" on the right if isSubmitted */}
+                <div style={styles.cardHeader}>
+                  <h3 style={styles.cardTitle}>
+                    {assignment.batch_id?.batch_name}
+                  </h3>
+                  {isSubmitted && (
+                    <span style={styles.submitted}>Submitted</span>
+                  )}
+                </div>
+
+                {/* Content Link */}
+                <p>
+                  <strong>Content:</strong>{' '}
+                  <a
+                    href={assignment.content_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: '#EE1B7A' }}
+                  >
+                    View Content
+                  </a>
+                </p>
+
+                {/* Expiry Date */}
+                <p>
+                  <strong>Expiry Date:</strong>{' '}
+                  {expiryDate.toLocaleDateString()}
+                </p>
+
+                {/* Button or Deadline Crossed */}
+                {!isSubmitted && (
+                  isDeadlineCrossed ? (
+                    <div style={styles.deadlineCrossed}>Deadline crossed</div>
+                  ) : (
+                    <button
+                      onClick={() => handleUploadClick(assignment)}
+                      style={styles.button}
+                    >
+                      Upload Assignment
+                    </button>
+                  )
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 
+      {/* Upload Modal */}
       {modalOpen && selectedAssignment && (
         <UploadAssignmentModal
           assignment={selectedAssignment}
@@ -151,10 +174,10 @@ const AssignmentsPage = () => {
   );
 };
 
+/* ----- STYLES ----- */
 const styles = {
   container: {
-    padding: '20px'
-    
+    padding: '20px',
   },
   cardContainer: {
     display: 'flex',
@@ -170,15 +193,41 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    position: 'relative',
+  },
+  cardHeader: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: '10px',
+  },
+  cardTitle: {
+    color: 'black',
+    fontSize: '18px',
+    fontWeight: 'bold',
+  },
+  submitted: {
+    color: '#28a745',
+    fontWeight: 'bold',
+    fontSize: '14px',
   },
   button: {
     marginTop: '10px',
     padding: '10px',
-    backgroundColor: '#28a745',
+    backgroundColor: '#EE1B7A',
     color: '#fff',
     border: 'none',
-    borderRadius: '4px',
+    borderRadius: '8px',
     cursor: 'pointer',
+  },
+  deadlineCrossed: {
+    marginTop: '10px',
+    padding: '10px',
+    backgroundColor: '#dc3545',
+    color: '#fff',
+    borderRadius: '8px',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   error: {
     color: '#dc3545',

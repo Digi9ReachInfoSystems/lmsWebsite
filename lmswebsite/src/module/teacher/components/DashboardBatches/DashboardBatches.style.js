@@ -60,6 +60,10 @@ export const CardContainer = styled.div`
     gap: 20px;
     // justify-content: space-between;
     margin-bottom: 20px;
+
+    @media(max-width:576px){
+        flex-direction: column;
+    }
 `;
 
 export const Card = styled.div`
@@ -73,6 +77,10 @@ export const Card = styled.div`
 
     &:hover {
         transform: translateY(-5px);
+    }
+
+    @media(max-width:576px){
+        width: 100%;
     }
 `;
 

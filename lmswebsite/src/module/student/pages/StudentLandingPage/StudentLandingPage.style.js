@@ -4,10 +4,10 @@ import { Button } from "antd";
 // Container for the application form
 export const ApplicationContainer = styled.div`
   display: flex;
-  gap: 2em;
-  margin: 2em;
-  padding: 1em;
-
+  // gap: 2em;
+  // margin: 2em;
+  // padding: 1em;
+backhround-color: #fff;
   @media (max-width: 1200px) {
     gap: 1.5em;
     margin: 1.5em;
@@ -33,42 +33,31 @@ export const ApplicationContainer = styled.div`
   }
 `;
 
-// Image section
-export const ApplicationImage = styled.div`
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1em;
-
-  @media (max-width: 1200px) {
-    margin-bottom: 1.5em;
-  }
-
-  @media (max-width: 768px) {
-    margin-bottom: 1em;
-  }
-`;
-
-export const TeacherFormImage = styled.img`
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
-
-  @media (max-width: 1200px) {
-    max-width: 90%;
-  }
-
-  @media (max-width: 768px) {
-    max-width: 80%;
-  }
-`;
 
 // Details section
 export const ApplicationDetails = styled.div`
+
   flex: 2;
   display: flex;
   flex-direction: column;
-  gap: 1.5em;
+  // gap: 1.5em;
+
+  .studentApplicationDetails {
+  // height: 100%;
+    display: flex;
+    flex-direction: column;
+   align-items: center;
+   margin: auto;
+   background-color: #fff;
+   padding: 50px;
+   width: 60%;
+   color: #bdc9d3;
+   font-size: 24px;
+  }
+
+  p{
+  padding-bottom: 50px;
+  }
 
   @media (max-width: 1200px) {
     gap: 1.2em;
@@ -119,8 +108,10 @@ export const UploadButton = styled(Button)`
 
 // Styled Rows for fields
 export const StyledRow = styled.div`
+// padding: 10px;
   display: flex;
-  gap: 16px;
+  // gap: 16px;
+  // flex-direction: column;
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -130,7 +121,11 @@ export const StyledRow = styled.div`
 
 // Styled Column for individual fields
 export const StyledCol = styled.div`
-  flex: 1;
+  // flex: 1;
+  flex-direction: row;
+  width: 100%;
+
+ 
 `;
 
 // Styled container for available slots
