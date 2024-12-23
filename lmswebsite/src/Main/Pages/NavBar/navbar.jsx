@@ -171,8 +171,8 @@ function HeaderSection() {
             alt="Logo"
             onClick={handleLogoClick}
             sx={{
-              width: { xs: "60px", md: "140px" },
-              height: { xs: "60px", md: "140px" },
+              width: { xs: "70px", md: "170px" },
+              height: { xs: "70px", md: "170px" },
               cursor: "pointer",
             }}
           />

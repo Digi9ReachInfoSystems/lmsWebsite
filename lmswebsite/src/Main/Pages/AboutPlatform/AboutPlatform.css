@@ -20,7 +20,7 @@
   flex: 1;
   position: relative;
   border-radius: 12px;
-  background-color: #ffe6cf;
+  /* background-color: #ffe6cf; */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,7 +46,6 @@
   color: #333;
   margin-bottom: 20px;
   font-family: "Nunito", serif;
-
 
   @media (max-width: 768px) {
     font-size: 1.2rem;

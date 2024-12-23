@@ -81,6 +81,7 @@
 .skill-icon {
   width: 60px;
   height: 60px;
+  padding-bottom: 10px!important;
   /* background-color: #d1e4ff; */
   border-radius: 50%;
 }
