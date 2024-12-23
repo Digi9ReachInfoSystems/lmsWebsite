@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Typography, Row, Col } from "antd";
 import dayjs from "dayjs"; // Import dayjs for date handling
 import { getTeacherByAuthId } from "../../../../../api/teacherApi";
-import { StyledDatePicker, StyledInput } from "./GeneralSettings.style";
+import { StyledDatePicker, StyledInput, GeneralSettingsWarp } from "./GeneralSettings.style";
 const { Title } = Typography;
 import Animation from "../../../assets/Animation.json";
 import Lottie from "lottie-react";
@@ -72,7 +72,7 @@ const [loading, setLoading] = useState(true);
     );
 }
   return (
-    <>
+    <GeneralSettingsWarp>
       {fullName &&
 
         <div style={{ padding: "24px", background: "#fff", borderRadius: "8px" }}>
@@ -145,7 +145,7 @@ const [loading, setLoading] = useState(true);
           </Form>
         </div>
       }
-    </>
+    </GeneralSettingsWarp>
 
   );
 };

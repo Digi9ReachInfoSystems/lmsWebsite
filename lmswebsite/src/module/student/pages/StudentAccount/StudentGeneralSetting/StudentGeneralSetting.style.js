@@ -75,6 +75,8 @@
 //   }
 // `;
 
+//^^ old code ^^
+//&& new code &&
 
 import styled from "styled-components";
 import { Input, DatePicker } from "antd";
@@ -105,6 +107,7 @@ export const StyledInput = styled(Input)`
   &:hover {
     border: 2px solid #ff007a;
   }
+
 
 
     /* Add horizontal scrolling below 768px */

@@ -14,6 +14,9 @@ export const TeacherDashBoardCardswrap = styled.main`
     padding: 10px;
     margin-bottom: 20px;
     background-color: ${theme.colors.nyanza};
+    @media (max-width:990px){
+      max-width: 100%;
+    }
   }
   .area-row {
     display: flex;

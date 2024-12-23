@@ -1,6 +1,23 @@
 import styled from "styled-components";
 import { Input, DatePicker } from "antd";
 
+export const GeneralSettingsWarp = styled.div`
+:where(.css-dev-only-do-not-override-49qm).ant-row {
+    flex-direction: row;
+    flex-flow: nowrap;
+
+    @media (max-width:768px){
+      flex-direction: column;
+    }
+  }
+
+  .ant-col-12{
+    @media (max-width:768px){
+    max-width:100%;
+    }
+  }
+`
+
 export const StyledInput = styled(Input)`
  font-size: 14px;
   // color: #333;
@@ -24,6 +41,8 @@ export const StyledInput = styled(Input)`
     font-size: 11px;
     padding: 5px 10px;
   }
+
+  
 `;
 
 export const Button = styled.button`
