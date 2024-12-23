@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BatchCardWrap } from "./BatchCard.styles";
+import { useNavigate } from "react-router-dom";
+import { getStudentBatchStatus, getStudentByAuthId } from "../../../../api/studentApi";
 
 const BatchCard = ({ batch }) => {
   // Destructure the required fields from the batch object
@@ -13,6 +15,20 @@ const BatchCard = ({ batch }) => {
     studentcount,
     action,
   } = batch;
+  const navigate = useNavigate();
+  const [status, setStatus] = React.useState(false);
+
+  useEffect(() => {
+    const apiCaller = async () => {
+      const autId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const studentData = await getStudentByAuthId(autId);
+      const batchStatus = await getStudentBatchStatus(studentData.student._id, batch._id);
+      setStatus(batchStatus.status);
+    }
+    apiCaller();
+
+    setStatus(action);
+  }, []);
 
   // Format the date to a readable format
   const formattedDate = new Date(date).toLocaleDateString("en-US", {
@@ -24,6 +40,24 @@ const BatchCard = ({ batch }) => {
   return (
     <BatchCardWrap>
       <div className="batch-card">
+        <div className="status-container">
+          {/* Status Tab */}
+          <div
+            style={{
+              position: "absolute",
+              top: 10,
+              right: 10,
+              backgroundColor: status ? "#4CAF50" : "#FF2C2C",
+              color: "#fff",
+              padding: "5px 10px",
+              borderRadius: "12px",
+              fontSize: "12px",
+              fontWeight: "bold",
+            }}
+          >
+            { status ? "Active" : "Inactive"}
+          </div>
+        </div>
         <div className="batch-image-container">
           <img
             src={
@@ -82,6 +116,49 @@ const BatchCard = ({ batch }) => {
                 </span>
               </div>
             )}
+
+            {
+              status ?
+                (
+                  <button onClick={() => {
+                    navigate(`/student/dashboard/assignedBatches/${batch._id}`)
+                    // handleViewAssignments(batch._id)
+                  }}
+                    style={
+                      {
+                        backgroundColor: '#EE1B7A',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '8px',
+                        padding: '8px 15px',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.3s ease',
+                      }
+                    }
+                  >
+                    View Materials
+                  </button>
+                ) : (
+                  <button onClick={() => {
+                    navigate(`/student/dashboard/`)
+                    // handleViewAssignments(batch._id)
+                  }}
+                    style={
+                      {
+                        backgroundColor: '#EE1B7A',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '8px',
+                        padding: '8px 15px',
+                        cursor: 'pointer',
+                        transition: 'background-color 0.3s ease',
+                      }
+                    }
+                  >
+                    Subscribe Now !..
+                  </button>
+                )
+            }
 
             {/* Student Count */}
           </div>

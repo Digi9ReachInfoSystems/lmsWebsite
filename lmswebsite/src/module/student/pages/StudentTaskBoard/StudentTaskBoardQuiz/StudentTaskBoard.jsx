@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { getQuizByBatchId, getQuizBySubjectId } from "../../../../../api/quizApi";
 import { getBatchesByStudentId } from "../../../../../api/batchApi";
 import { Card, Button, Row, Col, Tag, Progress, Spin, Alert } from "antd";
-import { getStudentByAuthId } from "../../../../../api/studentApi";
+import { getStudentBatchStatus, getStudentByAuthId } from "../../../../../api/studentApi";
 import { getscoreforstudent } from "../../../../../api/responseApi";
-import  Animation from "../../../../student/assets/Animation.json";
+import Animation from "../../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -93,6 +93,8 @@ const StudentTaskBoard = () => {
           uniqueBatchIds.map((batchId) => getQuizByBatchId(batchId))
         );
 
+        console.log("Quizzes Data:", quizzesData);
+
         // Fetch quizzes for each unique subject ID
         // const quizzesData = await Promise.all(
         //   uniqueSubjectIds.map((subjectId) => getQuizBySubjectId(subjectId))
@@ -100,7 +102,19 @@ const StudentTaskBoard = () => {
 
         // Flatten the quizzes array
         const allQuizzes = quizzesData.flatMap((data) => data.quizzes);
-        setQuizzes(allQuizzes);
+        console.log("All Quizzes:", allQuizzes);
+        const upDatedQuiz = await Promise.all(
+          allQuizzes.map(async (quiz) => {
+
+            const statusValue = await getStudentBatchStatus(studentData.student._id, quiz.batch_index);; // Fetch the status
+            return {
+              ...quiz,
+              status: statusValue.status, // Add statusValue to batch data
+            };
+          })
+        )
+        console.log("Updated Quizzes:", upDatedQuiz);
+        setQuizzes(upDatedQuiz);
 
         // Fetch scores for each quiz for the student
         const responseMap = {};
@@ -151,6 +165,9 @@ const StudentTaskBoard = () => {
 
   // Determine quiz status
   const getQuizStatus = (quiz) => {
+    if(!quiz.status){
+      return <StatusTag color="volcano">Inactive</StatusTag>;
+    }
     const score = responses[quiz._id];
     const studentHasAnswered = quiz.answered_by.some(
       (entry) => entry.student_id === studentId
@@ -183,7 +200,7 @@ const StudentTaskBoard = () => {
             justifyContent: "center",
             alignItems: "center",
             // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
@@ -195,7 +212,7 @@ const StudentTaskBoard = () => {
       </div>
     );
   }
-  
+
 
   if (error) {
     return (
@@ -234,9 +251,10 @@ const StudentTaskBoard = () => {
                         </BodyText>
                       </>
                     }
-                    
+
                   />
-                  {studentHasAnswered ? (
+                  { quiz.status?
+                 ( studentHasAnswered ? (
                     <div style={{ marginTop: "10px" }}>
                       <Progress
                         percent={(
@@ -264,7 +282,25 @@ const StudentTaskBoard = () => {
                       <FaEye style={{ marginRight: "5px" }} />
                       Answer
                     </PrimaryButton>
-                  )}
+                  )): (
+                    <PrimaryButton
+                      type="primary"
+                      onClick={() => {
+                        navigate(`/student/dashboard/`);
+                      }}
+                      style={{
+                        marginTop: "15px",
+                        backgroundColor: "#e91e63",
+                        borderColor: "#e91e63",
+                      }}
+                      block
+                    >
+                      {/* <FaEye style={{ marginRight: "5px" }} /> */}
+                      Subscribe Now
+                    </PrimaryButton>
+                  )
+                  
+                  }
                 </StyledCard>
               </Col>
             );

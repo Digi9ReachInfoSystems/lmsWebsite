@@ -1,7 +1,7 @@
 // src/components/StudentAssignment.jsx
 
 import React, { useEffect, useState } from 'react';
-import { getStudentByAuthId } from '../../../../api/studentApi';
+import { getStudentBatchStatus, getStudentByAuthId } from '../../../../api/studentApi';
 import { getBatchesByStudentId } from '../../../../api/batchApi';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,9 +44,21 @@ const StudentAssignment = () => {
         console.log('Type of batchesData:', typeof batchesData);
         console.log('Is batchesData an array?', Array.isArray(batchesData));
 
+
+        const updatedBatches = await Promise.all(
+          batchesData.map(async (batch) => {
+            const statusValue = await getStudentBatchStatus(studentData.student._id, batch._id);; // Fetch the status
+            return {
+              ...batch,
+              status: statusValue.status, // Add statusValue to batch data
+            };
+          })
+        );
+        console.log("updatedBatches:", updatedBatches);
+
         // **Adjusting to handle array response**
-        if (Array.isArray(batchesData)) {
-          setBatches(batchesData);
+        if (Array.isArray(updatedBatches)) {
+          setBatches(updatedBatches);
           console.log('Batches set:', batchesData);
         } else if (batchesData && Array.isArray(batchesData.batches)) {
           setBatches(batchesData.batches);
@@ -76,14 +88,14 @@ const StudentAssignment = () => {
   return (
     <div style={styles.container}>
       <h1
-      style={
-        {
-          fontSize: '1.5rem',
-          fontWeight: 'bold',
-          marginBottom: '20px',
-          color: '#bdc9d3',
+        style={
+          {
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            marginBottom: '20px',
+            color: '#bdc9d3',
+          }
         }
-    }
       >Your Batches</h1>
       {batches.length === 0 ? (
         <div>No batches found.</div>
@@ -91,6 +103,24 @@ const StudentAssignment = () => {
         <div style={styles.cardContainer}>
           {batches.map((batch) => (
             <div key={batch._id} style={styles.card}>
+              {/* Status Badge */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "10px",
+                  right: "10px",
+                  backgroundColor: batch.status ? "#4CAF50" : "#FF2C2C", // Green for Active, Red for Inactive
+                  color: "#fff",
+                  padding: "5px 10px",
+                  borderRadius: "12px",
+                  fontSize: "12px",
+                  fontWeight: "bold",
+                  zIndex: 1, // Ensure it stays above other elements
+                }}
+              >
+                {batch.status ? "Active" : "Inactive"}
+              </div>
+
               {/* Batch Image */}
               {batch.batch_image && (
                 <img
@@ -102,43 +132,64 @@ const StudentAssignment = () => {
 
               {/* Batch Name */}
               <h2
-              style={
-                {
-                  fontSize: '1.2rem',
-                  fontWeight: 'bold',
-                  marginBottom: '10px',
-                }
-              }
-              >{batch.batch_name}</h2>
+                style={{
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                  marginBottom: "10px",
+                }}
+              >
+                {batch.batch_name}
+              </h2>
 
               {/* Teacher Name */}
               {batch.teacher_id && batch.teacher_id.length > 0 && batch.teacher_id[0].user_id?.name && (
-                <p><strong>Teacher:</strong> {batch.teacher_id[0].user_id.name}</p>
+                <p>
+                  <strong>Teacher:</strong> {batch.teacher_id[0].user_id.name}
+                </p>
               )}
 
               {/* Subject Name */}
               {batch.subject_id?.subject_name && (
-                <p><strong>Subject:</strong> {batch.subject_id.subject_name}</p>
+                <p>
+                  <strong>Subject:</strong> {batch.subject_id.subject_name}
+                </p>
               )}
 
-              {/* Add more batch details as needed */}
-              <button onClick={() => handleViewAssignments(batch._id)}
-                style={
-                  {
-                    backgroundColor: '#EE1B7A',
-                    color: '#fff',
-                    border: 'none',
-                    borderRadius: '8px',
-                    padding: '8px 15px',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.3s ease',
-                  }
-                }
+              {/* Action Button */}
+              {batch.status ? (
+                <button
+                  onClick={() => handleViewAssignments(batch._id)}
+                  style={{
+                    backgroundColor: "#EE1B7A",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "8px 15px",
+                    cursor: "pointer",
+                    transition: "background-color 0.3s ease",
+                  }}
                 >
-                View Assignments
-              </button>
+                  View Assignments
+                </button>
+              ) : (
+                <button
+                  onClick={() => navigate(`/student/dashboard/`)}
+                  style={{
+                    backgroundColor: "#EE1B7A",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "8px",
+                    padding: "8px 15px",
+                    cursor: "pointer",
+                    transition: "background-color 0.3s ease",
+                  }}
+                >
+                  Subscribe Now
+                </button>
+              )}
             </div>
           ))}
+
         </div>
       )}
     </div>
@@ -165,6 +216,7 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center', // Center align items for better presentation
+    position: "relative", // Ensure absolute positioning works for the badge
   },
   image: {
     width: '100%',

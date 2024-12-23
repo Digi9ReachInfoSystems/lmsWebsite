@@ -41,6 +41,7 @@ const AssignedBatchStudentsList = () => {
   const [form] = Form.useForm();
   const [file, setFile] = useState(null); // Store the selected file
   const [description, setDescription] = useState("");
+  const[createMeetig,setCreateMeeting]=useState(false);
 
   useEffect(() => {
     const fetchBatchDetails = async () => {
@@ -119,6 +120,7 @@ const AssignedBatchStudentsList = () => {
 
   const handleFormSubmit = async (values) => {
     try {
+      setCreateMeeting(true);
       const { title, time } = values;
       const [startDate, endDate] = time;
 
@@ -139,6 +141,7 @@ const AssignedBatchStudentsList = () => {
 
       setIsModalVisible(false);
       form.resetFields();
+      setCreateMeeting(false);
     } catch (err) {
       console.error("Error creating meeting:", err);
       message.error("Failed to create meeting.");
@@ -335,8 +338,10 @@ const AssignedBatchStudentsList = () => {
               <Button
                 type="primary"
                 style={{ backgroundColor: "#ee1b7a" }}
-                htmlType="submit" block>
-                Create Meeting
+                htmlType="submit" block
+                disabled={createMeetig}
+                >
+               {createMeetig? "Creating Meeting..." : "Create Meeting"} 
               </Button>
             </Form.Item>
           </Form>

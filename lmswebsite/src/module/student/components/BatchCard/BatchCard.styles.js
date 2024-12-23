@@ -15,6 +15,12 @@ export const BatchCardWrap = styled.div`
       box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
     }
   }
+  .status-container{
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  margin-bottom: 10px;
+  }
 
   .batch-image-container {
     width: 100%;
