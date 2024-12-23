@@ -113,8 +113,9 @@ function HeroContent() {
             color: "#333",
           }}
         >
-          Best Platform For Online <br />
-          Learning
+          {/* Best Platform For Online <br />
+          Learning */}
+          Achieve more with expert online coaching
         </Typography>
         <Typography
           variant="body1"
@@ -125,7 +126,7 @@ function HeroContent() {
             marginBottom: "2rem",
           }}
         >
-          Learn at your own pace.
+          Step up. Learn. Achieve
         </Typography>
         <Box
           sx={{
@@ -139,7 +140,7 @@ function HeroContent() {
             sx={{ backgroundColor: "#6A11CB", color: "#fff" }}
             onClick={() => navigate("/selectBoard")}
           >
-            Join as a Student
+            Enroll as a Student
           </Button>
           <Button
             variant="outlined"
