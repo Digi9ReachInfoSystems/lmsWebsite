@@ -64,7 +64,7 @@ const SummaryDrawer = ({ onClose }) => {
           <div className="summary-item">
             <span className="summary-label">Batch</span>
             <span className="summary-value">
-              {summary.selectedBatch.mode || "Not Selected"} - ₹
+              {summary.selectedBatch.title || "Not Selected"} - ₹
               {summary.selectedBatch.price || "0"}/month
             </span>
           </div>

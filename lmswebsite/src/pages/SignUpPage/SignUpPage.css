@@ -1,6 +1,6 @@
 .signup-container {
   display: flex;
-  /* height: 100vh; */
+  height: 100vh;
   font-family: "Arial", sans-serif;
 
   @media (max-width: 768px) {
@@ -9,9 +9,9 @@
 }
 
 .image-section {
-  /* flex: 0.6; */
+  flex: 0.5;
   width: 40%;
-  background-color: #00c897;
+  background-color: #6A11CB ;
   color: #fff;
   display: flex;
   /* height: 100vh; */
@@ -67,7 +67,7 @@
 
 .form-heading {
   font-size: 2rem;
-  color: #00c897;
+  color: #6A11CB;
   text-align: center;
   /* padding-bottom: 30px; */
 }
@@ -110,7 +110,7 @@
 }
 
 .confirm-btn {
-  background-color: #00c897;
+  background-color: #6A11CB;
   display: flex;
   justify-content: center;
   color: #fff;

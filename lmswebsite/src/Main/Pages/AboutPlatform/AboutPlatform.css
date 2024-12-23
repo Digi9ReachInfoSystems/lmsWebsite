@@ -60,7 +60,7 @@
 }
 
 .video-play-icon button {
-  background-color: #00c897;
+  background-color: #6a11cb;
   color: white;
   font-size: 24px;
   border: none;
@@ -74,7 +74,7 @@
 }
 
 .video-play-icon button:hover {
-  background-color: #00c897;
+  background-color: #6a11cb;
 }
 
 .about-platform-text {
@@ -125,21 +125,21 @@
 }
 
 .demo-button {
-  background-color: #00c897;
+  background-color: #6a11cb;
   color: white;
 }
 
 .start-button {
   background-color: white;
-  border: 2px solid #00c897;
-  color: #00c897;
+  border: 2px solid #6a11cb;
+  color: #6a11cb;
 }
 
 .demo-button:hover {
-  background-color: #00c897;
+  background-color: #6a11cb;
 }
 
 .start-button:hover {
-  background-color: #00c897;
+  background-color: #6a11cb;
   color: white;
 }

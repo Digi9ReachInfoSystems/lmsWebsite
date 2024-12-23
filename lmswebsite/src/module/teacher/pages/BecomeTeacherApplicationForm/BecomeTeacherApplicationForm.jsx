@@ -7,22 +7,17 @@ import { UploadOutlined } from "@ant-design/icons";
 // import Header from "../../components/Navbar/Navbar";
 import LMS from "../../components/LMS/LMS";
 import BecomeTeacherLogo from "../../assets/becomeTeacherLogo.png";
-import {
-  submitTeacherApplication,
-} from "../../../../api/teachersApplicationApi";
+import { submitTeacherApplication } from "../../../../api/teachersApplicationApi";
 import TeachersSection from "../../components/TeacherSection/TeachersSection";
 import FooterTeacher from "../../components/Footer/FooterTeacher";
 import { getAllClasses, getClassesByBoardId } from "../../../../api/classApi";
-import {
-  getSubjects,
-} from "../../../../services/createBatch";
+import { getSubjects } from "../../../../services/createBatch";
 import api from "../../../../config/axiosConfig";
 import { getBoards } from "../../../../api/boardApi";
 import {
   ApplicationContainer,
   StyledForm,
   Processing,
-  
 } from "./BecomeTeacherApplicationForm.styles";
 import { useNavigate } from "react-router-dom";
 import { getAllSubjects } from "../../../../api/subjectApi";
@@ -60,7 +55,7 @@ const BecomeTeacherApplicationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Since we are no longer relying on user sessions, 
+    // Since we are no longer relying on user sessions,
     // we remove all checks related to user data or application status.
     // Now we simply load boards and show the form directly.
 
@@ -137,8 +132,8 @@ const BecomeTeacherApplicationForm = () => {
         current_position: values.current_position,
         experience: values.experience,
         // language: values.language,
-        resume_link: values.resume[0].originFileObj, 
-        profileImage: values.profileImage[0].originFileObj, 
+        resume_link: values.resume[0].originFileObj,
+        profileImage: values.profileImage[0].originFileObj,
         board_id: values.board_id,
         qualifications: values.qualification,
         dateOfBirth: values.dob,
@@ -197,224 +192,215 @@ const BecomeTeacherApplicationForm = () => {
 
   return (
     <>
- 
-        <HeaderSection />
-        {formVisibility && !formProcessing && !formReject && (
-          <ApplicationContainer>
-            {/* <div className="applicationImage">
+      <HeaderSection />
+      {formVisibility && !formProcessing && !formReject && (
+        <ApplicationContainer>
+          {/* <div className="applicationImage">
               <img
                 src={BecomeTeacherLogo}
                 alt="Teacher Form"
                 className="teacherformImage"
               />
             </div> */}
-            <div className="applicationDetails">
-              <Heading>Love Teaching Students? Join Us</Heading>
-              <Subheading>
-                Become a Teacher and train students all around the world.
-              </Subheading>
-              <StyledForm>
-                <Form
-                  form={form}
-                  layout="vertical"
-                  onFinish={handleSubmit}
-                  initialValues={{
-                    language: "",
-                    current_position: "",
-                  }}
-                >
-                  <div className="applicationRowOne">
-                    <Form.Item
-                      name="name"
-                      label="Name"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your name",
-                        },
-                        {
-                          max: 50,
-                          message: "Name cannot exceed 50 characters",
-                        },
-                        {
-                          pattern: /^[A-Za-z\s]+$/,
-                          message: "Please enter a valid name (letters only)",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Name" />
-                    </Form.Item>
+          <div className="applicationDetails">
+            <Heading>Love Teaching Students? Join Us</Heading>
+            <Subheading>
+              Become a Teacher and train students all around the world.
+            </Subheading>
+            <StyledForm>
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={handleSubmit}
+                initialValues={{
+                  language: "",
+                  current_position: "",
+                }}
+              >
+                <div className="applicationRowOne">
+                  <Form.Item
+                    name="name"
+                    label="Name"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your name",
+                      },
+                      {
+                        max: 50,
+                        message: "Name cannot exceed 50 characters",
+                      },
+                      {
+                        pattern: /^[A-Za-z\s]+$/,
+                        message: "Please enter a valid name (letters only)",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Name" />
+                  </Form.Item>
 
-                    <Form.Item
-                      name="email"
-                      label="Email"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your email",
-                        },
-                        {
-                          type: "email",
-                          message: "Please enter a valid email",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Email" />
-                    </Form.Item>
+                  <Form.Item
+                    name="email"
+                    label="Email"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your email",
+                      },
+                      {
+                        type: "email",
+                        message: "Please enter a valid email",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Email" />
+                  </Form.Item>
 
-                    <Form.Item
-                      name="phone_number"
-                      label="Phone Number"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your phone number",
-                        },
-                        {
-                          pattern: /^\d{10}$/,
-                          message: "Phone number must be 10 digits",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Phone Number" maxLength={10} />
-                    </Form.Item>
-                    </div>
+                  <Form.Item
+                    name="phone_number"
+                    label="Phone Number"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your phone number",
+                      },
+                      {
+                        pattern: /^\d{10}$/,
+                        message: "Phone number must be 10 digits",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Phone Number" maxLength={10} />
+                  </Form.Item>
+                </div>
 
-                    <div className="applicationRowTwo">
+                <div className="applicationRowTwo">
+                  <Form.Item
+                    name="state"
+                    label="State"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your state",
+                      },
+                      {
+                        max: 50,
+                        message: "State cannot exceed 50 characters",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="State" />
+                  </Form.Item>
 
-                    <Form.Item
-                      name="state"
-                      label="State"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your state",
-                        },
-                        {
-                          max: 50,
-                          message: "State cannot exceed 50 characters",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="State" />
-                    </Form.Item>
+                  <Form.Item
+                    name="city"
+                    label="City"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your city",
+                      },
+                      {
+                        max: 50,
+                        message: "City cannot exceed 50 characters",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="City" />
+                  </Form.Item>
 
-                    <Form.Item
-                      name="city"
-                      label="City"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your city",
-                        },
-                        {
-                          max: 50,
-                          message: "City cannot exceed 50 characters",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="City" />
-                    </Form.Item>
-                 
-                 
-                    <Form.Item
-                      name="pincode"
-                      label="Pin Code"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your pin code",
-                        },
-                        {
-                          pattern: /^\d{6}$/,
-                          message: "Pin code must be 6 digits",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Enter PinCode" maxLength={6} />
-                    </Form.Item>
+                  <Form.Item
+                    name="pincode"
+                    label="Pin Code"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your pin code",
+                      },
+                      {
+                        pattern: /^\d{6}$/,
+                        message: "Pin code must be 6 digits",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Enter PinCode" maxLength={6} />
+                  </Form.Item>
+                </div>
 
-                    </div>
+                <div className="applicationRowTwo">
+                  <Form.Item
+                    name="qualification"
+                    label="Qualification"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your qualification",
+                      },
+                    ]}
+                  >
+                    <Input placeholder="Qualification" />
+                  </Form.Item>
+                  <Form.Item
+                    name="experience"
+                    label="Experience (Years)"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please enter your experience",
+                      },
+                      {
+                        type: "number",
+                        min: 0,
+                        max: 100,
+                        message: "Experience must be between 0 and 100",
+                        transform: (value) => Number(value),
+                      },
+                    ]}
+                  >
+                    <Input
+                      type="number"
+                      placeholder="Enter Experience"
+                      min={0}
+                      max={100}
+                    />
+                  </Form.Item>
 
-                    <div className="applicationRowTwo">
-                    <Form.Item
-                      name="qualification"
-                      label="Qualification"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your qualification",
-                        },
-                      ]}
-                    >
-                      <Input placeholder="Qualification" />
-                    </Form.Item>
-                    <Form.Item
-                      name="experience"
-                      label="Experience (Years)"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please enter your experience",
-                        },
-                        {
-                          type: "number",
-                          min: 0,
-                          max: 100,
-                          message: "Experience must be between 0 and 100",
-                          transform: (value) => Number(value),
-                        },
-                      ]}
-                    >
-                      <Input
-                        type="number"
-                        placeholder="Enter Experience"
-                        min={0}
-                        max={100}
-                      />
-                    </Form.Item>
+                  <Form.Item
+                    name="current_position"
+                    label="Current Position"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select your position",
+                      },
+                    ]}
+                  >
+                    <Select placeholder="Select Position">
+                      <Option value="Teacher">Teacher</Option>
+                      <Option value="Assistant">Assistant</Option>
+                      <Option value="Principal">Principal</Option>
+                    </Select>
+                  </Form.Item>
 
-                    <Form.Item
-                      name="current_position"
-                      label="Current Position"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please select your position",
-                        },
-                      ]}
-                    >
-                      <Select placeholder="Select Position">
-                        <Option value="Teacher">Teacher</Option>
-                        <Option value="Assistant">Assistant</Option>
-                        <Option value="Principal">Principal</Option>
-                      </Select>
-                    </Form.Item>
-              
+                  <Form.Item
+                    name="dob"
+                    label="Date of Birth"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please select your date of birth",
+                      },
+                    ]}
+                  >
+                    <DatePicker
+                      placeholder="Select Date"
+                      style={{ width: "100%" }}
+                    />
+                  </Form.Item>
+                </div>
 
-
-
-
-              
-                    <Form.Item
-                      name="dob"
-                      label="Date of Birth"
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please select your date of birth",
-                        },
-                      ]}
-                    >
-                      <DatePicker
-                        placeholder="Select Date"
-                        style={{ width: "100%" }}
-                      />
-                    </Form.Item>
-                    </div>
-
-                    <div className="applicationRowThree">
-                    {/* <Form.Item
+                <div className="applicationRowThree">
+                  {/* <Form.Item
                       name="language"
                       label="Language"
                       rules={[
@@ -431,184 +417,186 @@ const BecomeTeacherApplicationForm = () => {
                         <Option value="French">French</Option>
                       </Select>
                     </Form.Item> */}
-                    
-                    <Form.Item
+
+                  <Form.Item
+                    name="resume"
+                    label="Upload Resume"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please upload your resume",
+                      },
+                    ]}
+                  >
+                    <Upload
                       name="resume"
-                      label="Upload Resume"
-                      valuePropName="fileList"
-                      getValueFromEvent={normFile}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please upload your resume",
-                        },
-                      ]}
+                      beforeUpload={() => false}
+                      accept=".pdf,.doc,.docx"
+                      maxCount={1}
                     >
-                      <Upload
-                        name="resume"
-                        beforeUpload={() => false}
-                        accept=".pdf,.doc,.docx"
-                        maxCount={1}
-                      >
-                        <Button icon={<UploadOutlined />}>
-                          Click to Upload Resume
-                        </Button>
-                      </Upload>
-                    </Form.Item>
-                   
-                    <Form.Item
+                      <Button icon={<UploadOutlined />}>
+                        Click to Upload Resume
+                      </Button>
+                    </Upload>
+                  </Form.Item>
+
+                  <Form.Item
+                    name="profileImage"
+                    label="Upload Profile Image"
+                    valuePropName="fileList"
+                    getValueFromEvent={normFile}
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please upload your profile image",
+                      },
+                    ]}
+                  >
+                    <Upload
                       name="profileImage"
-                      label="Upload Profile Image"
-                      valuePropName="fileList"
-                      getValueFromEvent={normFile}
-                      rules={[
-                        {
-                          required: true,
-                          message: "Please upload your profile image",
-                        },
-                      ]}
+                      beforeUpload={() => false}
+                      accept=".jpg,.jpeg,.png"
+                      maxCount={1}
                     >
-                      <Upload
-                        name="profileImage"
-                        beforeUpload={() => false}
-                        accept=".jpg,.jpeg,.png"
-                        maxCount={1}
-                      >
-                        <Button icon={<UploadOutlined />}>
-                          Click to Upload Profile Image
-                        </Button>
-                      </Upload>
-                    </Form.Item>
-                    </div>
-                 
-               
+                      <Button icon={<UploadOutlined />}>
+                        Click to Upload Profile Image
+                      </Button>
+                    </Upload>
+                  </Form.Item>
+                </div>
+
+                <Form.Item
+                  name="board_id"
+                  label="Select Board"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a board",
+                    },
+                  ]}
+                >
+                  <Select
+                    placeholder="Select Board"
+                    onChange={(value) => {
+                      setSelectedBoard(value);
+                      setSelectedClass([]);
+                      setSelectedSubject([]);
+                      form.setFieldsValue({ class_id: undefined });
+                      form.setFieldsValue({ subject_id: undefined });
+                    }}
+                    allowClear
+                  >
+                    {boardData.map((board) => (
+                      <Option key={board._id} value={board._id}>
+                        {board.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+
+                <div className="applicationRowThree">
+                  {selectedBoard && (
                     <Form.Item
-                      name="board_id"
-                      label="Select Board"
+                      name="class_id"
+                      label="Select Classes"
                       rules={[
                         {
                           required: true,
-                          message: "Please select a board",
+                          message: "Please select at least one class",
                         },
                       ]}
                     >
                       <Select
-                        placeholder="Select Board"
-                        onChange={(value) => {
-                          setSelectedBoard(value);
-                          setSelectedClass([]);
+                        mode="multiple"
+                        placeholder="Select classes..."
+                        onChange={(values) => {
+                          setSelectedClass(values);
                           setSelectedSubject([]);
-                          form.setFieldsValue({ class_id: undefined });
                           form.setFieldsValue({ subject_id: undefined });
                         }}
                         allowClear
                       >
-                        {boardData.map((board) => (
-                          <Option key={board._id} value={board._id}>
-                            {board.name}
+                        {classes.map((classItem) => (
+                          <Option key={classItem._id} value={classItem._id}>
+                            {classItem.classLevel} - {classItem.className}
                           </Option>
                         ))}
                       </Select>
                     </Form.Item>
-                    
-               
+                  )}
+                </div>
 
-                  <div className="applicationRowThree">
-                    {selectedBoard && (
-                      <Form.Item
-                        name="class_id"
-                        label="Select Classes"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please select at least one class",
-                          },
-                        ]}
-                      >
-                        <Select
-                          mode="multiple"
-                          placeholder="Select classes..."
-                          onChange={(values) => {
-                            setSelectedClass(values);
-                            setSelectedSubject([]);
-                            form.setFieldsValue({ subject_id: undefined });
-                          }}
-                          allowClear
-                        >
-                          {classes.map((classItem) => (
-                            <Option key={classItem._id} value={classItem._id}>
-                              {classItem.classLevel} - {classItem.className}
-                            </Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                    )}
-                  </div>
-
-                  <div className="applicationRowThree">
-                    {subjects.length > 0 && (
-                      <Form.Item
-                        name="subject_id"
-                        label="Select Subjects"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please select at least one subject",
-                          },
-                        ]}
-                      >
-                        <Select
-                          mode="multiple"
-                          placeholder="Select subjects..."
-                          onChange={(values) => setSelectedSubject(values)}
-                          allowClear
-                        >
-                          {subjects.map((subject) => (
-                            <Option key={subject._id} value={subject._id}>
-                              {subject.subject_name}
-                            </Option>
-                          ))}
-                        </Select>
-                      </Form.Item>
-                    )}
-                  </div>
-
-                  <Form.Item>
-                    <Button
-                    style={{width:"30%", display:"flex", justifyContent:"center", 
-                      alignItems:"center", margin:"auto", backgroundColor:"#00c897",
-                      color:"white", padding:"20px 20px", borderRadius:"8px",
-                    fontSize:"20px"}}
-                      htmlType="submit"
-                      disabled={isSubmitting}
+                <div className="applicationRowThree">
+                  {subjects.length > 0 && (
+                    <Form.Item
+                      name="subject_id"
+                      label="Select Subjects"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please select at least one subject",
+                        },
+                      ]}
                     >
-                      {isSubmitting ? "Submitting..." : "Submit"}
-                    </Button>
-                  </Form.Item>
-                </Form>
-              </StyledForm>
-            </div>
-          </ApplicationContainer>
-        )}
+                      <Select
+                        mode="multiple"
+                        placeholder="Select subjects..."
+                        onChange={(values) => setSelectedSubject(values)}
+                        allowClear
+                      >
+                        {subjects.map((subject) => (
+                          <Option key={subject._id} value={subject._id}>
+                            {subject.subject_name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+                  )}
+                </div>
 
-        <Processing visible={formProcessing || formReject}>
-          <div className="applicationUnderProcessing">
-            {formProcessing && <p>Application Under Processing....!!!!</p>}
+                <Form.Item>
+                  <Button
+                    style={{
+                      width: "30%",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      margin: "auto",
+                      backgroundColor: "#6A11CB",
+                      color: "white",
+                      padding: "20px 20px",
+                      borderRadius: "8px",
+                      fontSize: "20px",
+                    }}
+                    htmlType="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Submitting..." : "Submit"}
+                  </Button>
+                </Form.Item>
+              </Form>
+            </StyledForm>
           </div>
-          <div>
-            {formReject && (
-              <p>Application Rejected... Better Luck Next Time</p>
-            )}
-          </div>
-        </Processing>
+        </ApplicationContainer>
+      )}
 
-        {/* <LMS /> */}
-        
-        {/* <TeachersSection />
-         */}
-         <MeetOurTeacher />
-         <Footer />
-         
+      <Processing visible={formProcessing || formReject}>
+        <div className="applicationUnderProcessing">
+          {formProcessing && <p>Application Under Processing....!!!!</p>}
+        </div>
+        <div>
+          {formReject && <p>Application Rejected... Better Luck Next Time</p>}
+        </div>
+      </Processing>
+
+      {/* <LMS /> */}
+
+      {/* <TeachersSection />
+       */}
+      <MeetOurTeacher />
+      <Footer />
     </>
   );
 };

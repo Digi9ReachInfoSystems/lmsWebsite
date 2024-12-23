@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { theme, media } from "../../../../style/theme/theme";
 
 export const ApplicationContainer = styled.div`
-
   display: flex;
   flex-direction: row;
   gap: 24px;
-  // padding: 40px;
-  background-color: ${theme.colors.white};    
-  width: 100%;  
-margin:auto;
+  padding: 40px;
+  background-color: ${theme.colors.white};
+
+  width: 100%;
+  margin: auto;
   ${media.md`
     padding: 20px;
     flex-direction: column;
@@ -38,7 +38,7 @@ margin:auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin:auto;
+    margin: auto;
     background-color: ${theme.colors.white};
     padding: 20px;
     // border-radius: 8px;
@@ -100,12 +100,11 @@ export const StyledForm = styled.div`
   .applicationRowOne,
   .applicationRowTwo,
   .applicationRowThree {
-   
     display: flex;
     justify-content: space-between;
     gap: 20px;
     margin-bottom: 15px;
-    
+
     ${media.md`
       flex-direction: column;
       gap: 12px;
@@ -117,12 +116,10 @@ export const StyledForm = styled.div`
 
     `}
   }
-    //  .applicationRowThree  div{
-    //    width: 100%;
-    //    gap: 20px;
-    //  }
-    
-     
+  //  .applicationRowThree  div{
+  //    width: 100%;
+  //    gap: 20px;
+  //  }
 
   .ant-input,
   .ant-select-selector,
@@ -131,9 +128,8 @@ export const StyledForm = styled.div`
   }
 
   button {
-   width:100%;
+    width: 100%;
   }
-   
 `;
 
 export const UploadWrapper = styled.div`
@@ -160,5 +156,3 @@ export const Processing = styled.div`
     font-size: 1.6rem;
   `}
 `;
-
-

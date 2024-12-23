@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./SignUpPage.css";
 import { message, Radio, DatePicker } from "antd";
 import { useNavigate } from "react-router-dom";
-import SignUpImage from "../../assets/student.avif"; // Replace with your image path
+import SignUpImage from "../../assets/4966434.jpg"; // Replace with your image path
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
