@@ -12,7 +12,7 @@
   font-size: 42px;
   margin-bottom: 10px;
   font-weight: bold;
-  color: #6a11cb;
+  color: #6a11cb !important;
 }
 /* Specific Header Styling */
 .black-text {
