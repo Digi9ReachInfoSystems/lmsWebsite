@@ -19,7 +19,7 @@ function LandingPageFinal() {
       <Features />
       <ChooseUs />
       <MeetOurTeacher />
-      <Testimonials />
+      {/* <Testimonials /> */}
       <Faq />
       <Footer />
     </div>
