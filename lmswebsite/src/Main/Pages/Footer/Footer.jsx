@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Footer.css";
+import { PiTrademarkLight } from "react-icons/pi";
 import {
   FaFacebook,
   FaLinkedin,
@@ -17,8 +18,9 @@ function Footer() {
           <h3>About Us</h3>
           <ul>
             <li>Our Academy</li>
-            <li>Become a Teacher</li>
+            <li>Become A Teacher</li>
             <li>Careers</li>
+            <li><Link to="https://roycareersolutions.com/">Roy Career Solutions Private Limited (Parent Company) </Link></li>
           </ul>
         </div>
         {/* <div className="footer-column">
@@ -59,7 +61,8 @@ function Footer() {
         </p>
         <p>
 <br />
-        <h3 style={{ color: "black" }}>find Us On Social Media</h3>
+        <h3 style={{ color: "black" , marginBottom: "1rem"}}>Find Us On Social Media</h3>
+
           <div className="footer-social-icons-new">
             <a href="#" aria-label="Facebook">
               <FaFacebook />
@@ -78,7 +81,7 @@ function Footer() {
            </a> */}
           </div>
     <hr />
-<h3>The Topper Academy@2024.</h3>
+<h3 style={{ display: "flex", justifyContent: "center" } }>The Topper Academy<PiTrademarkLight />2024.</h3>
 <p>Roy Career Solutions Private Limited, Bengaluru, Karnataka-560018</p>
         </p>
       </div>
