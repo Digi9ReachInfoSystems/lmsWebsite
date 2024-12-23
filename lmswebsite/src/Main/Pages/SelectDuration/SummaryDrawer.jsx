@@ -92,8 +92,11 @@ const SummaryDrawer = ({ onClose }) => {
 
         {/* Sign In Button */}
         <div className="signin-container">
-          <button className="signin-btn" onClick={handleSignIn}>
-            Sign up to Continue
+          <button
+            className="signin-btn"
+            // onClick={handleSignIn}
+          >
+            We Will be Back On 25th December
           </button>
         </div>
       </div>
