@@ -246,21 +246,26 @@ function HeroContent() {
       {/* Right Mockup */}
       <Box
         component="img"
-        src="https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/final%20edit.png?alt=media&token=76c7de42-eade-416d-8823-6f35a57a55bd"
+        src="https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/giphy%20(1).gif?alt=media&token=ece39431-b303-495d-9ee1-cb477ea5d4c4"
         alt="Mockup"
         sx={{
           width: "90%",
           maxWidth: "700px",
+          marginBottom: {
+            xs: "2rem",
+            md: "0",
+            sm: "0rem",
+          },
           borderRadius: "12px",
           // Adjust padding top & right based on screen size
           paddingTop: {
-            xs: "20px", // Extra-small devices
+            // xs: "20px", // Extra-small devices
             sm: "40px", // Small devices
-            md: "80px", // Medium devices and larger
+            md: "50px", // Medium devices and larger
           },
           paddingRight: {
             xs: "0px", // Extra-small devices
-            sm: "10px", // Small devices
+            sm: "0px", // Small devices
             md: "20px", // Medium devices and larger
           },
         }}
