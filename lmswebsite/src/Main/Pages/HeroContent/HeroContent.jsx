@@ -4,6 +4,7 @@ import Typewriter from "react-typewriter-effect";
 import StatsCard from "./Statscard";
 import GroupIcon from "@mui/icons-material/Groups";
 import { useNavigate } from "react-router-dom";
+import ReactPlayer from "react-player";
 
 function HeroContent() {
   const navigate = useNavigate();
@@ -139,7 +140,7 @@ function HeroContent() {
             sx={{ backgroundColor: "#6A11CB", color: "#fff" }}
             onClick={() => navigate("/selectBoard")}
           >
-            Join as a Student
+            Enroll as a Student
           </Button>
           <Button
             variant="outlined"
@@ -171,7 +172,7 @@ function HeroContent() {
           icon={<GroupIcon sx={{ color: "#fff" }} />}
           bgColor="#00C897"
           position={{
-            top: "40%",
+            top: "50%",
             right: "5%",
             "@media(max-width:576px)": { top: "46%" },
           }}
@@ -214,13 +215,14 @@ function HeroContent() {
         }}
       >
         <img
-          src="https://static.vecteezy.com/system/resources/previews/000/457/141/original/landing-page-template-of-website-design-illustration-concept-isometric-flat-design-concept-of-web-page-design-for-website-and-mobile-website-vector-illustration.jpg"
+          src="https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/final%20edit.png?alt=media&token=76c7de42-eade-416d-8823-6f35a57a55bd"
           alt="Mockup"
           style={{
             width: "90%",
+            paddingRight: "20px",
             maxWidth: "700px",
             borderRadius: "12px",
-            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
+            // boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
           }}
         />
       </Box>
