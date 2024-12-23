@@ -31,7 +31,7 @@ export const BatchCardWrap = styled.div`
     `}
 
     ${media.xs`
-      max-width: 200px;
+      /* max-width: 200px; */
       height: 350px;
       margin: 5px;
     `}

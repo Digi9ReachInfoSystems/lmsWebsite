@@ -96,13 +96,38 @@ export const AssignedTeacherBatchesWrap = styled.div`
     }
 
     &.ar-three {
-      display: flex;
-      flex-direction: row;
-    }
+      /* display: flex;
+      flex-direction: row; */
 
-    ${media.md`
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      ${media.xxxl`
+        grid-template-columns: repeat(5, 1fr);
+      `}
+
+      ${media.xxl`
+        grid-template-columns: repeat(4, 1fr);
+      `}
+
+      ${media.xl`
+        grid-template-columns: repeat(4, 1fr);
+      `}
+
+      ${media.lg`
+        grid-template-columns: repeat(3, 1fr);
+      `}
+
+      ${media.md`
+        grid-template-columns: repeat(2, 1fr);
+      `}
+
+      ${media.sm`
+        grid-template-columns: repeat(1, 1fr);
+      `}
+      ${media.md`
       flex-direction: column;
     `}
+    }
   }
 
   /* Backdrop Styles */
