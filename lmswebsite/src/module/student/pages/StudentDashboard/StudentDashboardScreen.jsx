@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid } from "@mui/material";
+import { Grid, Button } from "@mui/material";
 import {
   StudentDashboardScreenWrap,
   WelcomeTitle,
@@ -28,12 +28,18 @@ import MaterialFile from "../../components/MaterialUploaded/materialFile";
 import BatchDetailsContent from "../../components/DownloadContent/BatchDetails";
 import Animation from "../../../student/assets/Animation.json";
 import Lottie from "lottie-react";
-import { getStudentByAuthId } from "../../../../api/studentApi";
+import { getStudentBatchStatus, getStudentByAuthId } from "../../../../api/studentApi";
+import { Modal } from "antd"; // Import Ant Design Modal
+import { getBatchesByStudentId } from "../../../../api/batchApi";
+import api from "../../../../config/axiosConfig";
+// import "antd/dist/antd.css"; // Ensure Ant Design styles are applied
 
 const StudentDashboardScreen = () => {
   const [dashboardCards, setDashboardCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const [studentName, setStudentName] = useState(""); // New state for student's name
+  const [modalVisible, setModalVisible] = useState(false); // State to control modal visibility
+  const [expiredBatch, setExpiredBatch] = useState(""); // State to store the batch name
 
   useEffect(() => {
     const apiCaller = async () => {
@@ -83,6 +89,62 @@ const StudentDashboardScreen = () => {
     };
     apiCaller();
   }, []);
+  useEffect(() => {
+    const apiCaller = async () => {
+      try {
+        const sessionData = JSON.parse(localStorage.getItem("sessionData"));
+        if (!sessionData || !sessionData.userId) {
+          throw new Error("User is not authenticated.");
+        }
+  
+        const authId = sessionData.userId;
+        const studentData = await getStudentByAuthId(authId);
+        console.log("Student Data:", studentData);
+  
+        if (!studentData.student || !studentData.student._id) {
+          throw new Error("Student data is incomplete.");
+        }
+  
+        const fetchedBatches = await getBatchesByStudentId(
+          studentData.student._id
+        );
+        const updatedBatches = await Promise.all(
+          fetchedBatches.map(async (batch) => {
+            const statusValue = await getStudentBatchStatus(studentData.student._id, batch._id); // Fetch the status
+            return {
+              ...batch,
+              status: statusValue.status, // Add statusValue to batch data
+            };
+          })
+        );
+  
+        for (const batch of updatedBatches) {
+          if (!batch.status) {
+            await new Promise((resolve) => {
+              setExpiredBatch(batch.batch_name);
+              setModalVisible(true);
+  
+              // Wait for the modal to close before resolving
+              const interval = setInterval(() => {
+                if (!modalVisible) {
+                  clearInterval(interval);
+                  resolve();
+                }
+              }, 10000);
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching batches:", error);
+      }
+    };
+  
+    apiCaller();
+  }, []); // Ensure modalVisible state triggers re-execution when the modal closes.
+  
+  const handleModalClose = () => {
+    setModalVisible(false);
+  };
 
   if (loading) {
     return (
@@ -115,6 +177,29 @@ const StudentDashboardScreen = () => {
 
   return (
     <StudentDashboardScreenWrap className="content-area">
+      {/* Modal for subscription expiry */}
+      <Modal
+        title="Subscription Expired"
+        visible={modalVisible}
+        onCancel={handleModalClose}
+        footer={[
+          <Button key="close" onClick={handleModalClose} style={{ background: "#EE1B7A", color: "#fff" }}>
+            Close
+          </Button>,
+        ]}
+      >
+        <div style={{ padding: "20px", lineHeight: "1.6", fontSize: "1rem", color: "#4A4A4A" }}>
+          <p style={{ marginBottom: "10px" }}>
+            Your subscription for the batch <strong style={{ color: "#007BFF" }}>{expiredBatch}</strong> has expired.
+          </p>
+          <p style={{ marginBottom: "10px" }}>
+            To continue learning in this batch, please subscribe again.
+          </p>
+          <p style={{ marginBottom: "10px" }}>
+            <strong>Need help?</strong> Contact our support team for further assistance.
+          </p>
+        </div>
+      </Modal>
       <Grid container spacing={3}>
         {/* Left side containing the Welcome Container and Daily Schedule */}
         <Grid item xs={12} md={8}>

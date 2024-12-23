@@ -116,7 +116,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.clear(); // Clear all items in localStorage
-    navigate("/login"); // Redirect to the login page or desired route
+    navigate("/"); // Redirect to the login page or desired route
   };
 
   useEffect(() => {

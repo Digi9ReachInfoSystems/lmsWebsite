@@ -1,7 +1,7 @@
-import React, { useEffect ,useState} from "react";
+import React, { useEffect, useState } from "react";
 import { List, Button } from "antd";
-import { RightOutlined } from "@ant-design/icons";
-import { getStudentAttendance, getStudentByAuthId, getStudentscheduleById, getStudentscheduleForSevenDaysById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
+import { RightOutlined,AlertOutlined } from "@ant-design/icons";
+import { getStudentAttendance, getStudentBatchStatus, getStudentByAuthId, getStudentscheduleById, getStudentscheduleForSevenDaysById, studentClockIn, studentClockOut } from "../../../../api/studentApi";
 import { set } from "lodash";
 
 const UpcomingMeetings = () => {
@@ -20,17 +20,24 @@ const UpcomingMeetings = () => {
       const schedule = response.data.schedule;
       console.log("schedule", schedule);
       // Map the schedule into events for react-big-calendar
-      let formattedEvents = schedule.map((item, index) => ({
-        id: index,
-        title: item.meeting_title || "No Title", // Use the meeting title from the API response
-        start: new Date(item.date),
-        end: new Date(new Date(item.date).getTime() + 60 * 60 * 1000), // Assume 1-hour meetings
-        meetingId: item.meeting_id, // Use meeting_id to track clocking
-        meeting_url: item.meeting_url || null, // Include meeting URL
-        meeting_reschedule: item.meeting_reschedule,
-        clockIn: false,
-        clockOut: false,
-      }));
+      let formattedEvents = await Promise.all(schedule.map(async (item, index) => {
+        console.log ("item", item);
+        const status = await getStudentBatchStatus(studentData.student._id, item.batch_id);
+
+        return ({
+          id: index,
+          title: item.meeting_title || "No Title", // Use the meeting title from the API response
+          start: new Date(item.date),
+          end: new Date(new Date(item.date).getTime() + 60 * 60 * 1000), // Assume 1-hour meetings
+          meetingId: item.meeting_id, // Use meeting_id to track clocking
+          meeting_url: item.meeting_url || null, // Include meeting URL
+          meeting_reschedule: item.meeting_reschedule,
+          status: status.status || false,
+          clockIn: false,
+          clockOut: false,
+        })
+      }
+      ));
       studentAttendanceData.attendance.map((item) => {
         formattedEvents = formattedEvents.map((event) => {
           if (item.meeting_id === event.meetingId) {
@@ -66,7 +73,7 @@ const UpcomingMeetings = () => {
 
   // Handle when a user clicks on an event
   const handleSelectEvent = (event) => {
-  console.log("event", event);
+    console.log("event", event);
     if (event.meeting_url) {
       window.open(event.meeting_url, "_blank"); // Open the meeting URL in a new tab
       handleClockIn(event.meetingId);
@@ -110,7 +117,7 @@ const UpcomingMeetings = () => {
         [meetingId]: "clocked-out", // Update the status to clocked-out
       }));
       if (response) {
-        window.location.reload(); 
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error clocking out:", error);
@@ -129,31 +136,41 @@ const UpcomingMeetings = () => {
     >
       <h3>Upcoming Meetings</h3>
       {
-      ( meetingData && meetingData.length > 0) &&
+        (meetingData && meetingData.length > 0) &&
         <List
           itemLayout="horizontal"
           dataSource={meetingData}
           renderItem={(item) => {
-            console.log("item", item);
-            return (
-              <List.Item
-                actions={[!item.clockIn ?
-                  (<>
+            if (!item.status) {
+              return (
+                <List.Item
+                  actions={[
                     <Button
                       type="primary"
-                      icon={<RightOutlined />}
+                      // icon={<AlertOutlined />}
                       style={{
-                        backgroundColor: "#ff4d94", // Pink color
-                        borderColor: "#ff4d94",
+                        backgroundColor: "#FF2C2C", 
+                        borderColor: "#FF2C2C",
                         color: "#fff",
                         fontWeight: "bold",
                       }}
-                      onClick={() => handleSelectEvent(item)}
+                      // onClick={() => handleSelectEvent(item)}
                     >
-                      Join
+                      <>Subscription over!..</>
                     </Button>
-                    {studentMode === "personal" &&
-                      (<Button
+                  ]}
+                >
+                  <List.Item.Meta title={item?.title} description={new Date(item?.start).toLocaleString()} />
+                </List.Item>
+              )
+            } else {
+
+
+              return (
+                <List.Item
+                  actions={[!item.clockIn ?
+                    (<>
+                      <Button
                         type="primary"
                         icon={<RightOutlined />}
                         style={{
@@ -164,29 +181,44 @@ const UpcomingMeetings = () => {
                         }}
                         onClick={() => handleSelectEvent(item)}
                       >
-                        Reschedule
-                      </Button>)
-                    }
-                  </>
-                  ) : (item.clockIn && !item.clockOut ? <Button
-                    type="primary"
-                    icon={<RightOutlined />}
-                    style={{
-                      backgroundColor: "#ff4d94", // Pink color
-                      borderColor: "#ff4d94",
-                      color: "#fff",
-                      fontWeight: "bold",
-                    }}
-                    onClick={() => handleClockOut(item)}
-                  >
-                    Clock Out
-                  </Button>:
-                  <span>Clocked Out</span>)
-                ]}
-              >
-                <List.Item.Meta title={item?.title} description={new Date(item?.start).toLocaleString()} />
-              </List.Item>
-            )
+                        Join
+                      </Button>
+                      {studentMode === "personal" &&
+                        (<Button
+                          type="primary"
+                          icon={<RightOutlined />}
+                          style={{
+                            backgroundColor: "#ff4d94", // Pink color
+                            borderColor: "#ff4d94",
+                            color: "#fff",
+                            fontWeight: "bold",
+                          }}
+                          onClick={() => handleSelectEvent(item)}
+                        >
+                          Reschedule
+                        </Button>)
+                      }
+                    </>
+                    ) : (item.clockIn && !item.clockOut ? <Button
+                      type="primary"
+                      icon={<RightOutlined />}
+                      style={{
+                        backgroundColor: "#ff4d94", // Pink color
+                        borderColor: "#ff4d94",
+                        color: "#fff",
+                        fontWeight: "bold",
+                      }}
+                      onClick={() => handleClockOut(item)}
+                    >
+                      Clock Out
+                    </Button> :
+                      <span>Clocked Out</span>)
+                  ]}
+                >
+                  <List.Item.Meta title={item?.title} description={new Date(item?.start).toLocaleString()} />
+                </List.Item>
+              )
+            }
           }}
         />
 

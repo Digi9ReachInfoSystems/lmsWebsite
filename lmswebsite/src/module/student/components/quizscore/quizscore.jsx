@@ -4,6 +4,7 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { getBatchesByStudentId } from "../../../../api/batchApi";
 import { getQuizByBatchId } from "../../../../api/quizApi";
+import { Link } from "react-router-dom";
 
 const { Title, Text } = Typography;
 
@@ -98,42 +99,44 @@ const QuizScore = () => {
   }
 
   return (
-    <Card
-      bordered={false}
-      style={{
-        width: 300,
-        borderRadius: 8,
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
-        <CheckCircleOutlined
-          style={{ fontSize: 24, color: "#52c4dd", marginRight: 8 }}
+    <Link to="/student/dashboard/taskBoard">
+      <Card
+        bordered={false}
+        style={{
+          width: 300,
+          borderRadius: 8,
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", marginBottom: 16 }}>
+          <CheckCircleOutlined
+            style={{ fontSize: 24, color: "#52c4dd", marginRight: 8 }}
+          />
+          <Title level={5} style={{ margin: 0 }}>
+            Pending Assessment
+          </Title>
+        </div>
+
+        <Progress
+          percent={percentage}
+          status="active"
+          strokeColor="#52c41a"
+          style={{ marginBottom: 16 }}
         />
-        <Title level={5} style={{ margin: 0 }}>
-          Pending Assessment
-        </Title>
-      </div>
 
-      <Progress
-        percent={percentage}
-        status="active"
-        strokeColor="#52c41a"
-        style={{ marginBottom: 16 }}
-      />
+        <Text strong style={{ fontSize: "24px" }}>
+          {pendingQuizzes}
+        </Text>
+        <Text type="secondary" style={{ paddingLeft: "10px" }}>
+          Assessment remaining
+        </Text>
 
-      <Text strong style={{ fontSize: "24px" }}>
-        {pendingQuizzes}
-      </Text>
-      <Text type="secondary" style={{ paddingLeft: "10px" }}>
-        Assessment remaining
-      </Text>
-
-      <br />
-      <Text>
-        Answered: {answeredCount} / {totalQuizzes}
-      </Text>
-    </Card>
+        <br />
+        <Text>
+          Answered: {answeredCount} / {totalQuizzes}
+        </Text>
+      </Card>
+    </Link>
   );
 };
 
