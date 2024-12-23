@@ -116,10 +116,7 @@ export const StyledForm = styled.div`
 
     `}
   }
-  //  .applicationRowThree  div{
-  //    width: 100%;
-  //    gap: 20px;
-  //  }
+ 
 
   .ant-input,
   .ant-select-selector,
