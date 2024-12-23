@@ -42,7 +42,7 @@ function ManageMeetingStudent() {
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const studentData = await getStudentByAuthId(authId);
         setStudentMode(studentData.student.mode);
-        console.log("studentData", studentData.student._id);
+        //console.log("studentData", studentData.student._id);
         const response = await getStudentscheduleById(studentData.student._id);
         const studentAttendanceData = await getStudentAttendance(
           studentData.student._id
@@ -51,11 +51,11 @@ function ManageMeetingStudent() {
         //   `http://localhost:5000/students/student/67442e833781bb93207b0dbf/schedule`
         // );
         const schedule = response.data.schedule;
-        console.log("schedule", schedule);
+        //console.log("schedule", schedule);
 
         // Map the schedule into events for react-big-calendar
         let formattedEvents = await Promise.all( schedule.map(async (item, index) => {
-          // console.log("item", item);
+          // //console.log("item", item);
           const status =await  getStudentBatchStatus(studentData.student._id, item.batch_id);
 
           return ({
@@ -71,7 +71,7 @@ function ManageMeetingStudent() {
             clockOut: false,
           })
         }));
-        console.log("formattedEvents", formattedEvents);
+        //console.log("formattedEvents", formattedEvents);
         studentAttendanceData.attendance.map((item) => {
           formattedEvents = formattedEvents.map((event) => {
             if (item.meeting_id === event.meetingId) {
@@ -115,13 +115,13 @@ function ManageMeetingStudent() {
         setLoadData(!loadData);
       }
     } catch (error) {
-      console.error("Error clocking in:", error);
+      //console.error("Error clocking in:", error);
     }
   };
 
   // Handle clock-out action
   const handleClockOut = async (meetingId) => {
-    console.log("meetingId", meetingId);
+    //console.log("meetingId", meetingId);
     try {
       const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
       const studentData = await getStudentByAuthId(authId);
@@ -138,7 +138,7 @@ function ManageMeetingStudent() {
         setLoadData(!loadData);
       }
     } catch (error) {
-      console.error("Error clocking out:", error);
+      //console.error("Error clocking out:", error);
     }
   };
 

@@ -63,7 +63,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
 
   useEffect(() => {
     setLoading(true);
-    console.log("Selected Batch Index:", selectedBatchIndex);
+    //console.log("Selected Batch Index:", selectedBatchIndex);
     if (selectedBatchIndex !== null) {
       setSubjectData(batches.filter((batch, index) => {
 
@@ -102,9 +102,9 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
 
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const teacherData = await getTeacherByAuthId(authId);
-        console.log("Teacher Data:", teacherData);
+        //console.log("Teacher Data:", teacherData);
         const fetchedBatches = await getBatchesByTeacherId(teacherData.teacher._id);
-        // console.log("Fetched Batches:", fetchedBatches);
+        // //console.log("Fetched Batches:", fetchedBatches);
 
         setTeacherIdData(teacherData.teacher._id)
         setBatches(fetchedBatches);
@@ -123,7 +123,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
     
         setLoading(false);
       } catch (err) {
-        console.error('Error fetching data:', err);
+        //console.error('Error fetching data:', err);
         setError('Failed to load form data. Please try again.');
         setLoading(false);
       }
@@ -138,14 +138,14 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
       ...formData,
       [name]: value,
     });
-    console.log("gg", formData);
+    //console.log("gg", formData);
   };
 
   const openQuizDialog = () => setShowQuizDialog(true);
   const closeQuizDialog = () => setShowQuizDialog(false);
 
   const handleSaveQuestions = (questionsData) => {
-    console.log("questionsData", questionsData);
+    //console.log("questionsData", questionsData);
     setFormData({
       ...formData,
       questions: questionsData,
@@ -180,7 +180,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
 
 
       }
-      console.log("submitting data", submissionData);
+      //console.log("submitting data", submissionData);
       onSubmit(submissionData);
     }
   };
@@ -285,7 +285,7 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
             value={formData.batch}
             onChange={(value) => {
               setSelectedBatchIndex(value);
-              console.log("Selected Batch Index:", value);
+              //console.log("Selected Batch Index:", value);
               handleChange({ target: { name: 'batch', value } });
             }}
           >

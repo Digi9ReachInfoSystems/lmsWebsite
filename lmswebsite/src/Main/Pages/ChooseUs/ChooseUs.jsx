@@ -36,11 +36,11 @@ function ChooseUs() {
     <div>
       <div className="heading">
         <h2>Features & Benefits</h2>
-        <p>
+        {/* <p>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s.
-        </p>
+        </p> */}
       </div>
 
       <div className="choose-us-section">

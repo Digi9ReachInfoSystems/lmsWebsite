@@ -11,7 +11,7 @@ const Benefits = () => {
     const fetchBenefits = async () => {
       try {
         const response = await getAllBenefits();
-        console.log("Benefits fetched successfully:", response);
+        //////console.log("Benefits fetched successfully:", response);
 
         // Access the benefits array inside the response object
         if (response && Array.isArray(response.benefits)) {
@@ -21,7 +21,7 @@ const Benefits = () => {
         }
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        ////console.error("Error fetching data:", err);
         setError(err);
         setLoading(false);
       }

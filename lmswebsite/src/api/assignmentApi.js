@@ -10,10 +10,10 @@ import api from "../config/axiosConfig";
 export const createAssignment = async (assignmentData) => {
   try {
     const response = await api.post("/assignments/", assignmentData);
-    console.log("Assignment created successfully:", response.data);
+    //console.log("Assignment created successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error creating assignment:", error.response?.data || error.message);
+    //console.error("Error creating assignment:", error.response?.data || error.message);
     throw error; // Re-throw if you want to handle it elsewhere
   }
 };
@@ -27,10 +27,10 @@ export const createAssignment = async (assignmentData) => {
 export const editAssignment = async (assignmentId, updatedData) => {
   try {
     const response = await api.put(`/assignments/${assignmentId}`, updatedData);
-    console.log("Assignment updated successfully:", response.data);
+    //console.log("Assignment updated successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error editing assignment:", error.response?.data || error.message);
+    //console.error("Error editing assignment:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -43,10 +43,10 @@ export const editAssignment = async (assignmentId, updatedData) => {
 export const deleteAssignment = async (assignmentId) => {
   try {
     const response = await api.delete(`/assignments/${assignmentId}`);
-    console.log("Assignment deleted successfully:", response.data);
+    //console.log("Assignment deleted successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error deleting assignment:", error.response?.data || error.message);
+    //console.error("Error deleting assignment:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -59,10 +59,10 @@ export const deleteAssignment = async (assignmentId) => {
 export const getAssignmentById = async (assignmentId) => {
   try {
     const response = await api.get(`/assignments/${assignmentId}`);
-    console.log("Assignment fetched successfully:", response.data);
+    //console.log("Assignment fetched successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching assignment by ID:", error.response?.data || error.message);
+    //console.error("Error fetching assignment by ID:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -74,10 +74,10 @@ export const getAssignmentById = async (assignmentId) => {
 export const getAllAssignments = async () => {
   try {
     const response = await api.get("/assignments/");
-    console.log("All assignments fetched successfully:", response.data);
+    //console.log("All assignments fetched successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching all assignments:", error.response?.data || error.message);
+    //console.error("Error fetching all assignments:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -90,10 +90,10 @@ export const getAllAssignments = async () => {
 export const getAssignmentsByTeacherId = async (teacherId) => {
   try {
     const response = await api.get(`/assignments/teacher/${teacherId}`);
-    console.log("Assignments by teacher fetched successfully:", response.data);
+    //console.log("Assignments by teacher fetched successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching assignments by teacher ID:", error.response?.data || error.message);
+    //console.error("Error fetching assignments by teacher ID:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -106,10 +106,10 @@ export const getAssignmentsByTeacherId = async (teacherId) => {
 export const getAssignmentsByBatchId = async (batchId) => {
   try {
     const response = await api.get(`/assignments/batch/${batchId}`);
-    console.log("Assignments by batch fetched successfully:", response.data);
+    //console.log("Assignments by batch fetched successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error fetching assignments by batch ID:", error.response?.data || error.message);
+    //console.error("Error fetching assignments by batch ID:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -123,10 +123,10 @@ export const getAssignmentsByBatchId = async (batchId) => {
 export const addStudentResponse = async (assignmentId, responseData) => {
   try {
     const response = await api.post(`/assignments/${assignmentId}/responses`, responseData);
-    console.log("Student response added successfully:", response.data);
+    //console.log("Student response added successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error adding student response:", error.response?.data || error.message);
+    //console.error("Error adding student response:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -140,10 +140,10 @@ export const addStudentResponse = async (assignmentId, responseData) => {
 export const deleteStudentResponse = async (assignmentId, studentId) => {
   try {
     const response = await api.delete(`/assignments/${assignmentId}/responses/${studentId}`);
-    console.log("Student response deleted successfully:", response.data);
+    //console.log("Student response deleted successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error deleting student response:", error.response?.data || error.message);
+    //console.error("Error deleting student response:", error.response?.data || error.message);
     throw error;
   }
 };
@@ -161,10 +161,10 @@ export const updateStudentResponse = async (assignmentId, studentId, updatedResp
       `/assignments/${assignmentId}/responses/${studentId}`,
       updatedResponseData
     );
-    console.log("Student response updated successfully:", response.data);
+    //console.log("Student response updated successfully:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error updating student response:", error.response?.data || error.message);
+    //console.error("Error updating student response:", error.response?.data || error.message);
     throw error;
   }
 };

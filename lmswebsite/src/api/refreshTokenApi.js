@@ -1,10 +1,10 @@
 import api from '../config/axiosConfig';
 
 export const updateAccessToken = async () => {   
-    console.log("updateAccessToken"); 
+    //console.log("updateAccessToken"); 
     try {
         const sessionData = JSON.parse(localStorage.getItem('sessionData'));
-        console.log("sessionData referesh", sessionData);
+        //console.log("sessionData referesh", sessionData);
         if (sessionData?.refreshToken) {
             const response = await api.post('refreshToken/get-access-token',{refresh_token:sessionData.refreshToken});
             if (response.status === 200) {  
@@ -18,7 +18,7 @@ export const updateAccessToken = async () => {
             }
         }
     } catch (error) {
-        console.error('Error updating access token:', error);
+        //console.error('Error updating access token:', error);
         throw error;
     }
 };

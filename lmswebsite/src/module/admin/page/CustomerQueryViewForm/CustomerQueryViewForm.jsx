@@ -24,7 +24,7 @@ const CustomerQueryViewForm = ({queryId,closeModal}) => {
         setQuery(data);
         setStatus(data.queryStatus);
       } catch (err) {
-        console.error("Error fetching query:", err.message);
+        //console.error("Error fetching query:", err.message);
         setError("Failed to fetch query details.");
       } finally {
         setLoading(false);
@@ -45,7 +45,7 @@ const CustomerQueryViewForm = ({queryId,closeModal}) => {
       alert("Query status updated to solved successfully.");
       navigate("/admin/customerQueries");
     } catch (error) {
-      console.error("Error updating query status:", error.message);
+      //console.error("Error updating query status:", error.message);
       alert("Failed to update query status.");
     }
   };

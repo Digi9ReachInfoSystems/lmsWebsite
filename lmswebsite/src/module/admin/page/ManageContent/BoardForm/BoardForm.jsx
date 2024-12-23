@@ -15,17 +15,17 @@ const BoardForm = () => {
  
   const handleSubmit = async (values) => {
     const downloadUrl = await uploadFileToFirebase(imageFile, "boardImage");
-    console.log('Form Values:', values); // Log form values
+    //console.log('Form Values:', values); // Log form values
     setIsSubmitting(true);
     setError(null);
      const submissionData={...values,icon:downloadUrl};
     try {
     setLoading(true);
       const response = await createBoard(submissionData);
-      console.log('API Response:', response); // Log API response
+      //console.log('API Response:', response); // Log API response
       message.success('Board created successfully!');
     } catch (err) {
-      console.error('Error:', err); // Log error details
+      //console.error('Error:', err); // Log error details
       let errorMsg = 'Failed to create board. Please try again.';
       if (err.response && err.response.data && err.response.data.error) {
         errorMsg = err.response.data.error;

@@ -66,7 +66,7 @@ const BannerForm = () => {
  
       setSuccessMessage("Banner created successfully!");
       message.success("Banner created successfully!"); // Show success message
-      console.log("Banner response:", response); // Debugging log to verify response
+      //console.log("Banner response:", response); // Debugging log to verify response
  
       // Reset the form
       setFormData({
@@ -77,7 +77,7 @@ const BannerForm = () => {
     } catch (error) {
       setError(error.response?.data?.error || "Failed to create banner. Please try again later.");
       message.error("Failed to create banner. Please try again later."); // Show error message
-      console.error("Error creating banner:", error.response?.data || error);
+      //console.error("Error creating banner:", error.response?.data || error);
     } finally {
       setIsSubmitting(false);
       setLoading(false);

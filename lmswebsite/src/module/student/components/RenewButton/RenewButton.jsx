@@ -7,7 +7,7 @@ import { getStudentById } from '../../../../api/studentApi';
 import { useNavigate } from 'react-router-dom';
 import { razorPayKeys } from '../../../../config/razorpayConfig';
 const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
-    console.log("prpos", studentId, amount,batchId,subjectId,duration)
+    //console.log("prpos", studentId, amount,batchId,subjectId,duration)
   const navigate = useNavigate();
   const handlePayment = async () => {
     try {
@@ -33,7 +33,7 @@ const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
         image: razorPayKeys.logo, // Optional: Logo image
         order_id: order.id,
         handler: async function (response) {
-          console.log(response);
+          //console.log(response);
           // Step 3: Verify Payment on Backend
           try {
             // const verificationResponse = await axiosInstance.post('/api/payments/verify-payment', {
@@ -50,7 +50,7 @@ const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
             //   alert('Payment Verification Failed!');
             // }
           } catch (error) {
-            console.error('Payment Verification Error:', error);
+            //console.error('Payment Verification Error:', error);
             alert('Payment Verification Failed!');
           }
         },
@@ -73,7 +73,7 @@ const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
-      console.error('Error initiating payment:', error);
+      //console.error('Error initiating payment:', error);
       alert('Could not initiate payment. Please try again.');
     }
   };

@@ -4,35 +4,35 @@ import "./MeetourTeacher.css";
 function MeetOurTeacher() {
   const mentors = [
     {
-      name: "Roshan Thakur",
+      name: "Munmi Boruah",
       title: "English Teacher",
       image:
         "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
-      rating: 4.8,
-      reviews: "44k",
+      rating: 4.9,
+      reviews: "45k",
     },
     {
-      name: "Sunil Pal",
-      title: "Science Teacher",
+      name: "Anil Kumar",
+      title: "Mathemathics Teacher",
       image:
         "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
       rating: 4.8,
       reviews: "44k",
     },
     {
-      name: "Deepak Yadav",
-      title: "Maths Teacher",
+      name: "Geetam Singh",
+      title: "Mathemathics Teacher",
       image:
         "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
-      rating: 4.8,
-      reviews: "44k",
+      rating: 4.6,
+      reviews: "42k",
     },
   ];
 
   return (
     <div className="meet-our-teacher-section">
       <h2>
-        Meet our professional <span>mentors</span>
+        Meet few of our professional <span>mentors</span>
       </h2>
       <div className="mentors-container">
         {mentors.map((mentor, index) => (

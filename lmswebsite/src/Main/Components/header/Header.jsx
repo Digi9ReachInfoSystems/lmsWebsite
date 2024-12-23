@@ -57,7 +57,7 @@ const Header = ({ scrollToSection }) => {
         const fetchedBoards = await getBoards(category);
         setBoards((prev) => ({ ...prev, [category]: fetchedBoards }));
       } catch (error) {
-        console.error(`Failed to fetch boards for ${category}:`, error);
+        //console.error(`Failed to fetch boards for ${category}:`, error);
       }
     }
     setIsCoursesOpen(true);
@@ -75,7 +75,7 @@ const Header = ({ scrollToSection }) => {
         const fetchedClasses = await getClassesByBoardId(boardId);
         setClasses((prev) => ({ ...prev, [boardId]: fetchedClasses }));
       } catch (error) {
-        console.error(`Failed to fetch classes for board ${boardId}:`, error);
+        //console.error(`Failed to fetch classes for board ${boardId}:`, error);
       }
     }
   };
@@ -95,7 +95,7 @@ const Header = ({ scrollToSection }) => {
           [classId]: fetchedPackages.concat(fetchedPackages2),
         }));
       } catch (error) {
-        console.error(`Failed to fetch packages for class ${classId}:`, error);
+        //console.error(`Failed to fetch packages for class ${classId}:`, error);
       }
     }
   };

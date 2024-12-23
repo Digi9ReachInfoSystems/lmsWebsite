@@ -34,10 +34,10 @@ const QuizQuestionPage = () => {
           navigate("/student/dashboard/taskBoard");
         }
       } catch (error) {
-        console.error(
-          "Error checking if student has submitted responses:",
-          error
-        );
+        ////console.error(
+        //   "Error checking if student has submitted responses:",
+        //   error
+        // );
       }
     };
 
@@ -67,7 +67,7 @@ const QuizQuestionPage = () => {
 
     try {
       const result = await submitResponse(responseData);
-      console.log("Response submitted successfully:", result);
+      ////console.log("Response submitted successfully:", result);
 
       if (result && result.response) {
         message.success(
@@ -85,10 +85,10 @@ const QuizQuestionPage = () => {
         message.error("You have already submitted a response for this quiz.");
         navigate("/student/dashboard/taskBoard");
       } else {
-        console.error(
-          "Error submitting response:",
-          error.response?.data || error.message
-        );
+        //console.error(
+        //   "Error submitting response:",
+        //   error.response?.data || error.message
+        // );
         message.error("An error occurred while submitting your responses.");
       }
     }

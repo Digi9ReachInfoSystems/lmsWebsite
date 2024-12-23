@@ -19,7 +19,7 @@ const PaymentScreen = () => {
             try {
                 const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
                 const response = await getStudentByAuthId(authId);
-                //    console.log("response", response);
+                //    ////console.log("response", response);
                 setStudent(response.student); // Populate student details
                 setLoading(false);
             } catch (err) {
@@ -34,7 +34,7 @@ const PaymentScreen = () => {
     if (error) return <div>Error: {error.message}</div>;
 
     const handleProceedPayment = () => {
-        console.log("Payment Details:", { studentName: student.user_id.name, totalPrice: student.amount });
+        //console.log("Payment Details:", { studentName: student.user_id.name, totalPrice: student.amount });
         // Add payment logic here
         navigate("/dashboard"); // Navigate to the dashboard after proceeding
     };

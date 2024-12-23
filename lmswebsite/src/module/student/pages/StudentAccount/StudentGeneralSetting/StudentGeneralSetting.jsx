@@ -27,7 +27,8 @@ const GeneralSettings = () => {
       setUsername(DataStudent.student.user_id.email);
       setEmail(DataStudent.student.user_id.email);
       setPhone(DataStudent.student.phone_number);
-      console.log(DataStudent);
+      
+      // console.log(DataStudent);
 
       // Format the date of birth
       const dateObject = new Date(DataStudent.student.dateOfBirth);
@@ -40,7 +41,7 @@ const GeneralSettings = () => {
     apiCaller();
 
   }, []);
-  console.log("ddd", fullName);
+  ////console.log("ddd", fullName);
 
   if (loading) {
     return (

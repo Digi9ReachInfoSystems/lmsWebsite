@@ -29,7 +29,7 @@ api.interceptors.request.use(
 // api.interceptors.response.use(
 //   (response) => response,
 //   (error) => {
-//     console.error("API Error:", error.response?.data || error.message);
+//     ////console.error("API Error:", error.response?.data || error.message);
 //     return Promise.reject(error);
 //   }
 // );
@@ -61,7 +61,7 @@ api.interceptors.response.use(
         // Retry the original request with the new token
         return api(originalRequest);
       } catch (refreshError) {
-        console.error("Failed to refresh token:", refreshError);
+        ////console.error("Failed to refresh token:", refreshError);
         return Promise.reject(refreshError);
       }
     }

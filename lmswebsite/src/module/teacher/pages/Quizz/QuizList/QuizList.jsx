@@ -81,7 +81,7 @@ export default function QuizList() {
 
         const authId = sessionData.userId;
         const teacherData = await getTeacherByAuthId(authId);
-        console.log("Teacher Data:", teacherData);
+        //console.log("Teacher Data:", teacherData);
 
         if (!teacherData || !teacherData.teacher || !teacherData.teacher._id) {
           message.error("Teacher data not found.");
@@ -92,7 +92,7 @@ export default function QuizList() {
           teacher_id: teacherData.teacher._id,
           batch_id: batchId,
         });
-        console.log("Quizzes Data:", data);
+        //console.log("Quizzes Data:", data);
 
         if (data && data.quizzes) {
           setQuizzes(data.quizzes);
@@ -103,7 +103,7 @@ export default function QuizList() {
           message.warning("No quizzes found for this batch.");
         }
       } catch (err) {
-        console.error("Error fetching quizzes:", err);
+        //console.error("Error fetching quizzes:", err);
         setError("Failed to fetch quizzes. Please try again.");
       } finally {
         setLoading(false);
@@ -128,7 +128,7 @@ export default function QuizList() {
 
   // Handle form submission (onSubmit function)
   const handleFormSubmit = async (formData) => {
-    console.log("Form submitted with data: ", formData);
+    //console.log("Form submitted with data: ", formData);
 
     setLoading(true);
     setError(null);
@@ -148,7 +148,7 @@ export default function QuizList() {
         message.error("Failed to create quiz. Please try again.");
       }
     } catch (err) {
-      console.error("Error creating quiz:", err.response || err.message);
+      //console.error("Error creating quiz:", err.response || err.message);
       setError("An error occurred while creating the quiz.");
       message.error("An error occurred while creating the quiz.");
     } finally {
@@ -166,7 +166,7 @@ export default function QuizList() {
     } else {
       setFilterData(originalData); // Reset to original data if search is empty
     }
-    console.log("Filtered Data:", filterData);
+    //console.log("Filtered Data:", filterData);
   }, [searchInput, originalData]);
 
   const handleViewQuestions = (quiz) => {

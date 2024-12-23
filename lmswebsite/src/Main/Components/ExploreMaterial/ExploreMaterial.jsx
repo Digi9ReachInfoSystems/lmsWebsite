@@ -14,7 +14,7 @@ const ExploreMaterial = () => {
     const fetchClasses = async () => {
       try {
         const fetchedClasses = await getAllClasses(); // Fetch classes from API
-        console.log("Fetched Classes:", fetchedClasses);
+        //console.log("Fetched Classes:", fetchedClasses);
 
         const limitedClasses = fetchedClasses.slice(0, 5); // Limit to 5 classes
         setClasses(limitedClasses);
@@ -24,7 +24,7 @@ const ExploreMaterial = () => {
           setSelectedClass(limitedClasses[0]._id); // Use _id directly
         }
       } catch (error) {
-        console.error("Error fetching classes:", error.message);
+        //console.error("Error fetching classes:", error.message);
       }
     };
 
@@ -39,19 +39,19 @@ const ExploreMaterial = () => {
       setLoading(true);
       try {
         const mode = "normal"; // Fixed mode value; update if needed
-        console.log("Fetching packages for Class ID:", selectedClass, "Mode:", mode);
+        //console.log("Fetching packages for Class ID:", selectedClass, "Mode:", mode);
 
         const fetchedPackages = await getPackageByClassId(selectedClass, mode);
-        console.log("Fetched Packages:", fetchedPackages);
+        //console.log("Fetched Packages:", fetchedPackages);
 
         if (Array.isArray(fetchedPackages)) {
           setPackages(fetchedPackages);
         } else {
           setPackages([]);
-          console.warn("Invalid packages response format");
+          //console.warn("Invalid packages response format");
         }
       } catch (error) {
-        console.error("Error fetching packages:", error.message);
+        //console.error("Error fetching packages:", error.message);
         setPackages([]);
       } finally {
         setLoading(false);

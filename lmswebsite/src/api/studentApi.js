@@ -19,10 +19,10 @@ export const getPaymentStatusChartData = async (queryParams) => {
     // Make the GET request
     const response = await api.get(`/students/payment/statusChart?${queryParams}`);
 
-    console.log('Payment status chart data fetched successfully:', response.data);
+    ////console\.log('Payment status chart data fetched successfully:', response.data);
     return response.data; // Return the response data
   } catch (error) {
-    console.error('Error fetching payment status chart data:', error.response?.data || error.message);
+    //console.error('Error fetching payment status chart data:', error.response?.data || error.message);
     throw error; // Throw the error for further handling
   }
 };
@@ -42,7 +42,7 @@ export const getStudentById = async (studentId) => {
     return response.data;
   } catch (error) {
     // Handle and rethrow the error for calling functions
-    console.error('Error fetching student:', error);
+    //console\.error('Error fetching student:', error);
     throw error;
   }
 };
@@ -55,13 +55,13 @@ export const getAllStudents = async () => {
   try {
     // Make GET request to fetch all students
     const response = await api.get('/students');
-    console.log('All students fetched successfully:', response.data);
+    //console\.log('All students fetched successfully:', response.data);
 
     // Return the list of students
     return response.data;
   } catch (error) {
     // Handle and rethrow the error for calling functions
-    console.error('Error fetching students:', error);
+    //console\.error('Error fetching students:', error);
     throw error;
   }
 };
@@ -69,10 +69,10 @@ export const getAllStudents = async () => {
   export const getStudentscheduleById = async (studentId) => {
     try {
       const response = await api.get(`/students/student/${studentId}/schedule`);
-      console.log('Student schedule fetched successfully:', response.data);
+      //console\.log('Student schedule fetched successfully:', response.data);
       return response;
     } catch (error) {
-      console.error('Error fetching student schedule:', error);
+      //console\.error('Error fetching student schedule:', error);
       throw error;
     }
   }
@@ -85,7 +85,7 @@ export const getStudentByAuthId = async (authId) => {
     });
     return response.data; // Return the teacher data from the API response
   } catch (error) {
-    console.error('Error fetching student by auth_id:', error);
+    //console\.error('Error fetching student by auth_id:', error);
     throw error; // Re-throw error for further handling if needed
   }
 };
@@ -96,7 +96,7 @@ export const getStudentsByClassId = async (classId) => {
     const response = await api.get(`/students/class/${classId}`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching students by class ID:', error);
+    //console\.error('Error fetching students by class ID:', error);
     throw error;
   }
 };
@@ -108,7 +108,7 @@ export const getStudentsForBatchBySubjectId = async (subjectId,mode) => {
 
     return response.data;
   } catch (error) {
-    console.error('Error fetching students by Subject ID:', error);
+    //console\.error('Error fetching students by Subject ID:', error);
     throw error;
   }
 }
@@ -121,24 +121,24 @@ export const studentClockIn = async (studentId, meetingId) => {
       meetingId,
       studentId,
     });
-    console.log("clockedin", response.data);
+    //console\.log("clockedin", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error clocking in:", error.response?.data || error.message);
+    //console\.error("Error clocking in:", error.response?.data || error.message);
   }
 };
 
 export const studentClockOut = async (studentId, meetingId) => {
-  console.log("studentClockOut", studentId, meetingId);
+  //console\.log("studentClockOut", studentId, meetingId);
   try {
     const response = await api.post(`/students/clock-out`, {
       meetingId,
       studentId,
     });
-    console.log("clockedout", response.data);
+    //console\.log("clockedout", response.data);
     return response.data;
   } catch (error) {
-    console.error("Error clocking out:", error.response?.data || error.message);
+    //console\.error("Error clocking out:", error.response?.data || error.message);
   }
 };
 
@@ -148,7 +148,7 @@ export const getStudentAttendance = async (studentId) => {
     const response = await api.get(`/students/student/attendance?studentId=${studentId}`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching student attendance:", error);
+    //console\.error("Error fetching student attendance:", error);
     throw error;
   }
 };
@@ -158,7 +158,7 @@ export const getStudentsForAttendance = async () => {
     const response = await api.get(`/students/student/forattendance`);
     return response.data;
   } catch (error) {
-    console.error('Error fetching students for attendance:', error);
+    //console\.error('Error fetching students for attendance:', error);
     throw error;
   }
 };
@@ -171,7 +171,7 @@ export const updateMode = async (studentId) => {
     const response = await api.put(`/students/student/mode`,data);
     return response.data;
   } catch (error) {
-    console.error('Error updating mode:', error);
+    //console\.error('Error updating mode:', error);
     throw error;
   }
 }
@@ -179,10 +179,10 @@ export const updateMode = async (studentId) => {
 export const getStudentscheduleForSevenDaysById = async (studentId) => {
   try {
     const response = await api.get(`/students/student/${studentId}/scheduleSevenDays`);
-    console.log('Student schedule fetched successfully:', response.data);
+    //console\.log('Student schedule fetched successfully:', response.data);
     return response;
   } catch (error) {
-    console.error('Error fetching student schedule:', error);
+    //console\.error('Error fetching student schedule:', error);
     throw error;
   }
 }
@@ -190,29 +190,29 @@ export const getStudentscheduleForSevenDaysById = async (studentId) => {
 export  const updateStudent = async (studentId, studentData) => {
   try {
     const response = await api.put(`/students/update/${studentId}`, studentData);
-    console.log('Student updated successfully:', response.data);
+    //console\.log('Student updated successfully:', response.data);
     return response.data; // Return the updated student data
   } catch (error) {
-    console.error('Error updating student:', error.response?.data || error.message);
+    //console\.error('Error updating student:', error.response?.data || error.message);
     throw error; // Throw error for further handling
   }
 };
 
 export const getEligibleStudentsForBatch = async (filterData) => {
-  console.log("filterData", filterData);
+  //console\.log("filterData", filterData);
   try {
     const response = await api.post(`/students/student/eligible-student`,filterData);
     return response.data;
   } catch (error) {
-    console.error('Error fetching eligible students for batch:', error);
+    //console\.error('Error fetching eligible students for batch:', error);
     throw error;
   }
 };
 
 export const getStudentBatchStatus = async (studentId,batchId) => {
   try { 
-    console.log("inside studentId", studentId);  
-    console.log("inside batchId", batchId);
+    //console\.log("inside studentId", studentId);  
+    //console\.log("inside batchId", batchId);
     const batchData = {
       studentId: studentId,
       batchId: batchId
@@ -220,7 +220,7 @@ export const getStudentBatchStatus = async (studentId,batchId) => {
     const response = await api.post(`/students/student/batchstatus`,batchData);
     return response.data;
   } catch (error) {
-    console.error('Error fetching student batch status:', error);
+    //console\.error('Error fetching student batch status:', error);
     throw error;
   }
 };

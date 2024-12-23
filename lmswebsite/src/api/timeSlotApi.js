@@ -11,10 +11,10 @@ import api from '../config/axiosConfig';
 export const createTimeSlot = async (timeSlotData) => {
     try {
         const response = await api.post('/timeslots/create', timeSlotData);
-        console.log('Time slot created successfully:', response.data);
+        ////console.log('Time slot created successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error creating time slot:', error.response?.data || error.message);
+        //console.error('Error creating time slot:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -27,10 +27,10 @@ export const createTimeSlot = async (timeSlotData) => {
 export const getTimeSlotById = async (timeSlotId) => {
     try {
         const response = await api.get(`/timeslots/gettimeslot/${timeSlotId}`);
-        console.log('Time slot fetched successfully:', response.data);
+        //console.log('Time slot fetched successfully:', response.data);
         return response.data; // Return the time slot data
     } catch (error) {
-        console.error('Error fetching time slot:', error.response?.data || error.message);
+        //console.error('Error fetching time slot:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -53,10 +53,10 @@ export const getTimeSlotById = async (timeSlotId) => {
 export const getTimeSlots = async (query) => {
     try {
         const response = await api.get('/timeslots/gettimeslots', { params: query });
-        console.log('Time slots fetched successfully:', response.data);
+        //console.log('Time slots fetched successfully:', response.data);
         return response.data; // Return the time slots data
     } catch (error) {
-        console.error('Error fetching time slots:', error.response?.data || error.message);
+        //console.error('Error fetching time slots:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -75,10 +75,10 @@ export const getTimeSlots = async (query) => {
 export const updateTimeSlot = async (timeSlotId, timeSlotData) => {
     try {
         const response = await api.put(`/timeslots/update/${timeSlotId}`, timeSlotData);
-        console.log('Time slot updated successfully:', response.data);
+        //console.log('Time slot updated successfully:', response.data);
         return response.data; // Return the updated time slot data
     } catch (error) {
-        console.error('Error updating time slot:', error.response?.data || error.message);
+        //console.error('Error updating time slot:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -91,10 +91,10 @@ export const updateTimeSlot = async (timeSlotId, timeSlotData) => {
 export const deleteTimeSlot = async (timeSlotId) => {
     try {
         const response = await api.delete(`/timeslots/delete/${timeSlotId}`);
-        console.log('Time slot deleted successfully:', response.data);
+        //console.log('Time slot deleted successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error deleting time slot:', error.response?.data || error.message);
+        //console.error('Error deleting time slot:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };

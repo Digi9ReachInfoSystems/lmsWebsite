@@ -46,7 +46,7 @@ const Dashboard = () => {
         setPaidAmount(paidAndUnpaidResponse.paid_amount);
         setUnpaidAmount(paidAndUnpaidResponse.unpaid_amount);
         setWeeklyTeacherApplication(weeklyTeacherApplicationData); // Set the weekly teacher application data
-        // console.log(weeklyTeacherApplicationData); // Debug log
+        // //console.log(weeklyTeacherApplicationData); // Debug log
         setDashboardCards([
           {
             title: "Total students",
@@ -73,7 +73,7 @@ const Dashboard = () => {
           },
         ]);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        //console.error("Error fetching data:", error);
       }
     };
  
