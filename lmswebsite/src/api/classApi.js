@@ -26,15 +26,15 @@ export const createClass = async (responseData) => {
         // Replace imageLink with the actual download URL
         const submissionData = { ...responseData, imageLink: downloadURL };
 
-        console.log("Final submission data:", submissionData);
+        //console.log("Final submission data:", submissionData);
 
         // API POST request
         const response = await api.post('/classes/', submissionData);
-        console.log('Class created successfully:', response.data);
+        //console.log('Class created successfully:', response.data);
 
         return response.data;
     } catch (error) {
-        console.error('Error creating class:', error.response?.data || error.message);
+        //console.error('Error creating class:', error.response?.data || error.message);
         throw error;
     }
 };
@@ -43,10 +43,10 @@ export const createClass = async (responseData) => {
 export const getClassesByBoardId = async (boardId) => {
     try {
         const response = await api.get(`/classes/board/${boardId}`);
-        console.log('Fetched classes by board ID:', response.data);
+        //console.log('Fetched classes by board ID:', response.data);
         return response.data; // Return fetched classes
     } catch (error) {
-        console.error('Error fetching classes by board ID:', error.response?.data || error.message);
+        //console.error('Error fetching classes by board ID:', error.response?.data || error.message);
         throw error; // Throw error for further handling
     }
 };  
@@ -57,10 +57,10 @@ export const getClassesByBoardId = async (boardId) => {
 export const getAllClasses = async () => {
     try {
         const response = await api.get('/classes');
-        console.log('Fetched classes:', response.data);
+        //console.log('Fetched classes:', response.data);
         return response.data; // Return fetched classes
     } catch (error) {
-        console.error('Error fetching classes:', error.response?.data || error.message);
+        //console.error('Error fetching classes:', error.response?.data || error.message);
         throw error; // Throw error for further handling
     }
 };
@@ -69,10 +69,10 @@ export const getAllClasses = async () => {
 export const deleteClass = async (classID) => {
     try {
         const response = await api.delete(`/classes/${classID}`);
-        console.log(`Class with ID ${classID} deleted successfully.`);
+        //console.log(`Class with ID ${classID} deleted successfully.`);
         return response.data; // Return the response if needed
     } catch (error) {
-        console.error('Error deleting class:', error.response?.data || error.message);
+        //console.error('Error deleting class:', error.response?.data || error.message);
         throw error; // Throw error for further handling
     }
 };
@@ -90,10 +90,10 @@ export const deleteClass = async (classID) => {
 export const updateClass = async (classId, updatedData) => {
     try {
       const response = await api.put(`/classes/${classId}`, updatedData);
-      console.log(`Class with ID ${classId} updated successfully.`);
+      //console.log(`Class with ID ${classId} updated successfully.`);
       return response.data; // Return the updated class data
     } catch (error) {
-      console.error('Error updating class:', error.response?.data || error.message);
+      //console.error('Error updating class:', error.response?.data || error.message);
       throw error; // Throw error for further handling
     }
   };

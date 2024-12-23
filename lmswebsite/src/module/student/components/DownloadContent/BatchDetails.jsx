@@ -36,7 +36,7 @@ const BatchDetailsContent = () => {
 
   // Handle changes in duration
   const handleDurationChange = (value) => {
-    console.log("value", value);  
+    //console.log("value", value);  
     setEnteredDuration(value);
   };
 
@@ -46,14 +46,14 @@ const BatchDetailsContent = () => {
       try {
         const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
         const studentData = await getStudentByAuthId(authId);
-        console.log("studentData", studentData);
+        //console.log("studentData", studentData);
         const batchType = await getTypeOfBatchById(studentData.student.type_of_batch);
-        console.log("batchType", batchType);
+        //console.log("batchType", batchType);
 
         const price = batchType.price * enteredDuration; // Simple formula: basePrice * months
         setCalculatedPrice(price);
       } catch (error) {
-        console.error("Error fetching student data:", error);
+        //console.error("Error fetching student data:", error);
       }
     }
     apiCaller();
@@ -78,14 +78,14 @@ const BatchDetailsContent = () => {
       try {
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
-          console.error("User is not authenticated.");
+          //console.error("User is not authenticated.");
           throw new Error("User is not authenticated.");
         }
         const authId = sessionData.userId;
         const studentData = await getStudentByAuthId(authId);
         setStudentData(studentData.student);
         if (!studentData.student || !studentData.student._id) {
-          console.error("Student data is incomplete.");
+          //console.error("Student data is incomplete.");
           throw new Error("Student data is incomplete.");
         }
 
@@ -137,7 +137,7 @@ const BatchDetailsContent = () => {
     >
       {batches.map((batch) => {
         // We'll do a quick check
-        console.log("batch", batch);
+        //console.log("batch", batch);
         const subjectInStudent = studentdata.subject_id.find(
           (subject) => subject?.batch_id == batch._id
         );

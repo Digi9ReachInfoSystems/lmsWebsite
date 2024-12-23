@@ -82,7 +82,7 @@ export default function CustomerQuery() {
           setLoading(false);
         }
       } catch (error) {
-        console.error("Error fetching queries:", error);
+        ////console.error("Error fetching queries:", error);
       }
     }
     apiCaller();

@@ -55,27 +55,27 @@ function RescheduleMeeting() {
 
     useEffect(() => {
         const fetchSchedule = async () => {
-            console.log("meeting_id", meeting_id);
+            ////console.log("meeting_id", meeting_id);
             if (!meeting_id) return;
             try {
 
                 setLoading(true);
                 const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
                 const studentData = await getStudentByAuthId(authId);
-                console.log("studentData", studentData.student._id);
+                ////console.log("studentData", studentData.student._id);
                 // const response = await getStudentscheduleById(studentData.student._id);
                 setStudentId(studentData.student._id);
                 const batchdata = await getBatchIdByMeetingId(meeting_id);
-                console.log("batchdata", batchdata);
+                ////console.log("batchdata", batchdata);
                 setBatchId(batchdata.batch_id);
                 const teacherData = await getTeacherByMeetingId(meeting_id);
-                console.log("teacherData", teacherData);
+                ////console.log("teacherData", teacherData);
                 setTeacherName(teacherData.teachers[0].user_id.name);
                 setTeacherId(teacherData.teachers[0]._id);
                 const response = await getTeacherscheduleById(teacherData.teachers[0]._id);
-                console.log("response", response);
+                ////console.log("response", response);
                 const attendanceData = await getTeacherAttendance(teacherData.teachers[0]._id);
-                console.log("attendanceData", attendanceData);
+                ////console.log("attendanceData", attendanceData);
                 const schedule = response.data.schedule;
 
                 let formattedEvents = schedule.map((item, index) => ({
@@ -141,7 +141,7 @@ function RescheduleMeeting() {
                 setLoadData(!loadData);
             }
         } catch (error) {
-            console.error("Error clocking in:", error);
+            ////console.error("Error clocking in:", error);
         }
     };
 
@@ -160,7 +160,7 @@ function RescheduleMeeting() {
                 setLoadData(!loadData);
             }
         } catch (error) {
-            console.error("Error clocking out:", error);
+            ////console.error("Error clocking out:", error);
         }
     };
 
@@ -189,7 +189,7 @@ function RescheduleMeeting() {
                 meeting_description: description
             };
 
-            console.log("Creating meeting with payload:", meetingPayload);
+            //console.log("Creating meeting with payload:", meetingPayload);
 
             // Call the API to create the meeting
             const response = await createReschedule(meetingPayload);
@@ -198,7 +198,7 @@ function RescheduleMeeting() {
             setIsModalVisible(false);
             form.resetFields();
         } catch (err) {
-            console.error("Error creating meeting:", err);
+            //console.error("Error creating meeting:", err);
             message.error("Failed to create meeting.");
         }
     };

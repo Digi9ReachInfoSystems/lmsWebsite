@@ -21,7 +21,7 @@ const TeachersSection = () => {
         setTeachers(response.slice(0, 4)); // Get the top 3 experienced teachers
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching teachers:", err);
+        ////console.error("Error fetching teachers:", err);
         setError("Failed to load teachers data");
         setLoading(false);
       }
@@ -37,7 +37,7 @@ const TeachersSection = () => {
   if (error) {
     return <p>{error}</p>;
   }
-  console.log("teachers", teachers);  
+  //console.log("teachers", teachers);  
   return (
    
     <></>

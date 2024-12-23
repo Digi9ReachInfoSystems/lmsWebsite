@@ -4,9 +4,9 @@ import api from "../config/axiosConfig";
 export const signupUser = async ( data) => {
   try {
     
-    console.log(data);
+    //console.log(data);
     // Construct the request body
-    console.log("inside signup", data);
+    //console.log("inside signup", data);
     const requestBody = {
       role: data.role || undefined, // Optional
       access_token: data.access_token || undefined, // Optional
@@ -34,11 +34,11 @@ export const signupUser = async ( data) => {
     const response = await api.post('/auth/signup', filteredBody);
 
     // Handle successful response
-    console.log('Signup successful:', response.data);
+    //console.log('Signup successful:', response.data);
     return response.data; // Return data to the calling function
   } catch (error) {
     // Handle errors
-    console.error('Error during signup:', error.response?.data || error.message);
+    //console.error('Error during signup:', error.response?.data || error.message);
     throw error; // Throw error to handle it higher up if needed
   }
 };

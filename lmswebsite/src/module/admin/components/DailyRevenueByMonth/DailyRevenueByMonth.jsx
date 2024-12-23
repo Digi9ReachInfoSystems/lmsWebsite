@@ -23,7 +23,7 @@ const DailyRevenueByMonth = () => {
       const dailyRevenueByMonth = await getDailyRevenueByMonth(
         selectedMonth + 1
       ); // Passing correct month
-      console.log("daily", dailyRevenueByMonth);
+      //console.log("daily", dailyRevenueByMonth);
       setData(dailyRevenueByMonth);
     };
     apiCaller();

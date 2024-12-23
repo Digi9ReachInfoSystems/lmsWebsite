@@ -93,7 +93,7 @@ const items = [
   },
 ];
 const onClick = (e) => {
-  console.log('click', e);
+  //console.log('click', e);
 };
 const DynamicTieredMenu = () => (
   <Menu

@@ -27,7 +27,7 @@ export const TeacherAttendance = () => {
                 const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
                 const response = await getTeacherByAuthId(authId);
                 const attendanceData = await getTeacherAttendance(response.teacher._id);
-                console.log("Attendance Data:", attendanceData);
+                ////console\.log("Attendance Data:", attendanceData);
                 setAttendance(attendanceData.attendance);
                 setFilteredAttendance(attendanceData.attendance); // Initialize filteredAttendance with all data
             } catch (error) {
@@ -44,7 +44,7 @@ export const TeacherAttendance = () => {
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        console.log(value);
+        //console.log(value);
         if (value === '') {
             setSearchTerm(null);
             setFilteredAttendance(attendance);

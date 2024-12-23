@@ -139,13 +139,13 @@ const BlogForm = () => {
       };
   
       // Log the payload for debugging
-      console.log("Submitting Blog Post:", payload);
+      ////console.log("Submitting Blog Post:", payload);
   
       // Create the blog post via API
       const response = await createBlog(payload);
   
       // Log the response for debugging
-      console.log("API Response:", response);
+      ////console.log("API Response:", response);
   
       // Adjust the condition based on actual response
       // Example: Check different possible success indicators
@@ -173,7 +173,7 @@ const BlogForm = () => {
         message.error(errorMsg);
       }
     } catch (err) {
-      console.error("Error creating blog post:", err);
+      ////console.error("Error creating blog post:", err);
       setError("An unexpected error occurred. Please try again.");
       message.error("An unexpected error occurred. Please try again.");
     } finally {

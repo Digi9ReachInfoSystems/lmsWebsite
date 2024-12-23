@@ -26,11 +26,11 @@ const StudentAccountSettings = () => {
   const [phone, setPhone] = useState("7837292020");
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log("hello2"); 
+    ////console.log("hello2"); 
     const apiCaller=async() => {
       const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
       const DataStudent= await getStudentByAuthId(authId);
-      console.log(DataStudent);
+      //console.log(DataStudent);
       setFirstName(DataStudent.student.user_id.name);
       setUsername(DataStudent.student.user_id.email);
       setEmail(DataStudent.student.user_id.email);

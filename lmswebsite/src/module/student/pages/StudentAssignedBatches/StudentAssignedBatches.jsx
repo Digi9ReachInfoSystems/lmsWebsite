@@ -35,7 +35,7 @@ export default function StudentAssignedBatches() {
 
         const authId = sessionData.userId;
         const studentData = await getStudentByAuthId(authId);
-        console.log("Student Data:", studentData);
+        ////console.log("Student Data:", studentData);
 
         if (!studentData.student || !studentData.student._id) {
           throw new Error("Student data is incomplete.");
@@ -47,11 +47,11 @@ export default function StudentAssignedBatches() {
         setBatches(fetchedBatches);
         setOriginalData(fetchedBatches);
         setFilterData(fetchedBatches);
-        console.log("Fetched Batches:", fetchedBatches);
+        //console.log("Fetched Batches:", fetchedBatches);
         setLoading(false);
       } catch (err) {
         setBatches(null);
-        console.error("Error fetching batches:", err);
+        //console.error("Error fetching batches:", err);
         // setError(err.message || 'Failed to fetch batches');
         setLoading(false);
       }

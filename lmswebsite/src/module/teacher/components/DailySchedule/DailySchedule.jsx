@@ -23,7 +23,7 @@ export default function DailySchedule() {
   const [error, setError] = useState(null);
 
   const isSameDay = (date1, date2) => {
-    console.log("date1", date1, "date2", date2);
+    //console.log("date1", date1, "date2", date2);
     // Check if year, month, and day are the same for both dates
     return (
       date1.getFullYear() === date2.getFullYear() &&

@@ -12,10 +12,10 @@ import api from '../config/axiosConfig';
 export const createFeedback = async (feedbackData) => {
     try {
         const response = await api.post('/feedback/createfeedback', feedbackData);
-        console.log('Feedback submitted successfully:', response.data);
+        //console.log('Feedback submitted successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error submitting feedback:', error.response?.data || error.message);
+        //console.error('Error submitting feedback:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -27,10 +27,10 @@ export const createFeedback = async (feedbackData) => {
 export const getAllFeedback = async () => {
     try {
         const response = await api.get('/feedback/');
-        console.log('Feedback fetched successfully:', response.data);
+        //console.log('Feedback fetched successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching feedback:', error.response?.data || error.message);
+        //console.error('Error fetching feedback:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -43,10 +43,10 @@ export const getAllFeedback = async () => {
 export const getFeedbackById = async (feedbackId) => {
     try {
         const response = await api.get(`/feedback/${feedbackId}`);
-        console.log('Feedback fetched successfully:', response.data);
+        //console.log('Feedback fetched successfully:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching feedback:', error.response?.data || error.message);
+        //console.error('Error fetching feedback:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -59,10 +59,10 @@ export const getFeedbackById = async (feedbackId) => {
 export const getFeedbackByBatchId = async (batchId) => {
     try {
         const response = await api.get(`/feedback/batch/${batchId}`);
-        console.log('Feedback fetched successfully for batch:', response.data);
+        //console.log('Feedback fetched successfully for batch:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching feedback by batch ID:', error.response?.data || error.message);
+        //console.error('Error fetching feedback by batch ID:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };
@@ -75,10 +75,10 @@ export const getFeedbackByBatchId = async (batchId) => {
 export const getFeedbackByTeacherId = async (teacherId) => {
     try {
         const response = await api.get(`/feedback/teacher/${teacherId}`);
-        console.log('Feedback fetched successfully for teacher:', response.data);
+        //console.log('Feedback fetched successfully for teacher:', response.data);
         return response.data; // Return the response data
     } catch (error) {
-        console.error('Error fetching feedback by teacher ID:', error.response?.data || error.message);
+        //console.error('Error fetching feedback by teacher ID:', error.response?.data || error.message);
         throw error; // Throw the error for further handling
     }
 };

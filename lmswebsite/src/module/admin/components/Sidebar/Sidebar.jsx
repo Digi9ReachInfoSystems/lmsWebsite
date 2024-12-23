@@ -127,7 +127,7 @@ const Sidebar = () => {
         // Navigate to login page or home page
         navigate("/");
       } catch (error) {
-        console.error("Logout failed:", error);
+        //console.error("Logout failed:", error);
         // Optionally, show an error message to the user
       }
     }

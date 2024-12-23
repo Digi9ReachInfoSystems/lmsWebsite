@@ -12,7 +12,7 @@ const ContactForms = () => {
     const fetchQueries = async () => {
       try {
         const data = await getAllQuerys(); // Fetch all queries from the API
-        console.log("Fetched Queries:", data.queries); // Debug log
+        //console.log("Fetched Queries:", data.queries); // Debug log
 
         // Filter out only the unsolved queries (querySolved = false) and limit to 4
         const unsolvedQueries = data.queries
@@ -22,7 +22,7 @@ const ContactForms = () => {
         setQueries(unsolvedQueries || []); // Set the filtered queries in state
         setLoading(false);
       } catch (err) {
-        console.error("Error fetching queries:", err);
+        //console.error("Error fetching queries:", err);
         setError("Failed to load queries");
         setLoading(false);
       }

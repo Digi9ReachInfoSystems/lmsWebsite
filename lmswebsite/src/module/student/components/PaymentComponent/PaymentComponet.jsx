@@ -29,7 +29,7 @@ const PaymentComponent = ({ studentId, amount }) => {
         image: razorPayKeys.logo, // Optional: Logo image
         order_id: order.id,
         handler: async function (response) {
-          console.log(response);
+          ////console.log(response);
           // Step 3: Verify Payment on Backend
           try {
             // const verificationResponse = await axiosInstance.post('/api/payments/verify-payment', {
@@ -46,7 +46,7 @@ const PaymentComponent = ({ studentId, amount }) => {
             //   alert('Payment Verification Failed!');
             // }
           } catch (error) {
-            console.error('Payment Verification Error:', error);
+            //console.error('Payment Verification Error:', error);
             alert('Payment Verification Failed!');
           }
         },
@@ -66,7 +66,7 @@ const PaymentComponent = ({ studentId, amount }) => {
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {
-      console.error('Error initiating payment:', error);
+      //console.error('Error initiating payment:', error);
       alert('Could not initiate payment. Please try again.');
     }
   };

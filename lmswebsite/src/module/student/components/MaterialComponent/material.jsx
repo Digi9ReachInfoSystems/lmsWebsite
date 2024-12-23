@@ -22,17 +22,17 @@ const ActivePackage = () => {
 
   useEffect(() => {
     const fetchStudentId = async () => {
-      console.log("Fetching student ID...");
+      //console.log("Fetching student ID...");
       try {
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
-          console.error("User is not authenticated.");
+          //console.error("User is not authenticated.");
           throw new Error("User is not authenticated.");
         }
         const authId = sessionData.userId;
         const studentData = await getStudentByAuthId(authId);
         if (!studentData.student || !studentData.student._id) {
-          console.error("Student data is incomplete.");
+          //console.error("Student data is incomplete.");
           throw new Error("Student data is incomplete.");
         }
         setStudentId(studentData.student._id);
@@ -48,19 +48,19 @@ const ActivePackage = () => {
   useEffect(() => {
     const fetchAttendance = async () => {
 
-      console.log("Fetching attendance for student ID:", studentId);
+      //console.log("Fetching attendance for student ID:", studentId);
       try {
         if (studentId) {
           const attendanceData = await getStudentAttendance(studentId);
-          console.log("Received attendance data:", attendanceData);
+          //console.log("Received attendance data:", attendanceData);
 
           setAttendance(attendanceData);
 
           // Set the classesAttended from the response
           if (attendanceData.classesAttended !== undefined && attendanceData.classesAttended !== null) {
-           console.log("classesAttended", attendanceData.classesAttended);
+           //console.log("classesAttended", attendanceData.classesAttended);
             setClassesAttended(attendanceData.classesAttended);
-            console.log("Classes attended:", attendanceData.classesAttended);
+            //console.log("Classes attended:", attendanceData.classesAttended);
           }
 
           // Optionally, calculate progress percentage based on attended classes
