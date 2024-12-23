@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { UploadOutlined, WindowsFilled } from "@ant-design/icons";
 import { Input, Select, Button, Upload, Form, message } from "antd";
-import Header from "../../components/Header/Header";
-import studentApplicationImage from "../../../../assets/SignUpImage.png";
-
+// import Header from "../../components/Header/Header";
+// import studentApplicationImage from "../../../../assets/SignUpImage.png";
+import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import {
   ApplicationContainer,
-  ApplicationImage,
-  TeacherFormImage,
+  // ApplicationImage,
+  // TeacherFormImage,
   ApplicationDetails,
   UploadButton,
   StyledRow,
@@ -34,6 +34,7 @@ import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
 import { getAllTypeOfBatches } from "../../../../api/typeOfBatchApi";
 import { set } from "lodash";
+import Footer from "../../../../Main/Pages/Footer/Footer";
 
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
@@ -173,17 +174,19 @@ export const StudentLandingPage = () => {
 
       {studentDataForm ? (
         <>
-          <Header />
+          <HeaderSection />
           {/* studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" */}
           {(studentDataForm.student.custom_package_status === "no_package" || studentDataForm.student.custom_package_status === "expired") ? (
             <ApplicationContainer>
-              <ApplicationImage>
+              {/* <ApplicationImage>
                 <TeacherFormImage
                   src={studentApplicationImage}
                   alt="teacherFormImage"
                 />
-              </ApplicationImage>
+
+              </ApplicationImage> */}
               <ApplicationDetails>
+                <div className="studentApplicationDetails">
                 <h2>Create your own package!</h2>
                 <p>Add subjects of your choice to enroll..!</p>
 
@@ -191,62 +194,49 @@ export const StudentLandingPage = () => {
                   {/* Row 1: Name, Email, Phone */}
                   <StyledRow>
                     <StyledCol>
-                      <Form.Item label="Name" name="name">
+                      <Form.Item label="Name" name="name" style={{ padding:"5px", display:"flex",color:"#bdc9d3",  marginRight:"30px"}}>
                         {/* <Input value={studentDataForm.student.user_id.name} readOnly /> */}
                         {studentDataForm.student.user_id.name}
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item label="Email" name="email">
+                    <Form.Item label="Email" name="email" style={{ padding:"5px", color:"#bdc9d3", display:"flex", marginRight:"30px"}}>
                         {/* <Input value={studentDataForm.student.user_id.email} readOnly /> */}
                         {studentDataForm.student.user_id.email}
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item label="Phone" name="phone">
+                    <Form.Item label="Phone" name="phone" style={{ padding:"5px",color:"#bdc9d3", display:"flex", marginRight:"30px"}}>
                         {/* <Input value={studentDataForm.student.phone_number} readOnly /> */}
                         {studentDataForm.student.phone_number}
                       </Form.Item>
                     </StyledCol>
                   </StyledRow>
 
-                  {/* Row 2: Available Slots */}
-                  {/* <StyledRow>
-                    <StyledCol>
-                      <Form.Item label="Available Slots">
-                        <AvailableSlotsContainer>
-                          {availableSlots.map((slot, index) => (
-                            <Slot
-                              key={index}
-                              onClick={() => {
-                                setSelectedSlot(slot);
-                                setSlot(slot);
-                              }}
-                              isSelected={slot === selectedSlot}
-                            >
-                              {slot}
-                            </Slot>
-                          ))}
-                        </AvailableSlotsContainer>
-                      </Form.Item>
-                    </StyledCol>
-                  </StyledRow> */}
 
                   {/* Row 3: Course, Standard, Board */}
                   <StyledRow>
+
                     <StyledCol>
-                      <Form.Item label="Selected Board" name="board">
+                    <Form.Item label="Selected Gender" name="gender" style={{ padding:"5px", color:"#bdc9d3", display:"flex", marginRight:"30px"}}>
+                        {/* <Input value={studentDataForm.student.type_of_batch} readOnly /> */}
+                        {studentDataForm.student.gender}
+                      </Form.Item>
+                    </StyledCol>
+                    <StyledCol>
+                    <Form.Item label="Selected Board" name="board" style={{ padding:"5px", color:"#bdc9d3", display:"flex",marginRight:"30px"}}>
                         {/* <Input value={studentDataForm.student.board_id.name} readOnly /> */}
 
                         {studentDataForm.student.board_id?.name}
                       </Form.Item>
                     </StyledCol>
                     <StyledCol>
-                      <Form.Item label="Selected Class" name="class">
+                    <Form.Item label="Selected Class" name="class" style={{ padding:"5px", color:"#bdc9d3", display:"flex", marginRight:"30px",}}>
                         {/* <Input value={studentDataForm.student.class.classLevel} readOnly /> */}
                         {studentDataForm.student.class.classLevel}
                       </Form.Item>
                     </StyledCol>
+                  </StyledRow>
                     <StyledCol>
                       <Form.Item
                         label="Select Subjects (Minimum 3) "
@@ -285,6 +275,8 @@ export const StudentLandingPage = () => {
                     </StyledCol>
                     <StyledCol>
                       <Form.Item
+
+                      style={{paddingBottom:"20px"}}
                         label="Select Batch "
                         name="type_of_batch"
                         rules={[
@@ -312,7 +304,7 @@ export const StudentLandingPage = () => {
 
                       </Form.Item>
                     </StyledCol>
-                  </StyledRow>
+                  {/* </StyledRow> */}
 
                   {/* Submit Button */}
                   <StyledRow style={{ justifyContent: "flex-end" }}>
@@ -322,8 +314,12 @@ export const StudentLandingPage = () => {
                           type="primary"
                           htmlType="submit"
                           style={{
-                            background:
-                              "linear-gradient(90deg, #E82C86 0%, #82194B 100%)",
+                            background:"purple",
+                            display:"flex",
+// marginTop:"20px",
+                            flexDirection:"row",
+                            justifyContent:"center",
+                            margin:"auto",
                             borderColor: "#82194B",
                           }}
                         >
@@ -333,6 +329,7 @@ export const StudentLandingPage = () => {
                     </StyledCol>
                   </StyledRow>
                 </Form>
+                </div>
               </ApplicationDetails>
             </ApplicationContainer>
           ) : studentDataForm.student.custom_package_status === "pending" ? (
@@ -348,21 +345,7 @@ export const StudentLandingPage = () => {
           )
           }
 
-          {/* {studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired" && ( */}
-          {/* {(studentDataForm.student.custom_package_status == "no_package"||studentDataForm.student.custom_package_status == "expired") &&(
-            <>
-              <GotoOneToOne />
-              <StudentExistingPackages
-                data={packagesData}
-                studentId={studentDataForm.student._id}
-              />
-            </>
-          )} */}
-
-          <StudentEnrollmentVideoView />
-          <TeachersSection />
-          <StudentEnrollmentReviews />
-          <Footer2 />
+       
         </>
       ) : (
         <LoadingPage />

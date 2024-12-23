@@ -268,7 +268,7 @@ export const TeacherApplicationFormReviewWrap = styled.div`
 
     #TeacherApplicationFormReview-TeacherApprove {
       background-color: ${theme.colors.success};
-      color: ${theme.colors.blue};
+      color: ${theme.colors.gray700};
       &:hover {
         background-color: ${theme.colors.successDark};
       }

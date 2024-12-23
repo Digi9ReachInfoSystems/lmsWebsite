@@ -90,7 +90,7 @@ const Login = () => {
 
       <LoginFormContainer>
         <Title>Welcome Back 👋 </Title>
-        <SubTitle>Please sign-in to your account and start learning </SubTitle>
+        <SubTitle>Please Sign in to your account and start learning </SubTitle>
         <Form className="login-textfields" onFinish={handleLogin}>
           <p className="caption">EMAIL</p>
           <Form.Item

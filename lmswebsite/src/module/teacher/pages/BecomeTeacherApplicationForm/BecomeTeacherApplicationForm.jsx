@@ -143,7 +143,8 @@ const BecomeTeacherApplicationForm = () => {
 
       message.success("Application submitted successfully!");
       // Redirect or reload as needed
-      navigate("/teacher");
+      // navigate("/teacher");
+      form.resetFields();
     } catch (error) {
       message.error("Failed to submit the application. Please try again.");
       console.error(

@@ -112,6 +112,7 @@ function HeaderSection() {
         refreshToken: profileData.user.refresh_token,
         name: profileData.user.name,
         loggedIn: "true",
+        role: profileData.user.role,
       };
 
       localStorage.setItem("sessionData", JSON.stringify(sessionData));

@@ -274,7 +274,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           type="primary"
           onClick={handleViewResume}
           className="view-resume-btn"
-          style={{ marginBottom: '20px' }}
+          style={{ marginBottom: '20px', backgroundColor:"purple"}}
         >
           View Resume
         </Button>
@@ -351,7 +351,8 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={false}>
+            <Button type="primary" htmlType="submit" loading={false} 
+            style={{backgroundColor:"pink"}}>
               Approve
             </Button>
           </Form.Item>
