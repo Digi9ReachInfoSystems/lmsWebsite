@@ -16,8 +16,8 @@ function Footer() {
         <div className="footer-column">
           <h3>About Us</h3>
           <ul>
-            <li>Our Academy</li>
-            <li>Become a Teacher</li>
+            <li><Link to="/Our-Academy">Our Academy</Link> </li>
+            <li><Link to="/teacher">Become A Teacher </Link></li>
             <li>Careers</li>
           </ul>
         </div>
