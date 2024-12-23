@@ -532,7 +532,7 @@ function HeaderSection() {
               textAlign: "center",
             }}
           >
-            Login
+            Login as a Student/Teacher
           </Typography>
 
           <Form onFinish={handleLogin}>
