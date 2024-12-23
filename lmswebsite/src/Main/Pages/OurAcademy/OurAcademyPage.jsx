@@ -1,6 +1,6 @@
 import React from "react";
 import "./OurAcademy.css";
-import OurAcademylogo from "../../../../src/Main/assets/OurAcadamylogo.svg";
+import OurAcademylogo from "../../../../src/assets/finaledit.png";
 import HeaderSection from "../NavBar/navbar";
 
 const OurAcademyPage = () => {
