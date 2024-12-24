@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Container,
   Title,
@@ -11,19 +11,21 @@ import Header from "../../Main/Pages/NavBar/navbar";
 import Footer from "../../Main/Pages/Footer/Footer";
 
 const DisclaimerPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Header />
-        <DisclaimerHeader>
-          <Title>Disclaimer Policy</Title>
-          <Paragraph style={{ textAlign: "center" }}>
-            We try to keep the Website (hereinafter referred to as “Platform”)
-            up and running and free of annoyances. But we make no promises that
-            we will succeed.
-          </Paragraph>
-        </DisclaimerHeader>
+      <DisclaimerHeader>
+        <Title>Disclaimer Policy</Title>
+        <Paragraph style={{ textAlign: "center" }}>
+          We try to keep the Website (hereinafter referred to as “Platform”) up
+          and running and free of annoyances. But we make no promises that we
+          will succeed.
+        </Paragraph>
+      </DisclaimerHeader>
       <Container>
-
         <Paragraph style={{ fontSize: "30px", fontWeight: "bold" }}>
           Here's a refined version of your point for use in a professional
           disclaimer:

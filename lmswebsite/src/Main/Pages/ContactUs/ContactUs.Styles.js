@@ -33,7 +33,7 @@ export const ContactForm = styled.div`
 
   .ContactButton {
     width: 100%;
-    background: #00c897;
+    background: #6a11cb;
     color: #fff;
     border: none;
 
@@ -47,7 +47,7 @@ export const ContactForm = styled.div`
   :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined:not(
       :disabled
     ):not(.ant-btn-disabled):hover {
-    background: #01edb2;
+    background: #6a11cb;
     color: #fff;
   }
 
@@ -100,7 +100,7 @@ export const ContactInfo = styled.div`
   margin-top: 20px;
   flex-direction: row;
   // background: ${theme.colors.white};
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     flex-direction: column;
   }
 `;

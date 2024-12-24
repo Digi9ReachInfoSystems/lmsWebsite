@@ -23,27 +23,29 @@ const ContactUs = () => {
   const contactItems = [
     {
       id: "info",
-      label: "Company info",
-      detail: "XYZ",
+      label: "Roy Career Solutions",
+      Link: "https://roycareersolutions.com/",
+      // detail: "XYZ",
       icon: IoInformationCircleOutline,
     },
-    {
-      id: "text",
-      label: "Text us",
-      detail: "310-803-5878",
-      icon: FiMessageSquare,
-    },
-    { id: "call", label: "Call us", detail: "866-765-2327", icon: FiPhoneCall },
+    // {
+    //   id: "text",
+    //   label: "Text us",
+    //   detail: "310-803-5878",
+    //   icon: FiMessageSquare,
+    // },
+    // { id: "call", label: "Call us", detail: "866-765-2327", icon: FiPhoneCall },
     {
       id: "message",
       label: "Message us",
       detail: "Facebook Message",
+      Link: "https://www.facebook.com/people/The-Topper-Academy/61567845897039/",
       icon: LiaFacebookMessenger,
     },
     {
       id: "email",
       label: "Email us",
-      detail: "XYZ@gmail.com",
+      detail: "info@thetopperacademy.com",
       icon: FaRegEnvelope,
     },
   ];
@@ -58,7 +60,7 @@ const ContactUs = () => {
         contactEmail: values.email,
         contactNumber: values.number,
         message: values.message,
-      }
+      };
       // Call the API to create the query
       const response = await createQuery(submissionData);
 
@@ -141,10 +143,7 @@ const ContactUs = () => {
 
               {/* Submit Button */}
               <Form.Item>
-                <Button
-                  htmlType="submit"
-                  className="ContactButton"
-                >
+                <Button htmlType="submit" className="ContactButton">
                   Submit
                 </Button>
               </Form.Item>
@@ -159,9 +158,11 @@ const ContactUs = () => {
       </ContactUsWarp>
 
       <ContactInfo>
-        {contactItems.map(({ id, label, detail, icon: Icon }) => (
+        {contactItems.map(({ id, label, detail, icon: Icon, Link }) => (
           <ContactItem key={id}>
-            <Icon className="contact-icon" title={label} />
+            <a href={Link} target="_blank" rel="noopener noreferrer">
+              <Icon className="contact-icon" title={label} />
+            </a>
             <p>
               {label}
               <br />

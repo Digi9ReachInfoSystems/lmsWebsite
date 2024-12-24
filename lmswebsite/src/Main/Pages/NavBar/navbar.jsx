@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -74,6 +74,19 @@ function HeaderSection() {
       }
     }
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsCoursesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleBoardMouseEnter = async (boardId) => {
     setHoveredBoardId(boardId);
@@ -190,7 +203,8 @@ function HeaderSection() {
           {/* Courses Dropdown Trigger */}
           <Box sx={{ position: "relative" }}>
             <Box
-              onClick={handleDropdownToggle}
+              onMouseEnter={handleDropdownToggle}
+              // onMouseLeave={handleDropdownToggle}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -318,7 +332,7 @@ function HeaderSection() {
           </Box>
 
           {/* Other Navigation Links */}
-          <Link
+          <Button
             onClick={() => navigate("/Our-Academy")}
             underline="none"
             sx={{
@@ -328,8 +342,8 @@ function HeaderSection() {
             }}
           >
             Our Academy
-          </Link>
-          <Link
+          </Button>
+          <Button
             onClick={() => navigate("/blogs")}
             underline="none"
             sx={{
@@ -339,8 +353,8 @@ function HeaderSection() {
             }}
           >
             Blogs
-          </Link>
-          <Link
+          </Button>
+          <Button
             href="#"
             underline="none"
             sx={{
@@ -350,8 +364,8 @@ function HeaderSection() {
             }}
           >
             Testimonials
-          </Link>
-          <Link
+          </Button>
+          <Button
             onClick={() => navigate("/ContactUs")}
             underline="none"
             sx={{
@@ -361,7 +375,7 @@ function HeaderSection() {
             }}
           >
             Contact Us
-          </Link>
+          </Button>
         </Box>
 
         {/* Right Section: Action Buttons + Hamburger (Mobile) */}
