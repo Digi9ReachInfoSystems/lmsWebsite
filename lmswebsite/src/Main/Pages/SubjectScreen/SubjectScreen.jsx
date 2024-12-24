@@ -110,7 +110,7 @@ function SubjectScreen() {
                 <h4>{subject.subject_name}</h4>
               </div>
             ))}
-            <div
+            {/* <div
               className="skill-card custom-subject-card"
               onClick={handleCreateCustomSubject}
             >
@@ -124,7 +124,7 @@ function SubjectScreen() {
               <h4>Make Your Own Combo
                 
               </h4>
-            </div>
+            </div> */}
           </div>
         )}
 

@@ -7,15 +7,15 @@ function MeetOurTeacher() {
       name: "Munmi Boruah",
       title: "English Teacher",
       image:
-        "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
-      rating: 4.9,
-      reviews: "45k",
+        "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/pngtree-beauty-teacher-beauty-teacher-beautiful-female-teacher-teachers-day-png-image_493410-removebg-preview.png?alt=media&token=e25d7202-3230-4139-8c99-32bf2cc9c157",
+      rating: 4.8,
+      reviews: "44k",
     },
     {
       name: "Anil Kumar",
       title: "Mathemathics Teacher",
       image:
-        "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
+        "https://img.freepik.com/premium-vector/education-material-icon-vector-illustration_1287271-8064.jpg?semt=ais_hybrid", // Replace with the correct image path
       rating: 4.8,
       reviews: "44k",
     },
@@ -23,9 +23,9 @@ function MeetOurTeacher() {
       name: "Geetam Singh",
       title: "Mathemathics Teacher",
       image:
-        "https://thumbs.dreamstime.com/b/young-man-teacher-teaching-lesson-front-classroom-books-college-class-university-teacher-teach-man-teacher-teaching-320751793.jpg", // Replace with the correct image path
-      rating: 4.6,
-      reviews: "42k",
+        "https://img.freepik.com/premium-vector/education-material-icon-vector-illustration_1287271-8064.jpg?semt=ais_hybrid", // Replace with the correct image path
+      rating: 4.8,
+      reviews: "44k",
     },
   ];
 

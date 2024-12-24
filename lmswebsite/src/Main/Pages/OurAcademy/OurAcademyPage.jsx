@@ -1,6 +1,6 @@
 import React from "react";
 import "./OurAcademy.css";
-import OurAcademylogo from "../../../../src/Main/assets/OurAcadamylogo.svg";
+import OurAcademylogo from "../../../../src/assets/finaledit.png";
 import HeaderSection from "../NavBar/navbar";
 
 const OurAcademyPage = () => {
@@ -12,10 +12,10 @@ const OurAcademyPage = () => {
           <img src={OurAcademylogo} alt="" />
         </div>
         <div className="academy-content">
-          <h1 className="academy-title">
+          {/* <h1 className="academy-title">
             The Topper Academy:{" "}
             <span className="academy-highlight">Unlock Your Future!</span>{" "}
-          </h1>
+          </h1> */}
           <div style={{ display: "flex" }}>
             <span className="academy-line"></span>
             <p className="academy-description">

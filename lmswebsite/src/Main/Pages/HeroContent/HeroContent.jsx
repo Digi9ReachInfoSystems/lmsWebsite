@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
-import Typewriter from "react-typewriter-effect";
 import StatsCard from "./Statscard";
 import GroupIcon from "@mui/icons-material/Groups";
 import { useNavigate } from "react-router-dom";
 
 function HeroContent() {
   const navigate = useNavigate();
+  const isMobile = window.innerWidth <= 768; // Define mobile breakpoint
 
   return (
     <Box
@@ -14,7 +14,6 @@ function HeroContent() {
         position: "relative",
         minHeight: "100vh",
         background: "linear-gradient(270deg, #fff 0%, #fdf2f8 100%)",
-        // overflow: "hidden",
         display: "flex",
         flexDirection: { xs: "column", md: "row" },
         alignItems: "flex-start",
@@ -67,28 +66,84 @@ function HeroContent() {
           <path
             fill="#fff"
             d="M0,256L80,229.3C160,203,320,149,480,160C640,171,800,245,960,240C1120,235,1280,149,1360,106.7L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-          ></path>
+          />
         </svg>
       </Box>
 
       {/* Floating Bubbles */}
       {[1, 2, 3, 4].map((_, index) => (
         <Box
-          key={index}
+          key={`bubble-${index}`}
           sx={{
             position: "absolute",
             width: `${40 + index * 10}px`,
             height: `${40 + index * 10}px`,
-            borderRadius: "50%",
+            borderRadius: "50%", // Circle
             backgroundColor: ["#26D07C", "#FFB677", "#9EA8FF", "#00C897"][
               index
             ],
             top: `${10 + index * 20}%`,
-            left: index % 6 === 0 ? `${10 + index * 5}%` : "auto",
+            left: index % 6 === 0 ? `${20 + index * 20}%` : "auto",
             right: index % 2 !== 0 ? `${5 + index * 5}%` : "auto",
-            animation: `floatAnimation ${4 + index}s infinite ease-in-out`,
+            animation: `floatAnimation ${44 + index}s infinite ease-in-out`,
+            boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
+            zIndex: -5,
+            transition: "transform 0.3s ease, background-color 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.2)", // Increase size
+              backgroundColor: "#FF4081", // Change color
+            },
+          }}
+        />
+      ))}
+
+      {/* Add Squares */}
+      {[1, 2].map((_, index) => (
+        <Box
+          key={`square-${index}`}
+          sx={{
+            position: "absolute",
+            width: `${30 + index * 20}px`,
+            height: `${30 + index * 20}px`,
+            backgroundColor: ["#F29E4C", "#A8DADC"][index],
+            top: `${15 + index * 25}%`,
+            left: index % 2 === 0 ? `${85 + index * 10}%` : "auto",
+            right: index % 2 !== 0 ? `${35 + index * 10}%` : "auto",
+            transform: `rotate(${index * 15}deg)`,
+            animation: `floatAnimation ${5 + index}s infinite ease-in-out`,
             boxShadow: "0 15px 30px rgba(0, 0, 0, 0.2)",
             zIndex: 0,
+            transition: "transform 0.3s ease, rotate 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.2) rotate(15deg)", // Scale and rotate on hover
+              backgroundColor: "#FF5733", // Change color
+            },
+          }}
+        />
+      ))}
+
+      {/* Add Triangles */}
+      {[1, 2].map((_, index) => (
+        <Box
+          key={`triangle-${index}`}
+          sx={{
+            position: "absolute",
+            width: 0,
+            height: 0,
+            borderLeft: `${20 + index * 10}px solid transparent`,
+            borderRight: `${20 + index * 10}px solid transparent`,
+            borderBottom: `${30 + index * 10}px solid #A8DADC`,
+            top: `${5 + index * 20}%`,
+            left: index % 2 === 0 ? `${68 + index * 10}%` : "auto",
+            right: index % 2 !== 0 ? `${75 + index * 10}%` : "auto",
+            transform: `rotate(${index * 30}deg)`,
+            animation: `floatAnimation ${6 + index}s infinite ease-in-out`,
+            zIndex: 0,
+            transition: "transform 0.3s ease, border-bottom-color 0.3s ease",
+            "&:hover": {
+              transform: "scale(1.2) rotate(-15deg)", // Scale and rotate in opposite direction
+              borderBottomColor: "#FFC300", // Change color
+            },
           }}
         />
       ))}
@@ -107,20 +162,19 @@ function HeroContent() {
           variant="h3"
           sx={{
             fontWeight: "bold",
-            fontSize: { xs: "2rem", md: "3rem" },
+            fontSize: { xs: "3rem", md: "5rem" },
             marginBottom: "1rem",
             fontFamily: "Nunito, sans-serif",
             color: "#333",
           }}
         >
-          {/* Best Platform For Online <br />
-          Learning */}
-          Achieve more with expert online coaching
+          Achieve more with expert Online <br />
+          Coaching
         </Typography>
         <Typography
           variant="body1"
           sx={{
-            fontSize: { xs: "1rem", md: "1.2rem" },
+            fontSize: { xs: "1.5rem", md: "1.8rem" },
             color: "#6c757d",
             fontFamily: "Nunito, sans-serif",
             marginBottom: "2rem",
@@ -151,80 +205,72 @@ function HeroContent() {
           </Button>
         </Box>
 
-        {/* Stats Cards (Hide on mobile) */}
-        <StatsCard
-          title="Total Students"
-          value="15K"
-          icon={<GroupIcon sx={{ color: "#fff" }} />}
-          bgColor="#6A11CB"
-          position={{
-            top: "8%",
-            left: "25%",
-            "@media(max-width:576px)": { top: "50%" },
-          }}
-          sx={{
-            display: { xs: "none", md: "block" },
-          }}
-        />
-        <StatsCard
-          title="Active Mentors"
-          value="500+"
-          icon={<GroupIcon sx={{ color: "#fff" }} />}
-          bgColor="#00C897"
-          position={{
-            top: "40%",
-            right: "5%",
-            "@media(max-width:576px)": { top: "46%" },
-          }}
-          sx={{
-            display: { xs: "none", md: "block" },
-          }}
-        />
-        <StatsCard
-          title="Total Classes"
-          value="8K+"
-          icon={<GroupIcon sx={{ color: "#fff" }} />}
-          bgColor="#FFB677"
-          position={{ bottom: "35%", left: "15%" }}
-          sx={{
-            display: { xs: "none", md: "block" },
-          }}
-        />
-        <StatsCard
-          title="Subjects Offered"
-          value="100+"
-          icon={<GroupIcon sx={{ color: "#fff" }} />}
-          bgColor="#FF4081"
-          position={{ bottom: "20%", right: "35%" }}
-          sx={{
-            display: { xs: "none", md: "block" },
-          }}
-        />
+        {/* Stats Cards (Conditional Rendering) */}
+        {!isMobile && ( // Only render if not on mobile
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              marginTop: "2rem",
+            }}
+          >
+            {/* <StatsCard
+              title="Total Students"
+              value="15K"
+              icon={<GroupIcon sx={{ color: "#fff" }} />}
+              bgColor="#6A11CB"
+            />
+            <StatsCard
+              title="Active Mentors"
+              value="500+"
+              icon={<GroupIcon sx={{ color: "#fff" }} />}
+              bgColor="#00C897"
+            />
+            <StatsCard
+              title="Total Classes"
+              value="8K+"
+              icon={<GroupIcon sx={{ color: "#fff" }} />}
+              bgColor="#FFB677"
+            />
+            <StatsCard
+              title="Subjects Offered"
+              value="100+"
+              icon={<GroupIcon sx={{ color: "#fff" }} />}
+              bgColor="#FF4081"
+            /> */}
+          </Box>
+        )}
       </Box>
 
       {/* Right Mockup */}
       <Box
+        component="img"
+        src="https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/giphy%20(1).gif?alt=media&token=ece39431-b303-495d-9ee1-cb477ea5d4c4"
+        alt="Mockup"
         sx={{
-          flex: "1",
-          position: "relative",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 2,
-          marginTop: { xs: "2rem", md: 0 },
+          width: "90%",
+          maxWidth: "700px",
+          marginBottom: {
+            xs: "2rem",
+            md: "0",
+            sm: "0rem",
+          },
+          margin: "auto",
+          borderRadius: "12px",
+          // Adjust padding top & right based on screen size
+          paddingTop: {
+            // xs: "20px", // Extra-small devices
+            sm: "40px", // Small devices
+            md: "50px", // Medium devices and larger
+          },
+          paddingRight: {
+            xs: "0px", // Extra-small devices
+            sm: "0px", // Small devices
+            md: "20px", // Medium devices and larger
+          },
         }}
-      >
-        <img
-          src="https://static.vecteezy.com/system/resources/previews/000/457/141/original/landing-page-template-of-website-design-illustration-concept-isometric-flat-design-concept-of-web-page-design-for-website-and-mobile-website-vector-illustration.jpg"
-          alt="Mockup"
-          style={{
-            width: "90%",
-            maxWidth: "700px",
-            borderRadius: "12px",
-            boxShadow: "0 10px 30px rgba(0, 0, 0, 0.2)",
-          }}
-        />
-      </Box>
+      />
     </Box>
   );
 }

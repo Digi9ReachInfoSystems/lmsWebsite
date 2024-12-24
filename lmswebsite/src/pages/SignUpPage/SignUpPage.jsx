@@ -220,10 +220,10 @@ const SignUpPage = () => {
               required
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Profile Image</label>
             <input type="file" onChange={handleFileUpload} required />
-          </div>
+          </div> */}
 
           <div className="form-actions">
             <button type="submit" className="confirm-btn">

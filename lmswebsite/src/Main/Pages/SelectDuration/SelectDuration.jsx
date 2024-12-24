@@ -26,34 +26,29 @@ function SelectDuration() {
       duration: 1,
       description: "Personal Batch, 1 Teacher 1 Student",
       features: [
-        "1 user per account",
-        "Unlimited events",
-        "Registration Form",
-        "Email announcements",
-        "Integrate webinars",
-        "Sales using mobile app",
+       
       ],
     },
     {
       id: 2,
-      title: "3 months",
-      duration: 3,
+      title: "4 months",
+      duration: 4,
       description: "1 Teacher 3 Students",
-      features: ["Same features as 1:1", "Plus group learning benefits"],
+      features: [],
     },
     {
       id: 3,
-      title: "5 months",
-      duration: 5,
+      title: "8 months",
+      duration: 8,
       description: "1 Teacher 5 Students",
-      features: ["More collaborative features", "Custom learning resources"],
+      features: [],
     },
     {
       id: 4,
       title: "10 months",
       duration: 10,
       description: "1 Teacher 7 Students",
-      features: ["Ideal for larger groups", "Best value for money"],
+      features: [],
     },
   ];
 
@@ -80,10 +75,10 @@ function SelectDuration() {
       <div className="duration-containers">
         <div className="header">
           <h3>
-            <span className="black-text">Select Your</span>{" "}
-            <span className="green-text">Learning Duration</span>
+            <span className="black-text">Choose Your</span>{" "}
+            <span className="green-text">Subscription Plan</span>
           </h3>
-          <p>Select your Duration, How Long You want to learn?</p>
+          <p>Choose your plan to enjoy learning</p>
         </div>
 
         {/* Batch Duration Options */}
@@ -103,14 +98,14 @@ function SelectDuration() {
                  
                   {/* Display total amount */}
                 </div>
-                <ul className="features-list">
+                {/* <ul className="features-list">
                   {batch.features.map((feature, index) => (
                     <li key={index}>&#10003; {feature}</li>
                   ))}
-                </ul>
+                </ul> */}
                 <div>
                 <p className="price">Total = ₹{totalPrice} </p>{" "}
-                  <p className="price-2">({batchPrice}X{batch.duration})</p>
+                  <p className="price-2">(₹{batchPrice}X{batch.duration})</p>
                   </div>
               </div>
             );
