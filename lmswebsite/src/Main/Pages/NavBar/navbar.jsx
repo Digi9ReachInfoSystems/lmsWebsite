@@ -338,18 +338,20 @@ function HeaderSection() {
             sx={{
               color: "#333",
               fontWeight: "medium",
-              "&:hover": { color: "#6A11CB" }, cursor: "pointer",
+              "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Our Academy
           </Button>
           <Button
-            onClick={() => navigate("/blogs")}
+            // onClick={() => navigate("/blogs")}
             underline="none"
             sx={{
               color: "#333",
               fontWeight: "medium",
-              "&:hover": { color: "#6A11CB" },  cursor: "pointer",
+              "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Blogs
@@ -360,7 +362,8 @@ function HeaderSection() {
             sx={{
               color: "#333",
               fontWeight: "medium",
-              "&:hover": { color: "#6A11CB" },  cursor: "pointer",
+              "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Testimonials
@@ -371,7 +374,8 @@ function HeaderSection() {
             sx={{
               color: "#333",
               fontWeight: "medium",
-              "&:hover": { color: "#6A11CB" },  cursor: "pointer",
+              "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Contact Us

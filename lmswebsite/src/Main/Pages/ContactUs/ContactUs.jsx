@@ -23,7 +23,8 @@ const ContactUs = () => {
   const contactItems = [
     {
       id: "info",
-      label: "Roy Career Solutions Private Limited",
+      label: "Company Information",
+      detail: "Roy Career Solutions Private Limited",
       Link: "https://roycareersolutions.com/",
       // detail: "XYZ",
       icon: IoInformationCircleOutline,
