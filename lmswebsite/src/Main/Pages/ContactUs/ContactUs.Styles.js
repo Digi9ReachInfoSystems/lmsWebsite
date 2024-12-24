@@ -33,21 +33,21 @@ export const ContactForm = styled.div`
 
   .ContactButton {
     width: 100%;
-    background: #00c897;
+    background: #6a11cb;
     color: #fff;
     border: none;
 
     &:hover {
       border: none;
       color: #fff;
-      background-color: #47ff60;
+      background: #6a11cb;
     }
   }
 
   :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined:not(
       :disabled
     ):not(.ant-btn-disabled):hover {
-    background: #01edb2;
+    background: #6a11cb;
     color: #fff;
   }
 
