@@ -100,7 +100,7 @@ export const ContactInfo = styled.div`
   margin-top: 20px;
   flex-direction: row;
   // background: ${theme.colors.white};
-  @media(max-width:576px){
+  @media (max-width: 576px) {
     flex-direction: column;
   }
 `;
