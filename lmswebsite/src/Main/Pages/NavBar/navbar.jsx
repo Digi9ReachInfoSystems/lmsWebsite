@@ -461,7 +461,7 @@ function HeaderSection() {
             Features
           </Link>
           <Link
-            href="/blogs"
+            // href="/blogs"
             underline="none"
             sx={{
               color: "#333",
