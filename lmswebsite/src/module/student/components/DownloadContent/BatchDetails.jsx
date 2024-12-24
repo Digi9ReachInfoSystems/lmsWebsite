@@ -191,7 +191,7 @@ const BatchDetailsContent = () => {
               <Col span={12} style={{ display: "flex", alignItems: "center" }
               }>
                 <Text strong>Subject:</Text>
-                <div style={{ marginLeft: 8 }}>{batch.subject_id.subject_name}</div>
+                <div style={{ marginLeft: 8 }}>{batch?.subject_id?.subject_name}</div>
               </Col>
             </Row>
 
