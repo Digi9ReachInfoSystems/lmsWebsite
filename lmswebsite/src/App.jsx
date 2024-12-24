@@ -106,6 +106,9 @@ import AssignmentResponse from "./module/teacher/pages/Quizz/AssignmentResponse/
 import StudentAssignment from "./module/student/pages/StudentAssignment/StudentAssignment";
 import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpload/StudentAssignmentUpload";
 import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
+import ReactGA from "react-ga";
+
+ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
   const [count, setCount] = useState(0);
 
