@@ -300,7 +300,7 @@ export default function TeacherApplicationFormView() {
         phone_number: values.phone_number,
         experience: values.experience,
         class_id: values.class_id, // Array of class IDs
-        subject_id: values.subject_id, // Array of subject IDs
+        subject: values.subject_id, // Array of subject IDs
         board_id: values.board_id, // Single board ID
         qualifications: values.qualifications, // Ensure backend expects 'qualifications'
         dateOfBirth: values.dateOfBirth.format("YYYY-MM-DD"),

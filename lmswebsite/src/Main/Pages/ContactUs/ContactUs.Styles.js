@@ -40,7 +40,7 @@ export const ContactForm = styled.div`
     &:hover {
       border: none;
       color: #fff;
-      background-color: #47ff60;
+      background: #6a11cb;
     }
   }
 

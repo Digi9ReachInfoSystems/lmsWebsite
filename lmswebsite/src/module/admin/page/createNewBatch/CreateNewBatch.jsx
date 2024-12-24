@@ -6,7 +6,7 @@ import { getClasses, getSubjects, getTeachersBySubjectAndClass } from "../../../
 import { getEligibleStudentsForBatch, getStudentsByClassId, getStudentsForBatchBySubjectId } from "../../../../api/studentApi";
 import { uploadFileToFirebase } from "../../../../utils/uploadFileToFirebase";
 import { CreateNewBatchWrap } from "./CreateNewBatch.Styles"; // Import styles
-import { getAllTypeOfBatches, getTypeOfBatchById } from "../../../../api/typeOfBatchApi";
+import { getAllTypeOfBatches, getCustomTypeOfBatch, getTypeOfBatchById, getTypeOfBatchBySubjectId } from "../../../../api/typeOfBatchApi";
 import { set } from "lodash";
 import dayjs from "dayjs";
 import { getBoards } from "../../../../api/boardApi";
@@ -27,6 +27,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
   const [mode, setMode] = useState("normal");
   const [loading, setLoading] = useState(false);
   const [selectionLength, setSelectionLength] = useState(0);
+  const[batchType, setBatchType] = useState();
   useEffect(() => {
 
     const apicaller = async () => {
@@ -42,8 +43,8 @@ const CreateNewBatch = ({ open, closeModal }) => {
     const fetchClasses = async () => {
       const classData = await getClassesByBoardId(selctedBoard);
       setClasses(classData || []);
-      const typeOfBatchData = await getAllTypeOfBatches();
-      setTypeOfBatch(typeOfBatchData || []);
+      // const typeOfBatchData = await getAllTypeOfBatches();
+      // setTypeOfBatch(typeOfBatchData || []);
     };
     fetchClasses();
   }, [selctedBoard]);
@@ -88,6 +89,14 @@ const CreateNewBatch = ({ open, closeModal }) => {
   };
 
   const handleSubjectChange = async (value) => {
+    if(batchType){
+      const typeOfBatchData = await getCustomTypeOfBatch();
+      setTypeOfBatch(typeOfBatchData || []);
+    }else{
+      const typeOfBatchData = await getTypeOfBatchBySubjectId(value);
+      setTypeOfBatch(typeOfBatchData || []);
+    }
+   
     const teacherData = await getTeachersBySubjectAndClass(value, form.getFieldValue("class"));
     // const studentData = await getStudentsForBatchBySubjectId(value, mode);
     //console.log("hehehe", { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") })
@@ -174,6 +183,34 @@ const CreateNewBatch = ({ open, closeModal }) => {
             <Input placeholder="Enter batch name" />
           </Form.Item>
           <Form.Item
+            name="typeofBatch"
+            label="Select Cutom/Normal"
+            rules={[
+              {
+                required: true,
+                message: "Please select a Type of Batch",
+              },
+            ]}
+          >
+            <Select
+              placeholder="Select Type of Batch"
+              onChange={(value) => {
+                //console.log("value", value);
+                setBatchType(value);
+              }}
+              allowClear
+            >
+             
+                <Option key={1} value={true}>
+                 Custom
+                </Option>
+                <Option key={2} value={false}>
+                 Normal
+                </Option>
+            
+            </Select>
+          </Form.Item>
+          <Form.Item
             name="board_id"
             label="Select Board"
             rules={[
@@ -235,23 +272,6 @@ const CreateNewBatch = ({ open, closeModal }) => {
             <Input placeholder="Enter batch duration" type="Number" min={0} />
           </Form.Item> */}
           <Form.Item
-            name="type_of_batch"
-            label="Type Of Batch"
-            rules={[{ required: true, message: "Please select a Type Of Batch" }]}
-          >
-            <Select
-              placeholder="Select Batch Type"
-              onChange={() => { setSelectedTypeOfBatch(form.getFieldValue("type_of_batch")) }}
-            // disabled={!subjects.length}
-            >
-              {typeOfBatch.map((batch) => (
-                <Option key={batch._id} value={batch._id}>
-                  {batch.mode}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
             name="subject"
             label="Subject"
             rules={[{ required: true, message: "Please select a subject" }]}
@@ -268,6 +288,27 @@ const CreateNewBatch = ({ open, closeModal }) => {
               ))}
             </Select>
           </Form.Item>
+          <Form.Item
+            name="type_of_batch"
+            label="Type Of Batch"
+            rules={[{ required: true, message: "Please select a Type Of Batch" }]}
+          >
+            <Select
+              placeholder="Select Batch Type"
+              onChange={() => { 
+                setSelectedTypeOfBatch(form.getFieldValue("type_of_batch"))
+                handleSubjectChange(form.getFieldValue("subject"))
+               }}
+            // disabled={!subjects.length}
+            >
+              {typeOfBatch.map((batch) => (
+                <Option key={batch._id} value={batch._id}>
+                  {batch.mode}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+
 
           <Form.Item
             name="teachers"

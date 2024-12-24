@@ -55,7 +55,7 @@ function Footer() {
       </div>
       <div></div>
       <div className="footer-bottom">
-        <h3 style={{ color: "black" }}>Legal Documents</h3>
+        <h3 style={{ color: "black" , fontSize: "1.3rem"}}>Legal Documents</h3>
         <p>
           <Link to="/privacy-policy" className="footer-link">
             Privacy Policy

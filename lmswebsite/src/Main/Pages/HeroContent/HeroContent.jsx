@@ -256,6 +256,7 @@ function HeroContent() {
             md: "0",
             sm: "0rem",
           },
+          margin: "auto",
           borderRadius: "12px",
           // Adjust padding top & right based on screen size
           paddingTop: {

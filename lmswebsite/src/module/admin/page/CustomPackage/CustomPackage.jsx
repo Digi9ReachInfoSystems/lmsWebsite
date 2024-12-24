@@ -94,7 +94,7 @@ const CustomPackage = () => {
         student_id: selectedPackage.student_id._id,
         duration: duration
       })
-      //console.log("Payment data:", paymentData);
+      console.log("Payment data:", paymentData);
       message.success("Payment request sent successfully.");
       handleModalClose();
     } catch (error) {
