@@ -119,7 +119,7 @@ function App() {
             element={
               <PublicRoute>
                 <LandingPageFinal />
-              </PublicRoute>
+               </PublicRoute>
             }
             key=""
           ></Route>
@@ -230,7 +230,7 @@ function App() {
             element={<RefundCancellationPolicy />}
           />
           <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />
-          <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
+          <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={["student"]}>  <StudentDashboardLayout /></ProtectedRoute>}>
             <Route index element={<StudentDashboardScreen />} />
             <Route
               path="/student/dashboard/circular"
@@ -284,7 +284,7 @@ function App() {
           <Route
             path="/teacher/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["teacher"]}>
                 <TeacherDashboardLayout />
               </ProtectedRoute>
             }
@@ -340,7 +340,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["admin"]}>
                 <DashboardLayout />
               </ProtectedRoute>
             }
