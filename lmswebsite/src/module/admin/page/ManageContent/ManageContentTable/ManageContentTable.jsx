@@ -1,6 +1,6 @@
 // ManageContentTable.jsx
 import React, { useState, useEffect } from 'react';
-import { Table, Modal, message, Popconfirm, Spin, Alert } from 'antd';
+import { Table, Modal, message, Popconfirm, Spin, Alert, Form, InputNumber, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Container,
@@ -37,9 +37,83 @@ const ManageContentTable = ({ contentType }) => {
   const [imageModalVisible, setImageModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
+  const [newPrice, setNewPrice] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false); // Add this state
 
+  // State for Discount Modal
+  const [isDiscountModalVisible, setIsDiscountModalVisible] = useState(false);
+  const [discountingRecord, setDiscountingRecord] = useState(null);
+  const [newDiscountPercentage, setNewDiscountPercentage] = useState('');
   // Helper function to extract ID from various formats
   const getId = (doc) => doc._id?.$oid || doc._id || doc.id;
+
+  const openEditModal = (record) => {
+    setEditingRecord(record);
+    setNewPrice(record.price); // Initialize with current price
+    setIsEditModalVisible(true);
+  };
+
+  const closeEditModal = () => {
+    setIsEditModalVisible(false);
+    setEditingRecord(null);
+    setNewPrice('');
+  };
+  const handleEditSubmit = async () => {
+    if (!editingRecord) return;
+
+    setIsSubmitting(true);
+    try {
+      const updatedData = { price: newPrice };
+      await updateTypeOfBatch(editingRecord._id, updatedData); // Ensure _id is correct
+      message.success('Price updated successfully!');
+      closeEditModal();
+      fetchData(); // Refresh table data
+    } catch (error) {
+      console.error('Error updating price:', error);
+      message.error('Failed to update price.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Open Discount Modal
+  const openDiscountModal = (record) => {
+    setDiscountingRecord(record);
+    setNewDiscountPercentage(record.discountPercentage || 0); // Initialize with current discount
+    setIsDiscountModalVisible(true);
+  };
+
+  // Close Discount Modal
+  const closeDiscountModal = () => {
+    setIsDiscountModalVisible(false);
+    setDiscountingRecord(null);
+    setNewDiscountPercentage('');
+  };
+
+  // Handle Discount Submit
+  const handleDiscountSubmit = async () => {
+    if (!discountingRecord) return;
+
+    setIsSubmitting(true);
+    try {
+      const updatedData = { discountPercentage: newDiscountPercentage };
+      // await updateTypeOfBatch(discountingRecord._id, updatedData); // Ensure _id is correct
+     await updateTypeOfBatch(discountingRecord._id, {
+        discountPercentage: newDiscountPercentage
+      })
+      message.success('Discount Percentage updated successfully!');
+      closeDiscountModal();
+      fetchData(); // Refresh table data
+    } catch (error) {
+      console.error('Error updating discount percentage:', error);
+      message.error('Failed to update discount percentage.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
 
   // Fetch data from API when contentType changes
   useEffect(() => {
@@ -151,7 +225,19 @@ const ManageContentTable = ({ contentType }) => {
 
         case 'typeOfBatch':
           const typeOfBatchData = await getAllTypeOfBatches();
-          setData(typeOfBatchData);
+          const TypeofBatch = typeOfBatchData.map((item) => {
+            return {
+              ...item,
+              subjectName: item?.subject_id?.subject_name || "N/A",
+              className: item?.subject_id?.class_id?.classLevel || "N/A",
+              boardName: item?.subject_id?.class_id?.curriculum?.name || "N/A",
+              batchType: (item?.custom_batch ? "Custom Batch" : "Normal Batch")
+            }
+          }
+
+          );
+          // console.log("typeOfBatchData", typeOfBatchData);
+          setData(TypeofBatch);
           break;
 
         case 'blog':
@@ -651,10 +737,30 @@ const ManageContentTable = ({ contentType }) => {
           key: 'price',
         },
         {
-          title: 'Duration',
-          dataIndex: 'duration',
-          key: 'duration',
+          title: 'Board',
+          dataIndex: 'boardName',
+          key: 'boardName',
         },
+        {
+          title: 'Class',
+          dataIndex: 'className',
+          key: 'className',
+        },
+        {
+          title: 'Subject',
+          dataIndex: 'subjectName',
+          key: 'subjectName',
+        },
+        {
+          title: 'Batch Type',
+          dataIndex: 'batchType',
+          key: 'batchType',
+        },
+        // {
+        //   title: 'Duration',
+        //   dataIndex: 'duration',
+        //   key: 'duration',
+        // },
         {
           title: 'Discount Percentage',
           dataIndex: 'discountPercentage',
@@ -666,8 +772,9 @@ const ManageContentTable = ({ contentType }) => {
           render: (_, record) => (
             <Popconfirm
               title="Are you sure you want to delete this batch type?"
-              onConfirm={() => {  
-                handleDelete(record) }}
+              onConfirm={() => {
+                handleDelete(record)
+              }}
               okText="Yes"
               cancelText="No"
             >
@@ -676,37 +783,41 @@ const ManageContentTable = ({ contentType }) => {
           ),
         },
         {
+          title: 'Discount',
+          key: 'discount',
+          render: (_, record) => (
+            <Popconfirm
+              title="Are you sure you want to edit this batch type?"
+              onConfirm={() => {
+                // handleDelete(record) 
+                openDiscountModal(record)
+              }
+              }
+              okText="Yes"
+              cancelText="No"
+            >
+              <button type="button">edit</button>
+            </Popconfirm>
+          ),
+        },
+        {
           title: 'Edit',
           key: 'edit',
           render: (_, record) => (
-            <button type="button" onClick={() => {
-              //console.log("edit", record);
-              const id = getId(record);
-              //console.log("id", id);
-              const percentageStr = window.prompt(
-                "Enter discount percentage (0-100):",
-                record.discountPercentage !== undefined ? record.discountPercentage : ""
-              );
-              if (percentageStr !== null) { // Check if user didn't cancel
-                const discountPercentage = parseFloat(percentageStr);
-                if (!isNaN(discountPercentage) && discountPercentage >= 0 && discountPercentage <= 100) {
-                  updateTypeOfBatch(id, {
-                    discountPercentage: discountPercentage
-                  })
-                    .then(() => {
-                      message.success('Discount Percentage updated successfully');
-                      fetchData(); // Refresh data after update
-                    })
-                    .catch(() => {
-                      message.error('Failed to update Discount Percentage');
-                    });
-                } else {
-                  message.error('Please enter a valid percentage between 0 and 100.');
-                }
+            <Popconfirm
+              title="Are you sure you want to edit this batch type?"
+              onConfirm={() => {
+                // handleDelete(record) 
+                openEditModal(record)
               }
-            }}>Edit</button>
+              }
+              okText="Yes"
+              cancelText="No"
+            >
+              <button type="button">edit</button>
+            </Popconfirm>
           ),
-        }
+        },
       ];
       FormComponent = ModeBatch;
       break;
@@ -823,13 +934,13 @@ const ManageContentTable = ({ contentType }) => {
 
   return (
     <Container>
-      <div style={{display:"flex", justifyContent:"space-between", padding:"20px"}}>
-      <Title>{title}</Title>
-      <div style={{ textAlign: 'right', marginBottom: '16px' }}>
-        <StyledButton icon={<PlusOutlined />} onClick={showModal}>
-          Create {title}
-        </StyledButton>
-      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
+        <Title>{title}</Title>
+        <div style={{ textAlign: 'right', marginBottom: '16px' }}>
+          <StyledButton icon={<PlusOutlined />} onClick={showModal}>
+            Create {title}
+          </StyledButton>
+        </div>
       </div>
       {/* Table */}
       {data.length > 0 ? (
@@ -863,7 +974,79 @@ const ManageContentTable = ({ contentType }) => {
       >
         <img src={selectedImage} alt="Full View" style={{ width: '100%' }} />
       </Modal>
-    </Container>
+
+      {/*edit type of batch Price model */}
+      <Modal
+        title="Edit Batch Type Price"
+        visible={isEditModalVisible}
+        onCancel={closeEditModal}
+        footer={null}
+
+      >
+        <Form layout="vertical" onFinish={handleEditSubmit}>
+          <Form.Item
+            label="New Price (₹)"
+            name="newPrice"
+            rules={[
+              { required: true, message: 'Please enter a new price!' },
+              { type: 'number', min: 0, message: 'Price must be a positive number!' },
+            ]}
+            initialValue={newPrice}
+          >
+            <InputNumber
+              value={newPrice}
+              onChange={(value) => setNewPrice(value)}
+              min={0}
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+              Save Changes
+            </Button>
+            <Button onClick={closeEditModal} style={{ marginLeft: '8px' }}>
+              Cancel
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+      {/* Edit Discount Modal */}
+      <Modal
+        title="Edit Discount Percentage"
+        visible={isDiscountModalVisible}
+        onCancel={closeDiscountModal}
+        footer={null}
+      >
+        <Form layout="vertical" onFinish={handleDiscountSubmit}>
+          <Form.Item
+            label="New Discount Percentage (%)"
+            name="newDiscountPercentage"
+            rules={[
+              { required: true, message: 'Please enter a new discount percentage!' },
+              { type: 'number', min: 0, max: 100, message: 'Percentage must be between 0 and 100!' },
+            ]}
+            initialValue={newDiscountPercentage}
+          >
+            <InputNumber
+              value={newDiscountPercentage}
+              onChange={(value) => setNewDiscountPercentage(value)}
+              min={0}
+              max={100}
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+              Save Changes
+            </Button>
+            <Button onClick={closeDiscountModal} style={{ marginLeft: '8px' }}>
+              Cancel
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+    </Container >
+
   );
 };
 
