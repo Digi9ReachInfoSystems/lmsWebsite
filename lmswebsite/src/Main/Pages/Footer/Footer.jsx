@@ -51,7 +51,7 @@ function Footer() {
 
 </div>
       <div className="footer-bottom">
-        <h3 style={{ color: "black" }}>Legal Documents</h3>
+        <h3 style={{ color: "black" , fontSize: "1.3rem"}}>Legal Documents</h3>
         <p>
         <Link to="/privacy-policy" className="footer-link">Privacy Policy</Link> ·{" "}
         <Link to="/TermsOfUse" className="footer-link">Terms and Conditions</Link>·{" "}
@@ -61,7 +61,7 @@ function Footer() {
         </p>
         <p>
 <br />
-        <h3 style={{ color: "black" , marginBottom: "1rem"}}>Find Us On Social Media</h3>
+        <h3 style={{ color: "black" , marginBottom: "1rem", fontSize: "1.1rem"}}>Find Us On Social Media</h3>
 
           <div className="footer-social-icons-new">
             <a href="#" aria-label="Facebook">
