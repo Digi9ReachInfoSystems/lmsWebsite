@@ -96,7 +96,7 @@ const SummaryDrawer = ({ onClose }) => {
             className="signin-btn"
             onClick={handleSignIn}
           >
-            Create an Account
+           Signup To Continue with the Payment
           </button>
         </div>
       </div>

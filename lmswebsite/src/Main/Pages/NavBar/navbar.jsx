@@ -129,7 +129,7 @@ function HeaderSection() {
       };
 
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
-
+     console.log("userProfileData", profileData);
       // Navigate by role
       if (profileData.user.role === "admin") {
         navigate("/admin");
@@ -138,9 +138,12 @@ function HeaderSection() {
         if (
           (studentData.student.custom_package_status === "no_package" ||
             studentData.student.custom_package_status === "pending") &&
-          studentData.student.is_paid === false
+          studentData.student.is_paid === false&&
+         ( !studentData.student.amount)
         ) {
           navigate("/student");
+        }else if(studentData.student.amount&&studentData.student.is_paid === false){
+          navigate("/paymentScreen");
         } else {
           navigate("/student/dashboard");
         }
