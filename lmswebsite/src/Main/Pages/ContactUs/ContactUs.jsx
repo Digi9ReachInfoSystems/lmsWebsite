@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import ContactImage from "../../assets/ContactUsImage.png";
+import ContactImage from "../../assets/contactUsImage.png";
 import {
   ContactUsWarp,
   ContactContainer,
