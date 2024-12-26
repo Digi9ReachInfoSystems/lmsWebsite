@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Input, Form } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import ContactImage from "../../assets/ContactUsImage.png";
+import ContactImage from "../../assets/contactUsImage.png";
 import {
   ContactUsWarp,
   ContactContainer,
@@ -23,18 +23,24 @@ const ContactUs = () => {
   const contactItems = [
     {
       id: "info",
-      label: "Roy Career Solutions",
+      label: "Company Information",
+      detail: "Roy Career Solutions Private Limited",
       Link: "https://roycareersolutions.com/",
       // detail: "XYZ",
       icon: IoInformationCircleOutline,
     },
-    // {
-    //   id: "text",
-    //   label: "Text us",
-    //   detail: "310-803-5878",
-    //   icon: FiMessageSquare,
-    // },
-    // { id: "call", label: "Call us", detail: "866-765-2327", icon: FiPhoneCall },
+    {
+      id: "Text us ON Whatsapp",
+      label: "Text us",
+      detail: "(+91) 9916299333",
+      icon: FiMessageSquare,
+    },
+    {
+      id: "call",
+      label: "Call us",
+      detail: "+91 7667840906",
+      icon: FiPhoneCall,
+    },
     {
       id: "message",
       label: "Message us",
