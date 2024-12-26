@@ -111,6 +111,9 @@ import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
   const [count, setCount] = useState(0);
 
   return (
@@ -123,7 +126,7 @@ function App() {
             element={
               <PublicRoute>
                 <LandingPageFinal />
-               </PublicRoute>
+              </PublicRoute>
             }
             key=""
           ></Route>
@@ -189,7 +192,14 @@ function App() {
               </PublicRoute>
             }
           />
-           <Route path="*" element={<PublicRoute><PageNotFound /></PublicRoute>} />
+          <Route
+            path="*"
+            element={
+              <PublicRoute>
+                <PageNotFound />
+              </PublicRoute>
+            }
+          />
           {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
           <Route
             path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"
@@ -235,7 +245,15 @@ function App() {
             element={<RefundCancellationPolicy />}
           />
           <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />
-          <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={["student"]}>  <StudentDashboardLayout /></ProtectedRoute>}>
+          <Route
+            path="/student/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                {" "}
+                <StudentDashboardLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<StudentDashboardScreen />} />
             <Route
               path="/student/dashboard/circular"
