@@ -106,6 +106,9 @@ import AssignmentResponse from "./module/teacher/pages/Quizz/AssignmentResponse/
 import StudentAssignment from "./module/student/pages/StudentAssignment/StudentAssignment";
 import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpload/StudentAssignmentUpload";
 import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
+import ReactGA from "react-ga";
+
+ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
   const [count, setCount] = useState(0);
 
@@ -119,7 +122,7 @@ function App() {
             element={
               <PublicRoute>
                 <LandingPageFinal />
-              </PublicRoute>
+               </PublicRoute>
             }
             key=""
           ></Route>
@@ -230,7 +233,7 @@ function App() {
             element={<RefundCancellationPolicy />}
           />
           <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />
-          <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
+          <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={["student"]}>  <StudentDashboardLayout /></ProtectedRoute>}>
             <Route index element={<StudentDashboardScreen />} />
             <Route
               path="/student/dashboard/circular"
@@ -284,7 +287,7 @@ function App() {
           <Route
             path="/teacher/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["teacher"]}>
                 <TeacherDashboardLayout />
               </ProtectedRoute>
             }
@@ -340,7 +343,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["admin"]}>
                 <DashboardLayout />
               </ProtectedRoute>
             }

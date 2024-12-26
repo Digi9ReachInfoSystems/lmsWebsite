@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    cursor: url('./customCursor.png'), auto; /* Use your custom cursor image */
+  }

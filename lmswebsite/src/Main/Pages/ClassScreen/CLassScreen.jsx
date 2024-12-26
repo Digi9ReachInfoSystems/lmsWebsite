@@ -102,7 +102,7 @@ function ClassScreen() {
             {selectedClass && (
               <div className="selected-class-info">
                 <p>
-                  Select Class: <strong>{selectedClass.classLevel}</strong>
+                  Selected Class: <strong>{selectedClass.classLevel}</strong>
                 </p>
               </div>
             )}

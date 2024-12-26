@@ -8,24 +8,23 @@ function MeetOurTeacher() {
       title: "English Teacher",
       image:
         "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/pngtree-beauty-teacher-beauty-teacher-beautiful-female-teacher-teachers-day-png-image_493410-removebg-preview.png?alt=media&token=e25d7202-3230-4139-8c99-32bf2cc9c157",
-      rating: 4.8,
-      reviews: "44k",
+      // reviews: "44k",
     },
     {
       name: "Anil Kumar",
       title: "Mathemathics Teacher",
       image:
-        "https://img.freepik.com/premium-vector/education-material-icon-vector-illustration_1287271-8064.jpg?semt=ais_hybrid", // Replace with the correct image path
+        "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/male-teacher-vector_905719-1132.png?alt=media&token=72a918aa-6327-459c-b176-5a602b7594f4", // Replace with the correct image path
       rating: 4.8,
-      reviews: "44k",
+      // reviews: "44k",
     },
     {
       name: "Geetam Singh",
       title: "Mathemathics Teacher",
       image:
-        "https://img.freepik.com/premium-vector/education-material-icon-vector-illustration_1287271-8064.jpg?semt=ais_hybrid", // Replace with the correct image path
+        "https://firebasestorage.googleapis.com/v0/b/demoproject-6d5cd.appspot.com/o/male-teacher-vector_905719-1132.png?alt=media&token=72a918aa-6327-459c-b176-5a602b7594f4", // Replace with the correct image path
       rating: 4.8,
-      reviews: "44k",
+      // reviews: "44k",
     },
   ];
 

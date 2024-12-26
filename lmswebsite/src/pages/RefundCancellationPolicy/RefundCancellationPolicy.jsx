@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   RefundContainer,
   RefundTitle,
@@ -12,14 +12,16 @@ import Header from "../../Main/Pages/NavBar/navbar";
 import Footer from "../../Main/Pages/Footer/Footer";
 
 const RefundCancellationPolicy = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Header />
-        <Refund>
-          <RefundTitle>REFUND AND CANCELLATION POLICY</RefundTitle>
-        </Refund>
+      <Refund>
+        <RefundTitle>REFUND AND CANCELLATION POLICY</RefundTitle>
+      </Refund>
       <RefundContainer>
-
         <RefundParagraph>
           Welcome to The Topper Academy! We strive to provide high-quality
           online education to support students in their learning journey. This
