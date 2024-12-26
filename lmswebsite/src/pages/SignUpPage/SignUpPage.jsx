@@ -83,10 +83,10 @@ const SignUpPage = () => {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
-      const profileImageUrl = await uploadFileToFirebase(
-        formData.profileImage,
-        "studentProfile"
-      );
+      // const profileImageUrl = await uploadFileToFirebase(
+      //   formData.profileImage,
+      //   "studentProfile"
+      // );
       //console.log("Profile Image URL:", profileImageUrl);
       // Prepare data to send to API
       const data = {
@@ -94,7 +94,7 @@ const SignUpPage = () => {
         access_token: user.accessToken,
         refresh_token: userCredential._tokenResponse.refreshToken,
         class_id: formData.className,
-        profile_image: profileImageUrl,
+        // profile_image: profileImageUrl,
         phone_number: formData.phoneNumber,
         student_name: formData.name,
         studentGender: formData.gender,
