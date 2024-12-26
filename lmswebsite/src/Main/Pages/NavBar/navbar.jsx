@@ -348,7 +348,7 @@ function HeaderSection() {
             Our Academy
           </Button>
           <Button
-            // onClick={() => navigate("/blogs")}
+            onClick={() => navigate("/blogs")}
             underline="none"
             sx={{
               color: "#333",
