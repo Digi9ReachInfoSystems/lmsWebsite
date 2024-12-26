@@ -107,6 +107,7 @@ import StudentAssignment from "./module/student/pages/StudentAssignment/StudentA
 import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpload/StudentAssignmentUpload";
 import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
 import ReactGA from "react-ga";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
@@ -188,6 +189,7 @@ function App() {
               </PublicRoute>
             }
           />
+           <Route path="*" element={<PublicRoute><PageNotFound /></PublicRoute>} />
           {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
           <Route
             path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"

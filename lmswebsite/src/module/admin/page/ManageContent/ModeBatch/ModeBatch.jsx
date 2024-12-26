@@ -150,6 +150,7 @@ const ModeBatch = () => {
       title,
       subject_id: selectedSubject?selectedSubject:undefined,
       custom_batch: batchType,
+      class_id: selectedClass ? selectedClass : undefined
     };
 
     // Debugging: Log the data being sent to the API
@@ -363,7 +364,7 @@ const ModeBatch = () => {
         {success && <Alert style={{ marginBottom: 10 }} message={success} type="success" />}
 
         {/* Submit Button */}
-        <AntdButton type="primary" htmlType="submit" disabled={features.length==0}>
+        <AntdButton type="primary" htmlType="submit" >
           Create
         </AntdButton>
       </AntdForm>
