@@ -20,7 +20,7 @@ function SelectType() {
   });
 
   useEffect(() => {
-    if (!selectedSubjects || selectedSubjects.length === 0) {
+    if (!selectedSubjects ) {
       navigate("/"); // Navigate only if no subjects are present
       return;
     }
@@ -28,7 +28,7 @@ function SelectType() {
     const fetchBatchTypes = async () => {
       try {
         const subjectId = JSON.parse(localStorage.getItem("selectedSubjects"));
-        const response = await getTypeOfBatchBySubjectId(subjectId[0]);
+        const response = await getTypeOfBatchBySubjectId(subjectId);
         console.log("Batch types fetched successfully:", response);
         setBatchTypes(response); // Set fetched batch types
       } catch (error) {
