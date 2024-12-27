@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -75,6 +75,19 @@ function HeaderSection() {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsCoursesOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleBoardMouseEnter = async (boardId) => {
     setHoveredBoardId(boardId);
     if (!classes[boardId]) {
@@ -116,7 +129,7 @@ function HeaderSection() {
       };
 
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
-
+     console.log("userProfileData", profileData);
       // Navigate by role
       if (profileData.user.role === "admin") {
         navigate("/admin");
@@ -125,9 +138,12 @@ function HeaderSection() {
         if (
           (studentData.student.custom_package_status === "no_package" ||
             studentData.student.custom_package_status === "pending") &&
-          studentData.student.is_paid === false
+          studentData.student.is_paid === false&&
+         ( !studentData.student.amount)
         ) {
           navigate("/student");
+        }else if(studentData.student.amount&&studentData.student.is_paid === false){
+          navigate("/paymentScreen");
         } else {
           navigate("/student/dashboard");
         }
@@ -190,7 +206,8 @@ function HeaderSection() {
           {/* Courses Dropdown Trigger */}
           <Box sx={{ position: "relative" }}>
             <Box
-              onClick={handleDropdownToggle}
+              onMouseEnter={handleDropdownToggle}
+              // onMouseLeave={handleDropdownToggle}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -318,50 +335,54 @@ function HeaderSection() {
           </Box>
 
           {/* Other Navigation Links */}
-          <Link
+          <Button
             onClick={() => navigate("/Our-Academy")}
             underline="none"
             sx={{
               color: "#333",
               fontWeight: "medium",
               "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Our Academy
-          </Link>
-          <Link
+          </Button>
+          <Button
             onClick={() => navigate("/blogs")}
             underline="none"
             sx={{
               color: "#333",
               fontWeight: "medium",
               "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Blogs
-          </Link>
-          <Link
+          </Button>
+          <Button
             href="#"
             underline="none"
             sx={{
               color: "#333",
               fontWeight: "medium",
               "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Testimonials
-          </Link>
-          <Link
+          </Button>
+          <Button
             onClick={() => navigate("/ContactUs")}
             underline="none"
             sx={{
               color: "#333",
               fontWeight: "medium",
               "&:hover": { color: "#6A11CB" },
+              cursor: "pointer",
             }}
           >
             Contact Us
-          </Link>
+          </Button>
         </Box>
 
         {/* Right Section: Action Buttons + Hamburger (Mobile) */}
@@ -443,7 +464,7 @@ function HeaderSection() {
             Features
           </Link>
           <Link
-            href="/blogs"
+            // href="/blogs"
             underline="none"
             sx={{
               color: "#333",
@@ -532,7 +553,7 @@ function HeaderSection() {
               textAlign: "center",
             }}
           >
-            Login
+            Login as a Student/Teacher
           </Typography>
 
           <Form onFinish={handleLogin}>

@@ -18,7 +18,7 @@ import { signupUser } from "../../api/authApi";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../../config/firebaseConfig";
 import { LinkText, ButtonContainer } from "./SignUpPage.style";
@@ -26,7 +26,7 @@ import { use } from "react";
 import { getBoards } from "../../api/boardApi";
 import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
-import SignUpImage from "../../assets/logo1.svg";
+import SignUpImage from "../../assets/Logofinal.png";
 import { getUserByAuthId } from "../../api/userApi";
 
 const { Option } = Select;
@@ -341,7 +341,13 @@ const StudentForm = () => {
             }}
           >
             Already have an account?{" "}
-            <a href="/" style={{ color: "purple", "&:hover": { textDecoration: "underline!important" } }}>
+            <a
+              href="/"
+              style={{
+                color: "purple",
+                "&:hover": { textDecoration: "underline!important" },
+              }}
+            >
               Sign in
             </a>
           </Text>

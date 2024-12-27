@@ -108,8 +108,11 @@ const SummaryDrawer = ({ onClose }) => {
 
         {/* Sign In Button */}
         <div className="signin-container">
-          <button className="signin-btn" onClick={handleSignIn}>
-            Sign up to Continue
+          <button
+            className="signin-btn"
+            onClick={handleSignIn}
+          >
+           Signup To Continue with the Payment
           </button>
         </div>
       </div>

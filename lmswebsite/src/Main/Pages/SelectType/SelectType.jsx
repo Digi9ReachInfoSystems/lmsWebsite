@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./SelectType.css";
 import HeaderSection from "../NavBar/navbar";
-import { getAllTypeOfBatches, getTypeOfBatchBySubjectId } from "../../../api/typeOfBatchApi";
+import {
+  getAllTypeOfBatches,
+  getTypeOfBatchBySubjectId,
+} from "../../../api/typeOfBatchApi";
 import { useNavigate } from "react-router-dom";
 
 function SelectType() {
@@ -24,7 +27,7 @@ function SelectType() {
 
     const fetchBatchTypes = async () => {
       try {
-        const subjectId= JSON.parse(localStorage.getItem("selectedSubjects"));
+        const subjectId = JSON.parse(localStorage.getItem("selectedSubjects"));
         const response = await getTypeOfBatchBySubjectId(subjectId);
         console.log("Batch types fetched successfully:", response);
         setBatchTypes(response); // Set fetched batch types
@@ -72,16 +75,15 @@ function SelectType() {
         {!loading && !error && (
           <div className="options-container">
             {batchTypes.map((batch) => (
-
               <div
                 key={batch._id} // Use batch._id directly
-                className={`batch-card ${selectedBatch === batch._id ? "selected" : ""
-                  }`}
+                className={`batch-card ${
+                  selectedBatch === batch._id ? "selected" : ""
+                }`}
                 onClick={() => handleBatchSelect(batch._id)} // Pass unique batch._id
               >
                 <div className="batch-header">
                   <h4>{batch.title}</h4>
-
                 </div>
                 <ul className="features-list">
                   {batch?.feature.map((feature, index) => (
@@ -89,8 +91,12 @@ function SelectType() {
                   ))}
                 </ul>
                 <div className="batch-price">
-                  <p >₹ {batch.price}/month</p>
+                  <p>₹ {batch.price}/month</p>
                 </div>
+
+                {/* <div className="batch-price">
+                  <p>₹ {batch.discountedPrice}/month</p>
+                </div> */}
               </div>
             ))}
           </div>

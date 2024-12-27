@@ -32,7 +32,7 @@ import { createCustomPackage } from "../../../../api/customPackageApi";
 import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 
 import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
-import { getAllTypeOfBatches } from "../../../../api/typeOfBatchApi";
+import { getAllTypeOfBatches, getCustomTypeOfBatch } from "../../../../api/typeOfBatchApi";
 import { set } from "lodash";
 import Footer from "../../../../Main/Pages/Footer/Footer";
 
@@ -69,7 +69,7 @@ export const StudentLandingPage = () => {
         const data = await getStudentByAuthId(sessionData.userId);
         ////console.log("studentData", data);
 
-        const batchData = await getAllTypeOfBatches();
+        const batchData = await getCustomTypeOfBatch();
         ////console.log("batchData", batchData);
         setBatchType(batchData);
         if (!data || !data.student) {

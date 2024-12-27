@@ -1,6 +1,6 @@
 // ManageContentTable.jsx
-import React, { useState, useEffect } from 'react';
-import { Table, Modal, message, Popconfirm, Spin, Alert } from 'antd';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Table, Modal, message, Popconfirm, Alert, Form, InputNumber, Button, Input, Row, Col, Tag } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import {
   Container,
@@ -17,19 +17,47 @@ import ChooseUsForm from '../ChooseUsForm/ChooseUsForm';
 import BenefitForm from '../BenifitsForm/BenifitsForm';
 import ModeBatch from '../ModeBatch/ModeBatch';
 import BlogForm from '../BlogForm/BlogForm';
-import { getAllClasses, createClass, deleteClass } from '../../../../../api/classApi';
-import { getAllSubjects, createSubject, deleteSubjectById } from '../../../../../api/subjectApi';
+import {
+  getAllClasses,
+  createClass,
+  deleteClass,
+} from '../../../../../api/classApi';
+import {
+  getAllSubjects,
+  createSubject,
+  deleteSubjectById,
+} from '../../../../../api/subjectApi';
 import { getBoards, createBoard, deleteBoard } from '../../../../../api/boadApi';
-import { getAllPackages, createPackage, deletePackageById } from '../../../../../api/packagesApi';
+import {
+  getAllPackages,
+  createPackage,
+  deletePackageById,
+} from '../../../../../api/packagesApi';
 import { getAllFAQ, createFAQ, deleteFAQ } from '../../../../../api/faq';
 import { getBanners, createBanner, deleteBanner } from '../../../../../api/bannerApi';
-import { createChooseUsFeature, deleteChooseUsFeature, getChooseUsData } from '../../../../../api/chooseUsApi';
-import { createBenefit, getAllBenefits, deleteBenefit } from '../../../../../api/benefitsApi';
-import { createTypeOfBatch, getAllTypeOfBatches, deleteTypeOfBatch, updateTypeOfBatch } from '../../../../../api/typeOfBatchApi';
+import {
+  createChooseUsFeature,
+  deleteChooseUsFeature,
+  getChooseUsData,
+} from '../../../../../api/chooseUsApi';
+import {
+  createBenefit,
+  getAllBenefits,
+  deleteBenefit,
+} from '../../../../../api/benefitsApi';
+import {
+  createTypeOfBatch,
+  getAllTypeOfBatches,
+  deleteTypeOfBatch,
+  updateTypeOfBatch,
+  discountTypeOfBatch,
+} from '../../../../../api/typeOfBatchApi';
 import { createBlog, getAllBlogs, deleteBlog } from '../../../../../api/blogApi';
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
-import { render } from '@fullcalendar/core/preact.js';
+import { FaPlus, FaTrash } from "react-icons/fa";
+// Removed unused import
+// import { render } from '@fullcalendar/core/preact.js';
 
 const ManageContentTable = ({ contentType }) => {
   const [data, setData] = useState([]);
@@ -38,8 +66,132 @@ const ManageContentTable = ({ contentType }) => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  // State for Edit Price Modal
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [editingRecord, setEditingRecord] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [features, setFeatures] = useState([]);
+  const [featureInput, setFeatureInput] = useState("");
+  const [error, setError] = useState("");
+
+  // State for Discount Modal
+  const [isDiscountModalVisible, setIsDiscountModalVisible] = useState(false);
+  const [discountingRecord, setDiscountingRecord] = useState(null);
+
+  // State for Search
+  const [searchKeywords, setSearchKeywords] = useState({});
+
+  // Initialize Form instances
+  const [editPriceForm] = Form.useForm();
+  const [editDiscountForm] = Form.useForm();
+
   // Helper function to extract ID from various formats
   const getId = (doc) => doc._id?.$oid || doc._id || doc.id;
+
+  const MAX_FEATURES = 10;
+
+  // Open Edit Price Modal
+  const openEditModal = (record) => {
+    console.log("record", record);
+    setEditingRecord(record);
+    editPriceForm.setFieldsValue({ newPrice: record.price });
+    editPriceForm.setFieldsValue({ title: record.title });
+    setFeatures(record.feature);
+    setIsEditModalVisible(true);
+  };
+
+  // Close Edit Price Modal
+  const closeEditModal = () => {
+    setIsEditModalVisible(false);
+    setEditingRecord(null);
+    editPriceForm.resetFields();
+    setFeatures([]);
+  };
+  // Handle feature input
+  const handleAddFeature = () => {
+    const trimmedFeature = featureInput.trim();
+    if (trimmedFeature) {
+      if (features.includes(trimmedFeature)) {
+        setError("This feature has already been added.");
+        return;
+      }
+      if (features.length >= MAX_FEATURES) {
+        setError(`You can only add up to ${MAX_FEATURES} features.`);
+        return;
+      }
+      setFeatures([...features, trimmedFeature]);
+      setFeatureInput("");
+      setError("");
+    }
+  };
+
+  const handleRemoveFeature = (featureToRemove) => {
+    setFeatures(features.filter((feature) => feature !== featureToRemove));
+    setError("");
+  };
+
+  const handleFeatureKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleAddFeature();
+    }
+  };
+
+  // Handle Edit Price Submit
+  const handleEditSubmit = async () => {
+    try {
+      const values = await editPriceForm.validateFields();
+      const updatedData = { price: values.newPrice, title: values.title , feature: features };
+      await updateTypeOfBatch(editingRecord._id, updatedData); // Ensure _id is correct
+      message.success('Data updated successfully!');
+      closeEditModal();
+      fetchData(); // Refresh table data
+    } catch (error) {
+      if (error.name !== 'Error') {
+        // Validation failed
+        console.error('Validation Failed:', error);
+      } else {
+        // API Error
+        console.error('Error updating price:', error);
+        message.error('Failed to update price.');
+      }
+    }
+  };
+
+  // Open Discount Modal
+  const openDiscountModal = (record) => {
+    setDiscountingRecord(record);
+    editDiscountForm.setFieldsValue({ newDiscountPercentage: record.discountPercentage || 0 });
+    setIsDiscountModalVisible(true);
+  };
+
+  // Close Discount Modal
+  const closeDiscountModal = () => {
+    setIsDiscountModalVisible(false);
+    setDiscountingRecord(null);
+    editDiscountForm.resetFields();
+  };
+
+  // Handle Discount Submit
+  const handleDiscountSubmit = async () => {
+    try {
+      const values = await editDiscountForm.validateFields();
+      const updatedData = { discountPercentage: values.newDiscountPercentage };
+      await discountTypeOfBatch(discountingRecord._id, updatedData); // Ensure _id is correct
+      message.success('Discount Percentage updated successfully!');
+      closeDiscountModal();
+      fetchData(); // Refresh table data
+    } catch (error) {
+      if (error.name !== 'Error') {
+        // Validation failed
+        console.error('Validation Failed:', error);
+      } else {
+        // API Error
+        console.error('Error updating discount percentage:', error);
+        message.error('Failed to update discount percentage.');
+      }
+    }
+  };
 
   // Fetch data from API when contentType changes
   useEffect(() => {
@@ -144,19 +296,27 @@ const ManageContentTable = ({ contentType }) => {
           break;
 
         case 'benefits':
-          ////console.log('Fetching benefits');
           const benefitData = await getAllBenefits();
           setData(benefitData.benefits);
           break;
 
         case 'typeOfBatch':
           const typeOfBatchData = await getAllTypeOfBatches();
-          setData(typeOfBatchData);
+          const TypeofBatch = typeOfBatchData.map((item) => {
+            return {
+              ...item,
+              subjectName: item?.subject_id?.subject_name || "N/A",
+              className: item?.class_id?.classLevel|| "N/A",
+              boardName: item?.class_id?.curriculum?.name || "N/A",
+              batchType: item?.custom_batch ? "Custom Batch" : "Normal Batch",
+            };
+          });
+          console.log("typeOfBatchData", TypeofBatch);
+          setData(TypeofBatch);
           break;
 
         case 'blog':
           const blogData = await getAllBlogs();
-          ////console.log("Blogs fetched successfully", blogData);
           if (blogData.success && Array.isArray(blogData.data)) {
             setData(blogData.data); // Correctly set to the data array
           } else {
@@ -169,9 +329,10 @@ const ManageContentTable = ({ contentType }) => {
           break;
       }
     } catch (error) {
+      console.error("Error fetching data:", error);
       message.error('Failed to fetch data');
     } finally {
-      setLoading(false); // Moved here to ensure it's always executed
+      setLoading(false); // Ensure loading is set to false regardless of success or failure
     }
   };
 
@@ -235,6 +396,7 @@ const ManageContentTable = ({ contentType }) => {
       setIsModalVisible(false);
       fetchData(); // Refresh data after creation
     } catch (error) {
+      console.error('API Error:', error);
       message.error('Failed to create item');
     }
   };
@@ -288,9 +450,54 @@ const ManageContentTable = ({ contentType }) => {
       }
       fetchData(); // Refresh data after deletion
     } catch (error) {
+      console.error('Error deleting item:', error);
       message.error('Failed to delete item');
     }
   };
+
+  // Define searchable fields per content type
+  const searchableFields = {
+    class: ['className', 'classLevel'],
+    subject: ['subject_name', 'classLevel'],
+    board: ['name'],
+    package: ['package_name', 'description'],
+    faq: ['question'],
+    banner: ['banner_name'],
+    chooseUs: ['name'],
+    benefits: ['title'],
+    typeOfBatch: ['mode', 'boardName', 'className', 'subjectName'],
+    blog: ['title', 'author', 'tags'],
+  };
+
+  // Handle search input changes
+  const handleSearchChange = (field, value) => {
+    setSearchKeywords((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  // Compute filtered data based on search keywords
+  const filteredData = useMemo(() => {
+    if (!contentType || !searchableFields[contentType]) {
+      return data;
+    }
+
+    return data.filter((record) => {
+      return searchableFields[contentType].every((field) => {
+        if (!searchKeywords[field]) return true; // No search keyword for this field
+        const recordValue = record[field];
+        if (recordValue === undefined || recordValue === null) return false;
+        if (Array.isArray(recordValue)) {
+          // For array fields like tags
+          return recordValue.some((item) =>
+            item.toString().toLowerCase().includes(searchKeywords[field].toLowerCase())
+          );
+        }
+        return recordValue.toString().toLowerCase().includes(searchKeywords[field].toLowerCase());
+      });
+    });
+  }, [data, searchKeywords, contentType]);
 
   // Define columns, form component, and title based on contentType
   let columns = [];
@@ -326,7 +533,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -343,16 +552,12 @@ const ManageContentTable = ({ contentType }) => {
           key: 'subject_name',
         },
         {
-          title: 'Class Level', // Changed from 'Class Name' to 'Class Level'
-          dataIndex: 'classLevel', // Updated dataIndex to 'classLevel'
+          title: 'Class Level',
+          dataIndex: 'classLevel',
           key: 'classLevel',
           render(_, record) {
-            return (
-              <span>
-                {record.classLevel || 'N/A'}
-              </span>
-            );
-          }
+            return <span>{record.classLevel || 'N/A'}</span>;
+          },
         },
         {
           title: 'Board Name',
@@ -369,7 +574,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -400,7 +607,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -425,13 +634,14 @@ const ManageContentTable = ({ contentType }) => {
           title: 'Price',
           dataIndex: 'price',
           key: 'price',
+          render: (text) => `₹${text}`,
         },
         {
           title: 'Features',
           dataIndex: 'features',
           key: 'features',
           render: (text, record) => (
-            <ul>
+            <ul style={{ paddingLeft: '20px' }}>
               {(record.features || []).map((feature, index) => (
                 <li key={index}>{feature}</li>
               ))}
@@ -464,7 +674,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -495,7 +707,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -537,7 +751,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -584,7 +800,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -623,7 +841,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -640,74 +860,68 @@ const ManageContentTable = ({ contentType }) => {
           dataIndex: 'mode',
           key: 'mode',
         },
-        
         {
           title: 'Price',
           dataIndex: 'price',
           key: 'price',
+          render: (text) => `₹${text}`,
         },
         {
           title: 'Discount Price',
           dataIndex: 'discountedPrice',
           key: 'discountedPrice',
+          render: (text) => text ? `₹${text}` : 'N/A',
         },
         {
-          title: 'Duration',
-          dataIndex: 'duration',
-          key: 'duration',
+          title: 'Board',
+          dataIndex: 'boardName',
+          key: 'boardName',
+        },
+        {
+          title: 'Class',
+          dataIndex: 'className',
+          key: 'className',
+        },
+        {
+          title: 'Subject',
+          dataIndex: 'subjectName',
+          key: 'subjectName',
+        },
+        {
+          title: 'Batch Type',
+          dataIndex: 'batchType',
+          key: 'batchType',
         },
         {
           title: 'Discount Percentage',
           dataIndex: 'discountPercentage',
           key: 'discountPercentage',
+          render: (text) => text !== undefined ? `${text}%` : 'N/A',
         },
         {
           title: 'Action',
           key: 'action',
           render: (_, record) => (
-            <Popconfirm
-              title="Are you sure you want to delete this batch type?"
-              onConfirm={() => {  
-                handleDelete(record) }}
-              okText="Yes"
-              cancelText="No"
-            >
-              <button type="button">Delete</button>
-            </Popconfirm>
+            <>
+              <Button type="link" onClick={() => openEditModal(record)}>
+                Edit 
+              </Button>
+              <Button type="link" onClick={() => openDiscountModal(record)}>
+                Edit Discount
+              </Button>
+              <Popconfirm
+                title="Are you sure you want to delete this batch type?"
+                onConfirm={() => handleDelete(record)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="link" danger>
+                  Delete
+                </Button>
+              </Popconfirm>
+            </>
           ),
         },
-        {
-          title: 'Edit',
-          key: 'edit',
-          render: (_, record) => (
-            <button type="button" onClick={() => {
-              //console.log("edit", record);
-              const id = getId(record);
-              //console.log("id", id);
-              const percentageStr = window.prompt(
-                "Enter discount percentage (0-100):",
-                record.discountPercentage !== undefined ? record.discountPercentage : ""
-              );
-              if (percentageStr !== null) { // Check if user didn't cancel
-                const discountPercentage = parseFloat(percentageStr);
-                if (!isNaN(discountPercentage) && discountPercentage >= 0 && discountPercentage <= 100) {
-                  updateTypeOfBatch(id, {
-                    discountPercentage: discountPercentage
-                  })
-                    .then(() => {
-                      message.success('Discount Percentage updated successfully');
-                      fetchData(); // Refresh data after update
-                    })
-                    .catch(() => {
-                      message.error('Failed to update Discount Percentage');
-                    });
-                } else {
-                  message.error('Please enter a valid percentage between 0 and 100.');
-                }
-              }
-            }}>Edit</button>
-          ),
-        }
       ];
       FormComponent = ModeBatch;
       break;
@@ -746,7 +960,6 @@ const ManageContentTable = ({ contentType }) => {
           dataIndex: 'description',
           key: 'description',
         },
-        // Inside ManageContentTable.jsx
         {
           title: "Tags",
           dataIndex: "tags",
@@ -754,13 +967,13 @@ const ManageContentTable = ({ contentType }) => {
           render: (_, record) => {
             if (Array.isArray(record.tags) && record.tags.length > 0) {
               return (
-                <div>
+                <ul style={{ listStyle: 'none', paddingLeft: 0, margin: 0 }}>
                   {record.tags.map((tag, idx) => (
-                    <li color="blue" key={`${tag}-${idx}`}>
-                      {tag}
+                    <li key={`${tag}-${idx}`} style={{ display: 'inline', marginRight: '8px' }}>
+                      <Tag color="blue">{tag}</Tag>
                     </li>
                   ))}
-                </div>
+                </ul>
               );
             } else {
               return <span>No tags</span>;
@@ -778,7 +991,9 @@ const ManageContentTable = ({ contentType }) => {
               okText="Yes"
               cancelText="No"
             >
-              <button type="button">Delete</button>
+              <Button type="link" danger>
+                Delete
+              </Button>
             </Popconfirm>
           ),
         },
@@ -789,6 +1004,76 @@ const ManageContentTable = ({ contentType }) => {
     default:
       break;
   }
+
+  // Render search inputs based on contentType
+  const renderSearchInputs = () => {
+    if (!contentType || !searchableFields[contentType]) return null;
+
+    return (
+      <Form layout="vertical" style={{ marginBottom: '20px' }}>
+        <Row gutter={16}>
+          {searchableFields[contentType].map((field) => {
+            let label = '';
+            switch (field) {
+              case 'className':
+                label = 'Class Name';
+                break;
+              case 'classLevel':
+                label = 'Class Level';
+                break;
+              case 'subject_name':
+                label = 'Subject Name';
+                break;
+              case 'name':
+                label = 'Name';
+                break;
+              case 'package_name':
+                label = 'Package Name';
+                break;
+              case 'description':
+                label = 'Description';
+                break;
+              case 'question':
+                label = 'Question';
+                break;
+              case 'title':
+                label = 'Name';
+                break;
+              case 'author':
+                label = 'Author';
+                break;
+              case 'tags':
+                label = 'Tags';
+                break;
+              case 'mode':
+                label = 'Mode';
+                break;
+              case 'boardName':
+                label = 'Board';
+                break;
+              case 'subjectName':
+                label = 'Subject';
+                break;
+              default:
+                label = field;
+            }
+
+            return (
+              <Col span={8} key={field}>
+                <Form.Item label={label} name={field}>
+                  <Input
+                    placeholder={`Search ${label}`}
+                    value={searchKeywords[field] || ''}
+                    onChange={(e) => handleSearchChange(field, e.target.value)}
+                  />
+                </Form.Item>
+              </Col>
+            );
+          })}
+        </Row>
+      </Form>
+    );
+  };
 
   if (loading) {
     return (
@@ -824,20 +1109,22 @@ const ManageContentTable = ({ contentType }) => {
 
   return (
     <Container>
-      <div style={{display:"flex", justifyContent:"space-between", padding:"20px"}}>
-      <Title>{title}</Title>
-      <div style={{ textAlign: 'right', marginBottom: '16px' }}>
-        <StyledButton icon={<PlusOutlined />} onClick={showModal}>
-          Create {title}
-        </StyledButton>
+      <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
+        <Title>{title}</Title>
+        <div style={{ textAlign: 'right', marginBottom: '16px' }}>
+          <StyledButton icon={<PlusOutlined />} onClick={showModal}>
+            Create {title}
+          </StyledButton>
+        </div>
       </div>
-      </div>
+      {/* Search Inputs */}
+      {renderSearchInputs()}
       {/* Table */}
-      {data.length > 0 ? (
+      {filteredData.length > 0 ? (
         <Table
           className='anttable'
           columns={columns}
-          dataSource={data}
+          dataSource={filteredData}
           rowKey={record => getId(record)} // Correctly returns the ID
           pagination={{ pageSize: 10 }} // Optional: Add pagination
           bordered // Optional: Add borders for better visibility
@@ -856,6 +1143,123 @@ const ManageContentTable = ({ contentType }) => {
         )}
       </Modal>
 
+      {/* Edit Price Modal */}
+      <Modal
+        title="Edit Batch Type Price"
+        visible={isEditModalVisible}
+        onCancel={closeEditModal}
+        footer={null}
+      >
+        <Form
+          form={editPriceForm}
+          layout="vertical"
+          onFinish={handleEditSubmit}
+        >
+          <Form.Item
+            label="New Title"
+            name="title"
+            rules={[
+              { required: true, message: 'Please enter the title!' },
+              // Add additional validation rules if necessary
+            ]}
+          >
+            <Input placeholder="Enter Title" />
+          </Form.Item>
+          {/* Features */}
+          <Form.Item label="Features" >
+            <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
+              <Input
+                value={featureInput}
+                onChange={(e) => setFeatureInput(e.target.value)}
+                onKeyDown={handleFeatureKeyDown}
+                placeholder="Enter a feature"
+              />
+              <Button
+                type="primary"
+                onClick={handleAddFeature}
+                disabled={!featureInput.trim() || features.length >= MAX_FEATURES}
+              >
+                <FaPlus /> Add
+              </Button>
+            </div>
+            {features.length >= MAX_FEATURES && (
+              <Alert message={`You can only add up to ${MAX_FEATURES} features.`} type="warning" />
+            )}
+            {features.length > 0 && (
+              <ul style={{ listStyle: "none", paddingLeft: 0 }}>
+                {features.map((feature, index) => (
+                  <li key={index} style={{ marginBottom: "4px" }}>
+                    {feature}{" "}
+                    <Button
+                      danger
+                      type="text"
+                      icon={<FaTrash />}
+                      onClick={() => handleRemoveFeature(feature)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Form.Item>
+          <Form.Item
+            label="New Price (₹)"
+            name="newPrice"
+            rules={[
+              { required: true, message: 'Please enter a new price!' },
+              { type: 'number', min: 0, message: 'Price must be a positive number!' },
+            ]}
+          >
+            <InputNumber
+              min={0}
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+              Save Changes
+            </Button>
+            <Button onClick={closeEditModal} style={{ marginLeft: '8px' }}>
+              Cancel
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+      {/* Edit Discount Modal */}
+      <Modal
+        title="Edit Discount Percentage"
+        visible={isDiscountModalVisible}
+        onCancel={closeDiscountModal}
+        footer={null}
+      >
+        <Form
+          form={editDiscountForm}
+          layout="vertical"
+          onFinish={handleDiscountSubmit}
+        >
+          <Form.Item
+            label="New Discount Percentage (%)"
+            name="newDiscountPercentage"
+            rules={[
+              { required: true, message: 'Please enter a new discount percentage!' },
+              { type: 'number', min: 0, max: 100, message: 'Percentage must be between 0 and 100!' },
+            ]}
+          >
+            <InputNumber
+              min={0}
+              max={100}
+              style={{ width: '100%' }}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={isSubmitting}>
+              Save Changes
+            </Button>
+            <Button onClick={closeDiscountModal} style={{ marginLeft: '8px' }}>
+              Cancel
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
       {/* Image Modal */}
       <Modal
         visible={imageModalVisible}
@@ -864,8 +1268,10 @@ const ManageContentTable = ({ contentType }) => {
       >
         <img src={selectedImage} alt="Full View" style={{ width: '100%' }} />
       </Modal>
-    </Container>
+    </Container >
+
   );
+
 };
 
 export default ManageContentTable;

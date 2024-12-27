@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { theme, media } from "../../../style/theme/theme";
 
 export const ContactUsWarp = styled.div`
-  background: ${theme.colors.white};
+  background: linear-gradient(to bottom, white, #6b11cb3d);
   width: 100%;
 
   display: flex;
@@ -33,21 +33,21 @@ export const ContactForm = styled.div`
 
   .ContactButton {
     width: 100%;
-    background: #00c897;
+    background: #6a11cb;
     color: #fff;
     border: none;
 
     &:hover {
       border: none;
       color: #fff;
-      background-color: #47ff60;
+      background: #6a11cb;
     }
   }
 
   :where(.css-dev-only-do-not-override-49qm).ant-btn-variant-outlined:not(
       :disabled
     ):not(.ant-btn-disabled):hover {
-    background: #01edb2;
+    background: #6a11cb;
     color: #fff;
   }
 
@@ -90,16 +90,17 @@ export const ContactImageContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 500px;
 `;
 
 export const ContactInfo = styled.div`
   display: flex;
   justify-content: space-around;
-  margin-top: 20px;
+  /* margin-top: 20px; */
+  padding: 20px 0;
   flex-direction: row;
-  // background: ${theme.colors.white};
+  background: #6011cb3d;
   @media(max-width:576px){
     flex-direction: column;
   }

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { getStudentByAuthId } from "../../../../api/studentApi";
 import { useNavigate } from "react-router-dom";
 import "./PaymentScreen.css";
+import Header from "../../components/Header/Header";
 // import "./PaymentScreen.css";
 import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import PaymentComponent from "../../components/PaymentComponent/PaymentComponet";
@@ -41,7 +42,7 @@ const PaymentScreen = () => {
 
     return (
         <div className="hellololo-payment">
-            <HeaderSection />
+            <Header/>
             <div className="board-container-payment">
                 <div className="skill-card-payment">
                 <div className="header-payment-icon">

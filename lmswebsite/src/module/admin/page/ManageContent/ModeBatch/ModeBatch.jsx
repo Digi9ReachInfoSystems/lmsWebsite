@@ -32,6 +32,7 @@ const ModeBatch = () => {
   const [selectedClass, setSelectedClass] = useState("");
   const [subjectData, setSubjectData] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
+  const[batchType, setBatchType] = useState(false);
 
   const MAX_FEATURES = 10;
 
@@ -147,7 +148,9 @@ const ModeBatch = () => {
       discountedPrice: discountedPrice ? parseFloat(discountedPrice) : undefined,
       features,
       title,
-      subject_id: selectedSubject,
+      subject_id: selectedSubject?selectedSubject:undefined,
+      custom_batch: batchType,
+      class_id: selectedClass ? selectedClass : undefined
     };
 
     // Debugging: Log the data being sent to the API
@@ -193,6 +196,17 @@ const ModeBatch = () => {
             placeholder="Enter batch title"
           />
         </AntdForm.Item>
+        <AntdForm.Item label="Batch Type" required>
+          <AntdSelect
+            value={batchType}
+            onChange={(val) => setBatchType(val)}
+            placeholder="Select Batch Type"
+          >
+            <Option value="false">Select Batch Type</Option>
+            <Option value="true">Custom</Option>
+            <Option value="false">Normal</Option>
+          </AntdSelect>
+        </AntdForm.Item>
 
         {/* Mode */}
         <AntdForm.Item label="Type of Batch" required>
@@ -210,7 +224,7 @@ const ModeBatch = () => {
         </AntdForm.Item>
 
         {/* Board */}
-        <AntdForm.Item label="Select Board" required>
+        <AntdForm.Item label="Select Board" required={batchType==="false"}>
           <AntdSelect
             placeholder="Select Board"
             value={selectedBoard}
@@ -220,6 +234,7 @@ const ModeBatch = () => {
               setSubjectData([]);
               setSelectedSubject("");
             }}
+            disabled={batchType==="true"}
           >
             <Option value="">-- Select Board --</Option>
             {boardData.map((board) => (
@@ -231,11 +246,12 @@ const ModeBatch = () => {
         </AntdForm.Item>
 
         {/* Class */}
-        <AntdForm.Item label="Select Class" required>
+        <AntdForm.Item label="Select Class" required={batchType==="false"}>
           <AntdSelect
             placeholder="Select Class"
             value={selectedClass}
             onChange={(val) => setSelectedClass(val)}
+            disabled={batchType==="true"}
           >
             <Option value="">-- Select Class --</Option>
             {classData.map((classItem) => (
@@ -247,11 +263,12 @@ const ModeBatch = () => {
         </AntdForm.Item>
 
         {/* Subject */}
-        <AntdForm.Item label="Select Subject" required>
+        <AntdForm.Item label="Select Subject" required={batchType==="false"}>
           <AntdSelect
             placeholder="Select Subject"
             value={selectedSubject}
             onChange={(val) => setSelectedSubject(val)}
+            disabled={batchType==="true"}
           >
             <Option value="">-- Select Subject --</Option>
             {subjectData.map((subject) => (
@@ -306,7 +323,7 @@ const ModeBatch = () => {
         </AntdForm.Item> */}
 
         {/* Features */}
-        <AntdForm.Item label="Features">
+        <AntdForm.Item label="Features" >
           <div style={{ display: "flex", gap: "8px", marginBottom: "8px" }}>
             <AntdInput
               value={featureInput}
@@ -347,7 +364,7 @@ const ModeBatch = () => {
         {success && <Alert style={{ marginBottom: 10 }} message={success} type="success" />}
 
         {/* Submit Button */}
-        <AntdButton type="primary" htmlType="submit">
+        <AntdButton type="primary" htmlType="submit" >
           Create
         </AntdButton>
       </AntdForm>

@@ -77,3 +77,25 @@ export const getTypeOfBatchBySubjectId= async(subjectId) =>{
         throw error; // Re-throw the error to handle it in the calling function
     }
 }
+
+export const getCustomTypeOfBatch= async() =>{
+    try {
+        const response = await api.get(`/typeOfBatch/custom/typeofbatch`);
+        console.log("Type of batch fetched successfully:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all type of batches:", error.response?.data || error.message);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+}
+
+export const getTypeOfBatchByClassId= async(classId,batchType) =>{
+    try {
+        const response = await api.get(`/typeOfBatch/class/${classId}/${batchType}`);
+        console.log("Type of batch fetched successfully:", response.data);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching all type of batches:", error.response?.data || error.message);
+        throw error; // Re-throw the error to handle it in the calling function
+    }
+}

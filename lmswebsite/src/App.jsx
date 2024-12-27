@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -106,7 +106,14 @@ import AssignmentResponse from "./module/teacher/pages/Quizz/AssignmentResponse/
 import StudentAssignment from "./module/student/pages/StudentAssignment/StudentAssignment";
 import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpload/StudentAssignmentUpload";
 import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
+import ReactGA from "react-ga";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
+
+ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
+  useEffect(() => {
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  }, []);
   const [count, setCount] = useState(0);
 
   return (
@@ -185,6 +192,14 @@ function App() {
               </PublicRoute>
             }
           />
+          <Route
+            path="*"
+            element={
+              <PublicRoute>
+                <PageNotFound />
+              </PublicRoute>
+            }
+          />
           {/* <Route path="/testing/:boardId" element={<BoardDetailPage />} /> */}
           <Route
             path="/pages/BatchesDetailPage/BatchesLandingPage/:boardId"
@@ -230,7 +245,15 @@ function App() {
             element={<RefundCancellationPolicy />}
           />
           <Route path="/DisclaimerPolicy" element={<DisclaimerPolicy />} />
-          <Route path="/student/dashboard" element={<StudentDashboardLayout />}>
+          <Route
+            path="/student/dashboard"
+            element={
+              <ProtectedRoute allowedRoles={["student"]}>
+                {" "}
+                <StudentDashboardLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<StudentDashboardScreen />} />
             <Route
               path="/student/dashboard/circular"
@@ -284,7 +307,7 @@ function App() {
           <Route
             path="/teacher/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["teacher"]}>
                 <TeacherDashboardLayout />
               </ProtectedRoute>
             }
@@ -340,7 +363,7 @@ function App() {
           <Route
             path="/admin"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowedRoles={["admin"]}>
                 <DashboardLayout />
               </ProtectedRoute>
             }
