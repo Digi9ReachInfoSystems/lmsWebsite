@@ -6,6 +6,7 @@ const SummaryDrawer = ({ onClose }) => {
     selectedBoard: {},
     selectedClass: {},
     selectedBatch: {},
+    selectedSubject:{},
     selectedDuration: {},
     taxes: 0,
     grandTotal: 0,
@@ -23,13 +24,22 @@ const SummaryDrawer = ({ onClose }) => {
     const baseTotal = duration.totalAmount || 0;
     const taxes = baseTotal * 0.18; // 18% GST
     const grandTotal = baseTotal + taxes;
-    //console.log("grandTotal", grandTotal);
+    const subject=JSON.parse(localStorage.getItem("subjects"));
+    const subId=JSON.parse(localStorage.getItem("selectedSubjects"));
+    const sub=subject.filter(subject=>{ 
+
+      if(subject._id===subId){
+        return subject
+      }
+    });
+
     localStorage.setItem("totalAmount", JSON.stringify(grandTotal));
     setSummary({
       selectedBoard: board,
       selectedClass,
       selectedBatch: batch,
       selectedDuration: duration,
+      selectedSubject:sub[0],
       taxes: taxes.toFixed(2),
       grandTotal: grandTotal.toFixed(2),
     });
@@ -59,6 +69,12 @@ const SummaryDrawer = ({ onClose }) => {
             <span className="summary-label">Class</span>
             <span className="summary-value">
               {summary.selectedClass.className || "Not Selected"}
+            </span>
+          </div>
+          <div className="summary-item">
+            <span className="summary-label">Subject</span>
+            <span className="summary-value">
+              {summary.selectedSubject?.subject_name || "Not Selected"}
             </span>
           </div>
           <div className="summary-item">
@@ -96,7 +112,7 @@ const SummaryDrawer = ({ onClose }) => {
             className="signin-btn"
             onClick={handleSignIn}
           >
-            Create an Account
+           Signup To Continue with the Payment
           </button>
         </div>
       </div>

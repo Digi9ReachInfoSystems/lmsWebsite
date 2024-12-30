@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import combo from "../../../Main/assets/combo.avif";
 
 function SubjectScreen() {
-  const [selectedSubjects, setSelectedSubjects] = useState([]); // To track selected subjects
+  const [selectedSubjects, setSelectedSubjects] = useState(); // To track selected subjects
   const [subjects, setSubjects] = useState([]); // Subjects state
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -43,12 +43,13 @@ function SubjectScreen() {
 
   // Toggle subject selection
   const toggleSelection = (subjectId) => {
-    setSelectedSubjects(
-      (prevSelected) =>
-        prevSelected.includes(subjectId)
-          ? prevSelected.filter((id) => id !== subjectId) // Deselect
-          : [...prevSelected, subjectId] // Select
-    );
+    setSelectedSubjects(subjectId)
+    // setSelectedSubjects(
+    //   (prevSelected) =>
+    //     prevSelected.includes(subjectId)
+    //       ? prevSelected.filter((id) => id !== subjectId) // Deselect
+    //       : [...prevSelected, subjectId] // Select
+    // );
   };
 
   // Continue to the next page
@@ -96,7 +97,7 @@ function SubjectScreen() {
               <div
                 key={subject._id}
                 className={`skill-card ${
-                  selectedSubjects.includes(subject._id) ? "selected" : ""
+                  selectedSubjects==subject._id ? "selected" : ""
                 }`}
                 onClick={() => toggleSelection(subject._id)} // Toggle subject selection
               >
@@ -137,7 +138,7 @@ function SubjectScreen() {
         <div className="navigation">
           <button
             className="next-btn"
-            disabled={selectedSubjects.length === 0} // Disable if no subjects are selected
+            disabled={!selectedSubjects} // Disable if no subjects are selected
             onClick={handleContinue}
           >
             Continue
