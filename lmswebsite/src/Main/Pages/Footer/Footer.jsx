@@ -55,7 +55,7 @@ function Footer() {
       </div>
       <div></div>
       <div className="footer-bottom">
-        <h3 style={{ color: "black" , fontSize: "1.3rem"}}>Legal Documents</h3>
+        <h3 style={{ color: "black", fontSize: "1.3rem" }}>Legal Documents</h3>
         <p>
           <Link to="/privacy-policy" className="footer-link">
             Privacy Policy
@@ -117,6 +117,7 @@ function Footer() {
             Roy Career Solutions Private Limited, Bengaluru, Karnataka-560018
           </p>
         </p>
+        <p></p>
       </div>
     </footer>
   );
