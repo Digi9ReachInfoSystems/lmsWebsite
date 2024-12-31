@@ -62,17 +62,43 @@ const ManagePayment = () => {
       render: (text, record) => <span>{record.student_id.user_id.name}</span>,
     },
     {
+      title: "Class",
+      dataIndex: ["student_id", "class", "className"],
+      key: "className",
+      render: (text, record) => (
+        <span>{record.student_id.class?.className}</span>
+      ),
+    },
+    {
       title: "Email",
       dataIndex: ["student_id", "user_id", "email"],
       key: "email",
       render: (text, record) => <span>{record.student_id.user_id.email}</span>,
     },
     {
-      title: "Package Name",
-      dataIndex: ["package_id", "package_name"],
-      key: "package_name",
-      render: (text, record) =>
-        record.package_id ? record.package_id.package_name : "N/A",
+      title: "Type of Batch",
+      dataIndex: ["student_id", "type_of_batch"],
+      key: "typeOfBatch",
+      render: (_, record) => record.student_id.type_of_batch?.mode || "N/A",
+    },
+    {
+      title: "Board",
+      dataIndex: ["student_id", "board_id"],
+      key: "board",
+      render: (_, record) => record.student_id.board_id?.name || "N/A",
+    },
+    {
+      title: "Subjects",
+      dataIndex: ["student_id", "subject_id"], // Adjust to point to the correct data path
+      key: "subjects",
+      render: (_, record) => {
+        const subjects = record.student_id?.subject_id || [];
+        return subjects.length > 0
+          ? subjects
+              .map((subject) => subject._id?.subject_name || "N/A")
+              .join(", ")
+          : "N/A";
+      },
     },
     {
       title: "Amount",
@@ -230,6 +256,10 @@ const ManagePayment = () => {
               </p>
               <p>
                 <strong>Description:</strong> {selectedPayment.description}
+              </p>{" "}
+              <p>
+                <strong>Class</strong>{" "}
+                {selectedPayment.student_id.class?.className}
               </p>
               <p>
                 <strong>Created At:</strong>{" "}
