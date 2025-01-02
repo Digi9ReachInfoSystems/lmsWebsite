@@ -28,6 +28,7 @@ import { auth } from "../../../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "../../../assets/Logofinal.png";
+import { newlogin } from "../../../api/mailNotificationApi";
 
 function HeaderSection() {
   const navigate = useNavigate();
@@ -136,10 +137,10 @@ function HeaderSection() {
         loggedIn: "true",
         role: profileData.user.role,
       };
-
+      await newlogin(profileData._id);
+      // console.log("user", user);
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
-      console.log("userProfileData", profileData);
-
+      //  console.log("userProfileData", profileData);
       // Navigate by role
       if (profileData.user.role === "admin") {
         navigate("/admin");
@@ -149,13 +150,10 @@ function HeaderSection() {
           (studentData.student.custom_package_status === "no_package" ||
             studentData.student.custom_package_status === "pending") &&
           studentData.student.is_paid === false &&
-          !studentData.student.amount
+          (!studentData.student.amount)
         ) {
           navigate("/student");
-        } else if (
-          studentData.student.amount &&
-          studentData.student.is_paid === false
-        ) {
+        } else if (studentData.student.amount && studentData.student.is_paid === false) {
           navigate("/paymentScreen");
         } else {
           navigate("/student/dashboard");

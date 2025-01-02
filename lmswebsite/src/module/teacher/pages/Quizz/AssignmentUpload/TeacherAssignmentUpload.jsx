@@ -38,6 +38,7 @@ import moment from "moment"; // For date handling
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoArrowBackOutline } from "react-icons/io5";
+import { newAssignmentCreated } from "../../../../../api/mailNotificationApi";
 
 const { Option } = Select;
 const { Text, Link, Title } = Typography;
@@ -225,12 +226,13 @@ const TeacherAssignmentUpload = () => {
         teacher_id: teacherId,
         content_url: contentUrl,
         expiry_date: expiry_date.toISOString(),
-      };
+      }; 
 
       // Debugging: Log the payload to ensure all fields are present
       //console.log("Submitting Assignment Payload:", payload);
 
       const newAssignment = await createAssignment(payload);
+      await newAssignmentCreated(batch_id);
 
       //console.log("Created Assignment:", newAssignment); // Debugging
 

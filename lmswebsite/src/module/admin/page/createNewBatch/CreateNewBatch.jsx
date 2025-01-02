@@ -11,6 +11,7 @@ import { set } from "lodash";
 import dayjs from "dayjs";
 import { getBoards } from "../../../../api/boardApi";
 import { getClassesByBoardId } from "../../../../api/classApi";
+import { batchCreatedAdmin } from "../../../../api/mailNotificationApi";
 
 const { Option } = Select;
 
@@ -149,6 +150,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
         type_of_batch: values.type_of_batch,
 
       }
+      await batchCreatedAdmin(submissionData.teacher_id,submissionData.students,submissionData.subject_id,submissionData.batch_name);
       //console.log("submissionData", submissionData);
 
       const response = await createBatch(submissionData);

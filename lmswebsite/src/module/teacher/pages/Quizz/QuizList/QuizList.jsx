@@ -42,6 +42,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { SubHeading } from "../../../../../components/common/landingPageComponents/SingleCoursePerClass.styles";
 import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
+import { newQuizCreated } from "../../../../../api/mailNotificationApi";
 
 const { Panel } = Collapse;
 const { Title, Text } = Typography;
@@ -136,6 +137,7 @@ export default function QuizList() {
 
     try {
       const response = await createQuiz(formData);
+      await newQuizCreated(formData.batch_index, formData.subject);
       if (response && response.quiz) {
         setQuizzes((prevQuizzes) => [...prevQuizzes, response.quiz]);
         setOriginalData((prevQuizzes) => [...prevQuizzes, response.quiz]);

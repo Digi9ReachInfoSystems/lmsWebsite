@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { uploadFileToFirebase } from '../../../../utils/uploadFileToFirebase';
 import { addStudentResponse } from '../../../../api/assignmentApi';
 import { getStudentByAuthId } from '../../../../api/studentApi';
+import { assignmentSubmited } from '../../../../api/mailNotificationApi';
 
 // Replace this with your actual authentication logic
 const getAuthId = () => {
@@ -62,7 +63,9 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
       };
 
       // Submit the response via API
+      await assignmentSubmited(assignment._id,studentId);
       await addStudentResponse(assignment._id, responseData);
+    
 
       // Optionally, show success message or refresh data
       alert('Assignment submitted successfully!');

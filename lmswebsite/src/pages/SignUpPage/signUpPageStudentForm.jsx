@@ -28,6 +28,7 @@ import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import SignUpImage from "../../assets/Logofinal.png";
 import { getUserByAuthId } from "../../api/userApi";
+import { studentAccountCreated, studentSignedUpAdmin } from "../../api/mailNotificationApi";
 
 const { Option } = Select;
 const { Title, Text } = Typography;
@@ -120,6 +121,8 @@ const StudentForm = () => {
 
       console.log("Submitting Student Data:", data);
       await signupUser(data);
+      await studentAccountCreated( values.student_name, values.email, values.password);
+      await studentSignedUpAdmin( values.student_name, values.email);
 
       // Clear local storage and navigate to login
       localStorage.clear();

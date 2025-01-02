@@ -18,6 +18,7 @@ import { FiMessageSquare, FiPhoneCall } from "react-icons/fi";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { LiaFacebookMessenger } from "react-icons/lia";
 import { IoInformationCircleOutline } from "react-icons/io5";
+import { customerQuery, customerQueryAdmin } from "../../../api/mailNotificationApi";
 
 const ContactUs = () => {
   const contactItems = [
@@ -69,6 +70,8 @@ const ContactUs = () => {
       };
       // Call the API to create the query
       const response = await createQuery(submissionData);
+      await customerQueryAdmin(values.title,  values.email);
+      await customerQuery(values.title,  values.email);
 
       if (response) {
         //console.log("Query successfully submitted:", response);

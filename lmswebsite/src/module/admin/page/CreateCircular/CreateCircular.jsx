@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast from react-toastify
 import "react-toastify/dist/ReactToastify.css";
+import { circularCreatedAdmin } from "../../../../api/mailNotificationApi";
 
 const { TextArea } = Input;
 
@@ -51,6 +52,7 @@ const CreateCircular = ({ closeModal }) => {
 
     try {
       const response = await createCircularNotificationApi(notificationData);
+      await circularCreatedAdmin(notificationData.role);
       toast.success("Circular created successfully!");
       setError("");
       setTitle("");
