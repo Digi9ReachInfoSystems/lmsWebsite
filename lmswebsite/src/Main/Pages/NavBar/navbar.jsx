@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   AppBar,
   Toolbar,
@@ -30,11 +30,6 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../../../assets/Logofinal.png";
 import { newlogin } from "../../../api/mailNotificationApi";
 
-/* 
-  Imported custom style elements can remain 
-  import { StyledLink, HamburgerMenu, StyledBox } from "./navbar.style"; 
-*/
-
 function HeaderSection() {
   const navigate = useNavigate();
 
@@ -52,6 +47,9 @@ function HeaderSection() {
   const [isNestedOpen, setIsNestedOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // for the hamburger menu
 
+  // ** Ref for the dropdown menu container **
+  const dropdownRef = useRef(null);
+
   // Logo click -> homepage
   const handleLogoClick = () => {
     navigate("/");
@@ -61,7 +59,6 @@ function HeaderSection() {
     setIsCoursesOpen((prev) => !prev);
   };
 
-  // Example category mouse enter
   const handleCategoryMouseEnter = async (category) => {
     setSelectedCategory(category);
     setIsNestedOpen(true);
@@ -71,15 +68,19 @@ function HeaderSection() {
         const fetchedBoards = await getBoards(category);
         setBoards((prev) => ({ ...prev, [category]: fetchedBoards }));
       } catch (error) {
-        //console.error(`Error fetching boards: ${error}`);
+        // console.error(`Error fetching boards: ${error}`);
       }
     }
   };
 
+  // Close the dropdown if user clicks outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsCoursesOpen(false);
+        setIsNestedOpen(false);
+        setSelectedCategory(null);
+        setHoveredBoardId(null);
       }
     };
 
@@ -96,9 +97,18 @@ function HeaderSection() {
         const fetchedClasses = await getClassesByBoardId(boardId);
         setClasses((prev) => ({ ...prev, [boardId]: fetchedClasses }));
       } catch (error) {
-        //console.error(`Error fetching classes: ${error}`);
+        // console.error(`Error fetching classes: ${error}`);
       }
     }
+  };
+
+  // ** NEW: Navigate to board page on click **
+  const handleBoardClick = (boardId) => {
+    // For example, navigate to "/boards/<boardId>"
+    navigate(`/selectBoard`);
+    // Optionally close the dropdown
+    setIsCoursesOpen(false);
+    setIsNestedOpen(false);
   };
 
   // Drawer toggles
@@ -113,7 +123,6 @@ function HeaderSection() {
 
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
-
       localStorage.setItem(
         "sessionData",
         JSON.stringify({ accessToken: user.accessToken })
@@ -206,10 +215,9 @@ function HeaderSection() {
           }}
         >
           {/* Courses Dropdown Trigger */}
-          <Box sx={{ position: "relative" }}>
+          <Box sx={{ position: "relative" }} ref={dropdownRef}>
             <Box
               onMouseEnter={handleDropdownToggle}
-              // onMouseLeave={handleDropdownToggle}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -292,7 +300,8 @@ function HeaderSection() {
                         {boards["School"].map((board) => (
                           <Box
                             key={board._id}
-                            onClick={() => handleBoardMouseEnter(board._id)}
+                            // Replace handleBoardMouseEnter with handleBoardClick
+                            onClick={() => handleBoardClick(board._id)}
                             sx={{
                               cursor: "pointer",
                               "&:hover": {
@@ -466,7 +475,6 @@ function HeaderSection() {
             Features
           </Link>
           <Link
-            // href="/blogs"
             underline="none"
             sx={{
               color: "#333",
