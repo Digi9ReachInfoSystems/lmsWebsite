@@ -14,6 +14,7 @@ const PaymentComponent = ({ studentId, amount }) => {
       const orderResponse = await axiosInstance.post('/api/payments/create-order', {
         studentId,
         amount,
+        subjectId,
         description: 'Purchase of Premium Package', // Optional
       });
       const studentData= await getStudentById(studentId);

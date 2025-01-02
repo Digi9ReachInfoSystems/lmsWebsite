@@ -84,7 +84,7 @@ const PaymentScreen = () => {
                     </div>
 
 
-                    <PaymentComponent studentId={student._id} amount={student.amount} />
+                    <PaymentComponent studentId={student._id} amount={student.amount} subjectId={student.subject_id[0]._id} />
 
 
                 </div>
