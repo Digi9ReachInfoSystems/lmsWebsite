@@ -1,5 +1,5 @@
 // src/api/notificationApi.js
-import api from './axiosConfig';
+import api from '../config/axiosConfig';
 
 /**
  * Function to create a new notification

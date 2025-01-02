@@ -86,6 +86,17 @@ export const approveTeacherApplication = async (applicationId,data) => {
     }
 };
 
+export const rejectTeacherApplication = async (applicationId) => {
+  try {
+      const response = await api.put(`/teacher-application/reject/${applicationId}`);
+      //console.log('Teacher application approved successfully:', response.data);
+      return response.data; // Return the response data
+  } catch (error) {
+      //console.error('Error approving teacher application:', error.response?.data || error.message);
+      throw error; // Throw the error for further handling
+  }
+};
+
 /**
  * Fetch a single teacher's application by ID.
  * @param {string} applicationId - The ID of the application to fetch.

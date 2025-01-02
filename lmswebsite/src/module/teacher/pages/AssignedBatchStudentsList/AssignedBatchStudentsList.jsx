@@ -25,6 +25,7 @@ import { BodyText, Heading, PageContainer, PrimaryButton } from "../../../../sty
 import { AssignedBatchStudentsListContainer } from "./AssignedBatchStudentsList.style"
 import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
+import { newMaterialCreated, newQuizCreated } from "../../../../api/mailNotificationApi";
 const { RangePicker } = DatePicker;
 
 const AssignedBatchStudentsList = () => {
@@ -134,9 +135,10 @@ const AssignedBatchStudentsList = () => {
       };
 
       //////console.log("Creating meeting with payload:", meetingPayload);
-
+     const batcData= await getBatchById(batchId);
       // Call the API to create the meeting
       const response = await createMeeting(meetingPayload);
+      await newQuizCreated(batchId, batcData.batch.subject_id);
       message.success("Meeting created successfully!");
 
       setIsModalVisible(false);
@@ -198,7 +200,8 @@ const AssignedBatchStudentsList = () => {
       setLoading(true);
       // Call the uploadContent API function
       const response = await uploadContent(batchId, teacherId, file, description);
-      ////console.log("Content uploaded successfully:", response);
+      await newMaterialCreated(batchId);
+     ////console.log("Content uploaded successfully:", response);
       message.success("Content uploaded successfully!");
       setIsModel2visble(false); // Close the modal after success
       form.resetFields(); // Reset the form

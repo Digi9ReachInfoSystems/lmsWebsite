@@ -12,6 +12,7 @@ import { auth } from "../../config/firebaseConfig";
 import { uploadFileToFirebase } from "../../utils/uploadFileToFirebase";
 import { signupUser } from "../../api/authApi";
 import { getUserByAuthId } from "../../api/userApi";
+import { studentAccountCreated, studentSignedUpAdmin } from "../../api/mailNotificationApi";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -107,6 +108,8 @@ const SignUpPage = () => {
       };
       //console.log(data);
       await signupUser(data);
+      await studentAccountCreated(formData.name,formData.email,formData.password);
+      await studentSignedUpAdmin(formData.name,formData.email);
       message.success("Registration Successful!");
       try {
         const userCredential = await signInWithEmailAndPassword(

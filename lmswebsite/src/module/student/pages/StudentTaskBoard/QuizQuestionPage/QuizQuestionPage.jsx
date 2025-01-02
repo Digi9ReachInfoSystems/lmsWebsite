@@ -13,6 +13,7 @@ import {
   PrimaryButton,
   Subheading,
 } from "../../../../../style/PrimaryStyles/PrimaryStyles";
+import { quizResponseSubmited } from "../../../../../api/mailNotificationApi";
 
 const QuizQuestionPage = () => {
   const { state } = useLocation();
@@ -67,6 +68,7 @@ const QuizQuestionPage = () => {
 
     try {
       const result = await submitResponse(responseData);
+      await quizResponseSubmited(quiz._id, studentId);
       ////console.log("Response submitted successfully:", result);
 
       if (result && result.response) {
