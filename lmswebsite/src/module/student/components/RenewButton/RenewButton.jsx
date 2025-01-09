@@ -7,7 +7,7 @@ import { getStudentById } from '../../../../api/studentApi';
 import { useNavigate } from 'react-router-dom';
 import { razorPayKeys } from '../../../../config/razorpayConfig';
 const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
-    //console.log("prpos", studentId, amount,batchId,subjectId,duration)
+    console.log("prpos", studentId, amount,batchId,subjectId,duration)
   const navigate = useNavigate();
   const handlePayment = async () => {
     try {
@@ -15,13 +15,14 @@ const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
       const orderResponse = await axiosInstance.post('/api/payments/create-order-renewal', {
         studentId,
         amount,
-        description: 'Purchase of Premium Package', // Optional
+        description: 'Purchase of Premium Package 124', // Optional
         batchId,
         subjectId,
         duration
       });
       const studentData= await getStudentById(studentId);
       const order = orderResponse.data;
+      console.log("order",order);
 
       // Step 2: Initialize Razorpay Checkout
       const options = {
@@ -33,7 +34,7 @@ const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
         image: razorPayKeys.logo, // Optional: Logo image
         order_id: order.id,
         handler: async function (response) {
-          //console.log(response);
+          console.log(response);
           // Step 3: Verify Payment on Backend
           try {
             // const verificationResponse = await axiosInstance.post('/api/payments/verify-payment', {
@@ -69,9 +70,17 @@ const RenewButton = ({ studentId, amount,batchId,subjectId,duration }) => {
           color: '#3399cc', // Customize the color as needed
         },
       };
+      console.log("options",options);
 
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
+      console.log("rzp1",rzp1);
+     
+      rzp1.on('payment.failed', function (response){
+            console.log(response);
+            alert("This step of Payment Failed");
+      });
+      
     } catch (error) {
       //console.error('Error initiating payment:', error);
       alert('Could not initiate payment. Please try again.');

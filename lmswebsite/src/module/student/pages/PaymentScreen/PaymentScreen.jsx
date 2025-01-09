@@ -10,7 +10,7 @@ import { MdOutlineMarkEmailRead } from "react-icons/md";
 
 const PaymentScreen = () => {
     const navigate = useNavigate();
-    const [student, setStudent] = useState({ name: "", email: "" });
+    const [student, setStudent] = useState();
     const [totalPrice, setTotalPrice] = useState("500"); // Default total price
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,6 +21,7 @@ const PaymentScreen = () => {
                 const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
                 const response = await getStudentByAuthId(authId);
                 //    ////console.log("response", response);
+                console.log("response", response);
                 setStudent(response.student); // Populate student details
                 setLoading(false);
             } catch (err) {
@@ -84,7 +85,7 @@ const PaymentScreen = () => {
                     </div>
 
 
-                    <PaymentComponent studentId={student._id} amount={student.amount} subjectId={student.subject_id[0]._id} />
+                    <PaymentComponent studentId={student._id} amount={student.amount} subjectId={student.subject_id} />
 
 
                 </div>

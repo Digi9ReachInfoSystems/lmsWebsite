@@ -6,7 +6,7 @@ import { EnrollButton  }from "./PaymentComponet.style";
 import { getStudentById } from '../../../../api/studentApi';
 import { useNavigate } from 'react-router-dom';
 import { razorPayKeys } from '../../../../config/razorpayConfig';
-const PaymentComponent = ({ studentId, amount }) => {
+const PaymentComponent = ({ studentId, amount ,subjectId}) => {
   const navigate = useNavigate();
   const handlePayment = async () => {
     try {
@@ -14,11 +14,12 @@ const PaymentComponent = ({ studentId, amount }) => {
       const orderResponse = await axiosInstance.post('/api/payments/create-order', {
         studentId,
         amount,
-        subjectId,
+        subjectIds:subjectId,
         description: 'Purchase of Premium Package', // Optional
       });
       const studentData= await getStudentById(studentId);
       const order = orderResponse.data;
+      console.log("order",order);
 
       // Step 2: Initialize Razorpay Checkout
       const options = {
@@ -63,7 +64,7 @@ const PaymentComponent = ({ studentId, amount }) => {
           color: '#3399cc', // Customize the color as needed
         },
       };
-
+      console.log("options",options);
       const rzp1 = new window.Razorpay(options);
       rzp1.open();
     } catch (error) {

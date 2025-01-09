@@ -23,6 +23,7 @@ export const signupUser = async ( data) => {
       type_of_batch: data.type_of_batch || undefined,
       amount: data.amount || undefined,
       duration: data.duration || undefined,
+      is_paid: data.is_paid || false,
     };
 
     // Filter out undefined values from the request body

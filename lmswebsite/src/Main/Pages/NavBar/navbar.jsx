@@ -46,9 +46,10 @@ function HeaderSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isNestedOpen, setIsNestedOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // for the hamburger menu
-
+ const [form] = Form.useForm();
   // ** Ref for the dropdown menu container **
   const dropdownRef = useRef(null);
+
 
   // Logo click -> homepage
   const handleLogoClick = () => {
@@ -57,6 +58,7 @@ function HeaderSection() {
 
   const handleDropdownToggle = () => {
     setIsCoursesOpen((prev) => !prev);
+    form.resetFields();
   };
 
   const handleCategoryMouseEnter = async (category) => {
@@ -114,6 +116,7 @@ function HeaderSection() {
   // Drawer toggles
   const toggleDrawer = (open) => () => {
     setIsDrawerOpen(open);
+    form.resetFields();
   };
 
   // Login
@@ -137,7 +140,7 @@ function HeaderSection() {
         loggedIn: "true",
         role: profileData.user.role,
       };
-      await newlogin(profileData._id);
+      await newlogin(profileData.user._id);
       // console.log("user", user);
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
       //  console.log("userProfileData", profileData);
@@ -167,7 +170,14 @@ function HeaderSection() {
         }
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      console.log("Error logging in:", error);
+      if (error.code === "auth/invalid-credential") {
+        setErrorMessage("Incorrect Password or Email");
+      } else if (error.code=="auth/invalid-email") {
+        setErrorMessage("Incorrect  Email");
+      } else {
+        setErrorMessage("Network Error");
+      }
     }
 
     setIsSubmitting(false);
