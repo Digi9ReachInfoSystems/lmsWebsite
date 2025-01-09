@@ -152,10 +152,12 @@ function HeroContent() {
       <Box
         sx={{
           flex: "1",
-          textAlign: { xs: "center", md: "left" },
+          textAlign: { xs: "center" },
           zIndex: 2,
-          paddingLeft: { xs: 0, md: "10vw" },
+          paddingLeft: { xs: 0, md: "5vw" },
+          paddingRight: { xs: 0, md: "5vw" },
           paddingTop: { xs: "4rem", md: "8rem" },
+          width: { xs: "100%", md: "50%" },
         }}
       >
         <Typography
@@ -186,7 +188,7 @@ function HeroContent() {
           sx={{
             display: "flex",
             gap: "1rem",
-            justifyContent: { xs: "center", md: "flex-start" },
+            justifyContent: { xs: "center" },
           }}
         >
           <Button
