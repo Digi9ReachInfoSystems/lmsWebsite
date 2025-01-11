@@ -97,7 +97,7 @@ import SelectDuration from "./Main/Pages/SelectDuration/SelectDuration";
 import SelectType from "./Main/Pages/SelectType/SelectType";
 import PaymentScreen from "./module/student/pages/PaymentScreen/PaymentScreen";
 import StudentForm from "./pages/SignUpPage/signUpPageStudentForm";
-
+import { notification } from "antd";
 import ContactUs from "./Main/Pages/ContactUs/ContactUs";
 
 import Blog from "./Main/Pages/Blogs/Blog";
@@ -108,6 +108,7 @@ import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpl
 import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
 import ReactGA from "react-ga";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import useOnlineStatus from "./globalInternetConnection";
 
 ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
@@ -115,6 +116,23 @@ function App() {
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
   const [count, setCount] = useState(0);
+  const isOnline = useOnlineStatus();
+
+  useEffect(() => {
+    if (isOnline) {
+      notification.success({
+        message: "Back Online",
+        description: "Your internet connection has been restored.",
+        duration: 2,
+      });
+    } else {
+      notification.error({
+        message: "No Internet Connection",
+        description: "You are offline. Please check your internet connection.",
+        duration: 0, // Keep the notification open until dismissed
+      });
+    }
+  }, [isOnline]);
 
   return (
     <ThemeProvider theme={theme}>
