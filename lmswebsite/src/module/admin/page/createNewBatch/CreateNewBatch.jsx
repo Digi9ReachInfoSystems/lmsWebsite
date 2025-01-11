@@ -11,6 +11,7 @@ import { set } from "lodash";
 import dayjs from "dayjs";
 import { getBoards } from "../../../../api/boardApi";
 import { getClassesByBoardId } from "../../../../api/classApi";
+import { batchCreatedAdmin } from "../../../../api/mailNotificationApi";
 
 const { Option } = Select;
 
@@ -131,7 +132,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
       //console.log("Form Values:", values);
       // const batchData = {
       //   ...values,
-      //   date: values.date.format("YYYY-MM-DD"),
+        // date: values.date.format("YYYY-MM-DD"),
       //   teachers: values.teachers || [],
       //   students: values.students || [],
       // };
@@ -145,10 +146,11 @@ const CreateNewBatch = ({ open, closeModal }) => {
         class_id: values.class,
         students: values.students,
         subject_id: values.subject,
-        // date: newDate,
+        date: values.date.format("YYYY-MM-DD"),
         type_of_batch: values.type_of_batch,
 
       }
+      await batchCreatedAdmin(submissionData.teacher_id,submissionData.students,submissionData.subject_id,submissionData.batch_name);
       //console.log("submissionData", submissionData);
 
       const response = await createBatch(submissionData);
@@ -182,7 +184,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
           >
             <Input placeholder="Enter batch name" />
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="typeofBatch"
             label="Select Cutom/Normal"
             rules={[
@@ -209,7 +211,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
                 </Option>
             
             </Select>
-          </Form.Item>
+          </Form.Item> */}
           <Form.Item
             name="board_id"
             label="Select Board"
@@ -346,13 +348,13 @@ const CreateNewBatch = ({ open, closeModal }) => {
             </Form.Item>
           }
 
-          {/* <Form.Item
+          <Form.Item
             name="date"
-            label="Date"
+            label="Start Date"
             rules={[{ required: true, message: "Please select a date" }]}
           >
             <DatePicker style={{ width: "100%" }} />
-          </Form.Item> */}
+          </Form.Item>
 
           <Form.Item name="batchImage" label="Upload Batch Image" valuePropName="file">
             <Upload

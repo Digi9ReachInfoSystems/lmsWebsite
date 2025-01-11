@@ -109,6 +109,7 @@ import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
 import ReactGA from "react-ga";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import useOnlineStatus from "./globalInternetConnection";
+import PaymentLinkStatusPage from "./module/student/pages/paymentLinkStatusPage/paymentLinkStatusPage";
 
 ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
@@ -232,6 +233,7 @@ function App() {
           <Route path="/signupStudent" element={<StudentForm />} />
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/paymentScreen" element={<PaymentScreen />} />
+          <Route path="/paymentStatus" element={<PaymentLinkStatusPage />} />
           <Route path="/student" element={<StudentLandingPage />} />
           <Route path="/student/mode" element={<Mode />} />
           <Route path="/ContactUs" element={<ContactUs />} />

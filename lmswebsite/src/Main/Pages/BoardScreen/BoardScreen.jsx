@@ -35,7 +35,10 @@ function BoardScreen() {
   };
 
   const handleContinue = () => {
-    navigate("/classHomePage");
+    if (selectedBoardId) {
+      navigate("/classHomePage");
+    }
+
   };
 
   return (
@@ -56,9 +59,8 @@ function BoardScreen() {
           {boards.map((board) => (
             <div
               key={board._id}
-              className={`skill-card ${
-                selectedBoardId === board._id ? "selected" : ""
-              }`}
+              className={`skill-card ${selectedBoardId === board._id ? "selected" : ""
+                }`}
               onClick={() => handleBoardSelect(board._id)}
             >
               <div className="skill-icon">

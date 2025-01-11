@@ -28,6 +28,7 @@ import { auth } from "../../../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 import Logo from "../../../assets/Logofinal.png";
+import { newlogin } from "../../../api/mailNotificationApi";
 
 function HeaderSection() {
   const navigate = useNavigate();
@@ -45,9 +46,10 @@ function HeaderSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isNestedOpen, setIsNestedOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // for the hamburger menu
-
+ const [form] = Form.useForm();
   // ** Ref for the dropdown menu container **
   const dropdownRef = useRef(null);
+
 
   // Logo click -> homepage
   const handleLogoClick = () => {
@@ -56,6 +58,7 @@ function HeaderSection() {
 
   const handleDropdownToggle = () => {
     setIsCoursesOpen((prev) => !prev);
+    form.resetFields();
   };
 
   const handleCategoryMouseEnter = async (category) => {
@@ -113,6 +116,7 @@ function HeaderSection() {
   // Drawer toggles
   const toggleDrawer = (open) => () => {
     setIsDrawerOpen(open);
+    form.resetFields();
   };
 
   // Login
@@ -136,26 +140,27 @@ function HeaderSection() {
         loggedIn: "true",
         role: profileData.user.role,
       };
-
+      await newlogin(profileData.user._id);
+      // console.log("user", user);
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
-      console.log("userProfileData", profileData);
-
+      //  console.log("userProfileData", profileData);
       // Navigate by role
       if (profileData.user.role === "admin") {
         navigate("/admin");
       } else if (profileData.user.role === "student") {
         const studentData = await getStudentByAuthId(user.uid);
+        console.log("studentData", studentData);
         if (
-          (studentData.student.custom_package_status === "no_package" ||
-            studentData.student.custom_package_status === "pending") &&
-          studentData.student.is_paid === false &&
-          !studentData.student.amount
+          (studentData.student.mode == "personal" &&
+            studentData.student.paymentLink_status === "no_payment_link") &&
+          studentData.student.is_paid === false
+          //  &&
+          // (!studentData.student.amount)
         ) {
           navigate("/student");
-        } else if (
-          studentData.student.amount &&
-          studentData.student.is_paid === false
-        ) {
+        } else if (studentData.student.amount && studentData.student.is_paid === false&&studentData.student.paymentLink_status=="pending") {
+          navigate("/paymentStatus");
+        } else if (studentData.student.amount && studentData.student.is_paid === false) {
           navigate("/paymentScreen");
         } else {
           navigate("/student/dashboard");
@@ -169,7 +174,14 @@ function HeaderSection() {
         }
       }
     } catch (error) {
-      setErrorMessage(error.message);
+      console.log("Error logging in:", error);
+      if (error.code === "auth/invalid-credential") {
+        setErrorMessage("Incorrect Password or Email");
+      } else if (error.code=="auth/invalid-email") {
+        setErrorMessage("Incorrect  Email");
+      } else {
+        setErrorMessage("Network Error");
+      }
     }
 
     setIsSubmitting(false);

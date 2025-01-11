@@ -4,6 +4,7 @@ import { TeacherApplicationFormReviewWrap } from "./TeacherApplicationFormreview
 import {
   getSingleTeacherApplication,
   approveTeacherApplication,
+  rejectTeacherApplication,
 } from "../../../../api/teachersApplicationApi";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -26,6 +27,8 @@ import {
 } from "firebase/auth";
 import { auth } from "../../../../config/firebaseConfig";
 import { signupUser } from "../../../../api/authApi";
+import { teacherApplicationApproved } from "../../../../api/mailNotificationApi";
+import { set } from "lodash";
 
 const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const navigate = useNavigate();
@@ -33,6 +36,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [teacher_name, setTeacherName] = useState('');
+  const[teacher_email, setTeacherEmail] = useState('');
   const [form] = Form.useForm(); // Ant Design form instance
   const [isResumeModalVisible, setIsResumeModalVisible] = useState(false); // State for Resume Modal
   const [submitButton, setSubmitButton] = useState(false);
@@ -45,6 +49,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         }
         setTeacher(data);
         setTeacherName(data.application?.teacher_name);
+        setTeacherEmail(data.application?.email);
         ////console.log("Fetched Teacher Data:", data); // Debugging line
       } catch (err) {
         //console.error("Error fetching teacher:", err);
@@ -100,6 +105,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         auth_id: user.uid,
         user_id: userData.user._id,
       });
+      await teacherApplicationApproved(teacher_name,teacher_email, values.email,values.password);
       localStorage.setItem(
         "sessionData",
         JSON.stringify(oldSessionData)
@@ -116,11 +122,11 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
 
   const handleReject = async () => {
     try {
-      await approveTeacherApplication(teacher_Id, {
-        approval_status: "rejected",
-      });
+      await rejectTeacherApplication(teacher_Id);
       toast.error("Application rejected.");
       navigate("/admin/applicationFormReview"); // Redirect to applications list
+      closeModal();
+      window.location.reload();
     } catch (error) {
       //console.error("Error rejecting application:", error);
       toast.error("Failed to reject the application.");
@@ -253,7 +259,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
         </div>
         
         {/* Display Resume Link for Verification */}
-        <div style={{ marginTop: '20px' }}>
+        <div style={{ marginTop: '20px',  gap: '10px'}}>
           <p>
             <strong>Resume Link:</strong>{" "}
             {teacher?.application?.resume_Link ||
@@ -276,10 +282,19 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           type="primary"
           onClick={handleViewResume}
           className="view-resume-btn"
-          style={{ marginBottom: '20px', backgroundColor:"purple"}}
+          style={{ marginBottom: '20px',marginRight:"10px", backgroundColor:"purple"}}
         >
           View Resume
         </Button>
+        <Button
+          type="primary"
+          onClick={handleReject}
+          className="view-resume-btn"
+          style={{ marginBottom: '20px', backgroundColor:"purple"}}
+        >
+          Reject
+        </Button>
+        
 
         {/* Resume Modal */}
         <Modal

@@ -35,6 +35,7 @@ import MeetOurTeacher from "../../../../Main/Pages/Meetourteacher/Meetourteacher
 import Faq from "../../../../Main/Pages/Faqs/Faq";
 import ChooseUs from "../../../../Main/Components/ChooseUs/ChooseUs";
 import Footer from "../../../../Main/Components/Footer/Footer";
+import { applicationRecievedAdmin, applicationRecievedTeacher } from "../../../../api/mailNotificationApi";
 
 const { Option } = Select;
 
@@ -140,6 +141,8 @@ const BecomeTeacherApplicationForm = () => {
       };
 
       const response = await submitTeacherApplication(submissionData);
+      await applicationRecievedAdmin(values.name, values.email);
+      await applicationRecievedTeacher(values.name, values.email);
 
       message.success("Application submitted successfully!");
       form.resetFields();

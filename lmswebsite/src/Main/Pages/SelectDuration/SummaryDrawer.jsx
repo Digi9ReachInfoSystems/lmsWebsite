@@ -34,6 +34,7 @@ const SummaryDrawer = ({ onClose }) => {
     });
 
     localStorage.setItem("totalAmount", JSON.stringify(grandTotal));
+    localStorage.setItem("taxes", JSON.stringify(taxes));
     setSummary({
       selectedBoard: board,
       selectedClass,

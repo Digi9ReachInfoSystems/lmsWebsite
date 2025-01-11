@@ -167,6 +167,11 @@ const Sidebar = () => {
       link: "/admin/manageAttendance",
     },
     {
+      name: "Manage User",
+      icon: <PiListChecksThin />,
+      link: "/admin/userManagement",
+    },
+    {
       name:"Payment", icon: <FaRupeeSign />, link: "/admin/customPayments"
     }
   ];
