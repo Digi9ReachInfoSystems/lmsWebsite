@@ -14,6 +14,7 @@ import { signupUser } from "../../api/authApi";
 import { getUserByAuthId } from "../../api/userApi";
 import { studentAccountCreated, studentSignedUpAdmin } from "../../api/mailNotificationApi";
 
+
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
     board: "",
@@ -84,6 +85,7 @@ const SignUpPage = () => {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
+      const gstAmount=JSON.parse(localStorage.getItem("taxes"))
       // const profileImageUrl = await uploadFileToFirebase(
       //   formData.profileImage,
       //   "studentProfile"
@@ -104,7 +106,13 @@ const SignUpPage = () => {
         amount: formData.amount,
         duration: formData.duration,
         type_of_batch: formData.type_of_batch,
-        subject_id: formData.subject,
+        subject_id:{ 
+          _id:formData.subject,
+          type_of_batch: formData.type_of_batch,
+          duration: formData.duration
+        },
+        gstAmount:gstAmount,
+        discountAmount:0,
       };
       //console.log(data);
       await signupUser(data);

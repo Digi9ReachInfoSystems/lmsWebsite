@@ -24,6 +24,10 @@ export const signupUser = async ( data) => {
       amount: data.amount || undefined,
       duration: data.duration || undefined,
       is_paid: data.is_paid || false,
+      paymentLink_status: data.paymentLink_status || "no_payment_link",
+      gstAmount: data.gstAmount || undefined,
+      mode: data.mode || 'normal',
+      discountAmount: data.discountAmount || undefined,
     };
 
     // Filter out undefined values from the request body

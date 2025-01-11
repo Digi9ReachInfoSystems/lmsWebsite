@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getStudentByAuthId } from "../../../../api/studentApi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "./PaymentScreen.css";
 import Header from "../../components/Header/Header";
 // import "./PaymentScreen.css";
 import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import PaymentComponent from "../../components/PaymentComponent/PaymentComponet";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
+import { getgst } from "../../../../api/pricingApi";
 
 const PaymentScreen = () => {
     const navigate = useNavigate();
@@ -14,7 +15,10 @@ const PaymentScreen = () => {
     const [totalPrice, setTotalPrice] = useState("500"); // Default total price
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const [gstRate, setGstRate] = useState(0);
+    const location = useLocation();
+    const { totalAmount, discountAmount,gst } = location.state || {}; // Destructure state data
+    console.log("location", location);
     useEffect(() => {
         const fetchStudent = async () => {
             try {
@@ -24,6 +28,8 @@ const PaymentScreen = () => {
                 console.log("response", response);
                 setStudent(response.student); // Populate student details
                 setLoading(false);
+                const gst= await getgst();
+                setGstRate(gst.gst);
             } catch (err) {
                 setError(err);
                 setLoading(false);
@@ -43,11 +49,11 @@ const PaymentScreen = () => {
 
     return (
         <div className="hellololo-payment">
-            <Header/>
+            <Header />
             <div className="board-container-payment">
                 <div className="skill-card-payment">
-                <div className="header-payment-icon">
-                    <MdOutlineMarkEmailRead className="payment-icon" />
+                    <div className="header-payment-icon">
+                        <MdOutlineMarkEmailRead className="payment-icon" />
                     </div>
                     <div className="header-payment">
 
@@ -73,13 +79,46 @@ const PaymentScreen = () => {
                                 {/* <span className="tick-mark"> ✔</span> */}
                             </div>
                         </div>
+                        {
+                            totalAmount &&
+                            <div className="info-group-payment">
+                                <label className="info-label-payment">Amount</label>
+                                <div className="info-box-payment">
+                                    <p>{totalAmount.toFixed(2)}</p>
+
+                                    {/* <span className="tick-mark"> ✔</span> */}
+                                </div>
+                            </div>
+                        }
+                        {
+                            discountAmount &&
+                            <div className="info-group-payment">
+                                <label className="info-label-payment">Discount Amount</label>
+                                <div className="info-box-payment">
+                                    <p>{discountAmount.toFixed(2)}</p>
+
+                                    {/* <span className="tick-mark"> ✔</span> */}
+                                </div>
+                            </div>
+                        }
+                         {
+                            gst &&
+                            <div className="info-group-payment">
+                                <label className="info-label-payment">GST Amount: {gstRate}%</label>
+                                <div className="info-box-payment">
+                                    <p>{gst.toFixed(2)}</p>
+
+                                    {/* <span className="tick-mark"> ✔</span> */}
+                                </div>
+                            </div>
+                        }
                     </div>
 
 
                     <div className="info-group2-payment">
                         <label className="info-label-payment">Total  Price</label>
                         <div className="info-box-payments">
-                            <p>Rs.{student.amount}.00 /-</p>
+                            <p>Rs.{student.amount.toFixed(2)}/-</p>
                             {/* <span className="tick-mark"></span> */}
                         </div>
                     </div>

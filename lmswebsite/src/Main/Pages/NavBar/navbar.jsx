@@ -149,13 +149,17 @@ function HeaderSection() {
         navigate("/admin");
       } else if (profileData.user.role === "student") {
         const studentData = await getStudentByAuthId(user.uid);
+        console.log("studentData", studentData);
         if (
-          (studentData.student.custom_package_status === "no_package" ||
-            studentData.student.custom_package_status === "pending") &&
-          studentData.student.is_paid === false &&
-          (!studentData.student.amount)
+          (studentData.student.mode == "personal" &&
+            studentData.student.paymentLink_status === "no_payment_link") &&
+          studentData.student.is_paid === false
+          //  &&
+          // (!studentData.student.amount)
         ) {
           navigate("/student");
+        } else if (studentData.student.amount && studentData.student.is_paid === false&&studentData.student.paymentLink_status=="pending") {
+          navigate("/paymentStatus");
         } else if (studentData.student.amount && studentData.student.is_paid === false) {
           navigate("/paymentScreen");
         } else {

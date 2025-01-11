@@ -24,6 +24,7 @@ import {
   getTypeOfBatchBySubjectId,
 } from "../../../../api/typeOfBatchApi";
 import { useNavigate } from "react-router-dom";
+import { getdiscount, getgst } from "../../../../api/pricingApi";
 
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
@@ -107,7 +108,7 @@ export const StudentLandingPage = () => {
           data.student.custom_package_status === "expired" ||
           (data.student.subscribed_Package !== "" && data.student.is_paid === false)
         ) {
-          message.info("Your package has expired. Please renew.");
+          // message.info("Your package has expired. Please renew.");
         }
       } catch (error) {
         console.error("API Caller Error:", error);
@@ -225,7 +226,16 @@ export const StudentLandingPage = () => {
         return data.price * item.duration;
       })
     );
-    const totalAmount = (amounts.reduce((acc, val) => acc + val, 0))+((amounts.reduce((acc, val) => acc + val, 0)/100)*18);
+    const gst=await getgst();
+    const disc=await getdiscount();
+    const totalAmount = (amounts.reduce((acc, val) => acc + val, 0));
+    const discountAmount=(totalAmount/100)*disc.discount;
+    const discountedAmount=totalAmount-discountAmount;
+    const gstAmount=(discountedAmount/100)*gst.gst;
+    const finalAmount=discountedAmount+gstAmount;
+    console.log("finalAmount", finalAmount);
+    console.log("discountAmount", discountAmount);
+    console.log("discountedAmount", discountedAmount);
 
     console.log("typeOfBatchArray", typeOfBatchArray);
     console.log("final totalAmount", totalAmount);
@@ -249,7 +259,9 @@ export const StudentLandingPage = () => {
       await updateStudent(studentDataForm.student._id, {
         updateData: {
           subject_id: typeOfBatchArray,
-          amount: totalAmount,
+          amount: finalAmount,
+          discountAmount:discountAmount,
+          gstAmount:gstAmount
         },
       });
 
@@ -260,8 +272,8 @@ export const StudentLandingPage = () => {
       //   type_of_batch: typeOfBatchArray,
       // });
 
-      message.success("Request submitted successfully!");
-      navigate("/paymentScreen"); // e.g., navigate to your payment screen
+      message.success("Combo selected successfully!");
+      navigate("/paymentScreen",{ state: { totalAmount:totalAmount,discountAmount:discountAmount,gst:gstAmount } }); // e.g., navigate to your payment screen
     } catch (err) {
       console.error("Error submitting Packages:", err);
       message.error("Failed to submit the request. Please try again.");
@@ -445,7 +457,7 @@ export const StudentLandingPage = () => {
                           borderColor: "#82194B",
                         }}
                       >
-                        Submit Application
+                       Next
                       </Button>
                     </Form.Item>
                   </StyledCol>

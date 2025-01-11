@@ -1,8 +1,10 @@
+// src/components/UserManagement.jsx
+
 import React, { useState, useEffect } from "react";
 import { getAllStudents } from "../../../../api/studentApi"; // <-- Add createStudentApi import
 import { getAllTeachers } from "../../../../api/teacherApi";
 import { UserManagementWrap } from "./UserManagement.styles";
-import { Input, Select, Table, Modal,  message, Form, Button } from "antd";
+import { Input, Select, Table, Modal, message, Form, Button, Space } from "antd";
 import Lottie from "lottie-react";
 import Animation from "../../../admin/assets/Animation.json";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +21,8 @@ import {
 import { signupUser } from "../../../../api/authApi";
 import { studentAccountCreated, studentSignedUpAdmin } from "../../../../api/mailNotificationApi";
 import { auth } from "../../../../config/firebaseConfig";
+import { getdiscount, getgst } from "../../../../api/pricingApi";
+import { createPaymentForCustomPackage } from "../../../../api/paymentsApi";
 
 const { Option } = Select;
 
@@ -32,13 +36,17 @@ export default function UserManagement() {
   const [classes, setClasses] = useState([]);
   const [selectedBoard, setSelectedBoard] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
-  const [subject, setSubject] = useState([]);
+  const [subjects, setSubjects] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [boards, setBoards] = useState([]);
-  const [typeOfBatch, setTypeOfBatch] = useState([]);
-  const [selectedTypeOfBatch, setSelectedTypeOfBatch] = useState('');
+  const [typeOfBatchOptions, setTypeOfBatchOptions] = useState([]);
   const [amount, setAmount] = useState(0);
+  const [mainAmount, setMainAmount] = useState(0);
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [finalAmount, setFinalAmount] = useState(0);
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const[gstAmount, setGstAmount] = useState(0);
   const navigate = useNavigate();
 
   // ---- NEW STATES FOR MODAL ----
@@ -54,6 +62,7 @@ export default function UserManagement() {
     };
     apiCaller();
   }, []);
+
   useEffect(() => {
     const fetchClasses = async () => {
       if (selectedBoard) {
@@ -72,32 +81,41 @@ export default function UserManagement() {
 
     fetchClasses();
   }, [selectedBoard]);
+
   useEffect(() => {
     const fetchSubjects = async () => {
       if (selectedClass) {
         try {
           const subjectData = await getSubjectsByClassId(selectedClass);
           console.log("Fetched Subjects:", subjectData);
-          setSubject(subjectData || []);
+          setSubjects(subjectData || []);
         } catch (error) {
           console.error("Error fetching subjects:", error);
           message.error("Failed to load subjects. Please try again later.");
         }
       } else {
-        setSubject([]);
+        setSubjects([]);
       }
     };
     fetchSubjects();
-  }, [selectedClass])
+  }, [selectedClass]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      console.log(selectedSubject);
-      const data = await getTypeOfBatchBySubjectId(selectedSubject);
-      console.log(data);
-      setTypeOfBatch(data);
+    const fetchTypeOfBatch = async () => {
+      if (selectedSubject) {
+        try {
+          const data = await getTypeOfBatchBySubjectId(selectedSubject);
+          console.log("Fetched Type of Batch:", data);
+          setTypeOfBatchOptions(data || []);
+        } catch (error) {
+          console.error("Error fetching Type of Batch:", error);
+          message.error("Failed to load Type of Batch. Please try again later.");
+        }
+      } else {
+        setTypeOfBatchOptions([]);
+      }
     };
-    fetchData();
+    fetchTypeOfBatch();
   }, [selectedSubject]);
 
   // Fetch data whenever statusFilter changes (students/teachers)
@@ -197,7 +215,6 @@ export default function UserManagement() {
     form.resetFields(); // reset form fields if needed
   };
 
-
   const handleBoardChange = (value) => {
     setSelectedBoard(value);
     form.setFieldsValue({ class_id: undefined }); // Reset class selection
@@ -207,18 +224,29 @@ export default function UserManagement() {
   };
   const handleSubjectChange = (value) => {
     setSelectedSubject(value);
-  }
+  };
   const handleTypeOfBatchChange = (value) => {
-    setSelectedTypeOfBatch(value);
-  }
-  const handleDurationChange = async (value) => {
-    const data = await getTypeOfBatchById(selectedTypeOfBatch);
-    console.log(data);
-    let total = (data.price * value)
-    total = total + ((total / 100) * 18);
-    setAmount(total);
-    form.setFieldsValue({ amount: total });
-  }
+    // Handle if needed
+  };
+
+
+  // const handleDurationChange = async (value, index) => {
+  //   const typeOfBatchId = form.getFieldValue(['subjects', index, 'typeOfBatch']);
+  //   if (typeOfBatchId) {
+  //     try {
+  //       const data = await getTypeOfBatchById(typeOfBatchId);
+  //       console.log(data);
+  //       let total = data.price * value;
+  //       total = total + (total / 100) * 18; // Adding 18% tax or similar
+  //       setAmount((prev) => prev + total);
+  //       form.setFieldsValue({ subjects: [{ amount: total }] }); // Update amount for the specific subject
+  //     } catch (error) {
+  //       console.error("Error calculating amount:", error);
+  //       message.error("Failed to calculate amount. Please try again.");
+  //     }
+  //   }
+  // };
+
   const handleSubmit = async (values) => {
     console.log("Student Form Values:", values);
     setIsSubmitting(true);
@@ -250,7 +278,11 @@ export default function UserManagement() {
           "studentProfile"
         );
       }
-
+      const subArray = values.subjects.map((subject) => ({
+        _id: subject.subject_id,
+        typeOfBatch: subject.typeOfBatch,
+        duration: subject.duration,
+      }))
       // Prepare data to send to API
       const data = {
         role: "student",
@@ -263,24 +295,30 @@ export default function UserManagement() {
         studentGender: values.studentGender,
         studentDOB: values.studentDOB,
         board_id: values.board_id,
-        subject_id: values.subject_id,
-        type_of_batch: values.typeOfBatch,
-        duration: values.duration,
-        amount: values.amount,
-        is_paid:true,
+        subject_id: subArray,
+        amount: finalAmount,
+        discountAmount: discountAmount,
+        gstAmount:gstAmount,
+        is_paid: false,
+        paymentLink_status: "pending",
       };
 
       console.log("Submitting Student Data:", data);
-      await signupUser(data);
-      await studentAccountCreated( values.student_name, values.email, values.password);
-      await studentSignedUpAdmin( values.student_name, values.email);
+      const res = await signupUser(data);
+      console.log("res", res);
+      // res.student._id res.student.amount
+      await createPaymentForCustomPackage({
+        amount: res.student.amount, student_id: res.student._id
+      })
+      await studentAccountCreated(values.student_name, values.email, values.password);
+      await studentSignedUpAdmin(values.student_name, values.email);
 
       // Clear local storage and navigate to login
       // localStorage.clear();
       message.success("Registration successful! Please verify your email.");
       message.success("Registration Successful!");
       localStorage.setItem("sessionData", JSON.stringify(oldSessionData));
-      handleCancel();
+      // handleCancel();
       // navigate("/");
     } catch (error) {
       console.error("Registration error:", error);
@@ -291,8 +329,6 @@ export default function UserManagement() {
       setIsSubmitting(false);
     }
   };
-
-
 
   return (
     <UserManagementWrap>
@@ -317,13 +353,11 @@ export default function UserManagement() {
           </div>
           {/* --- NEW: Create Student Button (visible when statusFilter=students) --- */}
           {statusFilter === "students" && (
-            <Button type="primary" onClick={showModal} >
+            <Button type="primary" onClick={showModal}>
               Create Student
             </Button>
           )}
         </div>
-
-
       </div>
 
       <div className="area-row ar-three">
@@ -342,6 +376,7 @@ export default function UserManagement() {
         visible={isModalVisible}
         onCancel={handleCancel}
         footer={null} // we'll use Form submit instead
+        width={800} // Adjust width as needed
       >
         <Form
           form={form}
@@ -352,7 +387,7 @@ export default function UserManagement() {
           <Form.Item
             name="student_name"
             label="Name"
-            rules={[{ required: true, message: "Please enter your name" }]}
+            rules={[{ required: true, message: "Please enter the student's name" }]}
           >
             <Input placeholder="Name" />
           </Form.Item>
@@ -363,7 +398,7 @@ export default function UserManagement() {
             rules={[
               {
                 required: true,
-                message: "Please enter your email",
+                message: "Please enter the student's email",
               },
               {
                 type: "email",
@@ -378,7 +413,7 @@ export default function UserManagement() {
             name="password"
             label="Password"
             rules={[
-              { required: true, message: "Please enter your password" },
+              { required: true, message: "Please enter a password" },
               { min: 6, message: "Password must be at least 6 characters" },
             ]}
           >
@@ -389,7 +424,7 @@ export default function UserManagement() {
             name="phone_number"
             label="Phone Number"
             rules={[
-              { required: true, message: "Please enter your phone number" },
+              { required: true, message: "Please enter the student's phone number" },
               {
                 pattern: /^\d{10}$/,
                 message: "Phone number must be 10 digits",
@@ -421,91 +456,254 @@ export default function UserManagement() {
             name="class_id"
             label="Select Class"
             rules={[
-              { required: true, message: "Please select at least one class" },
+              { required: true, message: "Please select a class" },
             ]}
           >
-            <Select placeholder="Select Class" allowClear
+            <Select
+              placeholder="Select Class"
+              allowClear
               onChange={handleClassChange}
             >
               {classes.map((cls) => (
                 <Option key={cls._id} value={cls._id}>
-                  {cls.classLevel} - {cls.className}
+                  {cls.classLevel} 
                 </Option>
               ))}
             </Select>
           </Form.Item>
+
+          {/* --- Dynamic Subjects Section --- */}
+          <Form.List name="subjects">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <Space
+                    key={key}
+                    style={{ display: 'flex', marginBottom: 8 }}
+                    align="baseline"
+                  >
+                    {/* Subject Selection */}
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'subject_id']}
+                      rules={[{ required: true, message: 'Missing subject' }]}
+                    >
+                      <Select
+                        placeholder="Select Subject"
+                        onChange={async (value) => {
+                          console.log(value);
+                          const data = await getTypeOfBatchBySubjectId(value);
+                          setTypeOfBatchOptions(data || []);
+                          form.setFieldsValue({
+                            subjects: [
+                              ...form.getFieldValue('subjects').map((subject, idx) =>
+                                idx === name
+                                  ? { ...subject, typeOfBatch: undefined, duration: undefined, amount: 0 }
+                                  : subject
+                              ),
+                            ],
+                          });
+                        }}
+                        allowClear
+                      >
+                        {subjects.map((sub) => (
+                          <Option key={sub._id} value={sub._id}>
+                            {sub.subject_name}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    {/* Type of Batch Selection */}
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'typeOfBatch']}
+                      rules={[{ required: true, message: 'Missing Type of Batch' }]}
+                    >
+                      <Select
+                        placeholder="Select Type of Batch"
+                        onChange={async (value) => {
+                          // Optionally, you can fetch additional data or reset duration
+                          console.log(value);
+                          const data = await getTypeOfBatchById(value);
+                          form.setFieldsValue({
+                            subjects: [
+                              ...form.getFieldValue('subjects').map((subject, idx) =>
+                                idx === name
+                                  ? { ...subject, duration: undefined, amount: data.price }
+                                  : subject
+                              ),
+                            ],
+                          });
+                        }}
+                        allowClear
+                      >
+                        {typeOfBatchOptions.map((batch) => (
+                          <Option key={batch._id} value={batch._id}>
+                            {batch.mode}
+                          </Option>
+                        ))}
+                      </Select>
+                    </Form.Item>
+
+                    {/* Duration Selection */}
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'duration']}
+                      rules={[{ required: true, message: 'Missing Duration' }]}
+                    >
+                      <Select
+                        placeholder="Select Duration"
+                        onChange={(value) => {
+                          form.setFieldsValue({
+                            subjects: [
+                              ...form.getFieldValue('subjects').map((subject, idx) =>
+                                idx === name
+                                  ? { ...subject, duration: value, totalAmount: subject.amount * value }
+                                  : subject
+                              ),
+                            ],
+                          });
+
+                          // handleDurationChange(value, name)
+                          console.log("fffff ", form.getFieldValue("subjects"))
+                        }
+
+                        }
+                        allowClear
+                      >
+                        <Option key={"1"} value={1}>
+                          1 Month
+                        </Option>
+                        <Option key={"4"} value={4}>
+                          4 Months
+                        </Option>
+                        <Option key={"8"} value={8}>
+                          8 Months
+                        </Option>
+                        <Option key={"10"} value={10}>
+                          10 Months
+                        </Option>
+                      </Select>
+                    </Form.Item>
+
+                    {/* Amount Display */}
+                    <Form.Item
+                      {...restField}
+                      name={[name, 'totalAmount']}
+                      // label="Amount"
+                      rules={[{ required: true, message: 'Amount is required' }]}
+                    >
+
+                      <Input placeholder="Amount" readOnly />
+
+                    </Form.Item>
+
+                    {/* Remove Subject Button */}
+                    <Button type="primary" onClick={() => remove(name)}>
+                      Remove
+                    </Button>
+                  </Space>
+                ))}
+
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block>
+                    Add Subject
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
           <Form.Item
-            name="subject_id"
-            label="Select Subject"
+            name="discount"
+            label="Select Discount Percentage"
             rules={[
-              { required: true, message: "Please select at least one subject" },
+              { required: true, message: "Please select a Discount" },
             ]}
           >
-            <Select placeholder="Select Subject" allowClear
-              onChange={handleSubjectChange}
-            >
-              {subject.map((sub) => (
-                <Option key={sub._id} value={sub._id}>
-                  {sub.subject_name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="typeOfBatch"
-            label="Select Type of Batch"
-            rules={[
-              { required: true, message: "Please select at least one Type Of Batch" },
-            ]}
-          >
-            <Select placeholder="Select Type of Batch" allowClear
-              onChange={handleTypeOfBatchChange}
-            >
-              {typeOfBatch.map((batch) => (
-                <Option key={batch._id} value={batch._id}>
-                  {batch.mode}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="duration"
-            label="Select Duration"
-            rules={[
-              { required: true, message: "Please select at least Duration" },
-            ]}
-          >
-            <Select placeholder="Select Duration" allowClear
-              onChange={handleDurationChange}
+            <Select
+              placeholder="Select Discount"
+              allowClear
+              onChange={() => {
+                setDiscountPercentage(form.getFieldValue("discount"));
+              }}
             >
 
-              <Option key={"1"} value={1}>
-                1 Month
+              <Option key={0} value={0}>
+                0 %
               </Option>
-              <Option key={"4"} value={4}>
-                4 Month
+              <Option key={5} value={5}>
+                5 %
               </Option>
-              <Option key={"8"} value={8}>
-                8 Month
+              <Option key={10} value={10}>
+                10 %
               </Option>
-              <Option key={"10"} value={10}>
-                10 Month
+              <Option key={15} value={15}>
+                15 %
+              </Option>
+              <Option key={20} value={20}>
+                20 %
+              </Option>
+              <Option key={25} value={25}>
+                25 %
+              </Option>
+              <Option key={30} value={30}>
+                30 %
+              </Option>
+              <Option key={35} value={35}>
+                35 %
+              </Option>
+              <Option key={40} value={40}>
+                40 %
+              </Option>
+              <Option key={45} value={45}>
+                45 %
+              </Option>
+              <Option key={50} value={50}>
+                50 %
               </Option>
 
             </Select>
           </Form.Item>
-          {selectedTypeOfBatch && <Form.Item
-            name="amount"
-            label="Amount"
-          >
-            <Input placeholder="Phone Number" maxLength={10} readOnly value={amount} />
-          </Form.Item>}
 
+          <Button type="primary" onClick={async () => {
+            console.log(form.getFieldValue("subjects"))
+            let tA = 0;
+            form.getFieldValue("subjects").map((subject) => {
+              tA = tA + subject.totalAmount;
+            })
+            // const dis = await getdiscount();
+            const dis=discountPercentage
+            const gst = await getgst();
+            console.log(dis)
+            let dA = (tA / 100) * dis;
+            setMainAmount(tA);
+            setDiscountAmount(dA);
+            setGstAmount(((tA - dA) / 100) * gst.gst)
+            let fA = ((tA - dA) / 100) * gst.gst;
+
+            setFinalAmount((tA - dA) + fA);
+          }} block>
+            Get Price
+          </Button>
+
+          <Form.Item label="Amount">
+            <Input value={mainAmount} readOnly />
+          </Form.Item>
+
+          <Form.Item label="Discount">
+            <Input value={discountAmount} readOnly />
+          </Form.Item>
+
+          {/* Total Amount Display */}
+          <Form.Item label="Total Amount">
+            <Input value={finalAmount} readOnly />
+          </Form.Item>
 
           <Form.Item
             name="studentGender"
             label="Select Gender"
-            rules={[{ required: true, message: "Please select your gender" }]}
+            rules={[{ required: true, message: "Please select the student's gender" }]}
           >
             <Select placeholder="Select Gender" allowClear>
               <Option value="male">Male</Option>
@@ -527,7 +725,7 @@ export default function UserManagement() {
                 height: "40px",
               }}
             >
-             Create Student
+              Create Student
             </Button>
           </Form.Item>
         </Form>

@@ -7,6 +7,8 @@ import { getStudentByAuthId } from "../../../../api/studentApi";
 import { getTeacherByAuthId } from "../../../../api/teacherApi";
 import { getTypeOfBatchById } from "../../../../api/typeOfBatchApi";
 import RenewButton from "../RenewButton/RenewButton";
+import { getgst } from "../../../../api/pricingApi";
+import { set } from "lodash";
 
 const { Title, Text } = Typography;
 
@@ -23,10 +25,22 @@ const BatchDetailsContent = () => {
 
   // Modal states
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [enteredDuration, setEnteredDuration] = useState(null);
+  const [enteredDuration, setEnteredDuration] = useState(0);
   const [calculatedPrice, setCalculatedPrice] = useState(0);
-  const [gstRate] = useState(0.18); // 18% GST, for example
+  const [gstRate,setGstRate] = useState(0.18); // 18% GST, for example
   const [basePrice] = useState(1000); // Example base price per month (customize as needed)
+  useEffect(() => {
+    const apiCaller = async () => {
+      try {
+        const gstData= await getgst();
+        setGstRate((gstData.gst)/100);
+        
+      } catch (error) {
+        //console.error("Error fetching student data:", error);
+      }
+    }
+    apiCaller();
+  }, []);
 
   // Show or hide modal
   const showModal = (data) => {
@@ -267,7 +281,7 @@ const BatchDetailsContent = () => {
             value={enteredDuration}
             onChange={handleDurationChange}
           >
-             <Option>Select Duration</Option>
+             <Option value={0} >Select Duration</Option>
             <Option value={1}>1 Month</Option>
             <Option value={3}>3 Months</Option>
             <Option value={8}>8 Months</Option>
@@ -288,7 +302,7 @@ const BatchDetailsContent = () => {
           <Text>Total: </Text>
           <Text strong>{(calculatedPrice + calculatedPrice * gstRate).toFixed(2)}</Text>
         </div>
-        <RenewButton studentId={studentId} amount={(calculatedPrice + calculatedPrice * gstRate)} batchId={batchId} subjectId={subjectId} duration={enteredDuration} />
+        <RenewButton studentId={studentId} amount={(calculatedPrice + calculatedPrice * gstRate)} batchId={batchId} subjectId={subjectId} duration={enteredDuration} gst={calculatedPrice * gstRate} discount={0}/>
 
         {/* <Button
           type="primary"
