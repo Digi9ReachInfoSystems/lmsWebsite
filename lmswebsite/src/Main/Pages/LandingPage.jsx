@@ -13,6 +13,7 @@ import VideoSection from "./VideoSection/VideoSection";
 
 function LandingPageFinal() {
   useEffect(() => {
+    localStorage.clear();
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
   return (

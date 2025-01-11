@@ -1,131 +1,125 @@
+// StudentLandingPage.jsx
+
 import React, { useEffect, useState } from "react";
-import { UploadOutlined, WindowsFilled } from "@ant-design/icons";
-import { Input, Select, Button, Upload, Form, message } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import { Button, Upload, Form, message, Checkbox, Select, Table } from "antd";
 import Header from "../../components/Header/Header";
-// import studentApplicationImage from "../../../../assets/SignUpImage.png";
-import HeaderSection from "../../../../Main/Pages/NavBar/navbar";
 import {
   ApplicationContainer,
-  // ApplicationImage,
-  // TeacherFormImage,
   ApplicationDetails,
-  UploadButton,
   StyledRow,
   StyledCol,
-  AvailableSlotsContainer,
-  Slot,
   CustomPackageStatus,
 } from "./StudentLandingPage.style";
-import StudentEnrollmentVideoView from "../../components/StudentEnrollmentVideoView/StudentEnrollmentVideoView";
-import StudentEnrollmentReviews from "../../components/StudentEnrollmentReviews/StudentEnrollmentReviews";
-import TeachersSection from "../../components/TeacherSection/TeachersSection";
-import StudentExistingPackages from "../../components/StudentExistingPackages/StudentExistingPackages";
-import Footer2 from "../../components/Footer2/Footer2";
+import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
 import { getUserByAuthId } from "../../../../api/userApi";
-import { getStudentByAuthId, getStudentById, updateStudent } from "../../../../api/studentApi";
-import PaymentComponent from "../../components/PaymentComponent/PaymentComponet";
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { getStudentByAuthId, updateStudent } from "../../../../api/studentApi";
 import { getClassesByBoardId } from "../../../../api/classApi";
 import { getPackageByClassId } from "../../../../api/packagesApi";
 import { getSubjects } from "../../../../services/createBatch";
 import { createCustomPackage } from "../../../../api/customPackageApi";
-import LoadingPage from "../../../../pages/LoadingPage/LoadingPage";
-
-import { GotoOneToOne } from "../../components/GotoOneToOne/GotoOneToOne";
-import { getAllTypeOfBatches, getCustomTypeOfBatch } from "../../../../api/typeOfBatchApi";
-import { set } from "lodash";
-import Footer from "../../../../Main/Pages/Footer/Footer";
+import {
+  getCustomTypeOfBatch,
+  getTypeOfBatchById,
+  getTypeOfBatchBySubjectId,
+} from "../../../../api/typeOfBatchApi";
+import { useNavigate } from "react-router-dom";
+import { getdiscount, getgst } from "../../../../api/pricingApi";
 
 export const StudentLandingPage = () => {
   const [profilePicture, setProfilePicture] = useState(null);
-
-  const [studentDataForm, setStudentDataForm] = useState();
-  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [studentDataForm, setStudentDataForm] = useState(null);
   const [classData, setClassData] = useState([]);
-  const [studentClass, setStudentClass] = useState();
   const [packagesData, setPackagesData] = useState([]);
   const [subjects, setSubjects] = useState([]);
-  const [batchType, setBatchType] = useState([]);
-  const [slot, setSlot] = useState([]);
-  const [slectedSubject, setSelectedSubject] = useState([]);
-  const [selectedBatch, setSelectedBatch] = useState();
+
+  // Batch types per subject: { <subjectId>: [array of batchType objects], ... }
+  const [batchTypeOptions, setBatchTypeOptions] = useState({});
+  // Subjects the user has checked:
+  const [selectedSubjects, setSelectedSubjects] = useState([]);
+  // Chosen batch type for each subject: { <subjectId>: <batchId>, ... }
+  const [selectedBatches, setSelectedBatches] = useState({});
+  // Chosen duration for each subject: { <subjectId>: <durationNumber>, ... }
+  const [selectedDurations, setSelectedDurations] = useState({});
+  // Loading states for batch types per subject
+  const [loadingBatchTypes, setLoadingBatchTypes] = useState({});
+
   const navigate = useNavigate();
-  // const loaderData= useLoaderData();
-  // ////console.log("loaderData", loaderData);
+
+  // Cache to avoid refetching batch types for the same subject
+  const batchTypeCache = {};
+
+  // Duration options (can be hard-coded or fetched from an API)
+  // Using numeric 'value' so we can multiply price * duration
+  const durationOptions = [
+    { title: "1 month", value: 1 },
+    { title: "3 month", value: 3 },
+    { title: "8 month", value: 8 },
+    { title: "10 month", value: 10 },
+  ];
+
   useEffect(() => {
     const apiCaller = async () => {
       try {
         const sessionData = JSON.parse(localStorage.getItem("sessionData"));
         if (!sessionData || !sessionData.userId) {
-          ////console.error("No session data found.");
+          message.error("No session data found. Please log in.");
           return;
         }
-        // Await the user data if getUserByAuthId returns a promise
+
+        // 1) Fetch user & student data
         const user = await getUserByAuthId(sessionData.userId);
         if (!user) {
-          ////console.error("User not found.");
+          message.error("User not found.");
           return;
         }
-        const data = await getStudentByAuthId(sessionData.userId);
-        ////console.log("studentData", data);
 
-        const batchData = await getCustomTypeOfBatch();
-        ////console.log("batchData", batchData);
-        setBatchType(batchData);
+        const data = await getStudentByAuthId(sessionData.userId);
         if (!data || !data.student) {
-          ////console.error("Student data not found.");
+          message.error("Student data not found.");
           return;
         }
-        ////console.log("studentData", data);
         setStudentDataForm(data);
+
+        // 2) (Optional) Fetch custom type-of-batch
+        await getCustomTypeOfBatch();
+
+        // 3) Fetch packages for current class
         const packageResponse = await getPackageByClassId(
           data.student.class._id,
           "normal"
         );
         setPackagesData(packageResponse);
-        // ////console.log(
-        //   "packageResponse",
-        //   data.student.class._id,
-        //   "gg",
-        //   packageResponse
-        // );
+
+        // 4) Fetch subjects for the student's class
         const subjectResponse = await getSubjects(data.student.class._id);
         setSubjects(subjectResponse);
-        ////console.log("subjectResponse", subjectResponse);
-        const response = await getClassesByBoardId(data.student.board_id._id);
-        setClassData(response);
 
+        // 5) Fetch classes for the student's board (if needed)
+        await getClassesByBoardId(data.student.board_id._id);
+
+        // 6) Handle subscription logic, if needed
         if (
-          data.student.custom_package_status == "approved" ||
-          (data.student.subscribed_Package != "" && data.student.is_paid == true)
+          data.student.custom_package_status === "approved" ||
+          (data.student.subscribed_Package !== "" && data.student.is_paid === true)
         ) {
-          // navigate(
-          //   `/student/package/successPage?packageId=${data.student.subscribed_Package}&status=${data.student.custom_package_status}`
-          // );
           navigate("/student/dashboard");
         } else if (
-          data.student.custom_package_status == "expired" ||
-          (data.student.subscribed_Package != "" && data.student.is_paid == false)
+          data.student.custom_package_status === "expired" ||
+          (data.student.subscribed_Package !== "" && data.student.is_paid === false)
         ) {
-          // navigate("/student/package/expiryAlert")
-          // alert("Your Package has expired. ")
+          // message.info("Your package has expired. Please renew.");
         }
       } catch (error) {
-        ////console.error("API Caller Error:", error);
+        console.error("API Caller Error:", error);
+        message.error("An error occurred while fetching data.");
       }
     };
 
     apiCaller();
-  }, []);
+  }, [navigate]);
 
-  const availableSlots = [
-    "5 PM - 6 PM",
-    "6 PM - 7 PM",
-    "7 PM - 8 PM",
-    "8 PM - 9 PM",
-    "9 PM - 10 PM",
-  ];
-
+  // Upload profile picture handler (unused in this example but included for reference)
   const handleUploadChange = (info) => {
     if (info.file.status === "done") {
       setProfilePicture(info.file.originFileObj);
@@ -135,7 +129,118 @@ export const StudentLandingPage = () => {
     }
   };
 
-  const handleSubmit = () => {
+  // Handle subject checkbox changes
+  const handleSubjectChange = async (subjectId, checked) => {
+    setSelectedSubjects((prev) =>
+      checked ? [...prev, subjectId] : prev.filter((id) => id !== subjectId)
+    );
+
+    if (checked) {
+      // Fetch batch types if not cached
+      if (!batchTypeCache[subjectId]) {
+        setLoadingBatchTypes((prev) => ({ ...prev, [subjectId]: true }));
+        try {
+          const batchTypes = await getTypeOfBatchBySubjectId(subjectId);
+          batchTypeCache[subjectId] = batchTypes;
+          setBatchTypeOptions((prev) => ({
+            ...prev,
+            [subjectId]: batchTypes,
+          }));
+        } catch (error) {
+          message.error(`Failed to load batch types for subject.`);
+        } finally {
+          setLoadingBatchTypes((prev) => ({ ...prev, [subjectId]: false }));
+        }
+      }
+    } else {
+      // Clear batch type and duration if user unchecks
+      setSelectedBatches((prev) => {
+        const updated = { ...prev };
+        delete updated[subjectId];
+        return updated;
+      });
+      setSelectedDurations((prev) => {
+        const updated = { ...prev };
+        delete updated[subjectId];
+        return updated;
+      });
+    }
+  };
+
+  // Handle batch-type dropdown changes
+  const handleBatchChange = (subjectId, batchId) => {
+    setSelectedBatches((prev) => ({ ...prev, [subjectId]: batchId }));
+  };
+
+  // Handle duration dropdown changes
+  const handleDurationChange = (subjectId, durationValue) => {
+    setSelectedDurations((prev) => ({ ...prev, [subjectId]: durationValue }));
+  };
+
+  // Submission
+  const handleSubmit = async () => {
+    // 1) Check minimum subjects
+    if (selectedSubjects.length < 3) {
+      message.error("Please select at least 3 subjects.");
+      return;
+    }
+
+    // 2) Ensure each subject has a batch type
+    const allBatchesSelected = selectedSubjects.every(
+      (subjectId) => selectedBatches[subjectId]
+    );
+    if (!allBatchesSelected) {
+      message.error("Please select a batch type for each selected subject.");
+      return;
+    }
+
+    // 3) Ensure each subject has a duration
+    const allDurationsSelected = selectedSubjects.every(
+      (subjectId) => selectedDurations[subjectId]
+    );
+    if (!allDurationsSelected) {
+      message.error("Please select a duration for each selected subject.");
+      return;
+    }
+
+    // 4) Build the array for type_of_batch
+    const typeOfBatchArray = selectedSubjects.map((subjectId) => ({
+      _id: subjectId,
+      type_of_batch: selectedBatches[subjectId],
+      duration: selectedDurations[subjectId], // number of months
+    }));
+
+    // 5) Calculate totalAmount (must wait for each getTypeOfBatchById call)
+    // let totalAmount = 0;
+
+    // Option A: for...of loop (sequential)
+    // for (const item of typeOfBatchArray) {
+    //   const data = await getTypeOfBatchById(item.type_of_batch);
+    //   totalAmount += data.price * item.duration;
+    // }
+
+    // (Alternative) Option B: Promise.all (parallel fetch)
+    const amounts = await Promise.all(
+      typeOfBatchArray.map(async (item) => {
+        const data = await getTypeOfBatchById(item.type_of_batch);
+        return data.price * item.duration;
+      })
+    );
+    const gst=await getgst();
+    const disc=await getdiscount();
+    const totalAmount = (amounts.reduce((acc, val) => acc + val, 0));
+    const discountAmount=(totalAmount/100)*disc.discount;
+    const discountedAmount=totalAmount-discountAmount;
+    const gstAmount=(discountedAmount/100)*gst.gst;
+    const finalAmount=discountedAmount+gstAmount;
+    console.log("finalAmount", finalAmount);
+    console.log("discountAmount", discountAmount);
+    console.log("discountedAmount", discountedAmount);
+
+    console.log("typeOfBatchArray", typeOfBatchArray);
+    console.log("final totalAmount", totalAmount);
+
+    // 6) Prepare data for the API
     const submissionData = {
       name: studentDataForm.student.user_id.name,
       student_id: studentDataForm.student._id,
@@ -143,214 +248,233 @@ export const StudentLandingPage = () => {
       phone: studentDataForm.student.phone_number,
       board_id: studentDataForm.student.board_id._id,
       class_id: studentDataForm.student.class._id,
-      subjects: slectedSubject,
-      // slot: slot,
+      subjects: selectedSubjects,
+      batches: selectedBatches,
     };
-    ////console.log("sel");
-    ////console.log("submissionData", submissionData);
+    console.log("submissionData", submissionData);
 
-    const apiCaller = async () => {
-      try {
+    // 7) Call your APIs
+    try {
+      // Update the student with the new type_of_batch array
+      await updateStudent(studentDataForm.student._id, {
+        updateData: {
+          subject_id: typeOfBatchArray,
+          amount: finalAmount,
+          discountAmount:discountAmount,
+          gstAmount:gstAmount
+        },
+      });
 
-        const updateStudentData = await updateStudent(studentDataForm.student._id, { updateData: { type_of_batch: selectedBatch } });
-        ////console.log("updateStudentData", updateStudentData);
-        const response = await createCustomPackage({
-          subject_id: slectedSubject,
-          student_id: studentDataForm.student._id,
-          // slots: slot,
-        });
-        ////console.log("response", response);
-        alert("Request submitted   successfully!");
-        window.location.reload();
-      } catch (err) {
-        ////console.error("Error submitting Packages:", err);
-      }
-    };
-    apiCaller();
+      // If you need a custom package:
+      // await createCustomPackage({
+      //   subject_id: selectedSubjects,
+      //   student_id: studentDataForm.student._id,
+      //   type_of_batch: typeOfBatchArray,
+      // });
+
+      message.success("Combo selected successfully!");
+      navigate("/paymentScreen",{ state: { totalAmount:totalAmount,discountAmount:discountAmount,gst:gstAmount } }); // e.g., navigate to your payment screen
+    } catch (err) {
+      console.error("Error submitting Packages:", err);
+      message.error("Failed to submit the request. Please try again.");
+    }
   };
 
-  return (
+  // Table columns
+  const columns = [
+    {
+      title: "Subject",
+      dataIndex: "subjectName",
+      key: "subjectName",
+    },
+    {
+      title: "Batch Type",
+      dataIndex: "batchType",
+      key: "batchType",
+      render: (text, record) => {
+        const subjectId = record.subjectId;
+        const batchTypes = batchTypeOptions[subjectId] || [];
+        const loading = loadingBatchTypes[subjectId];
+
+        return (
+          <Select
+            placeholder="Select Batch Type"
+            value={selectedBatches[subjectId]}
+            onChange={(value) => handleBatchChange(subjectId, value)}
+            loading={loading}
+            style={{ width: 200 }}
+          >
+            {batchTypes.map((batch) => (
+              <Select.Option key={batch._id} value={batch._id}>
+                {batch.mode}
+              </Select.Option>
+            ))}
+          </Select>
+        );
+      },
+    },
+    {
+      title: "Duration",
+      dataIndex: "duration",
+      key: "duration",
+      render: (text, record) => {
+        const subjectId = record.subjectId;
+        return (
+          <Select
+            placeholder="Select Duration"
+            style={{ width: 150 }}
+            value={selectedDurations[subjectId]}
+            onChange={(value) => handleDurationChange(subjectId, value)}
+          >
+            {durationOptions.map((dur) => (
+              <Select.Option key={dur.value} value={dur.value}>
+                {dur.title}
+              </Select.Option>
+            ))}
+          </Select>
+        );
+      },
+    },
+  ];
+
+  // Table data
+  const tableData = selectedSubjects.map((subjectId) => {
+    const subject = subjects.find((subj) => subj._id === subjectId);
+    return {
+      key: subjectId,
+      subjectId,
+      subjectName: subject ? subject.subject_name : "N/A",
+      batchType: selectedBatches[subjectId] || null,
+      duration: selectedDurations[subjectId] || null,
+    };
+  });
+
+  return studentDataForm ? (
     <>
+      <Header />
+      {(studentDataForm.student.custom_package_status === "no_package" ||
+        studentDataForm.student.custom_package_status === "expired") ? (
+        <ApplicationContainer>
+          <ApplicationDetails>
+            <div className="studentApplicationDetails">
+              <h2>Create Your Own Package!</h2>
+              <p>Add subjects of your choice to enroll.</p>
 
-      {studentDataForm ? (
-        <>
-          {/* <HeaderSection /> */}
-          <Header/>
-          {/* studentDataForm.student.custom_package_status === "no_package" ||studentDataForm.student.custom_package_status === "expired" */}
-          {(studentDataForm.student.custom_package_status === "no_package" || studentDataForm.student.custom_package_status === "expired") ? (
-            <ApplicationContainer>
-              {/* <ApplicationImage>
-                <TeacherFormImage
-                  src={studentApplicationImage}
-                  alt="teacherFormImage"
-                />
+              <Form layout="vertical" onFinish={handleSubmit}>
+                {/* Row 1: Name, Email, Phone */}
+                <StyledRow>
+                  <StyledCol>
+                    <Form.Item label="Name" name="name" style={{ padding: "5px" }}>
+                      {studentDataForm.student.user_id.name}
+                    </Form.Item>
+                  </StyledCol>
+                  <StyledCol>
+                    <Form.Item label="Email" name="email" style={{ padding: "5px" }}>
+                      {studentDataForm.student.user_id.email}
+                    </Form.Item>
+                  </StyledCol>
+                  <StyledCol>
+                    <Form.Item label="Phone" name="phone" style={{ padding: "5px" }}>
+                      {studentDataForm.student.phone_number}
+                    </Form.Item>
+                  </StyledCol>
+                </StyledRow>
 
-              </ApplicationImage> */}
-              <ApplicationDetails>
-                <div className="studentApplicationDetails">
-                <h2>Create your own package!</h2>
-                <p>Add subjects of your choice to enroll..!</p>
+                {/* Row 2: Gender, Board, Class */}
+                <StyledRow>
+                  <StyledCol>
+                    <Form.Item label="Gender" name="gender" style={{ padding: "5px" }}>
+                      {studentDataForm.student.gender}
+                    </Form.Item>
+                  </StyledCol>
+                  <StyledCol>
+                    <Form.Item label="Board" name="board" style={{ padding: "5px" }}>
+                      {studentDataForm.student.board_id?.name}
+                    </Form.Item>
+                  </StyledCol>
+                  <StyledCol>
+                    <Form.Item label="Class" name="class" style={{ padding: "5px" }}>
+                      {studentDataForm.student.class.classLevel}
+                    </Form.Item>
+                  </StyledCol>
+                </StyledRow>
 
-                <Form layout="vertical" onFinish={handleSubmit}>
-                  {/* Row 1: Name, Email, Phone */}
-                  <StyledRow>
-                    <StyledCol>
-                      <Form.Item label="Name" name="name" style={{ padding:"5px", display:"flex",color:"#bdc9d3",  marginRight:"30px"}}>
-                        {/* <Input value={studentDataForm.student.user_id.name} readOnly /> */}
-                        {studentDataForm.student.user_id.name}
-                      </Form.Item>
-                    </StyledCol>
-                    <StyledCol>
-                    <Form.Item label="Email" name="email" style={{ padding:"5px", color:"#bdc9d3", display:"flex", marginRight:"30px"}}>
-                        {/* <Input value={studentDataForm.student.user_id.email} readOnly /> */}
-                        {studentDataForm.student.user_id.email}
-                      </Form.Item>
-                    </StyledCol>
-                    <StyledCol>
-                    <Form.Item label="Phone" name="phone" style={{ padding:"5px",color:"#bdc9d3", display:"flex", marginRight:"30px"}}>
-                        {/* <Input value={studentDataForm.student.phone_number} readOnly /> */}
-                        {studentDataForm.student.phone_number}
-                      </Form.Item>
-                    </StyledCol>
-                  </StyledRow>
-
-
-                  {/* Row 3: Course, Standard, Board */}
-                  <StyledRow>
-
-                    <StyledCol>
-                    <Form.Item label="Selected Gender" name="gender" style={{ padding:"5px", color:"#bdc9d3", display:"flex", marginRight:"30px"}}>
-                        {/* <Input value={studentDataForm.student.type_of_batch} readOnly /> */}
-                        {studentDataForm.student.gender}
-                      </Form.Item>
-                    </StyledCol>
-                    <StyledCol>
-                    <Form.Item label="Selected Board" name="board" style={{ padding:"5px", color:"#bdc9d3", display:"flex",marginRight:"30px"}}>
-                        {/* <Input value={studentDataForm.student.board_id.name} readOnly /> */}
-
-                        {studentDataForm.student.board_id?.name}
-                      </Form.Item>
-                    </StyledCol>
-                    <StyledCol>
-                    <Form.Item label="Selected Class" name="class" style={{ padding:"5px", color:"#bdc9d3", display:"flex", marginRight:"30px",}}>
-                        {/* <Input value={studentDataForm.student.class.classLevel} readOnly /> */}
-                        {studentDataForm.student.class.classLevel}
-                      </Form.Item>
-                    </StyledCol>
-                  </StyledRow>
-                    <StyledCol>
-                      <Form.Item
-                        label="Select Subjects (Minimum 3) "
-                        name="subjects"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please select more 3 subjects",
-                          },
-                          () => ({
-                            validator(_, value) {
-                              if (value && value.length >= 3) {
-                                return Promise.resolve();
-                              }
-                              return Promise.reject(
-                                new Error("You must select exactly 3 subjects")
-                              );
-                            },
-                          }),
-                        ]}
-                      >
-                        <Select
-                          mode="multiple"
-                          placeholder="Select subjects..."
-                          options={subjects.map((subject) => ({
-                            value: subject._id,
-                            label: subject.subject_name,
-                          }))}
-                          onChange={(options) => {
-                            setSelectedSubject(options);
-                            // setSelectedSubject(options);
-                            ////console.log("Selected subjects:", options);
-                          }}
-                        />
-                      </Form.Item>
-                    </StyledCol>
-                    <StyledCol>
-                      <Form.Item
-
-                      style={{paddingBottom:"20px"}}
-                        label="Select Batch "
-                        name="type_of_batch"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please select more 3 subjects",
-                          },
-
-                        ]}
-                      >
-                        <Select
-
-                          placeholder="Select Batch Type..."
-                          options={batchType.map((batch) => ({
-                            value: batch._id,
-                            label: batch.mode,
-                          }))}
-                          onChange={(options) => {
-                            // setSelectedSubject(options);
-                            // setSelectedSubject(options);
-                            setSelectedBatch(options);
-                            ////console.log("Selected subjects:", options);
-                          }}
-                        />
-
-                      </Form.Item>
-                    </StyledCol>
-                  {/* </StyledRow> */}
-
-                  {/* Submit Button */}
-                  <StyledRow style={{ justifyContent: "flex-end" }}>
-                    <StyledCol>
-                      <Form.Item>
-                        <Button
-                          type="primary"
-                          htmlType="submit"
+                {/* Subjects Selection */}
+                <StyledRow>
+                  <StyledCol span={24}>
+                    <Form.Item label="Select Subjects (Minimum 3)">
+                      {subjects.map((subject) => (
+                        <div
+                          key={subject._id}
                           style={{
-                            background:"purple",
-                            display:"flex",
-// marginTop:"20px",
-                            flexDirection:"row",
-                            justifyContent:"center",
-                            margin:"auto",
-                            borderColor: "#82194B",
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: "10px",
                           }}
                         >
-                          Submit Application
-                        </Button>
+                          <Checkbox
+                            onChange={(e) =>
+                              handleSubjectChange(subject._id, e.target.checked)
+                            }
+                            checked={selectedSubjects.includes(subject._id)}
+                          >
+                            {subject.subject_name}
+                          </Checkbox>
+                        </div>
+                      ))}
+                    </Form.Item>
+                  </StyledCol>
+                </StyledRow>
+
+                {/* Selected Subjects & Batch Types Table */}
+                {selectedSubjects.length > 0 && (
+                  <StyledRow>
+                    <StyledCol span={24}>
+                      <Form.Item label="Selected Subjects and Batch Types" required>
+                        <Table
+                          dataSource={tableData}
+                          columns={columns}
+                          pagination={false}
+                        />
                       </Form.Item>
                     </StyledCol>
                   </StyledRow>
-                </Form>
-                </div>
-              </ApplicationDetails>
-            </ApplicationContainer>
-          ) : studentDataForm.student.custom_package_status === "pending" ? (
-            <CustomPackageStatus>
-              {" "}
-              Your Custom Package is under review
-            </CustomPackageStatus>
-          ) : studentDataForm.student.custom_package_status == "rejected" && (
-            <CustomPackageStatus>
-              {" "}
-              Your Custom Package Request Rejected
-            </CustomPackageStatus>
-          )
-          }
+                )}
 
-       
-        </>
+                {/* Submit Button */}
+                <StyledRow style={{ justifyContent: "flex-end" }}>
+                  <StyledCol>
+                    <Form.Item>
+                      <Button
+                        type="primary"
+                        htmlType="submit"
+                        style={{
+                          background: "purple",
+                          display: "flex",
+                          flexDirection: "row",
+                          justifyContent: "center",
+                          margin: "auto",
+                          borderColor: "#82194B",
+                        }}
+                      >
+                       Next
+                      </Button>
+                    </Form.Item>
+                  </StyledCol>
+                </StyledRow>
+              </Form>
+            </div>
+          </ApplicationDetails>
+        </ApplicationContainer>
+      ) : studentDataForm.student.custom_package_status === "pending" ? (
+        <CustomPackageStatus>Your Custom Package is under review.</CustomPackageStatus>
+      ) : studentDataForm.student.custom_package_status === "rejected" ? (
+        <CustomPackageStatus>Your Custom Package Request was Rejected.</CustomPackageStatus>
       ) : (
-        <LoadingPage />
+        <CustomPackageStatus>Unexpected package status.</CustomPackageStatus>
       )}
     </>
+  ) : (
+    <LoadingPage />
   );
 };

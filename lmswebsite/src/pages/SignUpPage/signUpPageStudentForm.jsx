@@ -75,7 +75,7 @@ const StudentForm = () => {
   };
 
   const handleSubmit = async (values) => {
-    console.log("Student Form Values:", values);
+    // console.log("Student Form Values:", values);
     setIsSubmitting(true);
     try {
       // Create user with Firebase
@@ -117,6 +117,7 @@ const StudentForm = () => {
         studentGender: values.studentGender,
         studentDOB: values.studentDOB,
         board_id: values.board_id,
+        mode:'personal'
       };
 
       console.log("Submitting Student Data:", data);
@@ -299,7 +300,7 @@ const StudentForm = () => {
               <Select placeholder="Select Class" allowClear>
                 {classes.map((cls) => (
                   <Option key={cls._id} value={cls._id}>
-                    {cls.classLevel} - {cls.className}
+                    {cls.classLevel}
                   </Option>
                 ))}
               </Select>
@@ -329,8 +330,9 @@ const StudentForm = () => {
                   color: "#fff",
                   height: "40px",
                 }}
+                disabled={isSubmitting}
               >
-                Sign up
+              { isSubmitting? "Signing up...": "Sign up"}
               </Button>
             </Form.Item>
           </Form>

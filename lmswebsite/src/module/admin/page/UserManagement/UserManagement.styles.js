@@ -36,6 +36,7 @@ export const UserManagementWrap = styled.div`
   .UserManagement-controls {
     display: flex;
     align-items: center;
+    aligncontent: center;
     gap: 16px;
 
     ${media.md`
