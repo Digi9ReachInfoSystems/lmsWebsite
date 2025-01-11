@@ -109,7 +109,7 @@ import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
 import ReactGA from "react-ga";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import useOnlineStatus from "./globalInternetConnection";
-import PaymentLinkStatusPage from "./module/student/pages/PaymentLinkStatusPage/paymentLinkStatusPage";
+import PaymentLinkStatusPage from "./module/student/pages/PaymentLinkStatusPage/PaymentStatus";
 
 ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
