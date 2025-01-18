@@ -280,7 +280,7 @@ export default function UserManagement() {
       }
       const subArray = values.subjects.map((subject) => ({
         _id: subject.subject_id,
-        typeOfBatch: subject.typeOfBatch,
+        type_of_batch: subject.typeOfBatch,
         duration: subject.duration,
       }))
       // Prepare data to send to API
