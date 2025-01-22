@@ -526,7 +526,7 @@ const BecomeTeacherApplicationForm = () => {
                       >
                         {classes.map((classItem) => (
                           <Option key={classItem._id} value={classItem._id}>
-                            {classItem.classLevel} 
+                            {classItem.classLevel}
                           </Option>
                         ))}
                       </Select>

@@ -171,21 +171,17 @@ const SignUpPage = () => {
   return (
     <div className="signup-container">
       {/* Left Section - Image */}
-      <div className="image-section">
+      {/* <div className="image-section">
         <img src={SignUpImage} alt="Registration" className="imagesignup" />
         <h2>Register To The Platform</h2>
         <p>Your Journey Begins Here</p>
-      </div>
+      </div> */}
 
       {/* Right Section - Form */}
       <div className="form-section">
-        {/* <h2 className="form-heading">Registration</h2> */}
-        <p className="form-subheading">Enter Your Details</p>
+        <p className="form-subheading">Create Your Account to Continue</p>
 
         <form onSubmit={handleSubmit} className="signup-form">
-          {/* Static Fields */}
-
-          {/* Editable Fields */}
           <div className="form-group">
   <label>Full Name</label>
   <input
