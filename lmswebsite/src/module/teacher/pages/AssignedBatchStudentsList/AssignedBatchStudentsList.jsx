@@ -26,7 +26,10 @@ import { AssignedBatchStudentsListContainer } from "./AssignedBatchStudentsList.
 import Animation from "../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 import { newMaterialCreated, newQuizCreated } from "../../../../api/mailNotificationApi";
+
+
 const { RangePicker } = DatePicker;
+
 
 const AssignedBatchStudentsList = () => {
   const { batchId } = useParams();
@@ -334,6 +337,11 @@ const AssignedBatchStudentsList = () => {
                 showTime
                 format="YYYY-MM-DD HH:mm"
                 placeholder={["Start Time", "End Time"]}
+                disabledDate={(current) => {
+                  // Disable dates before today
+                  return current && current.isBefore(moment().startOf("day"), 'day');
+                }}
+                
               />
             </Form.Item>
 

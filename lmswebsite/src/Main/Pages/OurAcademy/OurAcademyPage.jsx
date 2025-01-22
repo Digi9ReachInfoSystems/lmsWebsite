@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./OurAcademy.css";
 import OurAcademylogo from "../../../../src/assets/finaledit.png";
 import HeaderSection from "../NavBar/navbar";
 
 const OurAcademyPage = () => {
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   return (
     <div>
       <HeaderSection />

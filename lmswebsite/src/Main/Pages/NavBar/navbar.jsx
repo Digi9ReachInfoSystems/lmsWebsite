@@ -119,18 +119,87 @@ function HeaderSection() {
     form.resetFields();
   };
 
-  // Login
+  // // Login
+  // const handleLogin = async (values) => {
+  //   const { email, password } = values;
+  //   setIsSubmitting(true);
+
+  //   try {
+  //     const { user } = await signInWithEmailAndPassword(auth, email, password);
+  //     localStorage.setItem(
+  //       "sessionData",
+  //       JSON.stringify({ accessToken: user.accessToken })
+  //     );
+
+  //     const profileData = await getUserByAuthId(user.uid);
+  //     const sessionData = {
+  //       userId: user.uid,
+  //       accessToken: user.accessToken,
+  //       refreshToken: profileData.user.refresh_token,
+  //       name: profileData.user.name,
+  //       loggedIn: "true",
+  //       role: profileData.user.role,
+  //     };
+  //     await newlogin(profileData.user._id);
+  //     // console.log("user", user);
+  //     localStorage.setItem("sessionData", JSON.stringify(sessionData));
+  //     //  console.log("userProfileData", profileData);
+  //     // Navigate by role
+  //     if (profileData.user.role === "admin") {
+  //       navigate("/admin");
+  //     } else if (profileData.user.role === "student") {
+  //       const studentData = await getStudentByAuthId(user.uid);
+  //       console.log("studentData", studentData);
+  //       if (
+  //         (studentData.student.mode == "personal" &&
+  //           studentData.student.paymentLink_status === "no_payment_link") &&
+  //         studentData.student.is_paid === false
+  //         //  &&
+  //         // (!studentData.student.amount)
+  //       ) {
+  //         navigate("/student");
+  //       } else if (studentData.student.amount && studentData.student.is_paid === false&&studentData.student.paymentLink_status=="pending") {
+  //         navigate("/paymentStatus");
+  //       } else if (studentData.student.amount && studentData.student.is_paid === false) {
+  //         navigate("/paymentScreen");
+  //       } else {
+  //         navigate("/student/dashboard");
+  //       }
+  //     } else if (profileData.user.role === "teacher") {
+  //       const teacherData = await getTeacherByAuthId(profileData.user.auth_id);
+  //       if (teacherData.teacher) {
+  //         navigate("/teacher/dashboard");
+  //       } else {
+  //         navigate("/teacher");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log("Error logging in:", error);
+  //     if (error.code === "auth/invalid-credential") {
+  //       setErrorMessage("Incorrect Password or Email");
+  //     } else if (error.code=="auth/invalid-email") {
+  //       setErrorMessage("Invalid Email");
+  //     } else {
+  //       setErrorMessage("Unable to connect to the internet.");
+  //     }
+  //   }
+
+  //   setIsSubmitting(false);
+  // };
+
+
   const handleLogin = async (values) => {
     const { email, password } = values;
     setIsSubmitting(true);
-
+  
     try {
       const { user } = await signInWithEmailAndPassword(auth, email, password);
+  
       localStorage.setItem(
         "sessionData",
         JSON.stringify({ accessToken: user.accessToken })
       );
-
+  
       const profileData = await getUserByAuthId(user.uid);
       const sessionData = {
         userId: user.uid,
@@ -141,24 +210,24 @@ function HeaderSection() {
         role: profileData.user.role,
       };
       await newlogin(profileData.user._id);
-      // console.log("user", user);
       localStorage.setItem("sessionData", JSON.stringify(sessionData));
-      //  console.log("userProfileData", profileData);
+  
       // Navigate by role
       if (profileData.user.role === "admin") {
         navigate("/admin");
       } else if (profileData.user.role === "student") {
         const studentData = await getStudentByAuthId(user.uid);
-        console.log("studentData", studentData);
         if (
-          (studentData.student.mode == "personal" &&
+          (studentData.student.mode === "personal" &&
             studentData.student.paymentLink_status === "no_payment_link") &&
           studentData.student.is_paid === false
-          //  &&
-          // (!studentData.student.amount)
         ) {
           navigate("/student");
-        } else if (studentData.student.amount && studentData.student.is_paid === false&&studentData.student.paymentLink_status=="pending") {
+        } else if (
+          studentData.student.amount &&
+          studentData.student.is_paid === false &&
+          studentData.student.paymentLink_status === "pending"
+        ) {
           navigate("/paymentStatus");
         } else if (studentData.student.amount && studentData.student.is_paid === false) {
           navigate("/paymentScreen");
@@ -174,18 +243,27 @@ function HeaderSection() {
         }
       }
     } catch (error) {
-      console.log("Error logging in:", error);
-      if (error.code === "auth/invalid-credential") {
-        setErrorMessage("Incorrect Password or Email");
-      } else if (error.code=="auth/invalid-email") {
-        setErrorMessage("Incorrect  Email");
-      } else {
-        setErrorMessage("Network Error");
+      // Handle specific Firebase error codes
+      switch (error.code) {
+        case "auth/user-not-found":
+          setErrorMessage("Invalid email. Please check your credentials.");
+          break;
+        case "auth/wrong-password":
+          setErrorMessage("Incorrect password. Please try again.");
+          break;
+        case "auth/invalid-email":
+          setErrorMessage("Invalid email format. Please check and try again.");
+          break;
+        default:
+          setErrorMessage("Unable to connect to the internet or a network error occurred.");
+          break;
       }
+      console.error("Error logging in:", error); // Optional for debugging
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setIsSubmitting(false);
   };
+  
 
   return (
     <AppBar

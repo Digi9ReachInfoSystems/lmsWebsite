@@ -1,10 +1,9 @@
 // src/TermsConditionSettings/TermsConditionSettings.jsx
+
 import React from "react";
 import {
   Container,
-  Title,
   TermContainer,
-  Header1,
   Subtitle,
   Para,
 } from "./TermsConditionSettings.style";

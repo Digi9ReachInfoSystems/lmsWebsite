@@ -8,7 +8,7 @@ import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 import { set } from "lodash";
  
-const ChooseUsForm = () => {
+const ChooseUsForm = ({onClose}) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -78,6 +78,7 @@ const ChooseUsForm = () => {
         imageUrl: null,
         previewUrl: "",
       }); // Clear form
+      onClose();
     } catch (error) {
       setError("Error creating feature: " + error.message);
     } finally {

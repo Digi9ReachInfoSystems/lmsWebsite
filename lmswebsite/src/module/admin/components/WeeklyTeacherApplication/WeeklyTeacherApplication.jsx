@@ -15,7 +15,7 @@ const WeeklyTeacherApplication = ({ data }) => {
     const labels = [];
     const startDay = startDate.getDay(); // Get the current day of the week
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 1; i < 8; i++) {
       const day = daysOfWeek[(startDay + i) % 7];
       labels.push(day);
     }

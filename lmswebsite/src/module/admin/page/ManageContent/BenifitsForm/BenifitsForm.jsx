@@ -5,7 +5,7 @@ import { createBenefit } from "../../../../../api/benefitsApi"; // Adjust path t
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
  
-const BenefitForm = () => {
+const BenefitForm = ( {onClose}) => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -47,6 +47,7 @@ const BenefitForm = () => {
         description: "",
         color: "",
       });
+      onClose();
     } catch (err) {
       setError(err.response?.data?.message || "Failed to create benefit");
     } finally {

@@ -159,7 +159,7 @@ export const Slot = styled.div`
   border-radius: 50px;
   text-align: center;
   font-size: 14px;
-  font-weight: 500;k
+  font-weight: 500;
   cursor: pointer;
 
 

@@ -82,7 +82,7 @@ export const StudentLandingPage = () => {
         setStudentDataForm(data);
 
         // 2) (Optional) Fetch custom type-of-batch
-        await getCustomTypeOfBatch();
+        // await getCustomTypeOfBatch();
 
         // 3) Fetch packages for current class
         const packageResponse = await getPackageByClassId(

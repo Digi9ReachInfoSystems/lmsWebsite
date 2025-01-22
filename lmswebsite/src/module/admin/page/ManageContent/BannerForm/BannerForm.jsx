@@ -7,7 +7,7 @@ import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 import { set } from "lodash";
  
-const BannerForm = () => {
+const BannerForm = ({onClose}) => {
   const [formData, setFormData] = useState({
     banner_name: "",
     banner_image: null, // Will hold the file object
@@ -74,6 +74,7 @@ const BannerForm = () => {
         banner_image: null,
       });
       setLoading(false);
+      onClose();
     } catch (error) {
       setError(error.response?.data?.error || "Failed to create banner. Please try again later.");
       message.error("Failed to create banner. Please try again later."); // Show error message

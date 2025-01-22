@@ -3,12 +3,12 @@ import { Table, Button, Input, Modal, Image, message } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
 import { TeacherCircularWrap } from "./TeacherCircular.styles";
-import Animation from "../../../teacher/assets/Animation.json";
-import Lottie from "lottie-react";
 import {
   Heading,
   PageContainer,
 } from "../../../../style/PrimaryStyles/PrimaryStyles";
+import Animation from "../../../teacher/assets/Animation.json";
+import Lottie from "lottie-react";
 
 const TeacherCircular = () => {
   const [circulars, setCirculars] = useState([]);
@@ -21,7 +21,6 @@ const TeacherCircular = () => {
   useEffect(() => {
     const fetchCirculars = async () => {
       try {
-        setLoading(true);
         const data = await getAllCircularNotificationsApi("teacher");
         if (data?.circularNotifications) {
           const formattedData = data.circularNotifications.map((circular) => ({
@@ -32,6 +31,7 @@ const TeacherCircular = () => {
           }));
           setCirculars(formattedData);
           setFilteredCirculars(formattedData);
+          setLoading(false);
         } else {
           message.error("Failed to fetch circular notifications.");
         }
@@ -42,8 +42,36 @@ const TeacherCircular = () => {
     };
 
     fetchCirculars();
-    setLoading(false);
   }, []);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <div
+          style={{
+            width: "300px",
+            height: "300px",
+            overflow: "hidden",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            // Scale down the animation using transform
+            transform: "scale(0.5)",
+            transformOrigin: "center center",
+          }}
+        >
+          <Lottie animationData={Animation} loop={true} />
+        </div>
+      </div>
+    );
+  }
 
   // Handle search functionality
   const handleSearch = (e) => {
@@ -96,71 +124,41 @@ const TeacherCircular = () => {
     },
   ];
 
-  if (loading) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-        }}
-      >
-        <div
-          style={{
-            width: "300px",
-            height: "300px",
-            overflow: "hidden",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            // Scale down the animation using transform
-            transform: "scale(0.5)",
-            transformOrigin: "center center",
-          }}
-        >
-          <Lottie animationData={Animation} loop={true} />
-        </div>
-      </div>
-    );
-  }
   return (
-    <PageContainer>
-      <TeacherCircularWrap>
-        {circulars ? (
-          <>
-            <div className="header">
-              <Heading> Circulars</Heading>
-              <Input
-                placeholder="Search by Circular Name"
-                value={searchInput}
-                onChange={handleSearch}
-                allowClear
-                prefix={<SearchOutlined />}
-                style={{ width: 300 }}
-              />
-            </div>
-            <Table
-              dataSource={filteredCirculars}
-              columns={columns}
-              pagination={{ pageSize: 5 }}
-              bordered
+    <TeacherCircularWrap>
+      {circulars ? (
+        <>
+          <div className="header">
+            <Heading> Circulars</Heading>
+            <Input
+              placeholder="Search by Circular Name"
+              value={searchInput}
+              onChange={handleSearch}
+              allowClear
+              prefix={<SearchOutlined />}
+              style={{ width: 300 }}
             />
-            <Modal
-              // title="View Image"
-              open={isModalVisible}
-              onCancel={closeModal}
-              footer={null}
-              centered
-            >
-              <Image src={selectedImage} alt="Circular" width="100%" />
-            </Modal>
-          </>
-        ) : (
-          <Lottie animationData={Animation} loop={true} />
-        )}
-      </TeacherCircularWrap>
-    </PageContainer>
+          </div>
+          <Table
+            dataSource={filteredCirculars}
+            columns={columns}
+            pagination={{ pageSize: 5 }}
+            bordered
+          />
+          <Modal
+            // title="View Image"
+            visible={isModalVisible}
+            onCancel={closeModal}
+            footer={null}
+            centered
+          >
+            <Image src={selectedImage} alt="Circular" width="100%" />
+          </Modal>
+        </>
+      ) : (
+        <Lottie animationData={Animation} loop={true} />
+      )}
+    </TeacherCircularWrap>
   );
 };
 

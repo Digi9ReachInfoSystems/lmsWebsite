@@ -7,7 +7,6 @@ import { CircularWrap } from "./Circulars.styles";
 import CreateCircular from "../CreateCircular/CreateCircular";
 import Animation from "../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
-import { set } from "lodash";
 
 const { Option } = Select;  // Destructure Option from Select
 

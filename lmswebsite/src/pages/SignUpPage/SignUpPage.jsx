@@ -12,8 +12,11 @@ import { auth } from "../../config/firebaseConfig";
 import { uploadFileToFirebase } from "../../utils/uploadFileToFirebase";
 import { signupUser } from "../../api/authApi";
 import { getUserByAuthId } from "../../api/userApi";
-import { studentAccountCreated, studentSignedUpAdmin } from "../../api/mailNotificationApi";
-
+import {
+  studentAccountCreated,
+  studentSignedUpAdmin,
+} from "../../api/mailNotificationApi";
+import moment from "moment";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -85,7 +88,7 @@ const SignUpPage = () => {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
-      const gstAmount=JSON.parse(localStorage.getItem("taxes"))
+      const gstAmount = JSON.parse(localStorage.getItem("taxes"));
       // const profileImageUrl = await uploadFileToFirebase(
       //   formData.profileImage,
       //   "studentProfile"
@@ -106,18 +109,22 @@ const SignUpPage = () => {
         amount: formData.amount,
         duration: formData.duration,
         type_of_batch: formData.type_of_batch,
-        subject_id:{ 
-          _id:formData.subject,
+        subject_id: {
+          _id: formData.subject,
           type_of_batch: formData.type_of_batch,
-          duration: formData.duration
+          duration: formData.duration,
         },
-        gstAmount:gstAmount,
-        discountAmount:0,
+        gstAmount: gstAmount,
+        discountAmount: 0,
       };
       //console.log(data);
       await signupUser(data);
-      await studentAccountCreated(formData.name,formData.email,formData.password);
-      await studentSignedUpAdmin(formData.name,formData.email);
+      await studentAccountCreated(
+        formData.name,
+        formData.email,
+        formData.password
+      );
+      await studentSignedUpAdmin(formData.name, formData.email);
       message.success("Registration Successful!");
       try {
         const userCredential = await signInWithEmailAndPassword(
@@ -144,10 +151,19 @@ const SignUpPage = () => {
         console.error(error.message);
       }
     } catch (error) {
-      //console.error("Registration error:", error);
-      const errorMessage =
-        error.message || "Registration failed. Please try again.";
-      message.error(`Registration failed: ${errorMessage}`);
+      console.error("Registration error:", error);
+
+      // Check for specific Firebase error codes
+      let errorMessage = "Registration failed. Please try again.";
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage =
+          "This email is already registered. Please sign in or use a different email.";
+      } else if (error.code) {
+        // Optional: Handle other specific error codes if needed
+        errorMessage = error.message || errorMessage;
+      }
+
+      message.error(errorMessage);
     }
     // navigate("/login");
   };
@@ -167,35 +183,72 @@ const SignUpPage = () => {
 
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="form-group">
-            <label>Full Name</label>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Phone Number</label>
-            <input
-              type="text"
-              name="phoneNumber"
-              placeholder="Enter phone number"
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+  <label>Full Name</label>
+  <input
+    type="text"
+    name="name"
+    placeholder="Enter your name"
+    onKeyPress={(e) => {
+      const char = String.fromCharCode(e.which || e.keyCode);
+      const alphabetOnly = /^[A-Za-z\s]+$/;
+      if (!alphabetOnly.test(char)) {
+        e.preventDefault(); // Prevent invalid characters from being entered
+      }
+    }}
+    onChange={(e) => {
+      const value = e.target.value;
+      const alphabetOnly = /^[A-Za-z\s]*$/;
+      if (alphabetOnly.test(value)) {
+        handleInputChange(e); // Update the state with valid input
+      }
+    }}
+    required
+  />
+</div>
+
+
+<div className="form-group">
+  <label>Email</label>
+  <input
+    type="email"
+    name="email"
+    placeholder="Enter your email"
+    onChange={(e) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const value = e.target.value;
+      if (emailRegex.test(value)) {
+        handleInputChange(e); // Update state only if email is valid
+      } else if (value === "") {
+        setFormData((prev) => ({ ...prev, email: "" })); // Clear invalid email
+      }
+    }}
+    required
+  />
+</div>
+
+<div className="form-group">
+  <label>Phone Number</label>
+  <input
+    type="text"
+    name="phoneNumber"
+    placeholder="Enter phone number"
+    maxLength={10} // Limit input length to 10 characters
+    onKeyPress={(e) => {
+      const char = String.fromCharCode(e.which || e.keyCode);
+      if (!/^\d$/.test(char)) {
+        e.preventDefault(); // Prevent non-numeric input
+      }
+    }}
+    onChange={(e) => {
+      const value = e.target.value.replace(/\D/g, ""); // Remove non-numeric characters
+      if (value.length <= 10) {
+        handleInputChange({ target: { name: "phoneNumber", value } }); // Update state
+      }
+    }}
+    required
+  />
+</div>
+
           <div className="form-group">
             <label>Date of Birth</label>
             <DatePicker
@@ -204,6 +257,10 @@ const SignUpPage = () => {
               }
               style={{ width: "100%" }}
               required
+              disabledDate={(current) => {
+                // Disable dates after today
+                return current && current.isAfter(moment().endOf("day"), "day");
+              }}
             />
           </div>
           <div className="form-group">

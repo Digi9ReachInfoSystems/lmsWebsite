@@ -17,7 +17,7 @@ import Lottie from "lottie-react";
 
 const { Option } = Select;
 
-const PackageForm = () => {
+const PackageForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
     package_name: "",
     description: "",
@@ -196,6 +196,7 @@ const PackageForm = () => {
         mode: "normal",
         duration: 0,
       });
+      onClose();
     } catch (error) {
       setError(
         error.response?.data?.error ||

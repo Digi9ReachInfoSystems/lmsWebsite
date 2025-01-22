@@ -155,14 +155,31 @@ const StudentForm = () => {
         console.error(error.message);
       }
       // navigate("/");
-    } catch (error) {
+    }catch (error) {
       console.error("Registration error:", error);
-      const errorMessage =
-        error.message || "Registration failed. Please try again.";
-      message.error(`Registration failed: ${errorMessage}`);
+    
+      // Check for specific Firebase error codes
+      let errorMessage = "Registration failed. Please try again.";
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage = "This email is already registered. Please sign in or use a different email.";
+      } else if (error.code) {
+        // Optional: Handle other specific error codes if needed
+        errorMessage = error.message || errorMessage;
+      }
+    
+      message.error(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
+    
+    // } catch (error) {
+    //   console.error("Registration error:", error);
+    //   const errorMessage =
+    //     error.message || "Registration failed. Please try again.";
+    //   message.error(`${errorMessage}`);
+    // } finally {
+    //   setIsSubmitting(false);
+    // }
   };
 
   return (
@@ -223,12 +240,26 @@ const StudentForm = () => {
             initialValues={{ student_email: "" }}
           >
             <Form.Item
-              name="student_name"
-              label="Name"
-              rules={[{ required: true, message: "Please enter your name" }]}
-            >
-              <Input placeholder="Name" />
-            </Form.Item>
+             label="Full Name"
+             name="student_name"
+             rules={[
+               { required: true, message: "Please enter the student's name" },
+               {
+                 pattern: /^[a-zA-Z\s]*$/,
+                 message: "Only alphabetic characters are allowed",
+               },
+             ]}
+           >
+             <Input
+               placeholder="Enter student's full name"
+               onKeyPress={(event) => {
+                 // Allow only alphabetic characters and space
+                 if (!/[a-zA-Z\s]/.test(event.key)) {
+                   event.preventDefault();
+                 }
+               }}
+             />
+           </Form.Item>
 
             <Form.Item
               name="email"
