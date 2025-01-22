@@ -14,7 +14,7 @@ import { getSubjectsByClassId } from "../../../../../api/subjectApi";
 
 const { Option } = AntdSelect;
 
-const ModeBatch = () => {
+const ModeBatch = ({onClose}) => {
   // State
   const [mode, setMode] = useState("");
   const [price, setPrice] = useState("");
@@ -33,6 +33,7 @@ const ModeBatch = () => {
   const [subjectData, setSubjectData] = useState([]);
   const [selectedSubject, setSelectedSubject] = useState("");
   const[batchType, setBatchType] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const MAX_FEATURES = 10;
 
@@ -176,11 +177,18 @@ const ModeBatch = () => {
         setSubjectData([]);
         setSelectedSubject("");
       }
+      // handleCancel();
+      onClose();
     } catch (err) {
       //console.error('API Error:', err);
       setError(err.response?.data?.error || 'Failed to create Type of Batch.');
+    } finally {
+      setIsSubmitting(false);
+      // handleCancel();
+     
     }
   };
+
 
   return (
     <div style={{ maxWidth: 600, margin: "0 auto" }}>
@@ -364,8 +372,12 @@ const ModeBatch = () => {
         {success && <Alert style={{ marginBottom: 10 }} message={success} type="success" />}
 
         {/* Submit Button */}
-        <AntdButton type="primary" htmlType="submit" >
-          Create
+        <AntdButton type="primary"
+            htmlType="submit"
+            loading={isSubmitting}
+            block
+            >
+        {isSubmitting ? "Creating..." : "Create "}
         </AntdButton>
       </AntdForm>
     </div>

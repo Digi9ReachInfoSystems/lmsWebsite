@@ -98,6 +98,7 @@ const CreateCircular = ({ closeModal }) => {
             type="date"
             value={validDate}
             onChange={(e) => setValidDate(e.target.value)}
+            min={new Date().toISOString().split("T")[0]}
           />
         </FormGroup>
 

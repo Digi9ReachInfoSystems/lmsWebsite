@@ -248,7 +248,7 @@ export default function UserManagement() {
   // };
 
   const handleSubmit = async (values) => {
-    console.log("Student Form Values:", values);
+    // console.log("Student Form Values:", values);
     setIsSubmitting(true);
     try {
       // Create user with Firebase
@@ -303,9 +303,9 @@ export default function UserManagement() {
         paymentLink_status: "pending",
       };
 
-      console.log("Submitting Student Data:", data);
+      // console.log("Submitting Student Data:", data);
       const res = await signupUser(data);
-      console.log("res", res);
+      // console.log("res", res);
       // res.student._id res.student.amount
       await createPaymentForCustomPackage({
         amount: res.student.amount, student_id: res.student._id
@@ -318,7 +318,7 @@ export default function UserManagement() {
       message.success("Registration successful! Please verify your email.");
       message.success("Registration Successful!");
       localStorage.setItem("sessionData", JSON.stringify(oldSessionData));
-      // handleCancel();
+      handleCancel();
       // navigate("/");
     } catch (error) {
       console.error("Registration error:", error);
@@ -384,13 +384,28 @@ export default function UserManagement() {
           onFinish={handleSubmit}
           initialValues={{ student_email: "" }}
         >
-          <Form.Item
-            name="student_name"
-            label="Name"
-            rules={[{ required: true, message: "Please enter the student's name" }]}
-          >
-            <Input placeholder="Name" />
-          </Form.Item>
+         <Form.Item
+  label="Full Name"
+  name="student_name"
+  rules={[
+    { required: true, message: "Please enter the student's name" },
+    {
+      pattern: /^[a-zA-Z\s]*$/,
+      message: "Only alphabetic characters are allowed",
+    },
+  ]}
+>
+  <Input
+    placeholder="Enter student's full name"
+    onKeyPress={(event) => {
+      // Allow only alphabetic characters and space
+      if (!/[a-zA-Z\s]/.test(event.key)) {
+        event.preventDefault();
+      }
+    }}
+  />
+</Form.Item>
+
 
           <Form.Item
             name="email"
@@ -717,6 +732,7 @@ export default function UserManagement() {
               type="primary"
               htmlType="submit"
               loading={isSubmitting}
+              block
               style={{
                 width: "100%",
                 backgroundColor: "purple",
@@ -725,7 +741,7 @@ export default function UserManagement() {
                 height: "40px",
               }}
             >
-              Create Student
+              {loading ? "Creating..." : "Create student"}
             </Button>
           </Form.Item>
         </Form>

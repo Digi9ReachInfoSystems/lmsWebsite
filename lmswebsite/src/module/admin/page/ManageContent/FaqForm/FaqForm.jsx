@@ -5,7 +5,7 @@ import { createFAQ } from "../../../../../api/faq"; // Adjust the path to your A
 import Animation from "../../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
  
-const FaqForm = () => {
+const FaqForm = ({onClose}) => {
   const [formData, setFormData] = useState({
     question: "",
     answer: "",
@@ -45,6 +45,7 @@ const FaqForm = () => {
         question: "",
         answer: "",
       });
+      onClose();
     } catch (error) {
       setError(
         error.response?.data?.error ||

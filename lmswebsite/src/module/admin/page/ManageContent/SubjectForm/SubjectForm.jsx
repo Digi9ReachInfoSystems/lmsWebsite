@@ -11,7 +11,7 @@ import { uploadFileToFirebase } from "../../../../../utils/uploadFileToFirebase"
 
 const { Option } = Select;
 
-const SubjectForm = () => {
+const SubjectForm = ({onClose, }) => {
   const [form] = Form.useForm();
   const [boards, setBoards] = useState([]);
   const [classes, setClasses] = useState([]);
@@ -65,16 +65,41 @@ const SubjectForm = () => {
     setImageFile(file); // Save the file in state
   };
 
+  // const handleSubmit = async (values) => {
+  //   setIsSubmitting(true);
+  //   const downloadUrl = await uploadFileToFirebase(imageFile, "subjectImage");
+  //   //console.log('Form Values:', values); // Log form values
+  //   const submissionData = { ...values, icon: downloadUrl };
+  //   try {
+  //     await createSubject(submissionData);
+  //     message.success("Subject created successfully!");
+  //     form.resetFields();
+  //     setClasses([]);
+  //     onClose();
+  //   } catch (error) {
+  //     const errorMsg =
+  //       error.response?.data?.error || error.message || "Failed to create subject.";
+  //     message.error(errorMsg);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
   const handleSubmit = async (values) => {
     setIsSubmitting(true);
-    const downloadUrl = await uploadFileToFirebase(imageFile, "subjectImage");
-    //console.log('Form Values:', values); // Log form values
-    const submissionData = { ...values, icon: downloadUrl };
+  
     try {
-      await createSubject(submissionData);
+      // Upload the image and include the download URL in the form data
+      const downloadUrl = await uploadFileToFirebase(imageFile, "subjectImage");
+      const submissionData = { ...values, icon: downloadUrl };
+  
+      // Call the `onSubmit` prop to handle the creation process
+      await onSubmit(submissionData);
+  
       message.success("Subject created successfully!");
       form.resetFields();
       setClasses([]);
+      onClose(); // Close the modal after submission
     } catch (error) {
       const errorMsg =
         error.response?.data?.error || error.message || "Failed to create subject.";
@@ -83,6 +108,7 @@ const SubjectForm = () => {
       setIsSubmitting(false);
     }
   };
+  
   if (loading) {
     return (
       <div

@@ -34,6 +34,8 @@ export const TeacherCircularWrap = styled.div`
 
   .ant-table {
     background-color: #fff;
+    width: 98%;
+    margin: auto;
   }
 
   .ant-modal-title {

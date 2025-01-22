@@ -59,6 +59,8 @@ export default function CustomerQuery() {
     openModal();
   };
 
+
+
   useEffect(() => {
     const apiCaller = async () => {
       try {
@@ -80,6 +82,7 @@ export default function CustomerQuery() {
           setOriginalData(dataFilter);
           setFilterData(dataFilter);
           setLoading(false);
+          // setLoading(true);
         }
       } catch (error) {
         ////console.error("Error fetching queries:", error);
@@ -99,6 +102,21 @@ export default function CustomerQuery() {
       setFilterData(originalData); // Reset to original data if search is empty
     }
   }, [searchInput, originalData]);
+
+  const handleQueryResolved = (resolvedQueryId) => {
+    // Update the originalData and filterData to reflect the resolved status
+    const updatedData = originalData.map((item) =>
+      item.key === resolvedQueryId
+        ? { ...item, status: "solved" }
+        : item
+    );
+
+    setOriginalData(updatedData);
+
+    // // Apply the current filter to the updated data
+    // const filtered = updatedData.filter((item) => item.status === statusFilter);
+    setStatusFilter("solved");
+  };
 
   if (loading) {
     return (
@@ -181,7 +199,7 @@ export default function CustomerQuery() {
         // title="Query Details"
         width={800}
       >
-        {queryId && <CustomerQueryViewForm queryId={queryId} closeModal={closeModal}/>}
+        {queryId && <CustomerQueryViewForm queryId={queryId} closeModal={closeModal} onQueryResolved={handleQueryResolved}/>}
       </Modal>
     </CustomerQueryWrap>
   );

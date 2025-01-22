@@ -35,6 +35,7 @@ import {
 import { auth } from "../../../../config/firebaseConfig";
 import { signupUser } from "../../../../api/authApi";
 import { createTeacher } from "../../../../api/teacherApi";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -767,7 +768,13 @@ export default function TeacherApplicationFormView() {
               { required: true, message: "Please select the date of birth" },
             ]}
           >
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker
+              style={{ width: "100%" }}
+              disabledDate={(current) => {
+                // Disable dates after today
+                return current && current.isAfter(moment().endOf("day"), "day");
+              }}
+            />
           </Form.Item>
 
           {/* Resume Upload */}

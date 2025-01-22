@@ -8,7 +8,7 @@ import {
 } from "./CustomerQueryViewForm.styles";
 import { fetchQueryById, updateQueryById } from "../../../../api/customerQueryApi";
 
-const CustomerQueryViewForm = ({queryId,closeModal}) => {
+const CustomerQueryViewForm = ({queryId,closeModal, onQueryResolved}) => {
 
   const navigate = useNavigate();
   const [query, setQuery] = useState(null);
@@ -20,6 +20,7 @@ const CustomerQueryViewForm = ({queryId,closeModal}) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const data = await fetchQueryById(queryId);
         setQuery(data);
         setStatus(data.queryStatus);
@@ -36,17 +37,21 @@ const CustomerQueryViewForm = ({queryId,closeModal}) => {
   // Function to update the query status to "solved" on the backend
   const resolveQuery = async () => {
     try {
+      setLoading(true);
       const updatedQuery = { ...query, queryStatus: "solved", querySolved: true };
 
       await updateQueryById(queryId, updatedQuery);
+      onQueryResolved(queryId);
       setQuery(updatedQuery);
       setStatus("solved");
       closeModal();
       alert("Query status updated to solved successfully.");
+      // setLoading(true);
       navigate("/admin/customerQueries");
     } catch (error) {
       //console.error("Error updating query status:", error.message);
       alert("Failed to update query status.");
+   
     }
   };
 

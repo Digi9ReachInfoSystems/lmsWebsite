@@ -17,7 +17,6 @@ const StudentCircular = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(true);
-
   // Fetch circular data
   useEffect(() => {
     const fetchCirculars = async () => {
@@ -127,34 +126,38 @@ const StudentCircular = () => {
 
   return (
     <StudentCircularWrap>
-      <>
-        <div className="header">
-          <Heading> Circulars </Heading>
-          <Input
-            placeholder="Search by Circular Name"
-            value={searchInput}
-            onChange={handleSearch}
-            allowClear
-            prefix={<SearchOutlined />}
-            style={{ width: 300 }}
+      {circulars ? (
+        <>
+          <div className="header">
+            <Heading> Circulars </Heading>
+            <Input
+              placeholder="Search by Circular Name"
+              value={searchInput}
+              onChange={handleSearch}
+              allowClear
+              prefix={<SearchOutlined />}
+              style={{ width: 300 }}
+            />
+          </div>
+          <Table
+            dataSource={filteredCirculars}
+            columns={columns}
+            pagination={{ pageSize: 5 }}
+            bordered
           />
-        </div>
-        <Table
-          dataSource={filteredCirculars}
-          columns={columns}
-          pagination={{ pageSize: 5 }}
-          bordered
-        />
-        <Modal
-          // title="View Image"
-          visible={isModalVisible}
-          onCancel={closeModal}
-          footer={null}
-          centered
-        >
-          <Image src={selectedImage} alt="Circular" width="100%" />
-        </Modal>
-      </>
+          <Modal
+            // title="View Image"
+            visible={isModalVisible}
+            onCancel={closeModal}
+            footer={null}
+            centered
+          >
+            <Image src={selectedImage} alt="Circular" width="100%" />
+          </Modal>
+        </>
+      ) : (
+        <Lottie animationData={Animation} loop={true} />
+      )}
     </StudentCircularWrap>
   );
 };

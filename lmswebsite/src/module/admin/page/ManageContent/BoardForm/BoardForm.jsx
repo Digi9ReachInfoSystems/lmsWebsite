@@ -7,7 +7,7 @@ import { set } from 'lodash';
 import { UploadOutlined } from "@ant-design/icons";
 import { uploadFileToFirebase } from '../../../../../utils/uploadFileToFirebase';
  
-const BoardForm = () => {
+const BoardForm = ({onClose}) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,6 +24,7 @@ const BoardForm = () => {
       const response = await createBoard(submissionData);
       //console.log('API Response:', response); // Log API response
       message.success('Board created successfully!');
+      onClose();
     } catch (err) {
       //console.error('Error:', err); // Log error details
       let errorMsg = 'Failed to create board. Please try again.';

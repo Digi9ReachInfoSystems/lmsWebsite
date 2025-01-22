@@ -12,7 +12,7 @@ import Animation from "../../../../admin/assets/Animation.json"; // Your Lottie 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const BlogForm = () => {
+const BlogForm = ({onClose}) => {
   const [formData, setFormData] = useState({
     title: "",
     imageUrl: null, // Holds the file object
@@ -172,6 +172,7 @@ const BlogForm = () => {
         setError(errorMsg);
         message.error(errorMsg);
       }
+      onClose();
     } catch (err) {
       ////console.error("Error creating blog post:", err);
       setError("An unexpected error occurred. Please try again.");

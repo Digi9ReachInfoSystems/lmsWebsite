@@ -107,6 +107,8 @@ const ManageContentTable = ({ contentType }) => {
     editPriceForm.resetFields();
     setFeatures([]);
   };
+
+ 
   // Handle feature input
   const handleAddFeature = () => {
     const trimmedFeature = featureInput.trim();
@@ -346,7 +348,7 @@ const ManageContentTable = ({ contentType }) => {
     setIsModalVisible(false);
   };
 
-  // Handle Create
+  // // Handle Create
   const handleCreate = async (newItem) => {
     try {
       switch (contentType) {
@@ -395,11 +397,24 @@ const ManageContentTable = ({ contentType }) => {
       }
       setIsModalVisible(false);
       fetchData(); // Refresh data after creation
+      setfil
     } catch (error) {
       console.error('API Error:', error);
       message.error('Failed to create item');
-    }
+    } 
   };
+
+  // const handleCreate = async (newItem) => {
+  //   try {
+  //     await createSubject(newItem); // Call the API to create the subject
+  //     message.success("Subject created successfully");
+  //     fetchData(); // Refresh the table data
+  //   } catch (error) {
+  //     console.error("API Error:", error);
+  //     message.error("Failed to create subject");
+  //   }
+  // };
+  
 
   // Handle Delete
   const handleDelete = async (record) => {

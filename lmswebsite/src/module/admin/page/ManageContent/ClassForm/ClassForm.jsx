@@ -8,7 +8,7 @@ import Lottie from "lottie-react";
 
 const { Option } = Select;
 
-const ClassForm = () => {
+const ClassForm = ({onClose}) => {
   const [form] = Form.useForm(); // Form instance
   const [boards, setBoards] = useState([]); // Board data
   const [loadingBoard, setLoadingBoard] = useState(false); // Loading state for boards
@@ -47,6 +47,7 @@ const ClassForm = () => {
       message.success("Class created successfully!");
       form.resetFields();
       setImageFile(null); // Reset image file
+      onClose();
     } catch (error) {
       let errorMsg = "Failed to create class. Please try again.";
       if (error.response?.data?.error) {

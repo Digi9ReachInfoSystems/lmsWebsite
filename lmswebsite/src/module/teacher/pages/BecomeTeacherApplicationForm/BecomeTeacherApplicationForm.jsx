@@ -36,6 +36,7 @@ import Faq from "../../../../Main/Pages/Faqs/Faq";
 import ChooseUs from "../../../../Main/Components/ChooseUs/ChooseUs";
 import Footer from "../../../../Main/Components/Footer/Footer";
 import { applicationRecievedAdmin, applicationRecievedTeacher } from "../../../../api/mailNotificationApi";
+import moment from "moment";
 
 const { Option } = Select;
 
@@ -387,21 +388,21 @@ const BecomeTeacherApplicationForm = () => {
                     </Select>
                   </Form.Item>
 
-                  <Form.Item
-                    name="dob"
-                    label="Date of Birth"
-                    rules={[
-                      {
-                        required: true,
-                        message: "Please select your date of birth",
-                      },
-                    ]}
-                  >
-                    <DatePicker
-                      placeholder="Select Date"
-                      style={{ width: "100%" }}
-                    />
-                  </Form.Item>
+                   <Form.Item
+                             label="Date of Birth"
+                             name="dateOfBirth"
+                             rules={[
+                               { required: true, message: "Please select the date of birth" },
+                             ]}
+                           >
+                             <DatePicker
+                               style={{ width: "100%" }}
+                               disabledDate={(current) => {
+                                 // Disable dates after today
+                                 return current && current.isAfter(moment().endOf("day"), "day");
+                               }}
+                             />
+                           </Form.Item>
                 </div>
 
                 <div className="applicationRowThree">
