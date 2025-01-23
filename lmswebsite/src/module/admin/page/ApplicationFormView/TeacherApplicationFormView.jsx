@@ -552,14 +552,30 @@ export default function TeacherApplicationFormView() {
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
           {/* Name */}
+
           <Form.Item
             label="Name"
             name="name"
-            rules={[{ required: true, message: "Please enter the name" }]}
+            rules={[
+              { required: true, message: "Please enter the name" },
+              {
+                pattern: /^[a-zA-Z\s]*$/,
+                message:
+                  "Name should not contain numbers or special characters",
+              },
+            ]}
           >
-            <Input placeholder="Enter name" />
+            <Input
+              placeholder="Enter name"
+              onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
+          {/* Microsoft ID */}
           <Form.Item
             label="Microsoft ID"
             name="microsoft_id"
@@ -593,21 +609,51 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* State */}
+
           <Form.Item
             label="State"
             name="state"
-            rules={[{ required: true, message: "Please enter the state" }]}
+            rules={[
+              { required: true, message: "Please enter the state" },
+              {
+                pattern: /^[a-zA-Z\s]*$/,
+                message:
+                  "State should not contain numbers or special characters",
+              },
+            ]}
           >
-            <Input placeholder="Enter state" />
+            <Input
+              placeholder="Enter state"
+              onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
           {/* City */}
+
           <Form.Item
             label="City"
             name="city"
-            rules={[{ required: true, message: "Please enter the city" }]}
+            rules={[
+              { required: true, message: "Please enter the city" },
+              {
+                pattern: /^[a-zA-Z\s]*$/,
+                message:
+                  "City should not contain numbers or special characters",
+              },
+            ]}
           >
-            <Input placeholder="Enter city" />
+            <Input
+              placeholder="Enter city"
+              onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
           {/* Pincode */}
@@ -626,29 +672,55 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* Current Position */}
+
           <Form.Item
             label="Current Position"
             name="current_position"
             rules={[
+              { required: true, message: "Please enter the current position" },
               {
-                required: true,
-                message: "Please enter the current position",
+                pattern: /^[a-zA-Z\s]*$/,
+                message:
+                  "Position should not contain numbers or special characters",
               },
             ]}
           >
-            <Input placeholder="Enter current position" />
+            <Input
+              placeholder="Enter current position"
+              onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
           {/* Language */}
+
           <Form.Item
             label="Language"
             name="language"
-            rules={[{ required: true, message: "Please enter the language" }]}
+            rules={[
+              { required: true, message: "Please enter the language" },
+              {
+                pattern: /^[a-zA-Z\s]*$/,
+                message:
+                  "Language should not contain numbers or special characters",
+              },
+            ]}
           >
-            <Input placeholder="Enter language" />
+            <Input
+              placeholder="Enter language"
+              onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
           {/* Phone Number */}
+
           <Form.Item
             label="Phone Number"
             name="phone_number"
@@ -660,7 +732,16 @@ export default function TeacherApplicationFormView() {
               },
             ]}
           >
-            <Input placeholder="Enter phone number" maxLength={10} />
+            <Input
+              placeholder="Enter phone number"
+              maxLength={10}
+              onKeyPress={(e) => {
+                // Only allow numbers (digits)
+                if (!/^\d$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
           {/* Experience */}

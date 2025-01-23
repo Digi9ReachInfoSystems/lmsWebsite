@@ -360,49 +360,51 @@ const AssignedBatchStudentsList = () => {
 
         {/* Modal for upploading content */}
 
+
         <Modal
-          title="Upload Content"
-          visible={isModel2visble}
+  title="Upload Content"
+  visible={isModel2visble}
+  onCancel={() => setIsModel2visble(false)}
+  footer={null}
+>
+  <Form form={form} layout="vertical" onFinish={handleUploadContent}>
+    <Form.Item
+      name="description"
+      label="Enter Description"
+      rules={[{ required: true, message: "Please enter a description!" }]}
+    >
+      <Input.TextArea
+        placeholder="Enter description"
+        onChange={(e) => setDescription(e.target.value)}
+      />
+    </Form.Item>
 
-          onCancel={() => { setIsModel2visble(false) }}
-          footer={null}
-        >
-          <Form form={form} layout="vertical" onFinish={handleUploadContent}>
-            <Form.Item
-              name="description"
-              label="Enter Description"
-              value={description}
+    <Upload 
+      onChange={handleFileChange}
+      accept=".pdf,.doc,.docx,.ppt,.pptx" // Restrict file types
+      beforeUpload={() => false} // Prevent automatic upload
+    >
+      <Form.Item
+        name="file"
+        label="Select File"
+        rules={[{ required: true, message: "Please select a file!" }]}
+      >
+        <Button>Click to Select File</Button>
+      </Form.Item>
+    </Upload>
 
-            >
-              <Input.TextArea type="text" onChange={(e) => setDescription(e.target.value)} />
-            </Form.Item>
+    <Button
+      key="upload"
+      type="primary"
+      style={{ backgroundColor: "#ee1b7a" }}
+      loading={loading}
+      onClick={handleUploadContent}
+    >
+      Upload
+    </Button>
+  </Form>
+</Modal>
 
-
-            <Upload onChange={handleFileChange}
-            >
-
-
-
-              <Form.Item
-                name="title"
-                label="Select File"
-                rules={[{ required: true, message: "Click to Select File" }]}
-
-              >
-                <Input placeholder="Click to Select File" />
-              </Form.Item>
-            </Upload>
-          </Form>
-          <Button
-            key="upload"
-            type="primary"
-            style={{ backgroundColor: "#ee1b7a" }}
-            loading={loading}
-            onClick={handleUploadContent}
-          >
-            Upload
-          </Button>
-        </Modal>
       </AssignedBatchStudentsListContainer>
     </>
 
