@@ -134,6 +134,7 @@ const StudentDashboardScreen = () => {
             });
           }
         }
+        navigate("/student/dashboard");create
       } catch (error) {
         //console.error("Error fetching batches:", error);
       }

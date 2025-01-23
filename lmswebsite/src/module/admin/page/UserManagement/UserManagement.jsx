@@ -318,7 +318,7 @@ export default function UserManagement() {
       message.success("Registration successful! Please verify your email.");
       message.success("Registration Successful!");
       localStorage.setItem("sessionData", JSON.stringify(oldSessionData));
-      handleCancel();
+      // handleCancel();
       // navigate("/");
     } catch (error) {
       console.error("Registration error:", error);
@@ -327,6 +327,8 @@ export default function UserManagement() {
       message.error(`Registration failed: ${errorMessage}`);
     } finally {
       setIsSubmitting(false);
+      window.location.reload();
+      form.resetFields(); 
     }
   };
 

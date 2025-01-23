@@ -373,6 +373,7 @@ export default function TeacherApplicationFormView() {
       );
     } finally {
       setUploading(false);
+      window.location.reload();
     }
   };
 

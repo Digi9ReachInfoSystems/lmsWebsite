@@ -18,9 +18,13 @@ import { FiMessageSquare, FiPhoneCall } from "react-icons/fi";
 import { FaRegEnvelope } from "react-icons/fa6";
 import { LiaFacebookMessenger } from "react-icons/lia";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { customerQuery, customerQueryAdmin } from "../../../api/mailNotificationApi";
+import {
+  customerQuery,
+  customerQueryAdmin,
+} from "../../../api/mailNotificationApi";
 
 const ContactUs = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const contactItems = [
     {
       id: "info",
@@ -62,27 +66,36 @@ const ContactUs = () => {
   // Handle form submission
   const handleSubmit = async (values) => {
     try {
+      setIsSubmitting(true); // Disable the button immediately after click
+  
       const submissionData = {
         title: values.title,
         contactEmail: values.email,
         contactNumber: values.number,
         message: values.message,
       };
+  
       // Call the API to create the query
       const response = await createQuery(submissionData);
-      await customerQueryAdmin(values.title,  values.email);
-      await customerQuery(values.title,  values.email);
-
+      await customerQueryAdmin(values.title, values.email);
+      await customerQuery(values.title, values.email);
+  
       if (response) {
-        //console.log("Query successfully submitted:", response);
-        alert("Query submitted successfully!");
-        form.resetFields(); // Reset form fields after successful submission
+        // Show the alert message after 1 second
+        setTimeout(() => {
+          alert("Query submitted successfully!");
+          form.resetFields(); // Reset form fields
+          setIsSubmitting(false); // Re-enable the button after alert
+        }, 1000); // Alert after 1 second
       }
     } catch (error) {
-      //console.error("Error submitting query:", error);
       alert("Failed to submit query. Please try again.");
+      setIsSubmitting(false); // Re-enable the button on error
+    } finally {
+      form.resetFields(); // Reset form fields regardless of success or error
     }
   };
+  
 
   return (
     <>
@@ -133,9 +146,14 @@ const ContactUs = () => {
                 ]}
               >
                 <Input
-                  type="tel"
+                  type="text"
                   placeholder="Enter the Number"
-                  maxLength={10}
+                  maxLength={10} // Limit the input to 10 characters
+                  onKeyPress={(event) => {
+                    if (!/^[0-9]$/.test(event.key)) {
+                      event.preventDefault(); // Prevent invalid input
+                    }
+                  }}
                 />
               </Form.Item>
 
@@ -152,8 +170,12 @@ const ContactUs = () => {
 
               {/* Submit Button */}
               <Form.Item>
-                <Button htmlType="submit" className="ContactButton">
-                  Submit
+                <Button
+                  htmlType="submit"
+                  className="ContactButton"
+                  disabled={isSubmitting} // Disable button while submitting
+                >
+                  {isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               </Form.Item>
             </Form>

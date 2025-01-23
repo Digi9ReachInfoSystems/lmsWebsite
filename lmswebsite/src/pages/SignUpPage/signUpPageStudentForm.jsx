@@ -74,8 +74,10 @@ const StudentForm = () => {
     form.setFieldsValue({ class_id: undefined }); // Reset class selection
   };
 
+
+
+
   const handleSubmit = async (values) => {
-    // console.log("Student Form Values:", values);
     setIsSubmitting(true);
     try {
       // Create user with Firebase
@@ -85,9 +87,11 @@ const StudentForm = () => {
         values.password
       );
       const user = userCredential.user;
-
+  
       // Send email verification
       await sendEmailVerification(user);
+  
+      // Save user session data in local storage
       localStorage.setItem(
         "sessionData",
         JSON.stringify({
@@ -95,8 +99,8 @@ const StudentForm = () => {
           refreshToken: userCredential._tokenResponse.refreshToken,
         })
       );
-
-      // Upload profile image
+  
+      // Upload profile image if present
       let profileImageUrl = "";
       if (values.profile_image && values.profile_image.length > 0) {
         profileImageUrl = await uploadFileToFirebase(
@@ -104,8 +108,8 @@ const StudentForm = () => {
           "studentProfile"
         );
       }
-
-      // Prepare data to send to API
+  
+      // Prepare data to send to the backend
       const data = {
         role: "student",
         access_token: user.accessToken,
@@ -117,70 +121,71 @@ const StudentForm = () => {
         studentGender: values.studentGender,
         studentDOB: values.studentDOB,
         board_id: values.board_id,
-        mode:'personal'
+        mode: "personal",
       };
-
-      console.log("Submitting Student Data:", data);
+  
+      // Submit student data to the API
       await signupUser(data);
-      await studentAccountCreated( values.student_name, values.email, values.password);
-      await studentSignedUpAdmin( values.student_name, values.email);
-
-      // Clear local storage and navigate to login
+      await studentAccountCreated(values.student_name, values.email, values.password);
+      await studentSignedUpAdmin(values.student_name, values.email);
+  
+      // Clear session data after signup
       localStorage.clear();
       message.success("Registration successful! Please verify your email.");
-      message.success("Registration Successful!");
-      try {
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          values.email,
-          values.password
-        );
-        const { user } = userCredential;
-        localStorage.setItem(
-          "sessionData",
-          JSON.stringify({ accessToken: user.accessToken })
-        );
-        const profileData = await getUserByAuthId(user.uid);
-        const sessionData = {
-          userId: user.uid,
-          accessToken: user.accessToken,
-          refreshToken: profileData.user.refresh_token,
-          name: profileData.user.name,
-          loggedIn: "true",
-          role: profileData.user.role,
-        };
-        localStorage.setItem("sessionData", JSON.stringify(sessionData));
+      
+      // Sign in the user after registration to automatically log them in
+      const signInUser = await signInWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      const { user: signedInUser } = signInUser;
+      
+      // Save session data after sign-in
+      localStorage.setItem(
+        "sessionData",
+        JSON.stringify({ accessToken: signedInUser.accessToken })
+      );
+  
+      // Fetch user profile data to check selected subjects and payment status
+      const profileData = await getUserByAuthId(signedInUser.uid);
+      const sessionData = {
+        userId: signedInUser.uid,
+        accessToken: signedInUser.accessToken,
+        refreshToken: profileData.user.refresh_token,
+        name: profileData.user.name,
+        loggedIn: "true",
+        role: profileData.user.role,
+      };
+      localStorage.setItem("sessionData", JSON.stringify(sessionData));
+  
+      // Condition to check if the student has selected subjects and paid
+      const hasSelectedSubjects = profileData.user.selectedSubjects?.length > 0;
+      const hasCompletedPayment = profileData.user.paymentStatus === "completed";
+  
+      if (hasSelectedSubjects && hasCompletedPayment) {
+        // If both conditions are met, navigate to the dashboard
+        navigate("/student/dashboard");
+      } else {
+        // If not, navigate to the student page (to select subjects or complete payment)
         navigate("/student");
-      } catch (error) {
-        console.error(error.message);
       }
-      // navigate("/");
-    }catch (error) {
+      
+    } catch (error) {
       console.error("Registration error:", error);
-    
-      // Check for specific Firebase error codes
       let errorMessage = "Registration failed. Please try again.";
       if (error.code === "auth/email-already-in-use") {
         errorMessage = "This email is already registered. Please sign in or use a different email.";
       } else if (error.code) {
-        // Optional: Handle other specific error codes if needed
         errorMessage = error.message || errorMessage;
       }
-    
       message.error(errorMessage);
     } finally {
       setIsSubmitting(false);
+      form.resetFields();
     }
-    
-    // } catch (error) {
-    //   console.error("Registration error:", error);
-    //   const errorMessage =
-    //     error.message || "Registration failed. Please try again.";
-    //   message.error(`${errorMessage}`);
-    // } finally {
-    //   setIsSubmitting(false);
-    // }
   };
+  
 
   return (
     <div

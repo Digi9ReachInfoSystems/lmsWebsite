@@ -184,6 +184,7 @@ const ModeBatch = ({onClose}) => {
       setError(err.response?.data?.error || 'Failed to create Type of Batch.');
     } finally {
       setIsSubmitting(false);
+      window.location.reload();
       // handleCancel();
      
     }
