@@ -551,13 +551,7 @@ export default function TeacherApplicationFormView() {
       >
         <Form form={form} layout="vertical" onFinish={onFinish}>
           {/* Name */}
-          {/* <Form.Item
-            label="Name"
-            name="name"
-            rules={[{ required: true, message: "Please enter the name" }]}
-          >
-            <Input placeholder="Enter name" />
-          </Form.Item> */}
+
           <Form.Item
             label="Name"
             name="name"
@@ -614,14 +608,7 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* State */}
-          {/* <Form.Item
-            label="State"
-            name="state"
-            rules={[{ required: true, message: "Please enter the state" }]}
-          >
-            <Input placeholder="Enter state" />
-          </Form.Item> */}
-          {/* State */}
+
           <Form.Item
             label="State"
             name="state"
@@ -645,14 +632,7 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* City */}
-          {/* <Form.Item
-            label="City"
-            name="city"
-            rules={[{ required: true, message: "Please enter the city" }]}
-          >
-            <Input placeholder="Enter city" />
-          </Form.Item> */}
-          {/* City */}
+
           <Form.Item
             label="City"
             name="city"
@@ -691,19 +671,7 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* Current Position */}
-          {/* <Form.Item
-            label="Current Position"
-            name="current_position"
-            rules={[
-              {
-                required: true,
-                message: "Please enter the current position",
-              },
-            ]}
-          >
-            <Input placeholder="Enter current position" />
-          </Form.Item> */}
-          {/* Current Position */}
+
           <Form.Item
             label="Current Position"
             name="current_position"
@@ -727,15 +695,7 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* Language */}
-          {/* <Form.Item
-            label="Language"
-            name="language"
-            rules={[{ required: true, message: "Please enter the language" }]}
-          >
-            <Input placeholder="Enter language" />
-          </Form.Item> */}
 
-          {/* Language */}
           <Form.Item
             label="Language"
             name="language"
@@ -759,6 +719,7 @@ export default function TeacherApplicationFormView() {
           </Form.Item>
 
           {/* Phone Number */}
+
           <Form.Item
             label="Phone Number"
             name="phone_number"
@@ -770,7 +731,16 @@ export default function TeacherApplicationFormView() {
               },
             ]}
           >
-            <Input placeholder="Enter phone number" maxLength={10} />
+            <Input
+              placeholder="Enter phone number"
+              maxLength={10}
+              onKeyPress={(e) => {
+                // Only allow numbers (digits)
+                if (!/^\d$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}
+            />
           </Form.Item>
 
           {/* Experience */}
