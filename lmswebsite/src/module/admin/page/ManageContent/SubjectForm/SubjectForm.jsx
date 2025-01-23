@@ -106,6 +106,7 @@ const SubjectForm = ({onClose, }) => {
       message.error(errorMsg);
     } finally {
       setIsSubmitting(false);
+      window.location.reload();
     }
   };
   

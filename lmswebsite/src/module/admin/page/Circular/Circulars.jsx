@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { AiOutlineFileAdd } from "react-icons/ai";
 import { FaSearch } from "react-icons/fa";
 import { getAllCircularNotificationsApi } from "../../../../api/circularNotificationApi";
-import { Button, Input, Modal, Table, Select } from "antd";  // Import Select component
+import { Button, Input, Modal, Table, Select } from "antd";
 import { CircularWrap } from "./Circulars.styles";
 import CreateCircular from "../CreateCircular/CreateCircular";
 import Animation from "../../../admin/assets/Animation.json";
 import Lottie from "lottie-react";
 
-const { Option } = Select;  // Destructure Option from Select
+const { Option } = Select;
 
 export default function Circulars() {
   const [searchInput, setSearchInput] = useState("");
@@ -17,8 +17,9 @@ export default function Circulars() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [isCreateCircularModalOpen, setIsCreateCircularModalOpen] = useState(false);
-  const [filter, setFilter] = useState("all");  // New state variable for filter
-const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(false);
+
   const columns = [
     {
       title: "Title",
@@ -65,43 +66,42 @@ const [loading, setLoading] = useState(false);
     },
   ];
 
-  // Fetch data on component mount
+  // Fetch data on component mount or filter change
   useEffect(() => {
-    const apiCaller = async () => {
+    const fetchCirculars = async () => {
       setLoading(true);
-      const data = await getAllCircularNotificationsApi(filter);
-      //console.log("Fetched Circulars:", data);
-      if (data) {
-        const formattedData = data.circularNotifications.map((circular) => ({
-
-          key: circular._id,
-          title: circular.circularName || "N/A",
-          description: circular.content || "N/A",
-          image: circular.image || "",
-          userType: circular.role || "all",  // Assuming userType is part of the data
-        }));
-        setOriginalData(formattedData);
-        setData(formattedData);
-        
-    setLoading(false);
+      try {
+        const data = await getAllCircularNotificationsApi(filter);
+        if (data) {
+          const formattedData = data.circularNotifications.map((circular) => ({
+            key: circular._id,
+            title: circular.circularName || "N/A",
+            description: circular.content || "N/A",
+            image: circular.image || "",
+            userType: circular.role || "all",
+          }));
+          setOriginalData(formattedData);
+          setData(formattedData);
+        }
+      } catch (error) {
+        console.error("Error fetching circulars:", error);
+      } finally {
+        setLoading(false);
       }
     };
-    apiCaller();
-  }, [filter]);
+    fetchCirculars();
+  }, [filter,isCreateCircularModalOpen]);
 
-  // Filter data based on searchInput and selected filter
+  // Filter data based on search input and selected filter
   useEffect(() => {
     let filteredData = originalData.filter((item) =>
       item.title.toLowerCase().includes(searchInput.toLowerCase())
     );
-    
-    // Apply additional filter based on userType
     if (filter !== "all") {
-      filteredData = filteredData.filter(item => item.userType === filter);
+      filteredData = filteredData.filter((item) => item.userType === filter);
     }
-    
     setData(filteredData);
-  }, [searchInput, originalData, filter]);  // Re-run filter when searchInput or filter changes
+  }, [searchInput, originalData, filter]);
 
   const openCreateCircularModal = () => {
     setIsCreateCircularModalOpen(true);
@@ -109,6 +109,18 @@ const [loading, setLoading] = useState(false);
 
   const closeCreateCircularModal = () => {
     setIsCreateCircularModalOpen(false);
+  };
+
+  const addCircularToList = (newCircular) => {
+    const formattedCircular = {
+      key: newCircular._id,
+      title: newCircular.circularName || "N/A",
+      description: newCircular.content || "N/A",
+      image: newCircular.image || "",
+      userType: newCircular.role || "all",
+    };
+    setOriginalData([formattedCircular, ...originalData]);
+    setData([formattedCircular, ...data]);
   };
 
   if (loading) {
@@ -129,15 +141,11 @@ const [loading, setLoading] = useState(false);
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            // Scale down the animation using transform
-            transform: "scale(0.5)", 
+            transform: "scale(0.5)",
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
@@ -155,8 +163,6 @@ const [loading, setLoading] = useState(false);
             onChange={(e) => setSearchInput(e.target.value)}
             style={{ width: "300px", marginRight: "20px" }}
           />
-
-          {/* Filter Dropdown */}
           <Select
             value={filter}
             onChange={(value) => setFilter(value)}
@@ -166,7 +172,6 @@ const [loading, setLoading] = useState(false);
             <Option value="teacher">Teacher</Option>
             <Option value="student">Student</Option>
           </Select>
-
           <Button
             type="primary"
             style={{ background: "#EE1B7A", borderColor: "#EE1B7A" }}
@@ -178,14 +183,8 @@ const [loading, setLoading] = useState(false);
         </div>
       </div>
 
-      <Table
-        columns={columns}
-        dataSource={data}
-        pagination={{ pageSize: 5 }}
-        bordered
-      />
+      <Table columns={columns} dataSource={data} pagination={{ pageSize: 5 }} bordered />
 
-      {/* Image Viewer Modal */}
       <Modal
         visible={isModalOpen}
         footer={null}
@@ -199,14 +198,13 @@ const [loading, setLoading] = useState(false);
         />
       </Modal>
 
-      {/* Create Circular Modal */}
       <Modal
         visible={isCreateCircularModalOpen}
         footer={null}
         onCancel={closeCreateCircularModal}
         centered
       >
-        <CreateCircular closeModal={closeCreateCircularModal} />
+        <CreateCircular closeModal={closeCreateCircularModal} addCircularToList={addCircularToList} />
       </Modal>
     </CircularWrap>
   );

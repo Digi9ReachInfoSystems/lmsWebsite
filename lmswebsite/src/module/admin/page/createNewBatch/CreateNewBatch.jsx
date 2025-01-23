@@ -111,7 +111,15 @@ const CreateNewBatch = ({ open, closeModal }) => {
     });
   };
 
+
   const handleSubjectChange = async (value) => {
+    // Reset teachers and students when subject is changed
+    form.setFieldsValue({
+      teachers: undefined,
+      students: undefined,
+    });
+  
+    // Fetch the batch types based on the subject
     if (batchType) {
       const typeOfBatchData = await getCustomTypeOfBatch();
       setTypeOfBatch(typeOfBatchData || []);
@@ -119,31 +127,26 @@ const CreateNewBatch = ({ open, closeModal }) => {
       const typeOfBatchData = await getTypeOfBatchBySubjectId(value);
       setTypeOfBatch(typeOfBatchData || []);
     }
-
+  
+    // Fetch teachers by subject and class
     const teacherData = await getTeachersBySubjectAndClass(
       value,
       form.getFieldValue("class")
     );
-    // const studentData = await getStudentsForBatchBySubjectId(value, mode);
-    //console.log("hehehe", { subject_id: value, type_of_batch: form.getFieldValue("type_of_batch"), duration: form.getFieldValue("duration") })
+  
+    // Fetch students eligible for the batch based on subject, batch type, and duration
     const filterData = {
       subject_id: value,
       type_of_batch: form.getFieldValue("type_of_batch"),
       duration: form.getFieldValue("duration"),
     };
     const studentData = await getEligibleStudentsForBatch(filterData);
-    //console.log("studentData", studentData);
-    // if (studentData.customPackageCriteria.length > 0 || studentData.normalCriteria.length > 0) {
-    //   const totalStudents = studentData.customPackageCriteria.concat(studentData.normalCriteria);
-    //   //console.log("totalStudents", totalStudents);
-    //   setStudents(totalStudents);
-    // } else {
-    //   setStudents([]);
-    // }
+  
+    // Update state with filtered teachers and students
     setStudents(studentData.students || []);
     setTeachers(teacherData || []);
-    form.setFieldsValue({ teachers: undefined });
   };
+  
 
   const handleFileUpload = async (info) => {
     const url = await uploadFileToFirebase(info.file, "batchImages");
@@ -353,7 +356,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
             rules={[{ required: true, message: "Please select teachers" }]}
           >
             <Select
-              mode="multiple"
+              // mode="multiple"
               placeholder="Select teachers"
               options={teachers?.map((teacher) => ({
                 label: teacher.user_id.name,

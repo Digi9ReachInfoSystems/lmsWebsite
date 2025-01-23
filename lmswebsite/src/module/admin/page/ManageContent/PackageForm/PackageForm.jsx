@@ -205,6 +205,7 @@ const PackageForm = ({ onClose }) => {
       //console.error("Error creating package:", error.response?.data || error);
     } finally {
       setIsSubmitting(false);
+      window.location.reload();
     }
   };
 

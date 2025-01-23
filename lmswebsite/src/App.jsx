@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
+// import { notification } from "antd";
+import useOnlineStatus from "./globalInternetConnection";
 import {
   BrowserRouter as Router,
   Routes,
@@ -108,32 +110,35 @@ import StudentAssignmentUpload from "./module/student/pages/StudentAssignmentUpl
 import OurAcademyPage from "./Main/Pages/OurAcademy/OurAcademyPage";
 import ReactGA from "react-ga";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
-import useOnlineStatus from "./globalInternetConnection";
+// import useOnlineStatus from "./globalInternetConnection";
 import PaymentLinkStatusPage from "./module/student/pages/PaymentLinkStatusPage/PaymentStatus";
 
 ReactGA.initialize("G-RN9S1VVZ6Z");
 function App() {
-  useEffect(() => {
-    ReactGA.pageview(window.location.pathname + window.location.search);
-  }, []);
-  const [count, setCount] = useState(0);
   const isOnline = useOnlineStatus();
+  const previousStatus = useRef(isOnline); // To track the previous online status
 
   useEffect(() => {
-    if (isOnline) {
-      notification.success({
-        message: "Back Online",
-        description: "Your internet connection has been restored.",
-        duration: 2,
-      });
-    } else {
-      notification.error({
-        message: "No Internet Connection",
-        description: "You are offline. Please check your internet connection.",
-        duration: 0, // Keep the notification open until dismissed
-      });
+    // Only trigger notification if the online status changes
+    if (previousStatus.current !== isOnline) {
+      if (isOnline) {
+        notification.success({
+          message: "Back Online",
+          description: "Your internet connection has been restored.",
+          duration: 1,
+        });
+      } else {
+        notification.error({
+          message: "No Internet Connection",
+          description: "You are offline. Please check your internet connection.",
+          duration: 1, // Keep the notification open until dismissed
+        });
+      }
+
+      // Update the previous status to the current status
+      previousStatus.current = isOnline;
     }
-  }, [isOnline]);
+  }, [isOnline]); // Dependency array includes isOnline
 
   return (
     <ThemeProvider theme={theme}>
