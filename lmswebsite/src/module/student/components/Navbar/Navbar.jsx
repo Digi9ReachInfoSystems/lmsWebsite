@@ -65,9 +65,14 @@ function NavBar() {
       currentPath += `/${segment}`;
       breadcrumbItems.push(
         <Breadcrumb.Item key={currentPath}>
-          <Link to={currentPath}>
+          {index === pathnames.length - 1 ? (
+            segment.charAt(0).toUpperCase() + segment.slice(1)
+          ) : (
+            <Link to={currentPath}>
             {segment.charAt(0).toUpperCase() + segment.slice(1)}
           </Link>
+          )}
+          
         </Breadcrumb.Item>
       );
     });
@@ -90,7 +95,7 @@ function NavBar() {
             <div className="menuItem" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "10px" }}>
 
 
-              <div className="notification-message flex items-center space-x-3">
+              <div className="flex items-center space-x-3 notification-message">
                 <div
                   className={`status-icon ${notif.is_global ? "bg-green-500" : "bg-yellow-500"
                     }`}
@@ -120,7 +125,7 @@ function NavBar() {
           <Button
             type="link"
             onClick={clearAllNotifications}
-            className="clear-all-btn w-full text-center"
+            className="w-full text-center clear-all-btn"
             style={{
               color: "#ff4747",
               fontWeight: "bold",

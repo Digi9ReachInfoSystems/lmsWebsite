@@ -75,7 +75,7 @@ const CreatedBatch = () => {
       //////console.log("data", data);
       if (data && Array.isArray(data.students)) {
         if (data.students.length === 0) {
-          message.error("No eligible students found.");
+          message.error("Batch is full.");
           setStudents([]);
         } else {
           const formattedStudents = data.students?.map((student) => ({
@@ -94,7 +94,7 @@ const CreatedBatch = () => {
     } catch (error) {
       //console.error("Error fetching students:", error);
       setStudents([]);
-      message.error("No Eligible Students Found for this Batch.");
+      message.error("Batch is full.");
       setLoadingAddStudent(false);
     }
   };

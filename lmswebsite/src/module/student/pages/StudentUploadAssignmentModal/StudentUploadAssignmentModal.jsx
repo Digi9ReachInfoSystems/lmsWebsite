@@ -16,6 +16,7 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
   const [file, setFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
+  // const [form] = Form.useForm();
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -75,6 +76,8 @@ const UploadAssignmentModal = ({ assignment, onClose, onUploadSuccess }) => {
       setError(err.message || 'Failed to upload assignment. Please try again.');
     } finally {
       setUploading(false);
+      window.location.reload();
+      // form.resetFields();
     }
   };
 

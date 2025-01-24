@@ -374,6 +374,7 @@ export default function TeacherApplicationFormView() {
     } finally {
       setUploading(false);
       window.location.reload();
+      form.resetFields();
     }
   };
 
