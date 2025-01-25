@@ -147,18 +147,18 @@ const CreateNewBatch = ({ open, closeModal }) => {
   };
 
   const handleFileUpload = async (info) => {
-    const { file } = info;
-    try {
-      const url = await uploadFileToFirebase(file, "batchImages");
+    // const { file } = info;
+    // try {
+      const url = await uploadFileToFirebase(info.file, "batchImages");
       form.setFieldsValue({ batchImage: url });
       message.success("File uploaded successfully!");
 
       // Update the file status to 'done' and set the URL for preview
-      info.onSuccess({ url });
-    } catch (error) {
-      message.error("Failed to upload the file. Please try again.");
-      info.onError(error);
-    }
+    //   info.onSuccess({ url });
+    // } catch (error) {
+    //   message.error("Failed to upload the file. Please try again.");
+    //   info.onError(error);
+    // }
   };
   const handleSubmit = async (values) => {
     setLoading(true);
@@ -202,7 +202,7 @@ const CreateNewBatch = ({ open, closeModal }) => {
     } finally {
       setLoading(false);
       window.location.reload();
-      form.resetFields();
+      // form.resetFields();
     }
   };
 
