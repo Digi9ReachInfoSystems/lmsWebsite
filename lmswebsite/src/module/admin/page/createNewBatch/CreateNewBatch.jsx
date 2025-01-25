@@ -111,14 +111,13 @@ const CreateNewBatch = ({ open, closeModal }) => {
     });
   };
 
-
   const handleSubjectChange = async (value) => {
     // Reset teachers and students when subject is changed
     form.setFieldsValue({
       teachers: undefined,
       students: undefined,
     });
-  
+
     // Fetch the batch types based on the subject
     if (batchType) {
       const typeOfBatchData = await getCustomTypeOfBatch();
@@ -127,13 +126,13 @@ const CreateNewBatch = ({ open, closeModal }) => {
       const typeOfBatchData = await getTypeOfBatchBySubjectId(value);
       setTypeOfBatch(typeOfBatchData || []);
     }
-  
+
     // Fetch teachers by subject and class
     const teacherData = await getTeachersBySubjectAndClass(
       value,
       form.getFieldValue("class")
     );
-  
+
     // Fetch students eligible for the batch based on subject, batch type, and duration
     const filterData = {
       subject_id: value,
@@ -141,21 +140,26 @@ const CreateNewBatch = ({ open, closeModal }) => {
       duration: form.getFieldValue("duration"),
     };
     const studentData = await getEligibleStudentsForBatch(filterData);
-  
+
     // Update state with filtered teachers and students
     setStudents(studentData.students || []);
     setTeachers(teacherData || []);
   };
-  
 
   const handleFileUpload = async (info) => {
-    const url = await uploadFileToFirebase(info.file, "batchImages");
-    //console.log("url", url);
+    // const { file } = info;
+    // try {
+      const url = await uploadFileToFirebase(info.file, "batchImages");
+      form.setFieldsValue({ batchImage: url });
+      message.success("File uploaded successfully!");
 
-    form.setFieldsValue({ batchImage: url });
-    message.success("File uploaded successfully!");
+      // Update the file status to 'done' and set the URL for preview
+    //   info.onSuccess({ url });
+    // } catch (error) {
+    //   message.error("Failed to upload the file. Please try again.");
+    //   info.onError(error);
+    // }
   };
-
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
@@ -197,6 +201,8 @@ const CreateNewBatch = ({ open, closeModal }) => {
       message.error("Failed to create batch. Please try again.");
     } finally {
       setLoading(false);
+      window.location.reload();
+      // form.resetFields();
     }
   };
 
@@ -276,7 +282,6 @@ const CreateNewBatch = ({ open, closeModal }) => {
               ))}
             </Select>
           </Form.Item>
-
           {/* <Form.Item
             name="batchMode"
             label="Batch Mode"
@@ -288,7 +293,6 @@ const CreateNewBatch = ({ open, closeModal }) => {
             </Radio.Group>
 
           </Form.Item> */}
-
           <Form.Item
             name="class"
             label="Class"
@@ -302,7 +306,6 @@ const CreateNewBatch = ({ open, closeModal }) => {
               ))}
             </Select>
           </Form.Item>
-
           {/* <Form.Item
             name="duration"
             label="Duration"
@@ -349,7 +352,6 @@ const CreateNewBatch = ({ open, closeModal }) => {
               ))}
             </Select>
           </Form.Item>
-
           <Form.Item
             name="teachers"
             label="Teachers"
@@ -386,18 +388,13 @@ const CreateNewBatch = ({ open, closeModal }) => {
               />
             </Form.Item>
           )}
-
           <Form.Item
             name="date"
             label="Start Date"
             rules={[{ required: true, message: "Please select a date" }]}
           >
-            <DatePicker
-              style={{ width: "100%" }}
-              disabledDate={disabledDate}
-            />
+            <DatePicker style={{ width: "100%" }} disabledDate={disabledDate} />
           </Form.Item>
-
           <Form.Item
             name="batchImage"
             label="Upload Batch Image"
@@ -409,11 +406,21 @@ const CreateNewBatch = ({ open, closeModal }) => {
               customRequest={handleFileUpload}
               listType="picture"
               maxCount={1}
+              onChange={(info) => {
+                const { status } = info.file;
+                if (status === "done") {
+                  message.success(
+                    `${info.file.name} file uploaded successfully.`
+                  );
+                } else if (status === "error") {
+                  message.error(`${info.file.name} file upload failed.`);
+                }
+              }}
             >
               <Button icon={<UploadOutlined />}>Upload</Button>
             </Upload>
           </Form.Item>
-
+          ;
           <Form.Item>
             <Button
               type="primary"
