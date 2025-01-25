@@ -12,7 +12,7 @@ import { FaUser } from "react-icons/fa"; // Example icon, using FontAwesome for 
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
 import{getUserByAuthId}from "../../../../../api/userApi"
-import{getStudentByAuthId}from "../../../../../api/studentApi"
+import{getStudentByAuthId, updateStudent}from "../../../../../api/studentApi"
 import { updateUserByAuthId } from "../../../../../api/userApi";
 import { BodyText, PageContainer, PrimaryButton, Subheading } from "../../../../../style/PrimaryStyles/PrimaryStyles";
 import Animation from "../../../../student/assets/Animation.json";
@@ -49,7 +49,11 @@ const StudentAccountSettings = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const authId=JSON.parse(localStorage.getItem("sessionData")).userId;
-    const responseUser = await updateUserByAuthId(authId,{name:firstName,phone_number:phone});
+    const responseUser = await updateUserByAuthId(authId,{name:firstName});
+    const DataStudent= await getStudentByAuthId(authId);
+    const responseStudent = await updateStudent(DataStudent.student._id,{updateData:{phone_number:phone}});
+    console.log("responseUser", DataStudent);
+    console.log("responseStudent", responseStudent);
     alert("Profile updated successfully!");
     window.location.reload();
 setLoading(false);

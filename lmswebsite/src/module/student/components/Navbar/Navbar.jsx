@@ -61,7 +61,7 @@ function NavBar() {
     ];
 
     let currentPath = "/student";
-    pathnames.forEach((segment) => {
+    pathnames.forEach((segment,index) => {
       currentPath += `/${segment}`;
       breadcrumbItems.push(
         <Breadcrumb.Item key={currentPath}>

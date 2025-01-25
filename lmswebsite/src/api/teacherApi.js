@@ -142,3 +142,12 @@ export const createTeacher = async (teacherData) => {
     throw error;
   }
 };
+export const updateTeacher = async (teacherId, teacherData) => {
+  try {
+    const response = await api.put(`/teachers/update/${teacherId}`, teacherData);
+    return response.data;
+  } catch (error) {
+    //console.error("Error updating teacher:", error);
+    throw error;
+  }
+};

@@ -11,13 +11,15 @@ import {
 import { FaUser } from "react-icons/fa"; // Example icon, using FontAwesome for the user icon
 import { MdEmail } from "react-icons/md";
 import { FaPhone } from "react-icons/fa6";
-import { getUserByAuthId } from "../../../../../api/userApi"
-import { getTeacherByAuthId } from "../../../../../api/teacherApi"
+import { getUserByAuthId } from "../../../../../api/userApi";
+import {
+  getTeacherByAuthId,
+  updateTeacher,
+} from "../../../../../api/teacherApi";
 import { updateUserByAuthId } from "../../../../../api/userApi";
 import Animation from "../../../../teacher/assets/Animation.json";
 import Lottie from "lottie-react";
 const AccountSettings = () => {
-
   const [firstName, setFirstName] = useState("Student");
   const [userName, setUsername] = useState("student_k");
   const [email, setEmail] = useState("Student@gmail.com");
@@ -33,10 +35,9 @@ const AccountSettings = () => {
       setUsername(DataTeacher.teacher?.microsoft_principle_name);
       setEmail(DataTeacher.teacher.user_id.email);
       setPhone(DataTeacher.teacher.phone_number);
-    }
+    };
     apiCaller();
     setLoading(false);
-
   }, []);
 
   const handlePhoneChange = (e) => {
@@ -46,11 +47,26 @@ const AccountSettings = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
-    const responseUser = await updateUserByAuthId(authId, { name: firstName, phone_number: phone });
-    alert("Profile updated successfully!");
-    window.location.reload();
-  }
+    console.log("called");
+    try {
+      const authId = JSON.parse(localStorage.getItem("sessionData")).userId;
+      const responseUser = await updateUserByAuthId(authId, {
+        name: firstName,
+        phone_number: phone,
+      });
+      const DataTeacher = await getTeacherByAuthId(authId);
+      const responseTeacher = await updateTeacher(DataTeacher.teacher._id, {
+        phone_number: phone,
+      });
+      console.log("teacher", responseTeacher);
+      console.log("responseUser", responseUser);
+      alert("Profile updated successfully!");
+    } catch (e) {
+      console.log(e);
+    }
+
+    // window.location.reload();
+  };
 
   if (loading) {
     return (
@@ -75,10 +91,7 @@ const AccountSettings = () => {
             transformOrigin: "center center",
           }}
         >
-          <Lottie
-            animationData={Animation}
-            loop={true}
-          />
+          <Lottie animationData={Animation} loop={true} />
         </div>
       </div>
     );
