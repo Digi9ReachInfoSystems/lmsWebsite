@@ -138,8 +138,10 @@ const BecomeTeacherApplicationForm = () => {
         profileImage: values.profileImage[0].originFileObj,
         board_id: values.board_id,
         qualifications: values.qualification,
-        dateOfBirth: values.dob,
+        dateOfBirth: values.dateOfBirth,
       };
+
+      console.log("Submission Data:", submissionData);
 
       const response = await submitTeacherApplication(submissionData);
       await applicationRecievedAdmin(values.name, values.email);
