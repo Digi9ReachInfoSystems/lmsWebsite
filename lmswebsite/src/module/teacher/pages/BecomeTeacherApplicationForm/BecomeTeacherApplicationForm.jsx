@@ -244,7 +244,11 @@ const BecomeTeacherApplicationForm = () => {
                       },
                     ]}
                   >
-                    <Input placeholder="Name" />
+                    <Input placeholder="Name"   onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }}  />
                   </Form.Item>
 
                   <Form.Item
@@ -278,7 +282,12 @@ const BecomeTeacherApplicationForm = () => {
                       },
                     ]}
                   >
-                    <Input placeholder="Phone Number" maxLength={10} />
+                    <Input placeholder="Phone Number" maxLength={10} // Prevents entering more than 10 characters
+          onKeyPress={(event) => {
+            if (!/^\d$/.test(event.key)) {
+              event.preventDefault(); // Blocks non-numeric input
+            }
+          }} />
                   </Form.Item>
                 </div>
 
@@ -297,7 +306,11 @@ const BecomeTeacherApplicationForm = () => {
                       },
                     ]}
                   >
-                    <Input placeholder="State" />
+                    <Input placeholder="State"   onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }} />
                   </Form.Item>
 
                   <Form.Item
@@ -314,7 +327,11 @@ const BecomeTeacherApplicationForm = () => {
                       },
                     ]}
                   >
-                    <Input placeholder="City" />
+                    <Input placeholder="City"    onKeyPress={(e) => {
+                if (!/^[a-zA-Z\s]*$/.test(e.key)) {
+                  e.preventDefault();
+                }
+              }} />
                   </Form.Item>
 
                   <Form.Item
@@ -331,7 +348,11 @@ const BecomeTeacherApplicationForm = () => {
                       },
                     ]}
                   >
-                    <Input placeholder="Enter PinCode" maxLength={6} />
+                    <Input placeholder="Enter PinCode" maxLength={6}   onKeyPress={(event) => {
+            if (!/^\d$/.test(event.key)) {
+              event.preventDefault(); // Blocks non-numeric input
+            }
+          }} />
                   </Form.Item>
                 </div>
 
