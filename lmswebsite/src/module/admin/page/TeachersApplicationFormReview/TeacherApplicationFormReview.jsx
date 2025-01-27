@@ -75,7 +75,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
 
   const handleonFinish = async (values) => {
     try {
-      setSubmitButton(true);
+      // setSubmitButton(true);
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         values.email,
@@ -112,7 +112,8 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       );
       //console.log("Form Values:", values);
       toast.success("Application approved successfully!");
-      setSubmitButton(false);
+      // setSubmitButton(false);
+      window.location.reload();
       closeModal();
     } catch (error) {
       //console.error("Error approving application:", error);
@@ -128,8 +129,15 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
       closeModal();
       window.location.reload();
     } catch (error) {
-      //console.error("Error rejecting application:", error);
-      toast.error("Failed to reject the application.");
+      if (error.code === "auth/email-already-in-use") {
+        toast.error("Email is already registered. Please use another email.");
+      } else if (error.code === "auth/weak-password") {
+        toast.error("Password must be at least 6 characters long.");
+      } else if (error.code === "auth/invalid-email") {
+        toast.error("Invalid email address.");
+      } else {
+        toast.error("Failed to approve the application.");
+      }
     }
   };
 
@@ -368,8 +376,12 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={false} disabled={submitButton}>
-              { submitButton ? "Processing" : "Approve" }
+            <Button  type="primary"
+              htmlType="submit"
+              loading={loading}
+              // onClick={handleApprove}
+              >
+              { loading ? "Processing" : "Approve" }
             </Button>
           </Form.Item>
         </Form>
