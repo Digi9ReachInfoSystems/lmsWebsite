@@ -1,3 +1,5 @@
+
+
 // src/components/TeacherApplicationFormView.jsx
 
 import React, { useEffect, useState } from "react";
@@ -36,6 +38,7 @@ import { auth } from "../../../../config/firebaseConfig";
 import { signupUser } from "../../../../api/authApi";
 import { createTeacher } from "../../../../api/teacherApi";
 import moment from "moment";
+// import {adminCreatesTeacherApplication} from "../../../../api/mailNotificationApi";
 
 const { Option } = Select;
 
@@ -350,14 +353,21 @@ export default function TeacherApplicationFormView() {
       //   phone_number: values.phone_number,
       // });
 
+
       // Submit the application
       //console.log("Submitting application:56dbchdb", applicationData);
       // const response = await submitTeacherApplication(applicationData);
       localStorage.setItem("sessionData", JSON.stringify(oldSessionData));
       const response = await createTeacher(applicationData);
+
+      // const responses = await submitTeacherApplication(applicationData);
+      // await adminCreatesTeacherApplication(values.name, values.email);
       // //console.log("Application submitted successfully:", response);
 
+
       message.success("Teacher application submitted successfully!");
+
+    
 
       // Refresh the table data
       setStatusFilter("pending"); // Assuming new applications are pending
@@ -373,8 +383,8 @@ export default function TeacherApplicationFormView() {
       );
     } finally {
       setUploading(false);
-      window.location.reload();
-      form.resetFields();
+      // window.location.reload();
+      // form.resetFields();
     }
   };
 
@@ -902,3 +912,4 @@ export default function TeacherApplicationFormView() {
     </TeacherApplicationFormViewWrap>
   );
 }
+
