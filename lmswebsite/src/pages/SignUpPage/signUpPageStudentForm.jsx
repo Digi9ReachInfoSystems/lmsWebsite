@@ -1,5 +1,7 @@
 // src/components/SignUpPage/StudentForm.jsx
 
+// combo of student subjects 
+
 import React, { useEffect, useState } from "react";
 import {
   Form,

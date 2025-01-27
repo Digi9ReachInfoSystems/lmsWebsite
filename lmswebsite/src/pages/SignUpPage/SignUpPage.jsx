@@ -1,3 +1,5 @@
+// sign up and pay page
+
 import React, { useState, useEffect } from "react";
 import "./SignUpPage.css";
 import { message, Radio, DatePicker } from "antd";
@@ -59,6 +61,21 @@ const SignUpPage = () => {
       type_of_batch: type_of_batch || "",
     }));
   }, []);
+
+  useEffect(() => {
+    const handleBackButton = (event) => {
+      event.preventDefault();
+      navigate("/selectDuration");
+    };
+
+    // Add event listener for back navigation
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      // Cleanup listener on component unmount
+      window.removeEventListener("popstate", handleBackButton);
+    };
+  }, [navigate]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

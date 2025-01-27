@@ -206,15 +206,16 @@ export const ManageAttendance = () => {
             <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", justifyContent: "space-between" }}>
                 <h2 style={{ margin: 0, color:"#bdc9d3"}}>Attendance List </h2>
                 <div style={{ display: "flex", alignItems: "center", marginBottom: "20px", justifyContent: "space-between", gap: "10px" }}>
-                    <Select
-                        defaultValue="teacher"
-                        style={{ width: 200 }}
-                        onChange={handleRoleChange}
-                        placeholder="Select Role"
-                    >
-                        <Option value="teacher">Teacher</Option>
-                        <Option value="student">Student</Option>
-                    </Select>
+                <Select
+    value={selectedRole} // Dynamically bind the current state
+    style={{ width: 200 }}
+    onChange={handleRoleChange}
+    placeholder="Select Role"
+>
+    <Option value="teacher">Teacher</Option>
+    <Option value="student">Student</Option>
+</Select>
+
                     {/* Search Field */}
                     <Input
                         placeholder="Search by meeting name"
