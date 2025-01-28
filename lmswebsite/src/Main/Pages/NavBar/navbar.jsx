@@ -243,22 +243,29 @@ function HeaderSection() {
         }
       }
     } catch (error) {
-      // Handle specific Firebase error codes
+      // console.log("Error code:", error.code); // Log the actual error code for debugging
       switch (error.code) {
         case "auth/user-not-found":
           setErrorMessage("Invalid email. Please check your credentials.");
           break;
-        case "auth/wrong-password":
+        case "auth/invalid-password":
           setErrorMessage("Incorrect password. Please try again.");
           break;
         case "auth/invalid-email":
           setErrorMessage("Invalid email format. Please check and try again.");
           break;
+          case "auth/invalid-credential":
+          setErrorMessage("Incorrect Password or Email");
+          break;
+          case "ERR_BAD_REQUEST":
+          setErrorMessage("check your credentials, it seems you have an old credentials.");
+          break;
         default:
           setErrorMessage("Unable to connect to the internet or a network error occurred.");
           break;
-      }
-      console.error("Error logging in:", error); // Optional for debugging
+        }
+      // console.error("Error logging in:", error); // Optional for debugging
+        
     } finally {
       setIsSubmitting(false);
     }

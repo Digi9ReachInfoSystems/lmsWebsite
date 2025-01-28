@@ -31,6 +31,7 @@ const SubscriptionSuccess = () => {
 
   const handleGoToDashboard = () => {
     setIsLoading(true); // Start loading
+    navigate("/student/dashboard");
     setTimeout(() => {
       navigate("/student/dashboard"); // Simulate loading before navigating
     }, 1000);

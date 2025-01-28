@@ -307,7 +307,11 @@ const StudentForm = () => {
                 },
               ]}
             >
-              <Input placeholder="Phone Number" maxLength={10} />
+              <Input placeholder="Phone Number" maxLength={10}     onKeyPress={(e) => {
+      if (!/^\d$/.test(e.key)) {
+        e.preventDefault(); // Prevent any non-digit input
+      }
+    }} />
             </Form.Item>
 
             <Form.Item

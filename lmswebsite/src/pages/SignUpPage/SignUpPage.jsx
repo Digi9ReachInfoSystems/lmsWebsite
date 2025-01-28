@@ -19,6 +19,7 @@ import {
   studentSignedUpAdmin,
 } from "../../api/mailNotificationApi";
 import moment from "moment";
+import { set } from "lodash";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -36,6 +37,7 @@ const SignUpPage = () => {
     amount: "",
     type_of_batch: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -90,6 +92,7 @@ const SignUpPage = () => {
     e.preventDefault();
     //console.log("Form Submitted:", formData);
     // Add API integration logic here
+    setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -184,6 +187,8 @@ const SignUpPage = () => {
       }
 
       message.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
     // navigate("/login");
   };
@@ -310,8 +315,8 @@ const SignUpPage = () => {
           </div> */}
 
           <div className="form-actions">
-            <button type="submit" className="confirm-btn">
-              Confirm
+            <button type="submit" className="confirm-btn" onLoad={loading}>
+              {loading ? "Registering..." : "Register"}
             </button>
           </div>
         </form>
