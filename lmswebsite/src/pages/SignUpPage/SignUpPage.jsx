@@ -178,11 +178,10 @@ const SignUpPage = () => {
       if (error.code === "auth/email-already-in-use") {
         errorMessage =
           "This email is already registered. Please sign in or use a different email.";
-      } else if(error.code === "auth/weak-password") {
+      } else if (error.code === "auth/weak-password") {
         errorMessage =
-          "Password must be at least 6 characters long.";
-      }
-       else if (error.code) {
+          "Password should be at least 6 characters.";
+      } else if (error.code) {
         // Optional: Handle other specific error codes if needed
         errorMessage = error.message || errorMessage;
       }
