@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createCircularNotificationApi } from "../../../../api/circularNotificationApi";
 import { CircularFormContainer, FormGroup } from "./CreateCircular.styles";
+import { set } from "lodash";
 
 const { TextArea } = Input;
 
@@ -14,6 +15,7 @@ const CreateCircular = ({ closeModal, addCircularToList }) => {
   const [validDate, setValidDate] = useState("");
   const [metaImage, setMetaImage] = useState(null);
   const [imagePreview, setImagePreview] = useState("");
+  const [loading, setLoading] = useState(false);
   const [role, setRole] = useState("all");
 
   const handleImageChange = (info) => {
@@ -25,6 +27,7 @@ const CreateCircular = ({ closeModal, addCircularToList }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
     if (!title || !description || !validDate || !metaImage) {
       toast.error("All fields are required, including an image.");
       return;
@@ -45,6 +48,9 @@ const CreateCircular = ({ closeModal, addCircularToList }) => {
       closeModal();
     } catch (error) {
       toast.error("Failed to create circular. Please try again.");
+    } finally {
+      setLoading(false);
+      // window.location.reload();
     }
   };
 
@@ -116,8 +122,9 @@ const CreateCircular = ({ closeModal, addCircularToList }) => {
           type="primary"
           htmlType="submit"
           block
+          loading= {loading}
         >
-          Submit
+          {loading ? "Creating Circular..." : "Create Circular"}
         </Button>
       </form>
     </CircularFormContainer>

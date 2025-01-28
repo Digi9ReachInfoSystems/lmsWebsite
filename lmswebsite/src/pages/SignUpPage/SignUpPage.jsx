@@ -19,6 +19,7 @@ import {
   studentSignedUpAdmin,
 } from "../../api/mailNotificationApi";
 import moment from "moment";
+import { set } from "lodash";
 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
@@ -36,6 +37,7 @@ const SignUpPage = () => {
     amount: "",
     type_of_batch: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -90,6 +92,7 @@ const SignUpPage = () => {
     e.preventDefault();
     //console.log("Form Submitted:", formData);
     // Add API integration logic here
+    setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -175,12 +178,18 @@ const SignUpPage = () => {
       if (error.code === "auth/email-already-in-use") {
         errorMessage =
           "This email is already registered. Please sign in or use a different email.";
-      } else if (error.code) {
+      } else if(error.code === "auth/weak-password") {
+        errorMessage =
+          "Password must be at least 6 characters long.";
+      }
+       else if (error.code) {
         // Optional: Handle other specific error codes if needed
         errorMessage = error.message || errorMessage;
       }
 
       message.error(errorMessage);
+    } finally {
+      setLoading(false);
     }
     // navigate("/login");
   };
@@ -307,8 +316,8 @@ const SignUpPage = () => {
           </div> */}
 
           <div className="form-actions">
-            <button type="submit" className="confirm-btn">
-              Confirm
+            <button type="submit" className="confirm-btn" onLoad={loading}>
+              {loading ? "Registering..." : "Register"}
             </button>
           </div>
         </form>

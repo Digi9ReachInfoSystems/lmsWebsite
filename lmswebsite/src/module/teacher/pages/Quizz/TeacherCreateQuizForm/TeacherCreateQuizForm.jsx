@@ -183,9 +183,10 @@ const TeacherCreateQuizForm = ({ onSubmit, onClose, teacherId }) => { // Receive
       //console.log("submitting data", submissionData);
       onSubmit(submissionData);
     } 
+    form.resetFields();
 
     window.location.reload();
-    form.resetFields();
+  
   };
 
   // if (loading) {
