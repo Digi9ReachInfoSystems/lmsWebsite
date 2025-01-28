@@ -94,7 +94,7 @@ const SubjectForm = ({onClose, }) => {
       const submissionData = { ...values, icon: downloadUrl };
   
       // Call the `onSubmit` prop to handle the creation process
-      await onSubmit(submissionData);
+      await createSubject(submissionData);
   
       message.success("Subject created successfully!");
       form.resetFields();

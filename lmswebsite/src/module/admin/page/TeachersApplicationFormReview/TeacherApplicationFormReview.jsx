@@ -299,6 +299,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
           onClick={handleReject}
           className="view-resume-btn"
           style={{ marginBottom: '20px', backgroundColor:"purple"}}
+            disabled={teacher?.application?.approval_status?.toLowerCase() === "rejected"}
         >
           Reject
         </Button>
@@ -379,6 +380,7 @@ const TeacherApplicationFormReview = ({ teacher_Id, closeModal }) => {
             <Button  type="primary"
               htmlType="submit"
               loading={loading}
+              disabled= {"approved" === teacher?.application?.approval_status}
               // onClick={handleApprove}
               >
               { loading ? "Processing" : "Approve" }
